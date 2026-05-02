@@ -10,6 +10,11 @@ export default defineConfig({
   adapter: vercel(),
   trailingSlash: 'always',
   site: 'https://extrapolationcalculator.com',
+  markdown: {
+    shikiConfig: {
+      theme: 'github-dark',
+    },
+  },
   integrations: [
     tailwind(),
     react(),
