@@ -3,7 +3,7 @@ import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
-import tailwindcss from '@tailwindcss/vite';
+import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   output: 'static',
@@ -11,6 +11,7 @@ export default defineConfig({
   trailingSlash: 'always',
   site: 'https://extrapolationcalculator.com',
   integrations: [
+    tailwind(),
     react(),
     mdx(),
     sitemap({
@@ -40,7 +41,6 @@ export default defineConfig({
     }),
   ],
   vite: {
-    plugins: [tailwindcss()],
     build: {
       rollupOptions: {
         output: {

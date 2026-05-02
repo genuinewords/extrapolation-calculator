@@ -1,22 +1,6 @@
-@import "tailwindcss";
-
-@theme {
-  --color-primary: #3B82F6;
-  --color-secondary: #10B981;
-  --color-accent: #8B5CF6;
-  --color-neutral-50: #fafafa;
-  --color-neutral-100: #f4f4f5;
-  --color-neutral-200: #e4e4e7;
-  --color-neutral-300: #d4d4d8;
-  --color-neutral-400: #a1a1aa;
-  --color-neutral-500: #71717a;
-  --color-neutral-600: #52525b;
-  --color-neutral-700: #3f3f46;
-  --color-neutral-800: #27272a;
-  --color-neutral-900: #18181b;
-  --color-neutral-950: #09090b;
-  --font-sans: 'Inter', system-ui, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   *,
@@ -30,40 +14,25 @@
   }
 
   body {
-    font-family: var(--font-sans);
-    color: var(--color-neutral-900);
-    background-color: white;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    @apply font-sans text-neutral-900 bg-white antialiased;
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
+    @apply outline-2 outline-offset-2 outline-primary;
   }
 }
 
 @layer components {
   .calculator-card {
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    background: white;
-    border: 1px solid var(--color-neutral-200);
+    @apply rounded-xl shadow-sm bg-white border border-neutral-200;
   }
 
   .skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--color-primary);
-    color: white;
-    padding: 8px;
-    z-index: 100;
-    transition: top 0.2s;
+    @apply absolute -top-10 left-0 bg-primary text-white px-2 py-2 z-50 transition-top duration-200;
   }
 
   .skip-link:focus {
-    top: 0;
+    @apply top-0;
   }
 
   [dir="rtl"] {
