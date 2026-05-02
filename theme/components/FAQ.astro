@@ -1,0 +1,94 @@
+import type { Locale } from '../i18n/utils';
+import { t, localizePath } from '../i18n/utils';
+
+interface FAQItem {
+  question: string;
+  answer: string;
+  category: string;
+  display: boolean;
+}
+
+interface Props {
+  locale: Locale;
+  items?: FAQItem[];
+}
+
+const { locale } = Astro.props;
+
+const defaultFAQs: FAQItem[] = [
+  {
+    question: locale === 'en' ? 'What is extrapolation?' : t(locale, 'faq.title'),
+    answer: locale === 'en'
+      ? 'Extrapolation is the process of estimating unknown values by extending a known sequence of values beyond the range of observed data. It involves using mathematical models to predict future or past values based on existing trends.'
+      : 'Extrapolation is the process of estimating unknown values by extending known data patterns.',
+    category: 'general',
+    display: true,
+  },
+  {
+    question: locale === 'en' ? 'What is linear extrapolation?' : t(locale, 'faq.title'),
+    answer: locale === 'en'
+      ? 'Linear extrapolation uses a straight line to extend the trend of existing data points. It assumes a constant rate of change and works best when the data follows a linear pattern.'
+      : 'Linear extrapolation uses a straight line to extend existing data trends.',
+    category: 'calculator',
+    display: true,
+  },
+  {
+    question: locale === 'en' ? 'What is exponential extrapolation?' : t(locale, 'faq.title'),
+    answer: locale === 'en'
+      ? 'Exponential extrapolation assumes that the data grows at a rate proportional to its current value, resulting in a curve that increases (or decreases) increasingly rapidly. It is commonly used for population growth and compound interest calculations.'
+      : 'Exponential extrapolation assumes proportional growth rates.',
+    category: 'calculator',
+    display: true,
+  },
+  {
+    question: locale === 'en' ? 'How accurate is extrapolation?' : t(locale, 'faq.title'),
+    answer: locale === 'en'
+      ? 'The accuracy of extrapolation depends on how well the chosen model fits the data and how far beyond the observed range you predict. The R² score and confidence level provided by our calculator help you assess reliability.'
+      : 'Extrapolation accuracy depends on model fit and prediction distance.',
+    category: 'technical',
+    display: true,
+  },
+  {
+    question: locale === 'en' ? 'What is R² score?' : t(locale, 'faq.title'),
+    answer: locale === 'en'
+      ? 'R² (coefficient of determination) measures how well the regression model fits the observed data. Values range from 0 to 1, where 1 indicates a perfect fit and 0 means the model explains none of the variance.'
+      : 'R² measures how well the model fits the data, ranging from 0 to 1.',
+    category: 'technical',
+    display: true,
+  },
+  {
+    question: locale === 'en' ? 'Is my data stored on your servers?' : t(locale, 'faq.title'),
+    answer: locale === 'en'
+      ? 'No. All calculations are performed entirely in your browser. Your data never leaves your device, and we do not store any personal information or calculation inputs on our servers.'
+      : 'No. All calculations run in your browser. Your data never leaves your device.',
+    category: 'general',
+    display: true,
+  },
+];
+
+const faqs = Astro.props.items ?? defaultFAQs;
+const visibleFAQs = faqs.filter((f) => f.display);
+
+<section class="max-w-4xl mx-auto py-12 px-4" aria-labelledby="faq-heading">
+  <h2 id="faq-heading" class="text-2xl font-bold text-neutral-900 mb-8">{t(locale, 'faq.title')}</h2>
+  <div class="space-y-4">
+    {visibleFAQs.map((faq, i) => (
+      <div class="border border-neutral-200 rounded-lg">
+        <button
+          class="w-full flex items-center justify-between px-6 py-4 text-left text-neutral-900 font-medium hover:bg-neutral-50 transition-colors"
+          aria-expanded="false"
+          aria-controls={`faq-answer-${i}`}
+          onclick={`this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'); document.getElementById('faq-answer-${i}').classList.toggle('hidden'); this.querySelector('.faq-chevron').classList.toggle('rotate-180')`}
+        >
+          <span>{faq.question}</span>
+          <svg class="faq-chevron h-5 w-5 text-neutral-500 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id={`faq-answer-${i}`} class="hidden px-6 pb-4 text-neutral-600 text-sm" role="region">
+          {faq.answer}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

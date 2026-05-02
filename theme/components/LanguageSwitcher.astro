@@ -1,0 +1,34 @@
+import type { Locale } from '../i18n/utils';
+import { t, getLocaleLabel, SUPPORTED_LOCALES, localizePath } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+  currentPath: string;
+}
+
+export default function LanguageSwitcher({ locale, currentPath }: Props) {
+  const pathWithoutLocale = currentPath.replace(/^\/(en|hi|es|ru|fr|de|it|pt|bn|ja|ko|ms|pl|id|ar|bg|tr|sv)/, '') || '/';
+
+  return (
+    <div class="relative inline-block">
+      <label for="language-select" class="sr-only">{t(locale, 'language.switch')}</label>
+      <select
+        id="language-select"
+        aria-label={t(locale, 'language.switch')}
+        class="appearance-none bg-white border border-neutral-200 rounded-lg px-3 py-2 pr-8 text-sm text-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+        onchange={`window.location.href = this.value`}
+      >
+        {SUPPORTED_LOCALES.map((loc) => (
+          <option value={localizePath(pathWithoutLocale, loc)} selected={loc === locale}>
+            {getLocaleLabel(loc)}
+          </option>
+        ))}
+      </select>
+      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-neutral-500">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </div>
+    </div>
+  );
+}

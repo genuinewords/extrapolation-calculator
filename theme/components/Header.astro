@@ -1,0 +1,88 @@
+import type { Locale } from '../i18n/utils';
+import { t, localizePath, isRtl } from '../i18n/utils';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+interface Props {
+  locale: Locale;
+  currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props;
+const dir = isRtl(locale) ? 'rtl' : 'ltr';
+const navLinks = [
+  { href: localizePath('/', locale), label: t(locale, 'nav.home') },
+  { href: localizePath('/about-us/', locale), label: t(locale, 'nav.about') },
+  { href: localizePath('/blog/', locale), label: t(locale, 'nav.blog') },
+  { href: localizePath('/contact-us/', locale), label: t(locale, 'nav.contact') },
+];
+
+<header dir={dir} class="bg-white border-b border-neutral-200 sticky top-0 z-50">
+  <a href="#main-content" class="skip-link">{locale === 'ar' ? 'تخطي إلى المحتوى' : 'Skip to content'}</a>
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
+    <div class="flex items-center justify-between h-16">
+      <a href={localizePath('/', locale)} class="flex items-center gap-2 text-lg font-semibold text-neutral-900">
+        <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+        <span>{t(locale, 'site.title')}</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-6">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-sm font-medium text-neutral-600 hover:text-primary transition-colors"
+            aria-current={currentPath === link.href ? 'page' : undefined}
+          >
+            {link.label}
+          </a>
+        ))}
+        <LanguageSwitcher locale={locale} currentPath={currentPath} />
+      </div>
+
+      <button
+        id="mobile-menu-button"
+        class="md:hidden p-2 rounded-lg text-neutral-600 hover:bg-neutral-100"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Toggle menu"
+      >
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          <path id="menu-icon-close" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" class="hidden" />
+        </svg>
+      </button>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden pb-4" role="navigation" aria-label="Mobile navigation">
+      <div class="flex flex-col gap-2">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="px-3 py-2 rounded-lg text-sm font-medium text-neutral-600 hover:bg-neutral-100 hover:text-primary transition-colors"
+          >
+            {link.label}
+          </a>
+        ))}
+        <div class="px-3 py-2">
+          <LanguageSwitcher locale={locale} currentPath={currentPath} />
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('menu-icon-open');
+  const closeIcon = document.getElementById('menu-icon-close');
+
+  btn?.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    menu?.classList.toggle('hidden');
+    openIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+  });
+</script>
