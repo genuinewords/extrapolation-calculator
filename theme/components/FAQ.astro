@@ -59,24 +59,24 @@ const faqs = Astro.props.items ?? defaultFAQs;
 const visibleFAQs = faqs.filter((f) => f.display);
 ---
 
-<section class="max-w-4xl mx-auto py-12 px-4" aria-labelledby="faq-heading">
-  <h2 id="faq-heading" class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-8">{t(locale, 'faq.title')}</h2>
+<section class="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto" aria-labelledby="faq-heading">
+  <h2 id="faq-heading" class="text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-10 text-center">{t(locale, 'faq.title')}</h2>
   <div class="space-y-4">
     {visibleFAQs.map((faq, i) => (
-      <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg">
+      <div class="calculator-card overflow-hidden">
         <button
-          class="w-full flex items-center justify-between px-6 py-4 text-left text-neutral-900 dark:text-neutral-100 font-medium hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+          class="w-full flex items-center justify-between px-6 py-5 text-left text-neutral-900 dark:text-neutral-100 font-semibold text-base leading-relaxed hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors duration-200"
           aria-expanded="false"
           aria-controls={`faq-answer-${i}`}
           id={`faq-question-${i}`}
           onclick={`this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'); document.getElementById('faq-answer-${i}').classList.toggle('hidden'); this.querySelector('.faq-chevron').classList.toggle('rotate-180')`}
         >
           <span>{faq.question}</span>
-          <svg class="faq-chevron h-5 w-5 text-neutral-500 dark:text-neutral-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="faq-chevron h-5 w-5 text-neutral-400 dark:text-neutral-500 transition-transform duration-200 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
         </button>
-        <div id={`faq-answer-${i}`} class="hidden px-6 pb-4 text-neutral-600 dark:text-neutral-400 text-sm" role="region" aria-labelledby={`faq-question-${i}`}>
+        <div id={`faq-answer-${i}`} class="hidden px-6 pb-5 text-neutral-600 dark:text-neutral-400 text-base leading-relaxed" role="region" aria-labelledby={`faq-question-${i}`}>
           {faq.answer}
         </div>
       </div>

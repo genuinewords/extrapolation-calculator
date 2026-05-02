@@ -14,7 +14,7 @@
   }
 
   body {
-    @apply font-sans text-neutral-900 bg-white antialiased;
+    @apply font-sans text-neutral-900 bg-white antialiased leading-relaxed;
   }
 
   .dark body {
@@ -28,15 +28,39 @@
 
 @layer components {
   .calculator-card {
-    @apply rounded-xl shadow-sm bg-white border border-neutral-200;
+    @apply rounded-xl shadow-md bg-white border border-neutral-200 hover:shadow-xl hover:scale-[1.02] hover:border-neutral-300 transition-all duration-200;
   }
 
   .dark .calculator-card {
-    @apply bg-neutral-900 border-neutral-700;
+    @apply bg-neutral-900 border-neutral-700 shadow-[0_4px_12px_rgba(0,0,0,0.5)];
+  }
+
+  .dark .calculator-card:hover {
+    @apply shadow-[0_8px_24px_rgba(0,0,0,0.7)] border-neutral-600;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary/90 hover:scale-105 transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-1 px-4 py-2 text-sm bg-white dark:bg-neutral-800 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-600 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-700 hover:scale-105 transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:outline-none;
+  }
+
+  .input-field {
+    @apply w-full border border-neutral-200 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-100 rounded-lg px-4 py-3 text-sm leading-relaxed focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-colors;
+  }
+
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .page-container {
+    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24;
   }
 
   .skip-link {
-    @apply absolute -top-10 left-0 bg-primary text-white px-2 py-2 z-50 transition-top duration-200;
+    @apply absolute -top-10 left-0 bg-primary text-white px-4 py-2 z-50 transition-top duration-200 rounded-br-lg;
   }
 
   .skip-link:focus {

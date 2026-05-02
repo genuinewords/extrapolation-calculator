@@ -11,31 +11,36 @@ const dir = isRtl(locale) ? 'rtl' : 'ltr';
 const year = new Date().getFullYear();
 ---
 
-<footer dir={dir} class="bg-neutral-900 dark:bg-black text-neutral-300 mt-auto">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<footer dir={dir} class="bg-neutral-900 dark:bg-neutral-900 text-neutral-300 mt-auto border-t border-neutral-800 dark:border-neutral-700 shadow-[0_-1px_2px_rgba(0,0,0,0.1)] dark:shadow-[0_-1px_2px_rgba(255,255,255,0.05)]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
       <div>
-        <h3 class="text-white font-semibold mb-4">{t(locale, 'site.title')}</h3>
-        <p class="text-sm text-neutral-400">{t(locale, 'site.description')}</p>
+        <div class="flex items-center gap-2.5 mb-4">
+          <svg class="h-7 w-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+          <h3 class="text-white font-bold text-lg">{t(locale, 'site.title')}</h3>
+        </div>
+        <p class="text-sm text-neutral-400 leading-relaxed">{t(locale, 'site.description')}</p>
       </div>
       <div>
-        <h3 class="text-white font-semibold mb-4">Links</h3>
-        <ul class="space-y-2 text-sm">
-          <li><a href={localizePath('/', locale)} class="hover:text-white transition-colors">{t(locale, 'nav.home')}</a></li>
-          <li><a href={localizePath('/about-us/', locale)} class="hover:text-white transition-colors">{t(locale, 'nav.about')}</a></li>
-          <li><a href={localizePath('/blog/', locale)} class="hover:text-white transition-colors">{t(locale, 'nav.blog')}</a></li>
-          <li><a href={localizePath('/contact-us/', locale)} class="hover:text-white transition-colors">{t(locale, 'nav.contact')}</a></li>
+        <h3 class="text-white font-semibold mb-4 text-lg">Links</h3>
+        <ul class="space-y-3 text-sm">
+          <li><a href={localizePath('/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.home')}</a></li>
+          <li><a href={localizePath('/about-us/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.about')}</a></li>
+          <li><a href={localizePath('/blog/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.blog')}</a></li>
+          <li><a href={localizePath('/contact-us/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.contact')}</a></li>
         </ul>
       </div>
       <div>
-        <h3 class="text-white font-semibold mb-4">Legal</h3>
-        <ul class="space-y-2 text-sm">
-          <li><a href={localizePath('/terms/', locale)} class="hover:text-white transition-colors">{t(locale, 'nav.terms')}</a></li>
-          <li><a href={localizePath('/privacy/', locale)} class="hover:text-white transition-colors">{t(locale, 'nav.privacy')}</a></li>
+        <h3 class="text-white font-semibold mb-4 text-lg">Legal</h3>
+        <ul class="space-y-3 text-sm">
+          <li><a href={localizePath('/terms/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.terms')}</a></li>
+          <li><a href={localizePath('/privacy/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.privacy')}</a></li>
         </ul>
       </div>
     </div>
-    <div class="border-t border-neutral-800 mt-8 pt-8 text-center text-sm text-neutral-500">
+    <div class="border-t border-neutral-800 dark:border-neutral-800 mt-10 pt-8 text-center text-sm text-neutral-500">
       <p>&copy; {year} {t(locale, 'site.title')}. {t(locale, 'footer.rights')}</p>
     </div>
   </div>

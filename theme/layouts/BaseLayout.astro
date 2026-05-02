@@ -81,9 +81,9 @@ const schema = schemaOrg ?? defaultSchema;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
-  <body class="min-h-screen flex flex-col bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 transition-colors">
+  <body class="min-h-screen flex flex-col bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 transition-colors duration-200">
     <Header locale={locale} currentPath={currentPath} />
-    <main id="main-content" class="flex-1">
+    <main id="main-content" class="flex-1 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <slot />
     </main>
     <Footer locale={locale} />

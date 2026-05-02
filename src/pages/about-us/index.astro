@@ -7,39 +7,47 @@ const currentPath = '/about-us/';
 ---
 
 <BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'about.title')} description="Learn about the Extrapolation Calculator project, our mission, and team.">
-  <div class="max-w-4xl mx-auto px-4 py-16">
-    <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">About Us</h1>
+  <div class="page-container">
+    <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-8">About Us</h1>
 
-    <div class="prose prose-neutral dark:prose-invert max-w-none dark:text-neutral-300">
-      <h2>Our Mission</h2>
-      <p>
-        The Extrapolation Calculator is a free, open-source tool designed to make mathematical
-        prediction accessible to everyone. Whether you're a student learning about data analysis,
-        a researcher forecasting trends, or a professional making business projections, our
-        calculator provides the tools you need — right in your browser.
-      </p>
+    <div class="space-y-8">
+      <div class="calculator-card p-8">
+        <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Our Mission</h2>
+        <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed">
+          The Extrapolation Calculator is a free, open-source tool designed to make mathematical
+          prediction accessible to everyone. Whether you're a student learning about data analysis,
+          a researcher forecasting trends, or a professional making business projections, our
+          calculator provides the tools you need — right in your browser.
+        </p>
+      </div>
 
-      <h2>Privacy First</h2>
-      <p>
-        We believe your data belongs to you. All calculations are performed entirely within
-        your browser using client-side JavaScript. Your data never leaves your device, and we
-        do not store any calculation inputs or results on our servers.
-      </p>
+      <div class="calculator-card p-8">
+        <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Privacy First</h2>
+        <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed">
+          We believe your data belongs to you. All calculations are performed entirely within
+          your browser using client-side JavaScript. Your data never leaves your device, and we
+          do not store any calculation inputs or results on our servers.
+        </p>
+      </div>
 
-      <h2>How It Works</h2>
-      <p>
-        Our calculator supports five extrapolation methods: linear, exponential, logarithmic,
-        polynomial, and quadratic. Each method fits a mathematical model to your data points
-        and projects it beyond the observed range. The R² score and confidence metrics help
-        you assess the reliability of each prediction.
-      </p>
+      <div class="calculator-card p-8">
+        <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4">How It Works</h2>
+        <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed">
+          Our calculator supports five extrapolation methods: linear, exponential, logarithmic,
+          polynomial, and quadratic. Each method fits a mathematical model to your data points
+          and projects it beyond the observed range. The R² score and confidence metrics help
+          you assess the reliability of each prediction.
+        </p>
+      </div>
 
-      <h2>Open Source</h2>
-      <p>
-        Built with modern web technologies including Astro, React, and Tailwind CSS. The
-        project is designed for performance, accessibility, and internationalization, supporting
-        18 languages out of the box.
-      </p>
+      <div class="calculator-card p-8">
+        <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Open Source</h2>
+        <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed">
+          Built with modern web technologies including Astro, React, and Tailwind CSS. The
+          project is designed for performance, accessibility, and internationalization, supporting
+          18 languages out of the box.
+        </p>
+      </div>
     </div>
   </div>
 </BaseLayout>

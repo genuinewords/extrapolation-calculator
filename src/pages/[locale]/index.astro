@@ -19,22 +19,26 @@ const dir = isRtl(locale) ? 'rtl' : 'ltr';
 ---
 
 <BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'site.title')} description={t(locale, 'site.description')}>
-  <section class="bg-gradient-to-b from-primary/5 to-white dark:from-primary/10 dark:to-neutral-950 py-16 md:py-24" dir={dir}>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
-        {t(locale, 'hero.title')}
-      </h1>
-      <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-8">
-        {t(locale, 'hero.subtitle')}
-      </p>
-      <a href="#calculator" class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors">
-        {t(locale, 'hero.cta')}
-      </a>
+  <section class="bg-gradient-to-br from-primary/5 via-primary/3 to-white dark:from-primary/10 dark:via-primary/5 dark:to-neutral-950 py-20 md:py-32" dir={dir}>
+    <div class="section-container text-center">
+      <div class="max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 leading-tight">
+          {t(locale, 'hero.title')}
+        </h1>
+        <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+          {t(locale, 'hero.subtitle')}
+        </p>
+        <a href="#calculator" class="btn-primary shadow-lg hover:shadow-xl">
+          {t(locale, 'hero.cta')}
+        </a>
+      </div>
     </div>
   </section>
 
-  <section id="calculator" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <ExtrapolationCalculator client:load locale={locale} />
+  <section id="calculator" class="py-16 md:py-20">
+    <div class="section-container">
+      <ExtrapolationCalculator client:load locale={locale} />
+    </div>
   </section>
 
   <FAQ locale={locale} />
