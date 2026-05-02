@@ -27,8 +27,9 @@ const year = new Date().getFullYear();
         <h3 class="text-white font-semibold mb-4 text-lg">Links</h3>
         <ul class="space-y-3 text-sm">
           <li><a href={localizePath('/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.home')}</a></li>
+          <li><a href={localizePath('/interpolation/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>Interpolation</a></li>
+          <li><a href={localizePath('/regression/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>Regression</a></li>
           <li><a href={localizePath('/about-us/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.about')}</a></li>
-          <li><a href={localizePath('/blog/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.blog')}</a></li>
           <li><a href={localizePath('/contact-us/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.contact')}</a></li>
         </ul>
       </div>

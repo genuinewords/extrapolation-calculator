@@ -12,18 +12,18 @@ const currentPath = '/';
     <div class="max-w-7xl mx-auto text-center">
       <div class="max-w-3xl mx-auto">
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 leading-tight">
-          Extrapolation<br class="hidden sm:block" /> Calculator
+          Mathematical<br class="hidden sm:block" /> Calculator Suite
         </h1>
         <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Predict future values from your existing data using advanced mathematical methods — free, private, and runs entirely in your browser.
+          Predict, estimate, and analyze with extrapolation, interpolation, and regression — free, private, entirely in your browser.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a href="#calculator" class="btn-primary shadow-lg hover:shadow-xl">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
             Start Calculating
           </a>
-          <a href="#methods" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium text-neutral-700 dark:text-neutral-300 border border-neutral-300 dark:border-neutral-600 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:scale-105 transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-            Learn More
+          <a href="#tools" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium text-neutral-700 dark:text-neutral-300 border border-neutral-300 dark:border-neutral-600 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:scale-105 transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            Explore Tools
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
           </a>
         </div>
@@ -31,41 +31,57 @@ const currentPath = '/';
     </div>
   </section>
 
-  <section id="calculator" class="py-16 md:py-20">
-    <div class="section-container">
-      <ExtrapolationCalculator client:load locale={locale} />
-    </div>
-  </section>
-
-  <section id="methods" class="bg-neutral-50 dark:bg-neutral-900/50 py-20 md:py-28">
-    <div class="section-container">
+  <section id="tools" class="py-20 md:py-28">
+    <div class="max-w-7xl mx-auto">
       <div class="text-center mb-14">
-        <h2 class="text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Extrapolation Methods</h2>
-        <p class="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">Choose the right mathematical model for your data to get accurate predictions.</p>
+        <h2 class="text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Calculator Tools</h2>
+        <p class="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">Three powerful calculators for every mathematical need.</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-        <div class="calculator-card p-8">
+        <a href="/interpolation/" class="calculator-card p-8 block group">
           <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5">
-            <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+            <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
           </div>
-          <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-3">Linear Extrapolation</h3>
-          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">Extend a straight line through your data points. Best for data with a constant rate of change.</p>
-        </div>
-        <div class="calculator-card p-8">
+          <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-primary transition-colors">Interpolation</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">Estimate values between known data points using linear, Lagrange, or cubic spline methods.</p>
+          <span class="inline-flex items-center gap-1 text-primary text-sm font-medium">
+            Open Calculator
+            <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+          </span>
+        </a>
+        <a href="/regression/" class="calculator-card p-8 block group">
           <div class="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center mb-5">
-            <svg class="h-6 w-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+            <svg class="h-6 w-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
           </div>
-          <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-3">Exponential Extrapolation</h3>
-          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">Model rapid growth patterns like population, compound interest, and viral spread.</p>
-        </div>
-        <div class="calculator-card p-8">
+          <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-secondary transition-colors">Regression</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">Analyze relationships between variables with simple or multiple regression models.</p>
+          <span class="inline-flex items-center gap-1 text-secondary text-sm font-medium">
+            Open Calculator
+            <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+          </span>
+        </a>
+        <a href="#calculator" class="calculator-card p-8 block group">
           <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-5">
             <svg class="h-6 w-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
           </div>
-          <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-3">Polynomial Extrapolation</h3>
-          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">Fit complex curves with polynomial regression for data with non-linear trends.</p>
-        </div>
+          <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-accent transition-colors">Extrapolation</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">Predict future values beyond your data using linear, exponential, or polynomial models.</p>
+          <span class="inline-flex items-center gap-1 text-accent text-sm font-medium">
+            Open Calculator
+            <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+          </span>
+        </a>
       </div>
+    </div>
+  </section>
+
+  <section id="calculator" class="py-16 md:py-20 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 bg-neutral-50 dark:bg-neutral-900/50">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-10">
+        <h2 class="text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Extrapolation Calculator</h2>
+        <p class="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">Predict values beyond your observed data range.</p>
+      </div>
+      <ExtrapolationCalculator client:load locale={locale} />
     </div>
   </section>
 

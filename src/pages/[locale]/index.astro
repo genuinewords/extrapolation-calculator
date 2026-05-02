@@ -19,8 +19,8 @@ const dir = isRtl(locale) ? 'rtl' : 'ltr';
 ---
 
 <BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'site.title')} description={t(locale, 'site.description')}>
-  <section class="bg-gradient-to-br from-primary/5 via-primary/3 to-white dark:from-primary/10 dark:via-primary/5 dark:to-neutral-950 py-20 md:py-32" dir={dir}>
-    <div class="section-container text-center">
+  <section class="bg-gradient-to-br from-primary/5 via-primary/3 to-white dark:from-primary/10 dark:via-primary/5 dark:to-neutral-950 py-20 md:py-32 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8" dir={dir}>
+    <div class="max-w-7xl mx-auto text-center">
       <div class="max-w-3xl mx-auto">
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 leading-tight">
           {t(locale, 'hero.title')}
@@ -36,7 +36,7 @@ const dir = isRtl(locale) ? 'rtl' : 'ltr';
   </section>
 
   <section id="calculator" class="py-16 md:py-20">
-    <div class="section-container">
+    <div class="max-w-7xl mx-auto">
       <ExtrapolationCalculator client:load locale={locale} />
     </div>
   </section>

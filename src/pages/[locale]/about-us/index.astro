@@ -16,7 +16,7 @@ const currentPath = localizePath('/about-us/', locale);
 ---
 
 <BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'about.title')} description={t(locale, 'site.description')}>
-  <div class="max-w-4xl mx-auto px-4 py-16">
+  <div class="max-w-4xl mx-auto py-16 md:py-24">
     <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">{t(locale, 'about.title')}</h1>
     <div class="prose prose-neutral dark:prose-invert max-w-none dark:text-neutral-300">
       <p>{t(locale, 'site.description')}</p>

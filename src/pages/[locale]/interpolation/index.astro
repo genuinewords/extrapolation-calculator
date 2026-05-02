@@ -1,0 +1,31 @@
+---
+import { SUPPORTED_LOCALES, DEFAULT_LOCALE, t, localizePath, isRtl } from '../../../../theme/i18n/utils';
+import BaseLayout from '../../../../theme/layouts/BaseLayout.astro';
+import InterpolationCalculator from '../../../components/InterpolationCalculator';
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES
+    .filter((l) => l !== DEFAULT_LOCALE)
+    .map((locale) => ({
+      params: { locale },
+      props: { locale },
+    }));
+}
+
+const { locale } = Astro.props;
+const currentPath = localizePath('/interpolation/', locale);
+---
+
+<BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'site.title')} description={t(locale, 'site.description')}>
+  <div class="py-16 md:py-20">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-10">
+        <a href={localizePath('/', locale)} class="inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 font-medium mb-4 transition-colors">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+          {t(locale, 'nav.home')}
+        </a>
+      </div>
+      <InterpolationCalculator client:load locale={locale} />
+    </div>
+  </div>
+</BaseLayout>

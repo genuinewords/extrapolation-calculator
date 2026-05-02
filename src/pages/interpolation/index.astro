@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../../theme/layouts/BaseLayout.astro';
+import InterpolationCalculator from '../../components/InterpolationCalculator';
+
+const locale = 'en';
+const currentPath = '/interpolation/';
+---
+
+<BaseLayout locale={locale} currentPath={currentPath} title="Interpolation Calculator" description="Estimate values between known data points using linear, Lagrange, and cubic spline interpolation.">
+  <div class="py-16 md:py-20">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-10">
+        <a href="/" class="inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 font-medium mb-4 transition-colors">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+          Back to Home
+        </a>
+        <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Interpolation Calculator</h1>
+        <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed max-w-2xl mx-auto">Estimate values between known data points using three powerful interpolation methods.</p>
+      </div>
+      <InterpolationCalculator client:load locale={locale} />
+    </div>
+  </div>
+</BaseLayout>

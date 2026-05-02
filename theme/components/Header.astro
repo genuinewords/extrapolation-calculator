@@ -12,8 +12,9 @@ const { locale, currentPath } = Astro.props;
 const dir = isRtl(locale) ? 'rtl' : 'ltr';
 const navLinks = [
   { href: localizePath('/', locale), label: t(locale, 'nav.home') },
+  { href: localizePath('/interpolation/', locale), label: 'Interpolation' },
+  { href: localizePath('/regression/', locale), label: 'Regression' },
   { href: localizePath('/about-us/', locale), label: t(locale, 'nav.about') },
-  { href: localizePath('/blog/', locale), label: t(locale, 'nav.blog') },
   { href: localizePath('/contact-us/', locale), label: t(locale, 'nav.contact') },
 ];
 ---
