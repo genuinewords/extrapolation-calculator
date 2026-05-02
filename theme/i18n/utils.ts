@@ -54,6 +54,10 @@ export function getLocaleLabel(locale: Locale): string {
   return labels[locale];
 }
 
+export { t } from './translations';
+
+export { t } from './translations';
+
 export function getAlternateUrls(currentPath: string): Array<{ locale: Locale; url: string }> {
   const pathWithoutLocale = currentPath.replace(/^\/(en|hi|es|ru|fr|de|it|pt|bn|ja|ko|ms|pl|id|ar|bg|tr|sv)/, '') || '/';
   return SUPPORTED_LOCALES.map((locale) => ({
