@@ -17,6 +17,10 @@
     @apply font-sans text-neutral-900 bg-white antialiased;
   }
 
+  .dark body {
+    @apply text-neutral-100 bg-neutral-950;
+  }
+
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-primary;
   }
@@ -25,6 +29,10 @@
 @layer components {
   .calculator-card {
     @apply rounded-xl shadow-sm bg-white border border-neutral-200;
+  }
+
+  .dark .calculator-card {
+    @apply bg-neutral-900 border-neutral-700;
   }
 
   .skip-link {

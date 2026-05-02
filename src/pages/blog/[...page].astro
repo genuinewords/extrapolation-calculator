@@ -3,15 +3,36 @@ import BaseLayout from '../../../theme/layouts/BaseLayout.astro';
 import { t } from '../../../theme/i18n/utils';
 import { getCollection } from 'astro:content';
 
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const posts = allPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+  const POSTS_PER_PAGE = 12;
+  const totalPages = Math.max(1, Math.ceil(posts.length / POSTS_PER_PAGE));
+
+  const pages = [];
+  for (let i = 1; i <= totalPages; i++) {
+    const start = (i - 1) * POSTS_PER_PAGE;
+    const pagePosts = posts.slice(start, start + POSTS_PER_PAGE);
+    pages.push({
+      params: { page: i === 1 ? undefined : String(i) },
+      props: { pagePosts, currentPage: i, totalPages },
+    });
+  }
+
+  pages.push({
+    params: { page: '1' },
+    props: { pagePosts: posts.slice(0, POSTS_PER_PAGE), currentPage: 1, totalPages },
+  });
+
+  return pages;
+}
+
+const { pagePosts, currentPage, totalPages } = Astro.props;
 const locale = 'en';
-const posts = await getCollection('blog');
-const sortedPosts = posts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
-const POSTS_PER_PAGE = 12;
-const pagePosts = sortedPosts.slice(0, POSTS_PER_PAGE);
-const totalPages = Math.max(1, Math.ceil(sortedPosts.length / POSTS_PER_PAGE));
+const currentPath = currentPage > 1 ? `/blog/${currentPage}/` : '/blog/';
 ---
 
-<BaseLayout locale={locale} currentPath="/blog/" title={t(locale, 'blog.title')} description="Articles about extrapolation methods, data analysis, and mathematical prediction.">
+<BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'blog.title')} description="Articles about extrapolation methods, data analysis, and mathematical prediction.">
   <div class="max-w-4xl mx-auto px-4 py-16">
     <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-8">Blog</h1>
 
@@ -53,14 +74,27 @@ const totalPages = Math.max(1, Math.ceil(sortedPosts.length / POSTS_PER_PAGE));
 
     {totalPages > 1 && (
       <nav class="flex items-center justify-center gap-4 mt-12" aria-label="Blog pagination">
-        <span class="text-sm text-neutral-500 dark:text-neutral-400">Page 1 of {totalPages}</span>
-        <a
-          href="/blog/2/"
-          class="px-4 py-2 text-sm font-medium text-neutral-600 dark:text-neutral-300 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors"
-          aria-label="Next page"
-        >
-          Next &rarr;
-        </a>
+        {currentPage > 1 && (
+          <a
+            href={currentPage === 2 ? '/blog/' : `/blog/${currentPage - 1}/`}
+            class="px-4 py-2 text-sm font-medium text-neutral-600 dark:text-neutral-300 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors"
+            aria-label="Previous page"
+          >
+            &larr; Previous
+          </a>
+        )}
+        <span class="text-sm text-neutral-500 dark:text-neutral-400">
+          Page {currentPage} of {totalPages}
+        </span>
+        {currentPage < totalPages && (
+          <a
+            href={`/blog/${currentPage + 1}/`}
+            class="px-4 py-2 text-sm font-medium text-neutral-600 dark:text-neutral-300 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors"
+            aria-label="Next page"
+          >
+            Next &rarr;
+          </a>
+        )}
       </nav>
     )}
   </div>

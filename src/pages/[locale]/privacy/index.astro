@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../../../theme/layouts/BaseLayout.astro';
+import { SUPPORTED_LOCALES, DEFAULT_LOCALE, t, localizePath } from '../../../../theme/i18n/utils';
+
+export function getStaticPaths() {
+  return SUPPORTED_LOCALES
+    .filter((l) => l !== DEFAULT_LOCALE)
+    .map((locale) => ({
+      params: { locale },
+      props: { locale },
+    }));
+}
+
+const { locale } = Astro.props;
+const currentPath = localizePath('/privacy/', locale);
+---
+
+<BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'nav.privacy')} description="Privacy policy.">
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">{t(locale, 'nav.privacy')}</h1>
+    <div class="prose prose-neutral dark:prose-invert max-w-none dark:text-neutral-300">
+      <p>{t(locale, 'site.description')}</p>
+      <p>{locale === 'en' ? 'All calculator data is processed client-side. Your data never leaves your device. We do not collect personal data through the calculator. Contact form data is processed by Web3Forms.' : t(locale, 'site.description')}</p>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,33 @@
+---
+import BlogLayout from '../../../../../theme/layouts/BlogLayout.astro';
+import { SUPPORTED_LOCALES, DEFAULT_LOCALE, t } from '../../../../../theme/i18n/utils';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return SUPPORTED_LOCALES
+    .filter((l) => l !== DEFAULT_LOCALE)
+    .flatMap((locale) =>
+      posts.map((post) => ({
+        params: { locale, slug: post.id },
+        props: { locale, post },
+      }))
+    );
+}
+
+const { locale, post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<BlogLayout
+  locale={locale}
+  title={post.data.title}
+  description={post.data.description}
+  currentPath={`/${locale}/blog/${post.id}/`}
+  publishDate={post.data.publishDate}
+  author={post.data.author}
+  category={post.data.category}
+  featuredImage={post.data.featuredImage}
+>
+  <Content />
+</BlogLayout>

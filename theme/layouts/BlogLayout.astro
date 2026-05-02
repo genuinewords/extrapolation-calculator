@@ -3,6 +3,7 @@ import type { Locale } from '../i18n/utils';
 import { t, isRtl, getAlternateUrls, DEFAULT_LOCALE } from '../i18n/utils';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import '../../src/styles/global.css';
 
 interface Props {
   locale?: Locale;
@@ -48,6 +49,9 @@ const blogSchema: Record<string, unknown> = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+    <script is:inline>
+      (function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()
+    </script>
 
     <title>{title} | {t(locale, 'site.title')}</title>
     <meta name="description" content={description} />
@@ -75,7 +79,7 @@ const blogSchema: Record<string, unknown> = {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100">
     <Header locale={locale} currentPath={currentPath} />
     <main id="main-content" class="flex-1">
       <article class="max-w-3xl mx-auto px-4 py-12">
@@ -83,8 +87,8 @@ const blogSchema: Record<string, unknown> = {
           {category && (
             <span class="inline-block bg-primary/10 text-primary text-xs font-medium px-3 py-1 rounded-full mb-4">{category}</span>
           )}
-          <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">{title}</h1>
-          <div class="flex items-center gap-4 text-sm text-neutral-500">
+          <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">{title}</h1>
+          <div class="flex items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400">
             {author && <span>{author}</span>}
             {publishDate && (
               <time datetime={publishDate.toISOString()}>
@@ -96,7 +100,7 @@ const blogSchema: Record<string, unknown> = {
         {featuredImage && (
           <img src={featuredImage} alt={title} class="w-full rounded-xl mb-8" loading="lazy" />
         )}
-        <div class="prose prose-neutral max-w-none">
+        <div class="prose prose-neutral dark:prose-invert max-w-none dark:text-neutral-300">
           <slot />
         </div>
       </article>

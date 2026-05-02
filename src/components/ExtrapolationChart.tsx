@@ -38,7 +38,7 @@ const ExtrapolationChart = forwardRef<HTMLCanvasElement, Props>(function Extrapo
 
   if (points.length < 2) {
     return (
-      <div class="h-64 bg-neutral-50 rounded-xl flex items-center justify-center text-neutral-400">
+      <div className="h-64 bg-neutral-50 dark:bg-neutral-800 rounded-xl flex items-center justify-center text-neutral-400">
         Add at least 2 data points to see the chart
       </div>
     );
@@ -135,7 +135,7 @@ const ExtrapolationChart = forwardRef<HTMLCanvasElement, Props>(function Extrapo
   };
 
   return (
-    <div class="bg-white rounded-xl border border-neutral-200 p-4">
+    <div className="bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-700 p-4">
       <Scatter ref={chartRef} data={data} options={options} />
     </div>
   );

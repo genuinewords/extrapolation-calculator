@@ -1,0 +1,41 @@
+---
+title: "Polynomial vs. Linear: Choosing the Right Method"
+description: A practical comparison of polynomial and linear extrapolation methods to help you choose the best approach for your data.
+publishDate: 2025-02-10
+author: Extrapolation Calculator Team
+category: Methods
+featuredImage: ""
+---
+
+When working with data prediction, choosing the right extrapolation method can make or break your results. Here's a practical guide to deciding between polynomial and linear approaches.
+
+## Linear: Simple and Stable
+
+Linear extrapolation shines when:
+- Your data has a roughly constant rate of change
+- You need quick, interpretable results
+- You're extrapolating a short distance
+
+The main advantage is stability — linear models rarely produce wildly unrealistic predictions, even far from your data range.
+
+## Polynomial: Flexible but Risky
+
+Polynomial extrapolation (especially higher degrees) can fit complex curves beautifully within your data range. However, outside that range, polynomials can diverge dramatically — producing extremely large or small values that make no physical sense.
+
+**Rule of thumb**: Use the lowest polynomial degree that gives an acceptable R² score.
+
+## The R² Decision Framework
+
+1. Fit a linear model first and check R²
+2. If R² < 0.7, try quadratic (degree 2)
+3. If still low, try cubic (degree 3)
+4. Compare R² scores — if a higher degree barely improves R², stick with the simpler model
+5. Always sanity-check extrapolated values against domain knowledge
+
+## Warning Signs
+
+- R² increases dramatically with degree → likely overfitting
+- Extrapolated values are orders of magnitude beyond your data → model divergence
+- The equation has very large coefficients → numerical instability
+
+The best extrapolation method is the simplest one that adequately fits your data.

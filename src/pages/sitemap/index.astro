@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../../theme/layouts/BaseLayout.astro';
+import { SUPPORTED_LOCALES, DEFAULT_LOCALE, t, localizePath } from '../../../theme/i18n/utils';
+
+const locale = 'en';
+const currentPath = '/sitemap/';
+
+const staticPages = [
+  { href: '/', label: t(locale, 'nav.home') },
+  { href: '/about-us/', label: t(locale, 'nav.about') },
+  { href: '/contact-us/', label: t(locale, 'nav.contact') },
+  { href: '/blog/', label: t(locale, 'nav.blog') },
+  { href: '/terms/', label: t(locale, 'nav.terms') },
+  { href: '/privacy/', label: t(locale, 'nav.privacy') },
+];
+---
+
+<BaseLayout locale={locale} currentPath={currentPath} title="Sitemap" description="Sitemap of the Extrapolation Calculator website.">
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-8">Sitemap</h1>
+
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Pages</h2>
+      <ul class="space-y-2">
+        {staticPages.map((page) => (
+          <li>
+            <a href={page.href} class="text-primary hover:underline">{page.label}</a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Languages</h2>
+      <ul class="grid grid-cols-2 md:grid-cols-4 gap-2">
+        {SUPPORTED_LOCALES.map((loc) => (
+          <li>
+            <a href={localizePath('/', loc)} class="text-primary hover:underline text-sm">
+              {loc === DEFAULT_LOCALE ? 'English (default)' : new Intl.DisplayNames([locale], { type: 'language' }).of(loc)}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</BaseLayout>

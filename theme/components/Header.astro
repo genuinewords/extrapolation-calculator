@@ -18,42 +18,70 @@ const navLinks = [
 ];
 ---
 
-<header dir={dir} class="bg-white border-b border-neutral-200 sticky top-0 z-50">
+<header dir={dir} class="bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700 sticky top-0 z-50 transition-colors">
   <a href="#main-content" class="skip-link">{locale === 'ar' ? 'تخطي إلى المحتوى' : 'Skip to content'}</a>
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
     <div class="flex items-center justify-between h-16">
-      <a href={localizePath('/', locale)} class="flex items-center gap-2 text-lg font-semibold text-neutral-900">
+      <a href={localizePath('/', locale)} class="flex items-center gap-2 text-lg font-semibold text-neutral-900 dark:text-neutral-100">
         <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
         </svg>
         <span>{t(locale, 'site.title')}</span>
       </a>
 
-      <div class="hidden md:flex items-center gap-6">
+      <div class="hidden md:flex items-center gap-4">
         {navLinks.map((link) => (
           <a
             href={link.href}
-            class="text-sm font-medium text-neutral-600 hover:text-primary transition-colors"
+            class="text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:text-primary transition-colors"
             aria-current={currentPath === link.href ? 'page' : undefined}
           >
             {link.label}
           </a>
         ))}
         <LanguageSwitcher locale={locale} currentPath={currentPath} />
+        <button
+          id="theme-toggle"
+          type="button"
+          aria-label="Toggle dark mode"
+          class="p-2 rounded-lg text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+        >
+          <svg id="theme-icon-sun" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg id="theme-icon-moon" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
       </div>
 
-      <button
-        id="mobile-menu-button"
-        class="md:hidden p-2 rounded-lg text-neutral-600 hover:bg-neutral-100"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-        aria-label="Toggle menu"
-      >
-        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          <path id="menu-icon-close" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" class="hidden" />
-        </svg>
-      </button>
+      <div class="flex items-center gap-2 md:hidden">
+        <button
+          id="theme-toggle-mobile"
+          type="button"
+          aria-label="Toggle dark mode"
+          class="p-2 rounded-lg text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+        >
+          <svg id="theme-icon-sun-m" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg id="theme-icon-moon-m" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+        <button
+          id="mobile-menu-button"
+          class="p-2 rounded-lg text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Toggle menu"
+        >
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            <path id="menu-icon-close" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" class="hidden" />
+          </svg>
+        </button>
+      </div>
     </div>
 
     <div id="mobile-menu" class="hidden md:hidden pb-4" role="navigation" aria-label="Mobile navigation">
@@ -61,7 +89,7 @@ const navLinks = [
         {navLinks.map((link) => (
           <a
             href={link.href}
-            class="px-3 py-2 rounded-lg text-sm font-medium text-neutral-600 hover:bg-neutral-100 hover:text-primary transition-colors"
+            class="px-3 py-2 rounded-lg text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-primary transition-colors"
           >
             {link.label}
           </a>
@@ -75,6 +103,34 @@ const navLinks = [
 </header>
 
 <script>
+  function updateThemeIcons() {
+    const isDark = document.documentElement.classList.contains('dark');
+    document.querySelectorAll('#theme-icon-sun, #theme-icon-sun-m').forEach(el => {
+      (el as HTMLElement).style.display = isDark ? 'block' : 'none';
+    });
+    document.querySelectorAll('#theme-icon-moon, #theme-icon-moon-m').forEach(el => {
+      (el as HTMLElement).style.display = isDark ? 'none' : 'block';
+    });
+  }
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.classList.contains('dark');
+    if (isDark) {
+      html.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    } else {
+      html.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    }
+    updateThemeIcons();
+  }
+
+  updateThemeIcons();
+
+  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+  document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggleTheme);
+
   const btn = document.getElementById('mobile-menu-button');
   const menu = document.getElementById('mobile-menu');
   const openIcon = document.getElementById('menu-icon-open');

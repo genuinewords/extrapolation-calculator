@@ -19,12 +19,12 @@ const dir = isRtl(locale) ? 'rtl' : 'ltr';
 ---
 
 <BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'site.title')} description={t(locale, 'site.description')}>
-  <section class="bg-gradient-to-b from-primary/5 to-white py-16 md:py-24" dir={dir}>
+  <section class="bg-gradient-to-b from-primary/5 to-white dark:from-primary/10 dark:to-neutral-950 py-16 md:py-24" dir={dir}>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold text-neutral-900 mb-4">
+      <h1 class="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
         {t(locale, 'hero.title')}
       </h1>
-      <p class="text-lg md:text-xl text-neutral-600 max-w-2xl mx-auto mb-8">
+      <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-8">
         {t(locale, 'hero.subtitle')}
       </p>
       <a href="#calculator" class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors">
