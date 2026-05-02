@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../theme/layouts/BaseLayout.astro';
+import FAQ from '../../theme/components/FAQ.astro';
+import ExtrapolationCalculator from '../components/ExtrapolationCalculator';
+
+const locale = 'en';
+const currentPath = '/';
+---
+
+<BaseLayout locale={locale} currentPath={currentPath}>
+  <section class="bg-gradient-to-b from-primary/5 to-white py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-neutral-900 mb-4">
+        Extrapolation Calculator
+      </h1>
+      <p class="text-lg md:text-xl text-neutral-600 max-w-2xl mx-auto mb-8">
+        Predict future values from your existing data using advanced mathematical methods — free, private, and runs entirely in your browser.
+      </p>
+      <a href="#calculator" class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+        Start Calculating
+      </a>
+    </div>
+  </section>
+
+  <section id="calculator" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <ExtrapolationCalculator client:load locale={locale} />
+  </section>
+
+  <section class="bg-neutral-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-neutral-900 text-center mb-12">Extrapolation Methods</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="calculator-card p-6">
+          <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+          </div>
+          <h3 class="font-semibold text-neutral-900 mb-2">Linear Extrapolation</h3>
+          <p class="text-sm text-neutral-600">Extend a straight line through your data points. Best for data with a constant rate of change.</p>
+        </div>
+        <div class="calculator-card p-6">
+          <div class="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="h-5 w-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+          </div>
+          <h3 class="font-semibold text-neutral-900 mb-2">Exponential Extrapolation</h3>
+          <p class="text-sm text-neutral-600">Model rapid growth patterns like population, compound interest, and viral spread.</p>
+        </div>
+        <div class="calculator-card p-6">
+          <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="h-5 w-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+          </div>
+          <h3 class="font-semibold text-neutral-900 mb-2">Polynomial Extrapolation</h3>
+          <p class="text-sm text-neutral-600">Fit complex curves with polynomial regression for data with non-linear trends.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FAQ locale={locale} />
+</BaseLayout>

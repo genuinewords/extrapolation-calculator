@@ -1,3 +1,4 @@
+---
 import type { Locale } from '../i18n/utils';
 import { t, localizePath, isRtl } from '../i18n/utils';
 import LanguageSwitcher from './LanguageSwitcher.astro';
@@ -15,6 +16,7 @@ const navLinks = [
   { href: localizePath('/blog/', locale), label: t(locale, 'nav.blog') },
   { href: localizePath('/contact-us/', locale), label: t(locale, 'nav.contact') },
 ];
+---
 
 <header dir={dir} class="bg-white border-b border-neutral-200 sticky top-0 z-50">
   <a href="#main-content" class="skip-link">{locale === 'ar' ? 'تخطي إلى المحتوى' : 'Skip to content'}</a>

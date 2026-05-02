@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../../theme/layouts/BaseLayout.astro';
+
+const locale = 'en';
+const currentPath = '/terms/';
+---
+
+<BaseLayout locale={locale} currentPath={currentPath} title="Terms of Service" description="Terms and conditions for using the Extrapolation Calculator.">
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 mb-6">Terms of Service</h1>
+    <div class="prose prose-neutral max-w-none">
+      <p>Last updated: January 2025</p>
+
+      <h2>1. Acceptance of Terms</h2>
+      <p>By accessing and using the Extrapolation Calculator website, you agree to be bound by these Terms of Service. If you do not agree, please do not use the service.</p>
+
+      <h2>2. Use of Service</h2>
+      <p>The Extrapolation Calculator is provided as a free tool for educational and analytical purposes. You may use it for personal, academic, or commercial analysis. The tool is provided "as is" without any warranties of any kind.</p>
+
+      <h2>3. Accuracy of Results</h2>
+      <p>While we strive for mathematical accuracy, extrapolation by its nature involves uncertainty. Results should be interpreted with appropriate caution. We are not responsible for decisions made based on calculations from this tool.</p>
+
+      <h2>4. Data Privacy</h2>
+      <p>All calculations are performed client-side in your browser. We do not collect, store, or transmit your calculation data. Contact form submissions are processed by Web3Forms and are subject to their privacy policy.</p>
+
+      <h2>5. Intellectual Property</h2>
+      <p>The content, design, and code of this website are protected by applicable intellectual property laws. You may not copy, modify, or distribute the software without explicit permission.</p>
+
+      <h2>6. Limitation of Liability</h2>
+      <p>In no event shall the operators of this website be liable for any indirect, incidental, special, or consequential damages arising from the use of this service.</p>
+
+      <h2>7. Changes to Terms</h2>
+      <p>We reserve the right to modify these terms at any time. Continued use of the service after changes constitutes acceptance of the new terms.</p>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,44 @@
+---
+title: "Exponential Growth: When Things Accelerate"
+description: Understanding exponential extrapolation for modeling rapidly growing phenomena like population, compound interest, and viral spread.
+publishDate: 2025-01-20
+author: Extrapolation Calculator Team
+category: Methods
+featuredImage: ""
+---
+
+Exponential extrapolation models data where the rate of growth is proportional to the current value. This creates the characteristic "hockey stick" curve that starts slowly and accelerates dramatically.
+
+## The Exponential Model
+
+The exponential function is expressed as:
+
+**y = a · e^(bx)**
+
+Or equivalently:
+
+**y = a · b^x**
+
+Where:
+- **a** is the initial value (y-intercept)
+- **b** is the growth rate
+- **e** is Euler's number (approximately 2.718)
+
+## Common Applications
+
+Exponential extrapolation is used in many fields:
+
+- **Population biology**: Modeling population growth
+- **Finance**: Compound interest calculations
+- **Epidemiology**: Early-stage disease spread
+- **Technology**: Adoption curves and Moore's Law
+
+## How Our Calculator Does It
+
+The calculator takes the natural logarithm of y-values, fits a linear model to the transformed data, then transforms back to get the exponential equation. This approach leverages the relationship:
+
+**ln(y) = ln(a) + bx**
+
+## Warning
+
+Exponential models can produce extremely large predictions for distant target values. Always sanity-check your results and consider physical constraints on growth.

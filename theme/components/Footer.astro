@@ -1,3 +1,4 @@
+---
 import type { Locale } from '../i18n/utils';
 import { t, localizePath, isRtl } from '../i18n/utils';
 
@@ -8,6 +9,7 @@ interface Props {
 const { locale } = Astro.props;
 const dir = isRtl(locale) ? 'rtl' : 'ltr';
 const year = new Date().getFullYear();
+---
 
 <footer dir={dir} class="bg-neutral-900 text-neutral-300 mt-auto">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

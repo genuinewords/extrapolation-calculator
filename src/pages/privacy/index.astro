@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../../theme/layouts/BaseLayout.astro';
+
+const locale = 'en';
+const currentPath = '/privacy/';
+---
+
+<BaseLayout locale={locale} currentPath={currentPath} title="Privacy Policy" description="Privacy policy for the Extrapolation Calculator.">
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 mb-6">Privacy Policy</h1>
+    <div class="prose prose-neutral max-w-none">
+      <p>Last updated: January 2025</p>
+
+      <h2>Data Collection</h2>
+      <p><strong>Calculator data is processed entirely client-side.</strong> The numbers you enter into the Extrapolation Calculator are processed by JavaScript running in your web browser. Your calculation data never leaves your device and is not transmitted to any server.</p>
+
+      <h2>Personal Data</h2>
+      <p>We do not collect, store, or process any personal data through the calculator tool. The only personal data we may receive is through the voluntary contact form, which requires you to provide your name and email address.</p>
+
+      <h2>Contact Form Data</h2>
+      <p>When you submit our contact form, your name, email address, and message are sent to Web3Forms for processing. This data is stored temporarily for the purpose of responding to your inquiry. We do not retain this data on our own servers.</p>
+
+      <h2>Cookies</h2>
+      <p>This website does not use tracking cookies. Essential cookies may be used for basic site functionality (such as language preference). No third-party advertising cookies are used.</p>
+
+      <h2>Third-Party Services</h2>
+      <ul>
+        <li><strong>Web3Forms</strong>: Processes contact form submissions. See their privacy policy for details.</li>
+        <li><strong>Google Fonts</strong>: Serves the Inter font family. Google may collect your IP address when loading fonts.</li>
+      </ul>
+
+      <h2>Data Retention</h2>
+      <p>Since we do not store calculator data, there is no data retention period for calculation inputs or results. Contact form data is handled by Web3Forms according to their retention policies.</p>
+
+      <h2>Your Rights</h2>
+      <p>You have the right to request information about any personal data we may hold about you and to request its deletion. To exercise these rights, please contact us through our contact form.</p>
+
+      <h2>Security</h2>
+      <p>This website is served over HTTPS to ensure encrypted communication. Since calculations run in your browser, your data is not exposed to network interception during processing.</p>
+    </div>
+  </div>
+</BaseLayout>

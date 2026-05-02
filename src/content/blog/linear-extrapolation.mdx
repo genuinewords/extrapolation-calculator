@@ -1,0 +1,46 @@
+---
+title: Understanding Linear Extrapolation
+description: A comprehensive guide to linear extrapolation — when to use it, how it works, and its limitations.
+publishDate: 2025-01-15
+author: Extrapolation Calculator Team
+category: Methods
+featuredImage: ""
+---
+
+Linear extrapolation is one of the simplest and most widely used methods for predicting future values. It works by fitting a straight line through existing data points and extending that line beyond the observed range.
+
+## When to Use Linear Extrapolation
+
+Linear extrapolation is most appropriate when:
+
+- Your data follows a roughly constant rate of change
+- You need a quick estimate without complex modeling
+- The relationship between variables appears linear
+- You're projecting a short distance beyond known data
+
+## The Mathematics
+
+The linear model is expressed as:
+
+**y = mx + b**
+
+Where:
+- **m** is the slope (rate of change)
+- **b** is the y-intercept
+
+The slope is calculated using the least squares method, which minimizes the sum of squared differences between observed and predicted values.
+
+## Limitations
+
+While linear extrapolation is simple and intuitive, it has important limitations:
+
+1. **Assumes constant change**: Real-world phenomena rarely maintain a constant rate
+2. **Accuracy decreases with distance**: The further you extrapolate from known data, the less reliable predictions become
+3. **Cannot capture curves**: Any non-linear trend will be poorly represented
+
+## Practical Tips
+
+- Always check the R² score to assess fit quality
+- Use confidence intervals to understand prediction uncertainty
+- Consider whether a non-linear method might better suit your data
+- Compare results across multiple methods before making decisions
