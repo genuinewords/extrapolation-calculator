@@ -1,4 +1,4 @@
-import{j as $t}from"./validation.Dtn_0S54.js";import{r as Y}from"./index.CdJzaNS0.js";import{m as Mn}from"./ExtrapolationCalculator.Db_QM5ph.js";/*!
+import{j as $t}from"./validation.Dtn_0S54.js";import{r as Y}from"./index.CdJzaNS0.js";import{m as Mn}from"./ExtrapolationCalculator.BIOcbiJ8.js";/*!
  * @kurkle/color v0.3.4
  * https://github.com/kurkle/color#readme
  * (c) 2024 Jukka Kurkela

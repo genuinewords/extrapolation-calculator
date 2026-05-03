@@ -6,9 +6,10 @@ const locale = 'en';
 const currentPath = '/regression/';
 ---
 
-<BaseLayout locale={locale} currentPath={currentPath} title="Regression Calculator" description="Analyze relationships between variables with simple and multiple regression.">
-  <div class="py-16 md:py-20">
-    <div class="max-w-7xl mx-auto">
+<BaseLayout locale={locale} currentPath={currentPath} title="Regression Calculator" description="Analyze relationships between variables with simple and multiple regression. Calculate coefficients, R-squared, and predictions.">
+  <!-- Hero + Calculator (above fold) -->
+  <div id="calculator" class="py-12 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-10">
         <a href="/" class="inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 font-medium mb-4 transition-colors">
           <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
@@ -16,8 +17,244 @@ const currentPath = '/regression/';
         </a>
         <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Regression Calculator</h1>
         <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed max-w-2xl mx-auto">Analyze relationships between variables with simple and multiple regression analysis.</p>
+        <p class="text-neutral-500 dark:text-neutral-500 text-sm mt-3">Need a different tool? Try our <a href="/" class="text-primary hover:text-primary/80 font-medium transition-colors">Extrapolation Calculator</a>.</p>
       </div>
       <RegressionCalculator client:load locale={locale} />
     </div>
   </div>
+
+  <!-- What Is a Regression Calculator? -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">What Is a Regression Calculator?</h2>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">A regression calculator is a tool that finds the mathematical relationship between one or more independent variables (X) and a dependent variable (Y). It fits a line or curve through your data points and gives you the equation, coefficients, and a measure of how well the model fits — all in seconds.</p>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-8">Whether you're predicting sales from ad spend, estimating GDP from economic indicators, or assessing disease risk from patient metrics, a regression calculator turns raw data into actionable equations you can use for forecasting and decision-making.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Definition of Regression in Statistics</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">In statistics, regression is a method for modeling the relationship between a dependent variable and one or more independent variables. The simplest form — simple linear regression — fits a straight line of the form <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">Y = β₀ + β₁X</code>, where β₀ is the intercept and β₁ is the slope. Multiple regression extends this to several predictors, and polynomial regression captures curved relationships.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">How a Regression Calculator Works</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Our calculator takes your (X, Y) data pairs and applies the least-squares method to find the best-fitting line or plane. For simple regression, it computes the slope and intercept that minimize the sum of squared residuals. For multiple regression, it solves a system of normal equations to find each β coefficient. The result includes the regression equation, R² value, and predicted Y for any given X.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Why Use a Regression Calculator Instead of Manual Calculation</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Computing regression coefficients by hand involves sums of squares, cross-products, and — for multiple regression — matrix inversion. Even a small dataset of 10 points requires dozens of arithmetic operations where a single error throws off every result. A calculator eliminates arithmetic mistakes, handles the matrix algebra instantly, and gives you not just coefficients but diagnostic statistics like R² that would take significant extra effort to compute manually.</p>
+    </div>
+  </section>
+
+  <!-- Types of Regression Methods Explained -->
+  <section class="py-12 md:py-16 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Types of Regression Methods Explained</h2>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Different relationships call for different regression approaches. The right method depends on how many predictors you have, whether the relationship is linear, and what kind of outcome you're modeling.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Simple Linear Regression – Formula &amp; Use Cases</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Simple linear regression fits a straight line through your data: <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">Y = β₀ + β₁X</code>. The slope β₁ tells you how much Y changes for each unit increase in X, and the intercept β₀ is the predicted Y when X equals zero. Use it when you have one predictor and a roughly linear relationship — for example, predicting house price from square footage, or exam score from study hours.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Multiple Linear Regression – Two or More Independent Variables</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">When the outcome depends on several factors simultaneously, multiple linear regression models <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">Y = β₀ + β₁X₁ + β₂X₂ + … + βₖXₖ</code>. Each β coefficient represents the effect of one predictor while holding the others constant. This is essential when confounding variables exist — for instance, predicting salary from both years of experience and education level, where ignoring either would bias the results.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Polynomial Regression – Capturing Curved Relationships</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">When a straight line doesn't fit, polynomial regression adds squared, cubed, or higher-power terms: <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">Y = β₀ + β₁X + β₂X²</code>. A quadratic (degree 2) captures U-shaped or inverted-U patterns. A cubic (degree 3) handles one inflection point. Use it for phenomena like diminishing returns, growth curves, or projectile motion — anywhere the rate of change itself changes.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Logistic Regression – For Binary Outcomes</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">When the dependent variable is categorical — yes/no, pass/fail, disease/healthy — logistic regression models the probability of belonging to a class. Instead of predicting Y directly, it predicts <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">ln(p / (1 − p))</code> as a linear function of X. While our calculator focuses on linear and multiple regression, logistic regression is the go-to method for classification problems and is widely used in medicine, marketing, and machine learning.</p>
+    </div>
+  </section>
+
+  <!-- Step-by-Step Guide -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Step-by-Step Guide to Using Our Regression Calculator</h2>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-8">Running a regression analysis takes just a few steps. Here's how to get reliable results every time.</p>
+
+      <div class="space-y-8">
+        <div class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-xs font-bold text-gold-600 dark:text-gold-400">1</span>
+          <div>
+            <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-0 mb-1">How to Enter X (Independent) and Y (Dependent) Data</h3>
+            <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">Type your data pairs into the interactive table — X values go in the independent variable column, Y values in the dependent variable column. Click "Add Point" for more rows. For multiple regression, add a second X column. You can also click the example data buttons to load pre-built datasets for simple or multiple regression.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-xs font-bold text-gold-600 dark:text-gold-400">2</span>
+          <div>
+            <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-0 mb-1">Selecting Simple or Multiple Regression</h3>
+            <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">Choose Simple Regression when you have one independent variable. Choose Multiple Regression when you have two predictors and want to see each one's individual effect while controlling for the other. The calculator automatically adjusts the math — simple regression uses two-parameter least squares, multiple regression solves a 3×3 system of normal equations.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-xs font-bold text-gold-600 dark:text-gold-400">3</span>
+          <div>
+            <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-0 mb-1">Reading the Output – Coefficients, R-Squared, and Predictions</h3>
+            <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">The result panel shows the regression equation with all computed coefficients (intercept and slopes), the R² value indicating goodness of fit, and a prediction for the Y value at your specified X. Higher R² means the model explains more of the variance in your data — 1.0 is a perfect fit, 0 means no relationship.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-xs font-bold text-gold-600 dark:text-gold-400">4</span>
+          <div>
+            <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-0 mb-1">Common Errors &amp; How to Fix Them</h3>
+            <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">The most common error is having too few data points — you need at least 2 points for simple regression and at least 3 for multiple regression. Collinear predictors (where X₁ and X₂ are nearly identical) cause a singular matrix error; remove or combine collinear variables. Always check that your X and Y values are valid numbers — empty cells or text will prevent calculation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Understanding Regression Outputs -->
+  <section class="py-12 md:py-16 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Understanding Regression Outputs</h2>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">A regression calculator produces more than just an equation. Understanding each output metric helps you judge whether the model is trustworthy and how to use it for predictions.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">What Is the Slope and Intercept?</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">The intercept (β₀) is the predicted Y value when all independent variables equal zero. It's the starting point of the regression line on the Y-axis. The slope (β₁) tells you how much Y is expected to change for each one-unit increase in X. A positive slope means Y increases with X; a negative slope means Y decreases. In multiple regression, each β coefficient represents the effect of one predictor while the others are held constant.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">How to Interpret R-Squared (Coefficient of Determination)</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">R² — the coefficient of determination — measures how much of the variance in Y is explained by the model. It ranges from 0 to 1. An R² of 0.85 means 85% of the variation in your dependent variable is captured by the regression equation. The remaining 15% is unexplained noise. Higher R² generally indicates a better fit, but beware: adding more predictors always inflates R², even if they're irrelevant. For multiple regression, adjusted R² is a more honest metric.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Predicted Values vs. Actual Values</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">The predicted (fitted) values are what the regression equation outputs for each X in your dataset. The residuals — the differences between actual Y values and predicted Y values — reveal where the model fits well and where it doesn't. Large, systematic residuals suggest the model is misspecified (perhaps a polynomial term is needed, or an important predictor is missing). Examining residuals is a critical step that many people skip, but it separates reliable regressions from misleading ones.</p>
+    </div>
+  </section>
+
+  <!-- Regression vs. Correlation vs. Interpolation -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Regression vs. Correlation vs. Interpolation – Key Differences</h2>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">These three techniques are often confused, but they answer fundamentally different questions. Knowing which one to use ensures you get the right insight from your data.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">When to Use Regression Instead of Correlation</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Correlation measures the strength and direction of a linear relationship between two variables — it gives you a single number (r) between −1 and +1. Regression goes further: it gives you the actual equation so you can predict Y from X. Use correlation when you just want to know "are these variables related?" Use regression when you need to answer "if X changes by this much, what happens to Y?" — that is, when you need actionable predictions, not just a summary statistic.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Regression vs. Interpolation – Different Goals</h3>
+      <div class="overflow-x-auto mb-6">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gold-500/5 dark:bg-gold-500/10">
+              <th class="text-left px-4 py-3 font-semibold text-neutral-900 dark:text-white border-b border-neutral-200 dark:border-neutral-700">Aspect</th>
+              <th class="text-left px-4 py-3 font-semibold text-neutral-900 dark:text-white border-b border-neutral-200 dark:border-neutral-700">Regression</th>
+              <th class="text-left px-4 py-3 font-semibold text-neutral-900 dark:text-white border-b border-neutral-200 dark:border-neutral-700">Interpolation</th>
+            </tr>
+          </thead>
+          <tbody class="text-neutral-600 dark:text-gray-300">
+            <tr class="border-b border-neutral-100 dark:border-neutral-800">
+              <td class="px-4 py-3 font-medium text-neutral-900 dark:text-white">Purpose</td>
+              <td class="px-4 py-3">Model the relationship between variables</td>
+              <td class="px-4 py-3">Estimate a value between known points</td>
+            </tr>
+            <tr class="border-b border-neutral-100 dark:border-neutral-800 bg-white/40 dark:bg-neutral-800/20">
+              <td class="px-4 py-3 font-medium text-neutral-900 dark:text-white">Curve fit</td>
+              <td class="px-4 py-3">Best fit (doesn't pass through all points)</td>
+              <td class="px-4 py-3">Exact fit (passes through every point)</td>
+            </tr>
+            <tr class="border-b border-neutral-100 dark:border-neutral-800">
+              <td class="px-4 py-3 font-medium text-neutral-900 dark:text-white">Noisy data</td>
+              <td class="px-4 py-3 text-green-600 dark:text-green-400">Handles noise well — that's the point</td>
+              <td class="px-4 py-3 text-amber-600 dark:text-amber-400">Sensitive — noise distorts the curve</td>
+            </tr>
+            <tr class="border-b border-neutral-100 dark:border-neutral-800 bg-white/40 dark:bg-neutral-800/20">
+              <td class="px-4 py-3 font-medium text-neutral-900 dark:text-white">Output</td>
+              <td class="px-4 py-3">Equation + coefficients + R²</td>
+              <td class="px-4 py-3">Interpolated Y value</td>
+            </tr>
+            <tr class="border-b border-neutral-100 dark:border-neutral-800">
+              <td class="px-4 py-3 font-medium text-neutral-900 dark:text-white">Typical use</td>
+              <td class="px-4 py-3">Forecasting, causal analysis</td>
+              <td class="px-4 py-3">Filling gaps in measurements</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Real-World Applications -->
+  <section class="py-12 md:py-16 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Real-World Applications of Regression</h2>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Regression analysis is one of the most widely used statistical tools in the world. From business strategy to medical research, it turns data into predictions and correlations into decisions.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Regression in Business &amp; Sales Forecasting</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Businesses use regression to forecast revenue from ad spend, predict customer lifetime value from acquisition channel data, and optimize pricing by modeling demand curves. A simple regression of monthly sales against marketing budget reveals the ROI of each advertising dollar. Multiple regression adds seasonality, competitor pricing, and economic indicators to refine the forecast further — enabling data-driven budget allocation instead of gut-feel decisions.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Regression in Economics (GDP, Inflation)</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Economists rely on multiple regression to estimate how GDP responds to interest rates, government spending, and trade balances. The famous Phillips curve — the inverse relationship between unemployment and inflation — is a regression result. Central banks use regression-based models to simulate the effects of policy changes before implementing them, making regression a cornerstone of macroeconomic decision-making.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Regression in Healthcare (Disease Risk Factors)</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Medical researchers use logistic and linear regression to identify risk factors for disease. A multiple regression of heart disease incidence on age, BMI, blood pressure, and cholesterol levels quantifies each factor's independent contribution. This separates genuine risk factors from correlated but irrelevant variables — critical evidence that drives clinical guidelines, screening recommendations, and public health policy.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Regression in Machine Learning (Predictive Modeling)</h3>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Linear regression is the foundation of predictive modeling in machine learning. It's often the first algorithm tried on a new dataset because it's fast, interpretable, and provides a baseline for more complex models. Ridge and Lasso regression add regularization to prevent overfitting. In production ML systems, regression models power recommendation scores, demand forecasts, and real-time bidding — often outperforming complex models on structured tabular data.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Frequently Asked Questions About Regression Calculators</h2>
+
+      <div class="space-y-4">
+        <details class="calculator-card overflow-hidden border-l-4 border-l-gold-500/40 group">
+          <summary class="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-neutral-900 dark:text-white cursor-pointer">What Is a Good R-Squared Value?<svg class="h-5 w-5 text-gold-500/60 dark:text-gold-400/60 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></summary>
+          <div class="px-6 pb-4 text-neutral-600 dark:text-gray-300 leading-relaxed">It depends on the field. In physics and engineering, R² above 0.90 is expected because relationships are governed by precise laws. In social sciences and business, R² of 0.40–0.70 is common and often considered good, because human behavior introduces significant noise. Don't chase a high R² by adding irrelevant predictors — a model with R² = 0.60 and meaningful variables is more useful than one with R² = 0.95 built from data dredging.</div>
+        </details>
+        <details class="calculator-card overflow-hidden border-l-4 border-l-gold-500/40 group">
+          <summary class="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-neutral-900 dark:text-white cursor-pointer">Can Regression Handle Non-Linear Data?<svg class="h-5 w-5 text-gold-500/60 dark:text-gold-400/60 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></summary>
+          <div class="px-6 pb-4 text-neutral-600 dark:text-gray-300 leading-relaxed">Yes. Polynomial regression adds squared, cubed, or higher-order terms to capture curves. A quadratic term models U-shaped relationships; a cubic term handles an S-curve with one inflection. For more complex non-linearity, consider transforming variables (e.g., taking the logarithm of X) before running regression. The key diagnostic: plot your residuals — if they show a clear pattern, your linear model is missing a non-linear term.</div>
+        </details>
+        <details class="calculator-card overflow-hidden border-l-4 border-l-gold-500/40 group">
+          <summary class="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-neutral-900 dark:text-white cursor-pointer">How Many Data Points Do I Need for Regression?<svg class="h-5 w-5 text-gold-500/60 dark:text-gold-400/60 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></summary>
+          <div class="px-6 pb-4 text-neutral-600 dark:text-gray-300 leading-relaxed">Technically, you need at least k + 1 data points, where k is the number of parameters (intercept plus slopes). For simple regression, that's 3 points minimum. For multiple regression with two predictors, it's 4. In practice, you want far more — at least 10–20 observations per predictor for stable, reliable estimates. With too few points, the coefficients are extremely sensitive to individual observations, and R² is misleadingly high.</div>
+        </details>
+        <details class="calculator-card overflow-hidden border-l-4 border-l-gold-500/40 group">
+          <summary class="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-neutral-900 dark:text-white cursor-pointer">Is Multiple Regression Better Than Simple Regression?<svg class="h-5 w-5 text-gold-500/60 dark:text-gold-400/60 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></summary>
+          <div class="px-6 pb-4 text-neutral-600 dark:text-gray-300 leading-relaxed">Not necessarily. Multiple regression is more powerful when additional predictors genuinely improve the model. But each extra variable costs degrees of freedom and can introduce multicollinearity — where predictors are so correlated that individual coefficients become unreliable. Use multiple regression when theory or exploratory analysis suggests additional predictors matter, and always check that R² improves meaningfully (adjusted R² should go up, not just raw R²).</div>
+        </details>
+        <details class="calculator-card overflow-hidden border-l-4 border-l-gold-500/40 group">
+          <summary class="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-neutral-900 dark:text-white cursor-pointer">Do I Need to Install Software to Use This Regression Calculator?<svg class="h-5 w-5 text-gold-500/60 dark:text-gold-400/60 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></summary>
+          <div class="px-6 pb-4 text-neutral-600 dark:text-gray-300 leading-relaxed">No. Our regression calculator runs entirely in your browser. There's nothing to download, install, or sign up for. All calculations happen client-side using JavaScript — your data never leaves your device. Open the page, enter your data, and get results instantly.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Our Calculator Stands Out -->
+  <section class="py-12 md:py-16 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Why Our Regression Calculator Stands Out</h2>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-8">Not all regression tools are created equal. Here's what makes ours different.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="calculator-card p-6">
+          <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mb-2">Supports Simple &amp; Multiple Regression</h3>
+          <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">One predictor or two — switch between simple and multiple regression with a single click. No separate tools needed.</p>
+        </div>
+        <div class="calculator-card p-6">
+          <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mb-2">Clear Output with Equation and R-Squared</h3>
+          <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">Every result includes the full regression equation, individual coefficients, and the R² goodness-of-fit metric. No ambiguity, no hidden calculations.</p>
+        </div>
+        <div class="calculator-card p-6">
+          <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mb-2">Dark Mode &amp; Responsive Design</h3>
+          <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">Comfortable to use at any hour, on any device. The calculator adapts to your screen size and color preference automatically.</p>
+        </div>
+        <div class="calculator-card p-6">
+          <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mb-2">No Sign-Up, Completely Free</h3>
+          <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">Zero barriers. No account, no email, no payment. Open the page and start calculating. Your data stays in your browser.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Try It Now (CTA) -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Try Our Regression Calculator Now</h2>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-8">Scroll up to the calculator, load an example dataset, and see regression in action. It takes less than 30 seconds to get your first equation and R² value.</p>
+      <a href="#calculator" class="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-gold-700 via-gold-600 to-gold-500 shadow-lg shadow-gold-600/20 hover:shadow-glow-gold hover:scale-[1.03] active:scale-[0.98] focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none relative overflow-hidden">
+        <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
+        <svg class="h-5 w-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+        <span class="relative z-10">Start Calculating</span>
+      </a>
+    </div>
+  </section>
 </BaseLayout>

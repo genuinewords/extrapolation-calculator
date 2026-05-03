@@ -137,22 +137,34 @@
 
   /* --- Luxury Inputs --- */
   .input-field {
-    @apply w-full border-b-2 border-neutral-200 dark:border-neutral-700 bg-transparent text-neutral-900 dark:text-neutral-100;
-    @apply px-4 py-3 text-sm leading-relaxed;
-    @apply focus:outline-none focus:border-gold-500;
+    @apply w-full px-4 py-3 text-sm leading-relaxed rounded-xl;
+    @apply border-2 border-neutral-300;
+    @apply focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500/30;
     @apply transition-all duration-300;
-    @apply hover:border-neutral-300 dark:hover:border-neutral-600;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-radius: 0;
+    @apply hover:border-neutral-400;
+    background-color: #ffffff;
+    color: #18181b;
+  }
+  select.input-field {
+    @apply appearance-none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23737273' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+  select.input-field option {
+    background-color: #ffffff;
+    color: #18181b;
   }
   .input-field::placeholder {
-    @apply text-neutral-400 dark:text-neutral-600;
+    color: #a1a1aa;
   }
   .input-field-error {
-    @apply input-field border-red-400;
-    @apply focus:border-red-400;
+    @apply input-field;
+    border-color: #f87171 !important;
+  }
+  .input-field-error:focus {
+    border-color: #f87171 !important;
   }
 
   /* --- Data Table --- */
@@ -198,8 +210,14 @@
 
   /* --- Step Item --- */
   .step-item {
-    @apply flex gap-3 items-start p-3 rounded-xl transition-all duration-200;
+    @apply flex gap-4 items-start p-4 rounded-2xl transition-all duration-200;
     @apply hover:bg-white/50 dark:hover:bg-neutral-800/40;
+  }
+  .step-item .num-badge {
+    @apply mt-0.5;
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.8rem;
   }
 
   /* --- Gold Divider --- */
@@ -234,6 +252,32 @@
   [dir="rtl"] {
     text-align: right;
   }
+}
+
+/* --- Dark mode input overrides (outside @layer for higher specificity) --- */
+.dark .input-field {
+  background-color: #27272a !important;
+  color: #f4f4f5 !important;
+  border-color: #3f3f46 !important;
+}
+.dark .input-field:hover {
+  border-color: #52525b !important;
+}
+.dark select.input-field {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23d4d4d8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E") !important;
+}
+.dark select.input-field option {
+  background-color: #27272a !important;
+  color: #f4f4f5 !important;
+}
+.dark .input-field::placeholder {
+  color: #71717a !important;
+}
+.dark .input-field-error {
+  border-color: #ef4444 !important;
+}
+.dark .input-field-error:focus {
+  border-color: #ef4444 !important;
 }
 
 /* --- Animations --- */

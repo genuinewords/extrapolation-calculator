@@ -49,6 +49,49 @@ const methodDescriptions: Record<MethodKey, { title: string; description: string
   },
 };
 
+const dummyDataByMethod: Record<MethodKey, { rows: { x: string; y: string }[]; targetX: string; label: string }> = {
+  linear: {
+    label: 'Linear',
+    rows: [
+      { x: '1', y: '18.5' }, { x: '5', y: '20.2' }, { x: '10', y: '22.8' },
+      { x: '15', y: '25.1' }, { x: '20', y: '27.4' },
+    ],
+    targetX: '30',
+  },
+  exponential: {
+    label: 'Exponential',
+    rows: [
+      { x: '1', y: '100' }, { x: '2', y: '150' }, { x: '3', y: '225' },
+      { x: '4', y: '337' }, { x: '5', y: '506' }, { x: '6', y: '759' },
+    ],
+    targetX: '8',
+  },
+  logarithmic: {
+    label: 'Logarithmic',
+    rows: [
+      { x: '1', y: '15' }, { x: '3', y: '30' }, { x: '5', y: '38' },
+      { x: '10', y: '48' }, { x: '20', y: '56' },
+    ],
+    targetX: '30',
+  },
+  polynomial: {
+    label: 'Polynomial',
+    rows: [
+      { x: '1', y: '120' }, { x: '2', y: '145' }, { x: '3', y: '160' },
+      { x: '4', y: '155' }, { x: '5', y: '140' }, { x: '6', y: '130' },
+    ],
+    targetX: '8',
+  },
+  quadratic: {
+    label: 'Quadratic',
+    rows: [
+      { x: '0', y: '0' }, { x: '1', y: '15.1' }, { x: '2', y: '19.6' },
+      { x: '3', y: '19.6' }, { x: '4', y: '15.1' },
+    ],
+    targetX: '5',
+  },
+};
+
 const demoDatasets: Record<string, { label: string; rows: { x: string; y: string }[]; targetX: string; context: string }> = {
   temperature: {
     label: 'Temperature Trend',
@@ -284,15 +327,6 @@ export default function ExtrapolationCalculator({ locale = 'en', showChart = tru
 
   return (
     <div className="calculator-card p-6 md:p-10 max-w-5xl mx-auto" role="application" aria-label={L('title', locale)}>
-      {/* Header */}
-      <div className="text-center mb-10">
-        <h1 className="font-serif text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 tracking-tight">{L('title', locale)}</h1>
-        <div className="gold-divider-wide mb-4" />
-        <p className="text-neutral-500 dark:text-neutral-400 text-lg max-w-xl mx-auto leading-relaxed font-light">{L('subtitle', locale)}</p>
-      </div>
-
-      <MethodIllustration method={method} />
-
       {/* Method Tabs */}
       <div className="flex gap-2 mb-8 flex-wrap justify-center">
         {(['linear', 'exponential', 'logarithmic', 'polynomial', 'quadratic'] as MethodKey[]).map((m) => (
@@ -319,6 +353,37 @@ export default function ExtrapolationCalculator({ locale = 'en', showChart = tru
             <h3 className="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-sm tracking-wide">{methodDescriptions[method].title}</h3>
             <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed mt-1">{methodDescriptions[method].description}</p>
           </div>
+        </div>
+      </div>
+
+      {/* Load Example Data */}
+      <div className="mb-8">
+        <div className="flex items-center gap-3 mb-3">
+          <span className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">Load Example Data</span>
+          <div className="h-px flex-1 bg-gradient-to-r from-neutral-200 dark:from-neutral-700 to-transparent" />
+        </div>
+        <div className="flex gap-2 flex-wrap">
+          {(['linear', 'exponential', 'logarithmic', 'polynomial', 'quadratic'] as MethodKey[]).map((m) => (
+            <button
+              key={m}
+              onClick={() => {
+                const d = dummyDataByMethod[m];
+                setInputRows([...d.rows]);
+                setTargetX(d.targetX);
+                setMethod(m);
+                setResult(null);
+                setGeneralError('');
+                setActiveDataset('custom');
+              }}
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+                method === m
+                  ? 'bg-gold-600 text-white shadow-md shadow-gold-500/20'
+                  : 'bg-white/60 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700/80 border border-neutral-200/60 dark:border-neutral-700/60'
+              }`}
+            >
+              {dummyDataByMethod[m].label}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -368,7 +433,7 @@ export default function ExtrapolationCalculator({ locale = 'en', showChart = tru
             id="method-select"
             value={method}
             onChange={(e) => setMethod(e.target.value as MethodKey)}
-            className="input-field"
+            className="input-field dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600"
             aria-label={L('method', locale)}
           >
             {Object.entries(methodLabels).map(([key, labelMap]) => (
@@ -386,7 +451,7 @@ export default function ExtrapolationCalculator({ locale = 'en', showChart = tru
             step="any"
             value={targetX}
             onChange={(e) => setTargetX(e.target.value)}
-            className="input-field"
+            className="input-field dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600"
             aria-label={L('targetX', locale)}
           />
         </div>
@@ -436,7 +501,7 @@ export default function ExtrapolationCalculator({ locale = 'en', showChart = tru
                     value={row.x}
                     onChange={(e) => updateRow(i, 'x', e.target.value)}
                     aria-label={`Point ${i + 1} X value`}
-                    className={errors[i] ? 'input-field-error py-2 w-full' : 'input-field py-2 w-full'}
+                    className={errors[i] ? 'input-field-error py-2 w-full dark:bg-neutral-800 dark:text-neutral-100 dark:border-red-500' : 'input-field py-2 w-full dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600'}
                     placeholder="X"
                   />
                 </div>
@@ -447,7 +512,7 @@ export default function ExtrapolationCalculator({ locale = 'en', showChart = tru
                     value={row.y}
                     onChange={(e) => updateRow(i, 'y', e.target.value)}
                     aria-label={`Point ${i + 1} Y value`}
-                    className={errors[i] ? 'input-field-error py-2 w-full' : 'input-field py-2 w-full'}
+                    className={errors[i] ? 'input-field-error py-2 w-full dark:bg-neutral-800 dark:text-neutral-100 dark:border-red-500' : 'input-field py-2 w-full dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600'}
                     placeholder="Y"
                   />
                 </div>

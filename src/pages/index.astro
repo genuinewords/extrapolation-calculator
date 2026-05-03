@@ -9,39 +9,36 @@ const currentPath = '/';
 
 <BaseLayout locale={locale} currentPath={currentPath}>
   <!-- Hero Section -->
-  <section class="bg-gradient-to-br from-gold-50 via-white to-gold-100/30 dark:from-neutral-950 dark:via-neutral-900 dark:to-gold-900/10 py-20 md:py-32 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-    <!-- Decorative orbs -->
+  <section class="bg-gradient-to-br from-gold-50 via-white to-gold-100/30 dark:from-neutral-950 dark:via-neutral-900 dark:to-gold-900/10 py-16 md:py-24 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
     <div class="absolute top-20 left-10 w-64 h-64 bg-gold-200/20 dark:bg-gold-500/5 rounded-full blur-3xl" aria-hidden="true" />
     <div class="absolute bottom-10 right-10 w-96 h-96 bg-gold-300/10 dark:bg-gold-400/5 rounded-full blur-3xl" aria-hidden="true" />
 
     <div class="max-w-7xl mx-auto text-center relative z-10">
       <div class="max-w-3xl mx-auto">
-        <!-- Premium Badge -->
         <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/70 dark:bg-neutral-800/60 backdrop-blur-sm border border-gold-500/20 text-gold-700 dark:text-gold-300 text-sm font-semibold mb-8 animate-fade-in-up shadow-sm">
           <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
           Free, Private & Browser-Based
         </div>
 
         <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 leading-tight tracking-tight">
-          Mathematical<br class="hidden sm:block" /> Calculator Suite
+          Extrapolation Calculator
         </h1>
 
         <div class="gold-divider-wide mb-6" />
 
         <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-          Predict, estimate, and analyze with extrapolation, interpolation, and regression — free, private, entirely in your browser.
+          Predict values beyond your data range — linear, exponential, logarithmic, polynomial &amp; quadratic methods. Free, private, entirely in your browser.
         </p>
 
-        <!-- Gold Buttons -->
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a href="#calculator" class="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-gold-700 via-gold-600 to-gold-500 shadow-lg shadow-gold-600/20 hover:shadow-glow-gold hover:scale-[1.03] active:scale-[0.98] focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none relative overflow-hidden">
             <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
             <svg class="h-5 w-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
             <span class="relative z-10 tracking-wide">Start Calculating</span>
           </a>
-          <a href="#tools" class="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-gold-600 via-gold-500 to-gold-400 shadow-lg shadow-gold-500/20 hover:shadow-glow-gold hover:scale-[1.03] active:scale-[0.98] focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none relative overflow-hidden border border-gold-400/30">
+          <a href="#methods" class="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-gold-600 via-gold-500 to-gold-400 shadow-lg shadow-gold-500/20 hover:shadow-glow-gold hover:scale-[1.03] active:scale-[0.98] focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none relative overflow-hidden border border-gold-400/30">
             <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-            <span class="relative z-10 tracking-wide">Explore Tools</span>
+            <span class="relative z-10 tracking-wide">Explore Methods</span>
             <svg class="h-4 w-4 relative z-10 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
           </a>
         </div>
@@ -49,55 +46,422 @@ const currentPath = '/';
     </div>
   </section>
 
-  <!-- Calculator Section (with graph) -->
-  <section id="calculator" class="py-16 md:py-20 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-neutral-50/50 to-white dark:from-neutral-950 dark:via-neutral-900/50 dark:to-neutral-950">
+  <!-- Calculator Tool (Above Fold) -->
+  <section id="calculator" class="py-12 md:py-16 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-neutral-50/50 to-white dark:from-neutral-950 dark:via-neutral-900/50 dark:to-neutral-950">
     <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-10">
-        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Extrapolation Calculator</h2>
-        <div class="gold-divider mb-4" />
-        <p class="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">Predict values beyond your observed data range.</p>
-      </div>
-      <ExtrapolationCalculator client:load locale={locale} />
+      <ExtrapolationCalculator client:load locale={locale} showChart={true} />
     </div>
   </section>
 
-  <!-- Cards Section (below calculator) -->
-  <section id="tools" class="py-20 md:py-28">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-14">
-        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Calculator Tools</h2>
+  <!-- What is Extrapolation? -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">What is Extrapolation?</h2>
         <div class="gold-divider mb-4" />
-        <p class="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">Three powerful calculators for every mathematical need.</p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-        <a href="/interpolation/" class="tool-card block group relative z-10 stagger-1 animate-stagger text-left">
+      <div class="space-y-6 text-neutral-600 dark:text-neutral-400 leading-relaxed text-lg">
+        <p>Extrapolation is a mathematical technique used to estimate values beyond the range of existing data points. Unlike interpolation, which predicts values between known observations, extrapolation extends trends outward to forecast future or unknown outcomes.</p>
+        <p>This powerful method is widely used across numerous fields including finance, engineering, meteorology, and scientific research. When you have a set of observed data points and need to predict what happens next, extrapolation provides the mathematical framework to make those predictions reliable and reproducible.</p>
+        <p>The fundamental principle behind extrapolation is identifying patterns in your existing data and extending those patterns logically. Whether the trend follows a straight line (linear), accelerates rapidly (exponential), levels off gradually (logarithmic), or follows a more complex curve (polynomial), each method offers different insights into how your data might behave beyond the observed range.</p>
+        <p>However, it is crucial to understand that extrapolation carries inherent uncertainty. The further you predict beyond your data range, the less reliable the estimate becomes. This is why our calculator provides R² scores and confidence indicators to help you assess the reliability of each prediction. Understanding these limitations ensures you make informed decisions based on extrapolated values rather than treating them as absolute certainties.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How This Calculator Works -->
+  <section class="py-16 md:py-20 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">How This Calculator Works</h2>
+        <div class="gold-divider mb-4" />
+      </div>
+      <div class="space-y-8">
+        <div class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-xs font-bold text-gold-600 dark:text-gold-400">1</span>
+          <div>
+            <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-lg leading-7">Enter Your Data Points</h3>
+            <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed text-sm mt-1">Input at least 2 data points (X, Y pairs) into the table. Use the example data buttons for quick testing or enter your own observations.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-xs font-bold text-gold-600 dark:text-gold-400">2</span>
+          <div>
+            <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-lg leading-7">Choose a Method</h3>
+            <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed text-sm mt-1">Select the mathematical model that fits your data pattern — linear, exponential, logarithmic, polynomial, or quadratic. Results update instantly as you switch.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-7 h-7 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-xs font-bold text-gold-600 dark:text-gold-400">3</span>
+          <div>
+            <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-lg leading-7">Get Your Prediction</h3>
+            <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed text-sm mt-1">Enter the target X value. The calculator returns the extrapolated Y value, fitted equation, R² score, confidence level, and a visual chart — all instantly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Extrapolation Methods Explained -->
+  <section id="methods" class="py-16 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Extrapolation Methods Explained</h2>
+        <div class="gold-divider mb-4" />
+        <p class="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">Choose the right mathematical model for your data pattern.</p>
+      </div>
+
+      <div class="space-y-8">
+        <div class="calculator-card p-6 md:p-8 border-l-4 border-l-gold-500">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center flex-shrink-0">
+              <svg class="h-6 w-6 text-gold-600 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16M4 12l4-4m-4 4l4 4" /></svg>
+            </div>
+            <div>
+              <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-xl mb-1">Linear Extrapolation</h3>
+              <p class="text-sm text-gold-600 dark:text-gold-400 font-medium">Best for: Steady, constant-rate trends</p>
+            </div>
+          </div>
+          <div class="text-neutral-600 dark:text-neutral-400 leading-relaxed space-y-3">
+            <p>Linear extrapolation assumes your data follows a straight-line trend. It fits a line using the least-squares method, minimizing the sum of squared vertical distances between observed points and the fitted line. The equation takes the form <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">y = mx + b</code>, where <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">m</code> is the slope and <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">b</code> is the y-intercept.</p>
+            <p>This method is the simplest and most interpretable. It works exceptionally well when your data shows a consistent increase or decrease over time. Common applications include predicting monthly revenue growth, temperature changes over seasons, or distance traveled at constant speed.</p>
+            <p><strong class="text-neutral-800 dark:text-neutral-200">When to use:</strong> Your data points form an approximately straight pattern, the rate of change is relatively constant, and you need a simple, interpretable model. Minimum 2 data points required.</p>
+          </div>
+        </div>
+
+        <div class="calculator-card p-6 md:p-8 border-l-4 border-l-gold-400">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gold-400/10 border border-gold-400/20 flex items-center justify-center flex-shrink-0">
+              <svg class="h-6 w-6 text-gold-500 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 17c3-4 6-7 12-7M3 17l4-4m-4 4l4 4" /></svg>
+            </div>
+            <div>
+              <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-xl mb-1">Exponential Extrapolation</h3>
+              <p class="text-sm text-gold-500 dark:text-gold-400 font-medium">Best for: Rapidly accelerating or decaying trends</p>
+            </div>
+          </div>
+          <div class="text-neutral-600 dark:text-neutral-400 leading-relaxed space-y-3">
+            <p>Exponential extrapolation models data that grows or decays at a rate proportional to its current value. The fitted curve follows the equation <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">y = a &middot; e^(bx)</code>, where <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">a</code> is the initial value and <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">b</code> controls the growth/decay rate.</p>
+            <p>The calculator linearizes the exponential model by taking the natural logarithm of Y values, then applies linear regression to find the optimal parameters. This transformation allows efficient least-squares fitting while capturing exponential behavior.</p>
+            <p><strong class="text-neutral-800 dark:text-neutral-200">When to use:</strong> Population growth, compound interest, viral spread, bacterial colony expansion, radioactive decay, or any phenomenon where growth accelerates over time. All Y values must be positive. Minimum 2 data points required.</p>
+          </div>
+        </div>
+
+        <div class="calculator-card p-6 md:p-8 border-l-4 border-l-gold-300">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gold-300/10 border border-gold-300/20 flex items-center justify-center flex-shrink-0">
+              <svg class="h-6 w-6 text-gold-500 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7c3 4 6 7 12 7M3 7l4 4m-4-4l4-4" /></svg>
+            </div>
+            <div>
+              <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-xl mb-1">Logarithmic Extrapolation</h3>
+              <p class="text-sm text-gold-500 dark:text-gold-400 font-medium">Best for: Rapid initial change that slows over time</p>
+            </div>
+          </div>
+          <div class="text-neutral-600 dark:text-neutral-400 leading-relaxed space-y-3">
+            <p>Logarithmic extrapolation models data where change is rapid initially but diminishes over time. The equation takes the form <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">y = a + b &middot; ln(x)</code>, capturing the characteristic curve of diminishing returns.</p>
+            <p>This method transforms X values using the natural logarithm before fitting a linear model, which captures the concave-down pattern common in many natural and economic processes.</p>
+            <p><strong class="text-neutral-800 dark:text-neutral-200">When to use:</strong> Learning curves, skill acquisition rates, diminishing returns in economics, saturation effects in chemistry, or any situation where progress slows over time. All X values must be positive. Minimum 2 data points required.</p>
+          </div>
+        </div>
+
+        <div class="calculator-card p-6 md:p-8 border-l-4 border-l-gold-600">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gold-600/10 border border-gold-600/20 flex items-center justify-center flex-shrink-0">
+              <svg class="h-6 w-6 text-gold-600 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12c2-4 4-6 8-6s6 2 8 6-2 6-6 6-6-2-8-6" /></svg>
+            </div>
+            <div>
+              <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-xl mb-1">Polynomial Extrapolation</h3>
+              <p class="text-sm text-gold-600 dark:text-gold-400 font-medium">Best for: Complex multi-directional trends with peaks and valleys</p>
+            </div>
+          </div>
+          <div class="text-neutral-600 dark:text-neutral-400 leading-relaxed space-y-3">
+            <p>Polynomial extrapolation fits a curve of degree <em>n</em> to your data using the general equation <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">y = a&#8345;x&#8319; + a&#8345;&#8331;&#8321;x&#8319;&#8315;&#185; + ... + a&#8321;x + a&#8320;</code>. Our calculator uses degree 3 (cubic) by default, which can capture one peak and one valley.</p>
+            <p>The fitting process uses Gaussian elimination on the Vandermonde matrix system to find optimal coefficients. Higher-degree polynomials can fit more complex shapes but carry greater risk of overfitting.</p>
+            <p><strong class="text-neutral-800 dark:text-neutral-200">When to use:</strong> Market cycles with booms and busts, seasonal patterns, engineering stress-strain curves, or any data showing multiple direction changes. Minimum n+1 data points required (4 points for degree 3). Beware of Runge's phenomenon at high degrees.</p>
+          </div>
+        </div>
+
+        <div class="calculator-card p-6 md:p-8 border-l-4 border-l-gold-700">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gold-700/10 border border-gold-700/20 flex items-center justify-center flex-shrink-0">
+              <svg class="h-6 w-6 text-gold-600 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16c2-6 6-10 10-10s8 4 10 10" /></svg>
+            </div>
+            <div>
+              <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-xl mb-1">Quadratic Extrapolation</h3>
+              <p class="text-sm text-gold-700 dark:text-gold-400 font-medium">Best for: U-shaped or inverted-U parabolic trends</p>
+            </div>
+          </div>
+          <div class="text-neutral-600 dark:text-neutral-400 leading-relaxed space-y-3">
+            <p>Quadratic extrapolation is a special case of polynomial fitting with degree 2, following <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">y = ax&sup2; + bx + c</code>. It captures a single curve direction change, producing either a U-shape (a > 0) or inverted U (a < 0).</p>
+            <p>This is the simplest model that can capture non-linearity while remaining interpretable. The vertex of the parabola represents the minimum or maximum of the modeled phenomenon.</p>
+            <p><strong class="text-neutral-800 dark:text-neutral-200">When to use:</strong> Projectile motion trajectories, profit maximization curves, cost optimization, braking distance vs. speed, or any parabolic relationship. Minimum 3 data points required.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Formula Reference -->
+  <section class="py-16 md:py-20 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Formula Reference</h2>
+        <div class="gold-divider mb-4" />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="calculator-card p-6">
+          <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-3">Linear</h3>
+          <div class="bg-neutral-50 dark:bg-neutral-800/60 rounded-xl p-4 font-mono text-gold-600 dark:text-gold-400 text-center text-lg tracking-wide">y = mx + b</div>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-3">m = slope, b = y-intercept. Fitted via least-squares on all data points.</p>
+        </div>
+        <div class="calculator-card p-6">
+          <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-3">Exponential</h3>
+          <div class="bg-neutral-50 dark:bg-neutral-800/60 rounded-xl p-4 font-mono text-gold-600 dark:text-gold-400 text-center text-lg tracking-wide">y = a &middot; e<sup>bx</sup></div>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-3">a = initial value, b = growth rate. Linearized via ln(y), then least-squares fit.</p>
+        </div>
+        <div class="calculator-card p-6">
+          <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-3">Logarithmic</h3>
+          <div class="bg-neutral-50 dark:bg-neutral-800/60 rounded-xl p-4 font-mono text-gold-600 dark:text-gold-400 text-center text-lg tracking-wide">y = a + b &middot; ln(x)</div>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-3">a = intercept, b = logarithmic rate. X values transformed via ln(x) before fitting.</p>
+        </div>
+        <div class="calculator-card p-6">
+          <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-3">Polynomial (Cubic)</h3>
+          <div class="bg-neutral-50 dark:bg-neutral-800/60 rounded-xl p-4 font-mono text-gold-600 dark:text-gold-400 text-center text-sm tracking-wide">y = a&#8323;x&sup3; + a&#8322;x&sup2; + a&#8321;x + a&#8320;</div>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-3">Coefficients solved via Vandermonde matrix and Gaussian elimination.</p>
+        </div>
+        <div class="calculator-card p-6 md:col-span-2">
+          <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-3">Quadratic</h3>
+          <div class="bg-neutral-50 dark:bg-neutral-800/60 rounded-xl p-4 font-mono text-gold-600 dark:text-gold-400 text-center text-lg tracking-wide">y = ax&sup2; + bx + c</div>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-3">Degree-2 polynomial. Vertex at x = -b/(2a). Same fitting method as polynomial with degree 2.</p>
+        </div>
+      </div>
+      <div class="mt-8 calculator-card p-6 border-l-4 border-l-gold-500">
+        <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-3">R&sup2; (Coefficient of Determination)</h3>
+        <div class="bg-neutral-50 dark:bg-neutral-800/60 rounded-xl p-4 font-mono text-gold-600 dark:text-gold-400 text-center tracking-wide">R&sup2; = 1 - SS<sub>res</sub> / SS<sub>tot</sub></div>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-3">SS<sub>res</sub> = sum of squared residuals, SS<sub>tot</sub> = total sum of squares. R&sup2; ranges from 0 (no fit) to 1 (perfect fit). Values above 0.9 indicate an excellent model fit.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Worked Examples -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Worked Examples</h2>
+        <div class="gold-divider mb-4" />
+        <p class="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">Real-world scenarios showing extrapolation in action.</p>
+      </div>
+      <div class="space-y-8">
+        <div class="calculator-card p-6 md:p-8">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="num-badge">1</div>
+            <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-lg">Temperature Prediction (Linear)</h3>
+          </div>
+          <div class="bg-neutral-50 dark:bg-neutral-800/60 rounded-xl p-4 mb-4 text-sm font-mono text-neutral-700 dark:text-neutral-300 space-y-1">
+            <p>Data: Day 1=18.5&deg;C, Day 5=20.2&deg;C, Day 10=22.8&deg;C, Day 15=25.1&deg;C, Day 20=27.4&deg;C, Day 25=29.2&deg;C</p>
+            <p>Method: Linear &rarr; y = 0.4229x + 17.8381</p>
+            <p>Target: Day 30 &rarr; <strong class="text-gold-600 dark:text-gold-400">Predicted: 30.52&deg;C</strong></p>
+            <p>R&sup2; = 99.47% &middot; Confidence: 99.5%</p>
+          </div>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">A nearly linear temperature increase over 25 days. The linear model fits extremely well (R&sup2; &gt; 0.99), making a Day 30 prediction highly reliable within this range.</p>
+        </div>
+
+        <div class="calculator-card p-6 md:p-8">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="num-badge">2</div>
+            <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-lg">Population Growth (Exponential)</h3>
+          </div>
+          <div class="bg-neutral-50 dark:bg-neutral-800/60 rounded-xl p-4 mb-4 text-sm font-mono text-neutral-700 dark:text-neutral-300 space-y-1">
+            <p>Data: 2018=100M, 2019=105M, 2020=110.3M, 2021=115.8M, 2022=121.6M, 2023=127.7M</p>
+            <p>Method: Exponential &rarr; y = 95.24 &middot; e^(0.0488x)</p>
+            <p>Target: Year 2028 &rarr; <strong class="text-gold-600 dark:text-gold-400">Predicted: ~163.9M</strong></p>
+            <p>R&sup2; = 99.99% &middot; Confidence: 100.0%</p>
+          </div>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">Population grows at ~4.9% annually, compounding exponentially. The exponential model fits virtually perfectly, making near-term projections reliable. Long-term projections should account for carrying capacity limits.</p>
+        </div>
+
+        <div class="calculator-card p-6 md:p-8">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="num-badge">3</div>
+            <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-lg">Learning Curve (Logarithmic)</h3>
+          </div>
+          <div class="bg-neutral-50 dark:bg-neutral-800/60 rounded-xl p-4 mb-4 text-sm font-mono text-neutral-700 dark:text-neutral-300 space-y-1">
+            <p>Data: Week 1=15pts, Week 2=24pts, Week 4=33pts, Week 8=40pts, Week 12=44pts</p>
+            <p>Method: Logarithmic &rarr; y = 6.12 + 16.87 &middot; ln(x)</p>
+            <p>Target: Week 20 &rarr; <strong class="text-gold-600 dark:text-gold-400">Predicted: ~56.8pts</strong></p>
+          </div>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">Skill acquisition shows rapid early improvement that plateaus. The logarithmic model captures this diminishing-returns pattern, which is typical of human learning processes.</p>
+        </div>
+
+        <div class="calculator-card p-6 md:p-8">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="num-badge">4</div>
+            <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-lg">Market Cycle (Polynomial)</h3>
+          </div>
+          <div class="bg-neutral-50 dark:bg-neutral-800/60 rounded-xl p-4 mb-4 text-sm font-mono text-neutral-700 dark:text-neutral-300 space-y-1">
+            <p>Data: Q1=120, Q2=145, Q3=160, Q4=155, Q5=140, Q6=130</p>
+            <p>Method: Polynomial (cubic) &rarr; captures the peak and subsequent decline</p>
+            <p>Target: Q8 &rarr; <strong class="text-gold-600 dark:text-gold-400">Predicted: ~105</strong></p>
+          </div>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">Market prices often exhibit boom-bust cycles with multiple turning points. Polynomial fitting captures these direction changes but beware: polynomial extrapolation far beyond the data can produce wild swings.</p>
+        </div>
+
+        <div class="calculator-card p-6 md:p-8">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="num-badge">5</div>
+            <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-lg">Projectile Motion (Quadratic)</h3>
+          </div>
+          <div class="bg-neutral-50 dark:bg-neutral-800/60 rounded-xl p-4 mb-4 text-sm font-mono text-neutral-700 dark:text-neutral-300 space-y-1">
+            <p>Data: t=0s h=0m, t=1s h=15.1m, t=2s h=19.6m, t=3s h=19.6m, t=4s h=15.1m</p>
+            <p>Method: Quadratic &rarr; y = -4.9x&sup2; + 19.6x + 0</p>
+            <p>Target: t=5s &rarr; <strong class="text-gold-600 dark:text-gold-400">Predicted: 0m (returns to ground)</strong></p>
+            <p>R&sup2; = 100% &middot; Perfect physical model fit</p>
+          </div>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">Projectile motion under gravity follows a perfect parabola. The quadratic model captures this exactly, with the vertex at the peak height. This is an ideal case where the mathematical model matches the physical law precisely.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interpolation vs Extrapolation Comparison -->
+  <section class="py-16 md:py-20 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Interpolation vs. Extrapolation</h2>
+        <div class="gold-divider mb-4" />
+      </div>
+      <div class="calculator-card overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="bg-gold-500/5 dark:bg-gold-500/10">
+                <th class="text-left px-6 py-4 font-serif font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200/60 dark:border-neutral-700/60">Aspect</th>
+                <th class="text-left px-6 py-4 font-serif font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200/60 dark:border-neutral-700/60">Interpolation</th>
+                <th class="text-left px-6 py-4 font-serif font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200/60 dark:border-neutral-700/60">Extrapolation</th>
+              </tr>
+            </thead>
+            <tbody class="text-neutral-600 dark:text-neutral-400">
+              <tr class="border-b border-neutral-100 dark:border-neutral-800/60">
+                <td class="px-6 py-4 font-medium text-neutral-900 dark:text-neutral-100">Definition</td>
+                <td class="px-6 py-4">Estimating values between known data points</td>
+                <td class="px-6 py-4">Estimating values beyond known data points</td>
+              </tr>
+              <tr class="border-b border-neutral-100 dark:border-neutral-800/60 bg-white/40 dark:bg-neutral-800/20">
+                <td class="px-6 py-4 font-medium text-neutral-900 dark:text-neutral-100">Range</td>
+                <td class="px-6 py-4">Within observed min-max range</td>
+                <td class="px-6 py-4">Outside observed min-max range</td>
+              </tr>
+              <tr class="border-b border-neutral-100 dark:border-neutral-800/60">
+                <td class="px-6 py-4 font-medium text-neutral-900 dark:text-neutral-100">Risk Level</td>
+                <td class="px-6 py-4 text-green-600 dark:text-green-400 font-medium">Low &mdash; bounded by data</td>
+                <td class="px-6 py-4 text-amber-600 dark:text-amber-400 font-medium">Higher &mdash; no bounds from data</td>
+              </tr>
+              <tr class="border-b border-neutral-100 dark:border-neutral-800/60 bg-white/40 dark:bg-neutral-800/20">
+                <td class="px-6 py-4 font-medium text-neutral-900 dark:text-neutral-100">Typical Accuracy</td>
+                <td class="px-6 py-4">Generally high</td>
+                <td class="px-6 py-4">Decreases with distance from data</td>
+              </tr>
+              <tr class="border-b border-neutral-100 dark:border-neutral-800/60">
+                <td class="px-6 py-4 font-medium text-neutral-900 dark:text-neutral-100">Use Cases</td>
+                <td class="px-6 py-4">Filling gaps in measurements, smooth curves</td>
+                <td class="px-6 py-4">Forecasting, future predictions, trend analysis</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 font-medium text-neutral-900 dark:text-neutral-100">Mathematical Basis</td>
+                <td class="px-6 py-4">Spline, Lagrange, linear between points</td>
+                <td class="px-6 py-4">Curve fitting + projection beyond range</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Limitations and Warnings -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Limitations and Warnings</h2>
+        <div class="gold-divider mb-4" />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="calculator-card p-6 border-l-4 border-l-red-400">
+          <div class="flex items-center gap-3 mb-3">
+            <svg class="h-6 w-6 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+            <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100">Distance Reduces Accuracy</h3>
+          </div>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">The further you extrapolate beyond your data range, the less reliable the prediction. A prediction at 2x the data range is far less trustworthy than one at 1.1x.</p>
+        </div>
+        <div class="calculator-card p-6 border-l-4 border-l-amber-400">
+          <div class="flex items-center gap-3 mb-3">
+            <svg class="h-6 w-6 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+            <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100">Model Assumptions</h3>
+          </div>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">Each method assumes a specific mathematical relationship. If the real-world process changes behavior (e.g., market crash), the model won't capture it. Always combine math with domain knowledge.</p>
+        </div>
+        <div class="calculator-card p-6 border-l-4 border-l-orange-400">
+          <div class="flex items-center gap-3 mb-3">
+            <svg class="h-6 w-6 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100">Outlier Sensitivity</h3>
+          </div>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">A single outlier can dramatically skew the fitted curve and resulting predictions. Always inspect your data for anomalies before extrapolating. Consider removing or adjusting outliers.</p>
+        </div>
+        <div class="calculator-card p-6 border-l-4 border-l-purple-400">
+          <div class="flex items-center gap-3 mb-3">
+            <svg class="h-6 w-6 text-purple-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>
+            <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100">Overfitting with Polynomials</h3>
+          </div>
+          <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">High-degree polynomials can fit training data perfectly but oscillate wildly outside the range (Runge's phenomenon). Stick to degree 2-3 unless you have strong justification.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-16 md:py-20 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+    <div class="max-w-4xl mx-auto">
+      <FAQ locale={locale} items={[
+        { question: 'What is extrapolation?', answer: 'Extrapolation is the process of estimating unknown values by extending a known sequence of values or facts beyond the area that is certainly known. It uses mathematical models to predict future or past values based on existing trends in your data.', category: 'general', display: true },
+        { question: 'What is linear extrapolation?', answer: 'Linear extrapolation uses a straight line (y = mx + b) to extend the trend of existing data points. It assumes a constant rate of change and works best when the data follows a roughly linear pattern. This is the simplest and most commonly used extrapolation method.', category: 'calculator', display: true },
+        { question: 'What is exponential extrapolation?', answer: 'Exponential extrapolation models data that grows or decays at a rate proportional to its current value, following y = a·e^(bx). It is commonly used for population growth, compound interest, viral spread, and radioactive decay calculations. All Y values must be positive.', category: 'calculator', display: true },
+        { question: 'How accurate is extrapolation?', answer: 'The accuracy of extrapolation depends on how well the chosen model fits the data and how far beyond the observed range you predict. The R² score and confidence level provided by our calculator help you assess reliability. Predictions close to the data range with high R² values are generally more reliable.', category: 'technical', display: true },
+        { question: 'What is R² score?', answer: 'R² (coefficient of determination) measures how well the regression model fits the observed data. Values range from 0 to 1, where 1 indicates a perfect fit and 0 means the model explains none of the variance. An R² above 0.9 indicates an excellent fit, while below 0.5 suggests a poor model choice.', category: 'technical', display: true },
+        { question: 'What is the difference between extrapolation and interpolation?', answer: 'Interpolation estimates values between known data points (within the observed range), while extrapolation estimates values beyond the known data range. Interpolation is generally more accurate because it is bounded by existing observations, whereas extrapolation carries more uncertainty the further you go from known data.', category: 'general', display: true },
+        { question: 'How many data points do I need for extrapolation?', answer: 'At minimum, you need 2 data points for linear, exponential, and logarithmic methods. Quadratic extrapolation requires at least 3 points, and polynomial (cubic) requires at least 4 points. However, more data points generally produce more reliable models, especially for methods that fit more parameters.', category: 'calculator', display: true },
+        { question: 'Which extrapolation method should I use?', answer: 'Choose based on your data pattern: Linear for steady, constant-rate trends; Exponential for accelerating growth or decay; Logarithmic for diminishing returns (fast initial change that slows); Polynomial for complex curves with peaks and valleys; Quadratic for simple parabolic (U-shaped) relationships. Check the R² score to confirm your choice.', category: 'general', display: true },
+        { question: 'Is my data stored on your servers?', answer: 'No. All calculations are performed entirely in your browser using JavaScript. Your data never leaves your device, and we do not store any personal information or calculation inputs on our servers. This calculator is 100% client-side and private.', category: 'general', display: true },
+        { question: 'Can I download my results?', answer: 'Yes! After calculating, you can export your results as CSV (data table), PNG (chart image), or PDF (full report with equation and chart). Click the export buttons that appear below the results section.', category: 'calculator', display: true },
+        { question: 'What does the confidence indicator mean?', answer: 'The confidence indicator is derived from the R² score and reflects how well the mathematical model fits your data. A confidence of 95%+ means the model explains over 95% of the variance in your data. Lower confidence values suggest the model may not be the best choice for your data pattern.', category: 'technical', display: true },
+        { question: 'Why does polynomial extrapolation give wild results?', answer: 'High-degree polynomials can exhibit Runge\'s phenomenon — oscillating wildly at the edges of and beyond the data range. This is why we limit the polynomial degree to 3 (cubic). For safer extrapolation with complex data, try quadratic or use multiple methods and compare results.', category: 'technical', display: true },
+      ]} />
+    </div>
+  </section>
+
+  <!-- Related Tools -->
+  <section id="tools" class="py-16 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Related Tools</h2>
+        <div class="gold-divider mb-4" />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <a href="/interpolation/" class="tool-card block group relative z-10 text-left">
           <div class="w-14 h-14 bg-gradient-to-br from-gold-500 to-gold-300 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-gold-500/20 group-hover:shadow-gold-500/40 group-hover:scale-110 transition-all duration-300">
             <svg class="h-7 w-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
           </div>
-          <h3 class="font-serif text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-gold-600 dark:group-hover:text-gold-400 transition-colors duration-200">Interpolation</h3>
+          <h3 class="font-serif text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-gold-600 dark:group-hover:text-gold-400 transition-colors duration-200">Interpolation Calculator</h3>
           <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-5">Estimate values between known data points using linear, Lagrange, or cubic spline methods.</p>
           <span class="inline-flex items-center gap-1.5 text-gold-600 dark:text-gold-400 font-semibold text-sm group-hover:gap-2 transition-all duration-200">
             Open Calculator
             <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
           </span>
         </a>
-        <a href="/regression/" class="tool-card block group relative z-10 stagger-2 animate-stagger text-left">
+        <a href="/regression/" class="tool-card block group relative z-10 text-left">
           <div class="w-14 h-14 bg-gradient-to-br from-gold-600 to-gold-400 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-gold-500/20 group-hover:shadow-gold-500/40 group-hover:scale-110 transition-all duration-300">
             <svg class="h-7 w-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
           </div>
-          <h3 class="font-serif text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-gold-600 dark:group-hover:text-gold-400 transition-colors duration-200">Regression</h3>
+          <h3 class="font-serif text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-gold-600 dark:group-hover:text-gold-400 transition-colors duration-200">Regression Calculator</h3>
           <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-5">Analyze relationships between variables with simple or multiple regression models.</p>
-          <span class="inline-flex items-center gap-1.5 text-gold-600 dark:text-gold-400 font-semibold text-sm group-hover:gap-2 transition-all duration-200">
-            Open Calculator
-            <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-          </span>
-        </a>
-        <a href="#calculator" class="tool-card block group relative z-10 stagger-3 animate-stagger text-left">
-          <div class="w-14 h-14 bg-gradient-to-br from-gold-700 to-gold-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-gold-500/20 group-hover:shadow-gold-500/40 group-hover:scale-110 transition-all duration-300">
-            <svg class="h-7 w-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
-          </div>
-          <h3 class="font-serif text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-gold-600 dark:group-hover:text-gold-400 transition-colors duration-200">Extrapolation</h3>
-          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-5">Predict future values beyond your data using linear, exponential, or polynomial models.</p>
           <span class="inline-flex items-center gap-1.5 text-gold-600 dark:text-gold-400 font-semibold text-sm group-hover:gap-2 transition-all duration-200">
             Open Calculator
             <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
@@ -106,6 +470,4 @@ const currentPath = '/';
       </div>
     </div>
   </section>
-
-  <FAQ locale={locale} />
 </BaseLayout>

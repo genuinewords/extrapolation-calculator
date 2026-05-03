@@ -33,6 +33,33 @@ const methodDescriptions: Record<InterpMethod, { title: string; description: str
   },
 };
 
+const dummyDataByMethod: Record<InterpMethod, { rows: { x: string; y: string }[]; targetX: string; label: string }> = {
+  linear: {
+    label: 'Linear',
+    rows: [
+      { x: '8', y: '18.2' }, { x: '10', y: '21.5' }, { x: '12', y: '25.8' },
+      { x: '14', y: '28.3' }, { x: '16', y: '26.1' },
+    ],
+    targetX: '13',
+  },
+  lagrange: {
+    label: 'Lagrange',
+    rows: [
+      { x: '1', y: '1' }, { x: '2', y: '4' }, { x: '3', y: '9' },
+      { x: '4', y: '16' }, { x: '5', y: '25' },
+    ],
+    targetX: '2.5',
+  },
+  spline: {
+    label: 'Cubic Spline',
+    rows: [
+      { x: '0', y: '0' }, { x: '1', y: '0.5' }, { x: '2', y: '2' },
+      { x: '3', y: '1.5' }, { x: '4', y: '3' },
+    ],
+    targetX: '2.5',
+  },
+};
+
 const demoDatasets: Record<string, { label: string; rows: { x: string; y: string }[]; targetX: string; context: string }> = {
   temperature: {
     label: 'Hourly Temperature',
@@ -227,14 +254,6 @@ export default function InterpolationCalculator({ locale = 'en' }: Props) {
 
   return (
     <div className="calculator-card p-6 md:p-10 max-w-5xl mx-auto" role="application" aria-label={L('title', locale)}>
-      <div className="text-center mb-10">
-        <h1 className="font-serif text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 tracking-tight">{L('title', locale)}</h1>
-        <div className="gold-divider-wide mb-4" />
-        <p className="text-neutral-500 dark:text-neutral-400 text-lg max-w-xl mx-auto leading-relaxed font-light">{L('subtitle', locale)}</p>
-      </div>
-
-      <MethodIllustration method={method} />
-
       <div className="flex gap-2 mb-8 flex-wrap justify-center">
         {(['linear', 'lagrange', 'spline'] as InterpMethod[]).map((m) => (
           <button key={m} onClick={() => setMethod(m)} className={method === m ? 'btn-tab-active' : 'btn-tab-inactive'} aria-pressed={method === m}>
@@ -252,6 +271,37 @@ export default function InterpolationCalculator({ locale = 'en' }: Props) {
             <h3 className="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-sm tracking-wide">{methodDescriptions[method].title}</h3>
             <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed mt-1">{methodDescriptions[method].description}</p>
           </div>
+        </div>
+      </div>
+
+      {/* Load Example Data */}
+      <div className="mb-8">
+        <div className="flex items-center gap-3 mb-3">
+          <span className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">Load Example Data</span>
+          <div className="h-px flex-1 bg-gradient-to-r from-neutral-200 dark:from-neutral-700 to-transparent" />
+        </div>
+        <div className="flex gap-2 flex-wrap">
+          {(['linear', 'lagrange', 'spline'] as InterpMethod[]).map((m) => (
+            <button
+              key={m}
+              onClick={() => {
+                const d = dummyDataByMethod[m];
+                setInputRows([...d.rows]);
+                setTargetX(d.targetX);
+                setMethod(m);
+                setResult(null);
+                setError('');
+                setActiveDataset('custom');
+              }}
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+                method === m
+                  ? 'bg-gold-600 text-white shadow-md shadow-gold-500/20'
+                  : 'bg-white/60 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700/80 border border-neutral-200/60 dark:border-neutral-700/60'
+              }`}
+            >
+              {dummyDataByMethod[m].label}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -276,7 +326,7 @@ export default function InterpolationCalculator({ locale = 'en' }: Props) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 calculator-inputs">
         <div>
           <label htmlFor="interp-target-x" className="block text-sm font-bold text-neutral-700 dark:text-neutral-300 mb-2">{L('targetX', locale)}</label>
-          <input id="interp-target-x" type="number" step="any" value={targetX} onChange={(e) => setTargetX(e.target.value)} className="input-field" aria-label={L('targetX', locale)} />
+          <input id="interp-target-x" type="number" step="any" value={targetX} onChange={(e) => setTargetX(e.target.value)} className="input-field dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600" aria-label={L('targetX', locale)} />
         </div>
       </div>
 
@@ -318,7 +368,7 @@ export default function InterpolationCalculator({ locale = 'en' }: Props) {
                     step="any"
                     value={row.x}
                     onChange={(e) => updateRow(i, 'x', e.target.value)}
-                    className="input-field py-2 w-full"
+                    className="input-field py-2 w-full dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600"
                     aria-label={`Point ${i + 1} X`}
                     placeholder="X"
                   />
@@ -329,7 +379,7 @@ export default function InterpolationCalculator({ locale = 'en' }: Props) {
                     step="any"
                     value={row.y}
                     onChange={(e) => updateRow(i, 'y', e.target.value)}
-                    className="input-field py-2 w-full"
+                    className="input-field py-2 w-full dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600"
                     aria-label={`Point ${i + 1} Y`}
                     placeholder="Y"
                   />

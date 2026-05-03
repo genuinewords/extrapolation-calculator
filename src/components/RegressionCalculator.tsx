@@ -130,7 +130,58 @@ function MethodIllustration({ method }: { method: RegMethod }) {
           {[0, 80, 160, 240, 320].map(x => <line key={`vx${x}`} x1={x} y1={0} x2={x} y2={120} />)}
           {[0, 30, 60, 90, 120].map(y => <line key={`hy${y}`} x1={0} y1={y} x2={320} y2={y} />)}
         </g>
-        {method === 'simple' ? (
+      {/* Load Example Data */}
+      <div className="mb-8">
+        <div className="flex items-center gap-3 mb-3">
+          <span className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">Load Example Data</span>
+          <div className="h-px flex-1 bg-gradient-to-r from-neutral-200 dark:from-neutral-700 to-transparent" />
+        </div>
+        <div className="flex gap-2 flex-wrap">
+          <button
+            onClick={() => {
+              setMethod('simple');
+              setSimpleRows([
+                { x: '10', y: '150' }, { x: '12', y: '180' }, { x: '15', y: '220' },
+                { x: '18', y: '260' }, { x: '20', y: '290' }, { x: '25', y: '350' },
+              ]);
+              setPredictX('22');
+              setResult(null);
+              setError('');
+              setActiveSimpleSet('custom');
+            }}
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+              method === 'simple'
+                ? 'bg-gold-600 text-white shadow-md shadow-gold-500/20'
+                : 'bg-white/60 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700/80 border border-neutral-200/60 dark:border-neutral-700/60'
+            }`}
+          >
+            Simple Regression
+          </button>
+          <button
+            onClick={() => {
+              setMethod('multiple');
+              setMultiRows([
+                { x1: '2', x2: '1', y: '12' }, { x1: '3', x2: '2', y: '18' }, { x1: '4', x2: '1', y: '20' },
+                { x1: '5', x2: '3', y: '28' }, { x1: '6', x2: '2', y: '30' }, { x1: '7', x2: '4', y: '38' },
+              ]);
+              setPredictX1('6');
+              setPredictX2('3');
+              setResult(null);
+              setError('');
+              setActiveMultiSet('custom');
+            }}
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+              method === 'multiple'
+                ? 'bg-gold-600 text-white shadow-md shadow-gold-500/20'
+                : 'bg-white/60 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700/80 border border-neutral-200/60 dark:border-neutral-700/60'
+            }`}
+          >
+            Multiple Regression
+          </button>
+        </div>
+      </div>
+
+      {method === 'simple' ? (
           <>
             {[[40, 90], [80, 75], [120, 60], [160, 50], [200, 40], [240, 30], [280, 20]].map(([cx, cy], i) => (
               <circle key={i} cx={cx} cy={cy} r="4" fill="#D4A853" stroke="none" />
@@ -229,14 +280,6 @@ export default function RegressionCalculator({ locale = 'en' }: Props) {
 
   return (
     <div className="calculator-card p-6 md:p-10 max-w-5xl mx-auto" role="application" aria-label={L('title', locale)}>
-      <div className="text-center mb-10">
-        <h1 className="font-serif text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 tracking-tight">{L('title', locale)}</h1>
-        <div className="gold-divider-wide mb-4" />
-        <p className="text-neutral-500 dark:text-neutral-400 text-lg max-w-xl mx-auto leading-relaxed font-light">{L('subtitle', locale)}</p>
-      </div>
-
-      <MethodIllustration method={method} />
-
       <div className="flex gap-2 mb-8 flex-wrap justify-center">
         {(['simple', 'multiple'] as RegMethod[]).map((m) => (
           <button key={m} onClick={() => { setMethod(m); setResult(null); setError(''); }}
@@ -276,7 +319,7 @@ export default function RegressionCalculator({ locale = 'en' }: Props) {
 
           <div className="mb-6">
             <label htmlFor="reg-predict-x" className="block text-sm font-bold text-neutral-700 dark:text-neutral-300 mb-2">{L('predictX', locale)}</label>
-            <input id="reg-predict-x" type="number" step="any" value={predictX} onChange={(e) => setPredictX(e.target.value)} className="input-field" />
+            <input id="reg-predict-x" type="number" step="any" value={predictX} onChange={(e) => setPredictX(e.target.value)} className="input-field dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600" />
           </div>
 
           <div className="mb-8">
@@ -304,10 +347,10 @@ export default function RegressionCalculator({ locale = 'en' }: Props) {
                   <div key={i} className="flex flex-col md:grid gap-4 md:gap-6 items-start md:items-center px-2 py-3 rounded-xl transition-all duration-200 hover:bg-white/60 dark:hover:bg-neutral-800/40" style={{ gridTemplateColumns: '40px 1fr 1fr 44px' }}>
                     <span className="num-badge text-xs scale-90 self-start md:self-center">{i + 1}</span>
                     <div className="w-full md:border-r-2 md:border-gold-500/20 md:pr-6 px-4">
-                      <input type="number" step="any" value={row.x} onChange={(e) => updateSimpleRow(i, 'x', e.target.value)} className="input-field py-2 w-full" aria-label={`Point ${i + 1} X`} placeholder="X" />
+                      <input type="number" step="any" value={row.x} onChange={(e) => updateSimpleRow(i, 'x', e.target.value)} className="input-field py-2 w-full dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600" aria-label={`Point ${i + 1} X`} placeholder="X" />
                     </div>
                     <div className="w-full px-4 md:pl-6">
-                      <input type="number" step="any" value={row.y} onChange={(e) => updateSimpleRow(i, 'y', e.target.value)} className="input-field py-2 w-full" aria-label={`Point ${i + 1} Y`} placeholder="Y" />
+                      <input type="number" step="any" value={row.y} onChange={(e) => updateSimpleRow(i, 'y', e.target.value)} className="input-field py-2 w-full dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600" aria-label={`Point ${i + 1} Y`} placeholder="Y" />
                     </div>
                     <button onClick={() => removeSimpleRow(i)} disabled={simpleRows.length <= 2} className="w-9 h-9 flex items-center justify-center text-neutral-400 hover:text-red-500 disabled:opacity-30 disabled:cursor-not-allowed rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200 self-end md:self-center">
                       <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -342,11 +385,11 @@ export default function RegressionCalculator({ locale = 'en' }: Props) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 calculator-inputs">
             <div>
               <label htmlFor="reg-predict-x1" className="block text-sm font-bold text-neutral-700 dark:text-neutral-300 mb-2">{L('predictX1', locale)}</label>
-              <input id="reg-predict-x1" type="number" step="any" value={predictX1} onChange={(e) => setPredictX1(e.target.value)} className="input-field" />
+              <input id="reg-predict-x1" type="number" step="any" value={predictX1} onChange={(e) => setPredictX1(e.target.value)} className="input-field dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600" />
             </div>
             <div>
               <label htmlFor="reg-predict-x2" className="block text-sm font-bold text-neutral-700 dark:text-neutral-300 mb-2">{L('predictX2', locale)}</label>
-              <input id="reg-predict-x2" type="number" step="any" value={predictX2} onChange={(e) => setPredictX2(e.target.value)} className="input-field" />
+              <input id="reg-predict-x2" type="number" step="any" value={predictX2} onChange={(e) => setPredictX2(e.target.value)} className="input-field dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600" />
             </div>
           </div>
 
@@ -376,13 +419,13 @@ export default function RegressionCalculator({ locale = 'en' }: Props) {
                   <div key={i} className="flex flex-col md:grid gap-4 md:gap-6 items-start md:items-center px-2 py-3 rounded-xl transition-all duration-200 hover:bg-white/60 dark:hover:bg-neutral-800/40" style={{ gridTemplateColumns: '36px 1fr 1fr 1fr 44px' }}>
                     <span className="num-badge text-xs scale-90 self-start md:self-center">{i + 1}</span>
                     <div className="w-full md:border-r-2 md:border-gold-500/20 md:pr-6 px-4">
-                      <input type="number" step="any" value={row.x1} onChange={(e) => updateMultiRow(i, 'x1', e.target.value)} className="input-field py-2 w-full" aria-label={`Point ${i + 1} X1`} placeholder="X₁" />
+                      <input type="number" step="any" value={row.x1} onChange={(e) => updateMultiRow(i, 'x1', e.target.value)} className="input-field py-2 w-full dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600" aria-label={`Point ${i + 1} X1`} placeholder="X₁" />
                     </div>
                     <div className="w-full md:border-r-2 md:border-gold-500/20 md:pr-6 px-4">
-                      <input type="number" step="any" value={row.x2} onChange={(e) => updateMultiRow(i, 'x2', e.target.value)} className="input-field py-2 w-full" aria-label={`Point ${i + 1} X2`} placeholder="X₂" />
+                      <input type="number" step="any" value={row.x2} onChange={(e) => updateMultiRow(i, 'x2', e.target.value)} className="input-field py-2 w-full dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600" aria-label={`Point ${i + 1} X2`} placeholder="X₂" />
                     </div>
                     <div className="w-full px-4 md:pl-6">
-                      <input type="number" step="any" value={row.y} onChange={(e) => updateMultiRow(i, 'y', e.target.value)} className="input-field py-2 w-full" aria-label={`Point ${i + 1} Y`} placeholder="Y" />
+                      <input type="number" step="any" value={row.y} onChange={(e) => updateMultiRow(i, 'y', e.target.value)} className="input-field py-2 w-full dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600" aria-label={`Point ${i + 1} Y`} placeholder="Y" />
                     </div>
                     <button onClick={() => removeMultiRow(i)} disabled={multiRows.length <= 2} className="w-9 h-9 flex items-center justify-center text-neutral-400 hover:text-red-500 disabled:opacity-30 disabled:cursor-not-allowed rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200 self-end md:self-center">
                       <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
