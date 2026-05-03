@@ -10,6 +10,7 @@ type MethodKey = 'linear' | 'exponential' | 'logarithmic' | 'polynomial' | 'quad
 
 interface Props {
   locale?: string;
+  showChart?: boolean;
 }
 
 const methodLabels: Record<MethodKey, Record<string, string>> = {
@@ -150,7 +151,7 @@ function MethodIllustration({ method }: { method: MethodKey }) {
   );
 }
 
-export default function ExtrapolationCalculator({ locale = 'en' }: Props) {
+export default function ExtrapolationCalculator({ locale = 'en', showChart = true }: Props) {
   const [inputRows, setInputRows] = useState<{ x: string; y: string }[]>(demoDatasets.temperature.rows);
   const [method, setMethod] = useState<MethodKey>('linear');
   const [targetX, setTargetX] = useState<string>(demoDatasets.temperature.targetX);
@@ -510,18 +511,19 @@ export default function ExtrapolationCalculator({ locale = 'en' }: Props) {
             </div>
           </div>
 
-          {/* Chart */}
-          <div className="mb-6">
-            <Suspense fallback={<div className="h-64 bg-white/40 dark:bg-neutral-800/40 rounded-2xl animate-pulse flex items-center justify-center text-neutral-400 backdrop-blur-sm border border-neutral-200/40 dark:border-neutral-700/40">{L('chartLoading', locale)}</div>}>
-              <ExtrapolationChart
-                points={inputRows.map((r) => ({ x: Number(r.x), y: Number(r.y) })).filter((p) => !isNaN(p.x) && !isNaN(p.y))}
-                result={result}
-                targetX={Number(targetX) || 0}
-                method={method}
-                ref={chartRef}
-              />
-            </Suspense>
-          </div>
+          {showChart && (
+            <div className="mb-6">
+              <Suspense fallback={<div className="h-64 bg-white/40 dark:bg-neutral-800/40 rounded-2xl animate-pulse flex items-center justify-center text-neutral-400 backdrop-blur-sm border border-neutral-200/40 dark:border-neutral-700/40">{L('chartLoading', locale)}</div>}>
+                <ExtrapolationChart
+                  points={inputRows.map((r) => ({ x: Number(r.x), y: Number(r.y) })).filter((p) => !isNaN(p.x) && !isNaN(p.y))}
+                  result={result}
+                  targetX={Number(targetX) || 0}
+                  method={method}
+                  ref={chartRef}
+                />
+              </Suspense>
+            </div>
+          )}
 
           {/* Export Buttons */}
           <div className="flex flex-wrap gap-2 mb-6">
