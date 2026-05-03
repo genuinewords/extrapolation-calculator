@@ -236,21 +236,6 @@
     @apply max-w-4xl mx-auto py-16 md:py-24;
   }
 
-  /* --- Skip Link --- */
-  .skip-link {
-    position: absolute;
-    top: -100px;
-    left: 0;
-    background: #b5890d;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    z-index: 50;
-    transition: top 0.2s;
-    border-radius: 0 0 0.5rem 0;
-  }
-  .skip-link:focus {
-    top: 0;
-  }
 
   /* --- Luxury Glow --- */
   .luxury-glow {
@@ -260,6 +245,22 @@
   [dir="rtl"] {
     text-align: right;
   }
+}
+
+/* --- Skip Link (outside @layer for higher specificity) --- */
+.skip-link {
+  position: absolute !important;
+  top: -100px !important;
+  left: 0;
+  background: #b5890d;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  z-index: 50;
+  transition: top 0.2s;
+  border-radius: 0 0 0.5rem 0;
+}
+.skip-link:focus {
+  top: 0 !important;
 }
 
 /* --- Dark mode input overrides (outside @layer for higher specificity) --- */
