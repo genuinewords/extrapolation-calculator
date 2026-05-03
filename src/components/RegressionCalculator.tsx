@@ -14,25 +14,107 @@ const methodLabels: Record<RegMethod, Record<string, string>> = {
   multiple: { en: 'Multiple Regression', hi: 'बहु प्रतिगमन', es: 'Regresión Múltiple', ru: 'Множественная Регрессия', fr: 'Régression Multiple', de: 'Mehrfache Regression', it: 'Regressione Multipla', pt: 'Regressão Múltipla', bn: 'বহু নির্ভরণ', ja: '重回帰', ko: '다중 회귀', ms: 'Regresi Berganda', pl: 'Regresja Wielokrotna', id: 'Regresi Berganda', ar: 'انحدار متعدد', bg: 'Множествена Регресия', tr: 'Çoklu Regresyon', sv: 'Multipel Regression' },
 };
 
+const methodDescriptions: Record<RegMethod, { title: string; description: string; icon: string }> = {
+  simple: {
+    title: 'Simple Linear Regression',
+    description: 'Model the relationship between one independent variable (X) and a dependent variable (Y). Calculates slope, intercept, and R² to assess fit quality.',
+    icon: 'M4 12h16M4 12l4-4m-4 4l4 4',
+  },
+  multiple: {
+    title: 'Multiple Linear Regression',
+    description: 'Model the relationship between two independent variables (X₁, X₂) and a dependent variable (Y). Computes coefficients β₀, β₁, β₂ using matrix math.',
+    icon: 'M4 8h16M4 12h16M4 16h16',
+  },
+};
+
+const simpleDemoSets: Record<string, { label: string; rows: { x: string; y: string }[]; predictX: string; context: string }> = {
+  house: {
+    label: 'House Prices',
+    context: 'Square footage (100s) → Price ($1000s)',
+    rows: [
+      { x: '10', y: '150' }, { x: '12', y: '180' }, { x: '15', y: '220' },
+      { x: '18', y: '260' }, { x: '20', y: '290' }, { x: '25', y: '350' },
+    ],
+    predictX: '22',
+  },
+  advertising: {
+    label: 'Ad Spend vs Sales',
+    context: 'Ad spend ($K) → Sales ($K)',
+    rows: [
+      { x: '5', y: '40' }, { x: '8', y: '52' }, { x: '10', y: '62' },
+      { x: '12', y: '75' }, { x: '15', y: '88' }, { x: '18', y: '105' },
+    ],
+    predictX: '16',
+  },
+  study: {
+    label: 'Study Hours vs Score',
+    context: 'Study hours → Test score (%)',
+    rows: [
+      { x: '2', y: '55' }, { x: '4', y: '62' }, { x: '6', y: '71' },
+      { x: '8', y: '78' }, { x: '10', y: '85' }, { x: '12', y: '92' },
+    ],
+    predictX: '9',
+  },
+  custom: {
+    label: 'Custom',
+    context: 'Enter your own data',
+    rows: [{ x: '1', y: '2.1' }, { x: '2', y: '3.9' }, { x: '3', y: '6.2' }, { x: '4', y: '7.8' }, { x: '5', y: '10.1' }],
+    predictX: '6',
+  },
+};
+
+const multiDemoSets: Record<string, { label: string; rows: { x1: string; x2: string; y: string }[]; predictX1: string; predictX2: string; context: string }> = {
+  sales: {
+    label: 'Product Sales',
+    context: 'TV Ads ($K), Radio Ads ($K) → Sales ($K)',
+    rows: [
+      { x1: '2', x2: '1', y: '12' }, { x1: '3', x2: '2', y: '18' }, { x1: '4', x2: '1', y: '20' },
+      { x1: '5', x2: '3', y: '28' }, { x1: '6', x2: '2', y: '30' }, { x1: '7', x2: '4', y: '38' },
+    ],
+    predictX1: '6',
+    predictX2: '3',
+  },
+  realEstate: {
+    label: 'Real Estate',
+    context: 'Size (1000 sqft), Age (years) → Price ($100K)',
+    rows: [
+      { x1: '15', x2: '5', y: '25' }, { x1: '20', x2: '3', y: '35' }, { x1: '18', x2: '8', y: '28' },
+      { x1: '25', x2: '2', y: '42' }, { x1: '22', x2: '6', y: '34' }, { x1: '30', x2: '1', y: '55' },
+    ],
+    predictX1: '24',
+    predictX2: '4',
+  },
+  custom: {
+    label: 'Custom',
+    context: 'Enter your own data',
+    rows: [
+      { x1: '1', x2: '2', y: '5' }, { x1: '2', x2: '3', y: '8' }, { x1: '3', x2: '1', y: '7' },
+      { x1: '4', x2: '4', y: '12' }, { x1: '5', x2: '2', y: '10' },
+    ],
+    predictX1: '6',
+    predictX2: '3',
+  },
+};
+
 const ui: Record<string, Record<string, string>> = {
-  en: { title: 'Regression Calculator', subtitle: 'Analyze relationships between variables', method: 'Method', predictX: 'Predict at X', predictX1: 'Predict at X₁', predictX2: 'Predict at X₂', calculate: 'Calculate', addPoint: 'Add Point', remove: 'Remove', result: 'Result', equation: 'Equation', rSquared: 'R² Score', predictedValue: 'Predicted Value', steps: 'Steps', dataPoints: 'Data Points', invalid: 'Please enter valid numbers', minPoints: 'At least 2 data points required for simple, 3 for multiple', singularMatrix: 'Singular matrix: variables may be collinear' },
-  es: { title: 'Calculadora de Regresión', subtitle: 'Analiza relaciones entre variables', method: 'Método', predictX: 'Predecir en X', predictX1: 'Predecir en X₁', predictX2: 'Predecir en X₂', calculate: 'Calcular', addPoint: 'Agregar Punto', remove: 'Eliminar', result: 'Resultado', equation: 'Ecuación', rSquared: 'Puntuación R²', predictedValue: 'Valor Predicho', steps: 'Pasos', dataPoints: 'Puntos de Datos', invalid: 'Ingrese números válidos', minPoints: 'Al menos 2 puntos para simple, 3 para múltiple', singularMatrix: 'Matriz singular: variables pueden ser colineales' },
-  fr: { title: 'Calculateur de Régression', subtitle: 'Analysez les relations entre les variables', method: 'Méthode', predictX: 'Prédire à X', predictX1: 'Prédire à X₁', predictX2: 'Prédire à X₂', calculate: 'Calculer', addPoint: 'Ajouter un Point', remove: 'Supprimer', result: 'Résultat', equation: 'Équation', rSquared: 'Score R²', predictedValue: 'Valeur Prédite', steps: 'Étapes', dataPoints: 'Points de Données', invalid: 'Entrez des nombres valides', minPoints: 'Au moins 2 points pour simple, 3 pour multiple', singularMatrix: 'Matrice singulière: variables colinéaires' },
-  de: { title: 'Regressionsrechner', subtitle: 'Analysieren Sie Beziehungen zwischen Variablen', method: 'Methode', predictX: 'Vorhersage bei X', predictX1: 'Vorhersage bei X₁', predictX2: 'Vorhersage bei X₂', calculate: 'Berechnen', addPoint: 'Punkt Hinzufügen', remove: 'Entfernen', result: 'Ergebnis', equation: 'Gleichung', rSquared: 'R²-Wert', predictedValue: 'Vorhergesagter Wert', steps: 'Schritte', dataPoints: 'Datenpunkte', invalid: 'Bitte gültige Zahlen eingeben', minPoints: 'Mindestens 2 Punkte für einfach, 3 für mehrfach', singularMatrix: 'Singuläre Matrix: Variablen kollinear' },
-  ja: { title: '回帰計算機', subtitle: '変数間の関係を分析', method: '手法', predictX: 'Xで予測', predictX1: 'X₁で予測', predictX2: 'X₂で予測', calculate: '計算', addPoint: 'ポイント追加', remove: '削除', result: '結果', equation: '方程式', rSquared: 'R²スコア', predictedValue: '予測値', steps: '手順', dataPoints: 'データポイント', invalid: '有効な数値を入力してください', minPoints: '単回帰は2点以上、重回帰は3点以上必要', singularMatrix: '特異行列: 変数が共線性の可能性' },
-  ko: { title: '회귀 계산기', subtitle: '변수 간의 관계 분석', method: '방법', predictX: 'X에서 예측', predictX1: 'X₁에서 예측', predictX2: 'X₂에서 예측', calculate: '계산', addPoint: '포인트 추가', remove: '삭제', result: '결과', equation: '방정식', rSquared: 'R² 점수', predictedValue: '예측값', steps: '단계', dataPoints: '데이터 포인트', invalid: '유효한 숫자를 입력하세요', minPoints: '단순회귀 2개 이상, 다중회귀 3개 이상 필요', singularMatrix: '특이 행렬: 변수가 공선형일 수 있음' },
-  ar: { title: 'حاسبة الانحدار', subtitle: 'حلل العلاقات بين المتغيرات', method: 'طريقة', predictX: 'توقع عند X', predictX1: 'توقع عند X₁', predictX2: 'توقع عند X₂', calculate: 'احسب', addPoint: 'إضافة نقطة', remove: 'إزالة', result: 'النتيجة', equation: 'المعادلة', rSquared: 'درجة R²', predictedValue: 'القيمة المتوقعة', steps: 'الخطوات', dataPoints: 'نقاط البيانات', invalid: 'أدخل أرقامًا صالحة', minPoints: 'نقطتين على الأقل للبسيط، 3 للمتعدد', singularMatrix: 'مصفوفة مفردة: المتغيرات قد تكون خطية مشتركة' },
-  it: { title: 'Calcolatore di Regressione', subtitle: 'Analizza relazioni tra variabili', method: 'Metodo', predictX: 'Prevedi a X', predictX1: 'Prevedi a X₁', predictX2: 'Prevedi a X₂', calculate: 'Calcola', addPoint: 'Aggiungi Punto', remove: 'Rimuovi', result: 'Risultato', equation: 'Equazione', rSquared: 'Punteggio R²', predictedValue: 'Valore Previsto', steps: 'Passaggi', dataPoints: 'Punti Dati', invalid: 'Inserisci numeri validi', minPoints: 'Almeno 2 punti per semplice, 3 per multipla', singularMatrix: 'Matrice singolare: variabili collineari' },
-  pt: { title: 'Calculadora de Regressão', subtitle: 'Analise relações entre variáveis', method: 'Método', predictX: 'Prever em X', predictX1: 'Prever em X₁', predictX2: 'Prever em X₂', calculate: 'Calcular', addPoint: 'Adicionar Ponto', remove: 'Remover', result: 'Resultado', equation: 'Equação', rSquared: 'Pontuação R²', predictedValue: 'Valor Previsto', steps: 'Etapas', dataPoints: 'Pontos de Dados', invalid: 'Insira números válidos', minPoints: 'Pelo menos 2 pontos para simples, 3 para múltipla', singularMatrix: 'Matriz singular: variáveis podem ser colineares' },
-  ru: { title: 'Калькулятор Регрессии', subtitle: 'Анализируйте зависимости между переменными', method: 'Метод', predictX: 'Прогноз при X', predictX1: 'Прогноз при X₁', predictX2: 'Прогноз при X₂', calculate: 'Вычислить', addPoint: 'Добавить Точку', remove: 'Удалить', result: 'Результат', equation: 'Уравнение', rSquared: 'Оценка R²', predictedValue: 'Прогнозируемое Значение', steps: 'Шаги', dataPoints: 'Точки Данных', invalid: 'Введите корректные числа', minPoints: 'Минимум 2 точки для простой, 3 для множественной', singularMatrix: 'Сингулярная матрица: переменные коллинеарны' },
-  hi: { title: 'प्रतिगमन कैलकुलेटर', subtitle: 'चरों के बीच संबंधों का विश्लेषण करें', method: 'विधि', predictX: 'X पर भविष्यवाणी', predictX1: 'X₁ पर भविष्यवाणी', predictX2: 'X₂ पर भविष्यवाणी', calculate: 'गणना करें', addPoint: 'बिंदु जोड़ें', remove: 'हटाएं', result: 'परिणाम', equation: 'समीकरण', rSquared: 'R² स्कोर', predictedValue: 'भविष्यवाणी मान', steps: 'चरण', dataPoints: 'डेटा बिंदु', invalid: 'कृपया मान्य संख्या दर्ज करें', minPoints: 'सरल के लिए 2, बहु के लिए 3 बिंदु आवश्यक', singularMatrix: 'विषम मैट्रिक्स: चर सहरेखीय हो सकते हैं' },
-  bn: { title: 'নির্ভরণ ক্যালকুলেটর', subtitle: 'চলকের মধ্যে সম্পর্ক বিশ্লেষণ', method: 'পদ্ধতি', predictX: 'X এ পূর্বাভাস', predictX1: 'X₁ এ পূর্বাভাস', predictX2: 'X₂ এ পূর্বাভাস', calculate: 'গণনা', addPoint: 'পয়েন্ট যোগ', remove: 'সরান', result: 'ফলাফল', equation: 'সমীকরণ', rSquared: 'R² স্কোর', predictedValue: 'পূর্বাভাস মান', steps: 'ধাপ', dataPoints: 'ডেটা পয়েন্ট', invalid: 'বৈধ সংখ্যা দিন', minPoints: 'সরলে ২, বহুতে ৩ পয়েন্ট প্রয়োজন', singularMatrix: 'একক ম্যাট্রিক্স: চলক সমরেখীয় হতে পারে' },
-  ms: { title: 'Kalkulator Regresi', subtitle: 'Analisis hubungan antara pembolehubah', method: 'Kaedah', predictX: 'Ramal pada X', predictX1: 'Ramal pada X₁', predictX2: 'Ramal pada X₂', calculate: 'Kira', addPoint: 'Tambah Titik', remove: 'Buang', result: 'Keputusan', equation: 'Persamaan', rSquared: 'Skor R²', predictedValue: 'Nilai Ramalan', steps: 'Langkah', dataPoints: 'Titik Data', invalid: 'Sila masukkan nombor yang sah', minPoints: 'Sekurang-kurangnya 2 titik untuk ringkas, 3 untuk berganda', singularMatrix: 'Matriks singular: pembolehubah mungkin kolinear' },
-  pl: { title: 'Kalkulator Regresji', subtitle: 'Analizuj relacje między zmiennymi', method: 'Metoda', predictX: 'Przewiduj przy X', predictX1: 'Przewiduj przy X₁', predictX2: 'Przewiduj przy X₂', calculate: 'Oblicz', addPoint: 'Dodaj Punkt', remove: 'Usuń', result: 'Wynik', equation: 'Równanie', rSquared: 'Wynik R²', predictedValue: 'Wartość Przewidywana', steps: 'Kroki', dataPoints: 'Punkty Danych', invalid: 'Podaj prawidłowe liczby', minPoints: 'Minimum 2 punkty dla prostej, 3 dla wielokrotnej', singularMatrix: 'Macierz osobliwa: zmienne współliniowe' },
-  id: { title: 'Kalkulator Regresi', subtitle: 'Analisis hubungan antar variabel', method: 'Metode', predictX: 'Prediksi pada X', predictX1: 'Prediksi pada X₁', predictX2: 'Prediksi pada X₂', calculate: 'Hitung', addPoint: 'Tambah Titik', remove: 'Hapus', result: 'Hasil', equation: 'Persamaan', rSquared: 'Skor R²', predictedValue: 'Nilai Prediksi', steps: 'Langkah', dataPoints: 'Titik Data', invalid: 'Masukkan angka yang valid', minPoints: 'Minimal 2 titik untuk sederhana, 3 untuk berganda', singularMatrix: 'Matriks singular: variabel mungkin kolinear' },
-  bg: { title: 'Калкулатор за Регресия', subtitle: 'Анализирайте връзки между променливи', method: 'Метод', predictX: 'Прогноза при X', predictX1: 'Прогноза при X₁', predictX2: 'Прогноза при X₂', calculate: 'Изчисли', addPoint: 'Добави Точка', remove: 'Премахни', result: 'Резултат', equation: 'Уравнение', rSquared: 'R² Резултат', predictedValue: 'Прогнозирана Стойност', steps: 'Стъпки', dataPoints: 'Точки Данни', invalid: 'Въведете валидни числа', minPoints: 'Минимум 2 точки за проста, 3 за множествена', singularMatrix: 'Сингулярна матрица: променливите може да са колинеарни' },
-  tr: { title: 'Regresyon Hesaplayıcısı', subtitle: 'Değişkenler arasındaki ilişkileri analiz edin', method: 'Yöntem', predictX: 'X\'te Tahmin', predictX1: 'X₁\'de Tahmin', predictX2: 'X₂\'de Tahmin', calculate: 'Hesapla', addPoint: 'Nokta Ekle', remove: 'Kaldır', result: 'Sonuç', equation: 'Denklem', rSquared: 'R² Skoru', predictedValue: 'Tahmin Edilen Değer', steps: 'Adımlar', dataPoints: 'Veri Noktaları', invalid: 'Geçerli sayılar girin', minPoints: 'Basit için en az 2, çoklu için 3 nokta gerekli', singularMatrix: 'Tekil matris: değişkenler eşdoğrusal olabilir' },
-  sv: { title: 'Regressionskalkylator', subtitle: 'Analysera samband mellan variabler', method: 'Metod', predictX: 'Förutsäg vid X', predictX1: 'Förutsäg vid X₁', predictX2: 'Förutsäg vid X₂', calculate: 'Beräkna', addPoint: 'Lägg Till Punkt', remove: 'Ta Bort', result: 'Resultat', equation: 'Ekvation', rSquared: 'R²-poäng', predictedValue: 'Förutsagt Värde', steps: 'Steg', dataPoints: 'Datapunkter', invalid: 'Ange giltiga siffror', minPoints: 'Minst 2 punkter för enkel, 3 för multipel', singularMatrix: 'Singulär matris: variabler kan vara kollinjära' },
+  en: { title: 'Regression Calculator', subtitle: 'Analyze relationships between variables', method: 'Method', predictX: 'Predict at X', predictX1: 'Predict at X₁', predictX2: 'Predict at X₂', calculate: 'Calculate', addPoint: 'Add Point', remove: 'Remove', result: 'Result', equation: 'Equation', rSquared: 'R² Score', predictedValue: 'Predicted Value', steps: 'Steps', dataPoints: 'Data Points', invalid: 'Please enter valid numbers', minPoints: 'At least 2 data points required for simple, 3 for multiple', singularMatrix: 'Singular matrix: variables may be collinear', demoData: 'Demo Data', custom: 'Custom', coefficients: 'Coefficients' },
+  es: { title: 'Calculadora de Regresión', subtitle: 'Analiza relaciones entre variables', method: 'Método', predictX: 'Predecir en X', predictX1: 'Predecir en X₁', predictX2: 'Predecir en X₂', calculate: 'Calcular', addPoint: 'Agregar Punto', remove: 'Eliminar', result: 'Resultado', equation: 'Ecuación', rSquared: 'Puntuación R²', predictedValue: 'Valor Predicho', steps: 'Pasos', dataPoints: 'Puntos de Datos', invalid: 'Ingrese números válidos', minPoints: 'Al menos 2 puntos para simple, 3 para múltiple', singularMatrix: 'Matriz singular: variables pueden ser colineales', demoData: 'Datos Demo', custom: 'Personalizado', coefficients: 'Coeficientes' },
+  fr: { title: 'Calculateur de Régression', subtitle: 'Analysez les relations entre les variables', method: 'Méthode', predictX: 'Prédire à X', predictX1: 'Prédire à X₁', predictX2: 'Prédire à X₂', calculate: 'Calculer', addPoint: 'Ajouter un Point', remove: 'Supprimer', result: 'Résultat', equation: 'Équation', rSquared: 'Score R²', predictedValue: 'Valeur Prédite', steps: 'Étapes', dataPoints: 'Points de Données', invalid: 'Entrez des nombres valides', minPoints: 'Au moins 2 points pour simple, 3 pour multiple', singularMatrix: 'Matrice singulière: variables colinéaires', demoData: 'Données Démo', custom: 'Personnalisé', coefficients: 'Coefficients' },
+  de: { title: 'Regressionsrechner', subtitle: 'Analysieren Sie Beziehungen zwischen Variablen', method: 'Methode', predictX: 'Vorhersage bei X', predictX1: 'Vorhersage bei X₁', predictX2: 'Vorhersage bei X₂', calculate: 'Berechnen', addPoint: 'Punkt Hinzufügen', remove: 'Entfernen', result: 'Ergebnis', equation: 'Gleichung', rSquared: 'R²-Wert', predictedValue: 'Vorhergesagter Wert', steps: 'Schritte', dataPoints: 'Datenpunkte', invalid: 'Bitte gültige Zahlen eingeben', minPoints: 'Mindestens 2 Punkte für einfach, 3 für mehrfach', singularMatrix: 'Singuläre Matrix: Variablen kollinear', demoData: 'Demo-Daten', custom: 'Benutzerdefiniert', coefficients: 'Koeffizienten' },
+  ja: { title: '回帰計算機', subtitle: '変数間の関係を分析', method: '手法', predictX: 'Xで予測', predictX1: 'X₁で予測', predictX2: 'X₂で予測', calculate: '計算', addPoint: 'ポイント追加', remove: '削除', result: '結果', equation: '方程式', rSquared: 'R²スコア', predictedValue: '予測値', steps: '手順', dataPoints: 'データポイント', invalid: '有効な数値を入力してください', minPoints: '単回帰は2点以上、重回帰は3点以上必要', singularMatrix: '特異行列: 変数が共線性の可能性', demoData: 'デモデータ', custom: 'カスタム', coefficients: '係数' },
+  ko: { title: '회귀 계산기', subtitle: '변수 간의 관계 분석', method: '방법', predictX: 'X에서 예측', predictX1: 'X₁에서 예측', predictX2: 'X₂에서 예측', calculate: '계산', addPoint: '포인트 추가', remove: '삭제', result: '결과', equation: '방정식', rSquared: 'R² 점수', predictedValue: '예측값', steps: '단계', dataPoints: '데이터 포인트', invalid: '유효한 숫자를 입력하세요', minPoints: '단순회귀 2개 이상, 다중회귀 3개 이상 필요', singularMatrix: '특이 행렬: 변수가 공선형일 수 있음', demoData: '데모 데이터', custom: '사용자 정의', coefficients: '계수' },
+  ar: { title: 'حاسبة الانحدار', subtitle: 'حلل العلاقات بين المتغيرات', method: 'طريقة', predictX: 'توقع عند X', predictX1: 'توقع عند X₁', predictX2: 'توقع عند X₂', calculate: 'احسب', addPoint: 'إضافة نقطة', remove: 'إزالة', result: 'النتيجة', equation: 'المعادلة', rSquared: 'درجة R²', predictedValue: 'القيمة المتوقعة', steps: 'الخطوات', dataPoints: 'نقاط البيانات', invalid: 'أدخل أرقامًا صالحة', minPoints: 'نقطتين على الأقل للبسيط، 3 للمتعدد', singularMatrix: 'مصفوفة مفردة: المتغيرات قد تكون خطية مشتركة', demoData: 'بيانات تجريبية', custom: 'مخصص', coefficients: 'المعاملات' },
+  it: { title: 'Calcolatore di Regressione', subtitle: 'Analizza relazioni tra variabili', method: 'Metodo', predictX: 'Prevedi a X', predictX1: 'Prevedi a X₁', predictX2: 'Prevedi a X₂', calculate: 'Calcola', addPoint: 'Aggiungi Punto', remove: 'Rimuovi', result: 'Risultato', equation: 'Equazione', rSquared: 'Punteggio R²', predictedValue: 'Valore Previsto', steps: 'Passaggi', dataPoints: 'Punti Dati', invalid: 'Inserisci numeri validi', minPoints: 'Almeno 2 punti per semplice, 3 per multipla', singularMatrix: 'Matrice singolare: variabili collineari', demoData: 'Dati Demo', custom: 'Personalizzato', coefficients: 'Coefficienti' },
+  pt: { title: 'Calculadora de Regressão', subtitle: 'Analise relações entre variáveis', method: 'Método', predictX: 'Prever em X', predictX1: 'Prever em X₁', predictX2: 'Prever em X₂', calculate: 'Calcular', addPoint: 'Adicionar Ponto', remove: 'Remover', result: 'Resultado', equation: 'Equação', rSquared: 'Pontuação R²', predictedValue: 'Valor Previsto', steps: 'Etapas', dataPoints: 'Pontos de Dados', invalid: 'Insira números válidos', minPoints: 'Pelo menos 2 pontos para simples, 3 para múltipla', singularMatrix: 'Matriz singular: variáveis podem ser colineares', demoData: 'Dados Demo', custom: 'Personalizado', coefficients: 'Coeficientes' },
+  ru: { title: 'Калькулятор Регрессии', subtitle: 'Анализируйте зависимости между переменными', method: 'Метод', predictX: 'Прогноз при X', predictX1: 'Прогноз при X₁', predictX2: 'Прогноз при X₂', calculate: 'Вычислить', addPoint: 'Добавить Точку', remove: 'Удалить', result: 'Результат', equation: 'Уравнение', rSquared: 'Оценка R²', predictedValue: 'Прогнозируемое Значение', steps: 'Шаги', dataPoints: 'Точки Данных', invalid: 'Введите корректные числа', minPoints: 'Минимум 2 точки для простой, 3 для множественной', singularMatrix: 'Сингулярная матрица: переменные коллинеарны', demoData: 'Демо-данные', custom: 'Пользовательский', coefficients: 'Коэффициенты' },
+  hi: { title: 'प्रतिगमन कैलकुलेटर', subtitle: 'चरों के बीच संबंधों का विश्लेषण करें', method: 'विधि', predictX: 'X पर भविष्यवाणी', predictX1: 'X₁ पर भविष्यवाणी', predictX2: 'X₂ पर भविष्यवाणी', calculate: 'गणना करें', addPoint: 'बिंदु जोड़ें', remove: 'हटाएं', result: 'परिणाम', equation: 'समीकरण', rSquared: 'R² स्कोर', predictedValue: 'भविष्यवाणी मान', steps: 'चरण', dataPoints: 'डेटा बिंदु', invalid: 'कृपया मान्य संख्या दर्ज करें', minPoints: 'सरल के लिए 2, बहु के लिए 3 बिंदु आवश्यक', singularMatrix: 'विषम मैट्रिक्स: चर सहरेखीय हो सकते हैं', demoData: 'डेमो डेटा', custom: 'कस्टम', coefficients: 'गुणांक' },
+  bn: { title: 'নির্ভরণ ক্যালকুলেটর', subtitle: 'চলকের মধ্যে সম্পর্ক বিশ্লেষণ', method: 'পদ্ধতি', predictX: 'X এ পূর্বাভাস', predictX1: 'X₁ এ পূর্বাভাস', predictX2: 'X₂ এ পূর্বাভাস', calculate: 'গণনা', addPoint: 'পয়েন্ট যোগ', remove: 'সরান', result: 'ফলাফল', equation: 'সমীকরণ', rSquared: 'R² স্কোর', predictedValue: 'পূর্বাভাস মান', steps: 'ধাপ', dataPoints: 'ডেটা পয়েন্ট', invalid: 'বৈধ সংখ্যা দিন', minPoints: 'সরলে ২, বহুতে ৩ পয়েন্ট প্রয়োজন', singularMatrix: 'একক ম্যাট্রিক্স: চলক সমরেখীয় হতে পারে', demoData: 'ডেমো ডেটা', custom: 'কাস্টম', coefficients: 'সহগ' },
+  ms: { title: 'Kalkulator Regresi', subtitle: 'Analisis hubungan antara pembolehubah', method: 'Kaedah', predictX: 'Ramal pada X', predictX1: 'Ramal pada X₁', predictX2: 'Ramal pada X₂', calculate: 'Kira', addPoint: 'Tambah Titik', remove: 'Buang', result: 'Keputusan', equation: 'Persamaan', rSquared: 'Skor R²', predictedValue: 'Nilai Ramalan', steps: 'Langkah', dataPoints: 'Titik Data', invalid: 'Sila masukkan nombor yang sah', minPoints: 'Sekurang-kurangnya 2 titik untuk ringkas, 3 untuk berganda', singularMatrix: 'Matriks singular: pembolehubah mungkin kolinear', demoData: 'Data Demo', custom: 'Tersuai', coefficients: 'Pekali' },
+  pl: { title: 'Kalkulator Regresji', subtitle: 'Analizuj relacje między zmiennymi', method: 'Metoda', predictX: 'Przewiduj przy X', predictX1: 'Przewiduj przy X₁', predictX2: 'Przewiduj przy X₂', calculate: 'Oblicz', addPoint: 'Dodaj Punkt', remove: 'Usuń', result: 'Wynik', equation: 'Równanie', rSquared: 'Wynik R²', predictedValue: 'Wartość Przewidywana', steps: 'Kroki', dataPoints: 'Punkty Danych', invalid: 'Podaj prawidłowe liczby', minPoints: 'Minimum 2 punkty dla prostej, 3 dla wielokrotnej', singularMatrix: 'Macierz osobliwa: zmienne współliniowe', demoData: 'Dane Demo', custom: 'Niestandardowy', coefficients: 'Współczynniki' },
+  id: { title: 'Kalkulator Regresi', subtitle: 'Analisis hubungan antar variabel', method: 'Metode', predictX: 'Prediksi pada X', predictX1: 'Prediksi pada X₁', predictX2: 'Prediksi pada X₂', calculate: 'Hitung', addPoint: 'Tambah Titik', remove: 'Hapus', result: 'Hasil', equation: 'Persamaan', rSquared: 'Skor R²', predictedValue: 'Nilai Prediksi', steps: 'Langkah', dataPoints: 'Titik Data', invalid: 'Masukkan angka yang valid', minPoints: 'Minimal 2 titik untuk sederhana, 3 untuk berganda', singularMatrix: 'Matriks singular: variabel mungkin kolinear', demoData: 'Data Demo', custom: 'Kustom', coefficients: 'Koefisien' },
+  bg: { title: 'Калкулатор за Регресия', subtitle: 'Анализирайте връзки между променливи', method: 'Метод', predictX: 'Прогноза при X', predictX1: 'Прогноза при X₁', predictX2: 'Прогноза при X₂', calculate: 'Изчисли', addPoint: 'Добави Точка', remove: 'Премахни', result: 'Резултат', equation: 'Уравнение', rSquared: 'R² Резултат', predictedValue: 'Прогнозирана Стойност', steps: 'Стъпки', dataPoints: 'Точки Данни', invalid: 'Въведете валидни числа', minPoints: 'Минимум 2 точки за проста, 3 за множествена', singularMatrix: 'Сингулярна матрица: променливите може да са колинеарни', demoData: 'Демо Данни', custom: 'Персонализиран', coefficients: 'Коефициенти' },
+  tr: { title: 'Regresyon Hesaplayıcısı', subtitle: 'Değişkenler arasındaki ilişkileri analiz edin', method: 'Yöntem', predictX: 'X\'te Tahmin', predictX1: 'X₁\'de Tahmin', predictX2: 'X₂\'de Tahmin', calculate: 'Hesapla', addPoint: 'Nokta Ekle', remove: 'Kaldır', result: 'Sonuç', equation: 'Denklem', rSquared: 'R² Skoru', predictedValue: 'Tahmin Edilen Değer', steps: 'Adımlar', dataPoints: 'Veri Noktaları', invalid: 'Geçerli sayılar girin', minPoints: 'Basit için en az 2, çoklu için 3 nokta gerekli', singularMatrix: 'Tekil matris: değişkenler eşdoğrusal olabilir', demoData: 'Demo Verileri', custom: 'Özel', coefficients: 'Katsayılar' },
+  sv: { title: 'Regressionskalkylator', subtitle: 'Analysera samband mellan variabler', method: 'Metod', predictX: 'Förutsäg vid X', predictX1: 'Förutsäg vid X₁', predictX2: 'Förutsäg vid X₂', calculate: 'Beräkna', addPoint: 'Lägg Till Punkt', remove: 'Ta Bort', result: 'Resultat', equation: 'Ekvation', rSquared: 'R²-poäng', predictedValue: 'Förutsagt Värde', steps: 'Steg', dataPoints: 'Datapunkter', invalid: 'Ange giltiga siffror', minPoints: 'Minst 2 punkter för enkel, 3 för multipel', singularMatrix: 'Singulär matris: variabler kan vara kollinjära', demoData: 'Demodata', custom: 'Anpassad', coefficients: 'Koefficienter' },
 };
 
 function L(key: string, locale: string): string {
@@ -40,24 +122,60 @@ function L(key: string, locale: string): string {
   return ui[l]?.[key] ?? ui.en[key] ?? key;
 }
 
+function MethodIllustration({ method }: { method: RegMethod }) {
+  return (
+    <div className="method-illustration mb-8">
+      <svg viewBox="0 0 320 120" className="w-full h-full" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <g className="text-neutral-200 dark:text-neutral-700" strokeWidth="1">
+          {[0, 80, 160, 240, 320].map(x => <line key={`vx${x}`} x1={x} y1={0} x2={x} y2={120} />)}
+          {[0, 30, 60, 90, 120].map(y => <line key={`hy${y}`} x1={0} y1={y} x2={320} y2={y} />)}
+        </g>
+        {method === 'simple' ? (
+          <>
+            {[[40, 90], [80, 75], [120, 60], [160, 50], [200, 40], [240, 30], [280, 20]].map(([cx, cy], i) => (
+              <circle key={i} cx={cx} cy={cy} r="4" fill="#D4A853" stroke="none" />
+            ))}
+            <line x1="20" y1="100" x2="300" y2="15" className="text-gold-500" strokeWidth="2.5" />
+            <line x1="20" y1="92" x2="300" y2="7" className="text-gold-500" strokeWidth="1" strokeDasharray="4" opacity="0.5" />
+            <line x1="20" y1="108" x2="300" y2="23" className="text-gold-500" strokeWidth="1" strokeDasharray="4" opacity="0.5" />
+          </>
+        ) : (
+          <>
+            <line x1="40" y1="100" x2="160" y2="100" className="text-neutral-400" strokeWidth="1" />
+            <line x1="40" y1="100" x2="80" y2="60" className="text-neutral-400" strokeWidth="1" />
+            <line x1="160" y1="100" x2="200" y2="60" className="text-neutral-400" strokeWidth="1" />
+            <line x1="80" y1="60" x2="200" y2="60" className="text-neutral-400" strokeWidth="1" />
+            <circle cx="60" cy="80" r="4" fill="#D4A853" stroke="none" />
+            <circle cx="100" cy="70" r="4" fill="#D4A853" stroke="none" />
+            <circle cx="140" cy="55" r="4" fill="#D4A853" stroke="none" />
+            <circle cx="180" cy="40" r="4" fill="#D4A853" stroke="none" />
+            <polygon points="40,90 180,90 200,50 60,50" className="text-gold-500" strokeWidth="1.5" strokeDasharray="4" fill="rgba(212,168,83,0.05)" />
+            <text x="100" y="115" textAnchor="middle" className="text-neutral-400" style={{ fontSize: '9px', fill: 'currentColor', stroke: 'none' }}>X₁ →</text>
+            <text x="50" y="75" textAnchor="middle" className="text-neutral-400" style={{ fontSize: '9px', fill: 'currentColor', stroke: 'none' }} transform="rotate(-35 50 75)">X₂ →</text>
+            <text x="10" y="60" textAnchor="middle" className="text-neutral-400" style={{ fontSize: '9px', fill: 'currentColor', stroke: 'none' }} transform="rotate(-90 10 60)">Y →</text>
+          </>
+        )}
+        <text x="160" y="115" textAnchor="middle" className="text-neutral-400 dark:text-neutral-500" style={{ fontSize: '10px', fill: 'currentColor', stroke: 'none' }}>X →</text>
+        <text x="10" y="60" textAnchor="middle" className="text-neutral-400 dark:text-neutral-500" style={{ fontSize: '10px', fill: 'currentColor', stroke: 'none' }} transform="rotate(-90 10 60)">Y →</text>
+      </svg>
+    </div>
+  );
+}
+
 export default function RegressionCalculator({ locale = 'en' }: Props) {
   const [method, setMethod] = useState<RegMethod>('simple');
-  const [simpleRows, setSimpleRows] = useState<{ x: string; y: string }[]>([
-    { x: '1', y: '2.1' }, { x: '2', y: '3.9' }, { x: '3', y: '6.2' }, { x: '4', y: '7.8' }, { x: '5', y: '10.1' },
-  ]);
-  const [multiRows, setMultiRows] = useState<{ x1: string; x2: string; y: string }[]>([
-    { x1: '1', x2: '2', y: '5' }, { x1: '2', x2: '3', y: '8' }, { x1: '3', x2: '1', y: '7' }, { x1: '4', x2: '4', y: '12' }, { x1: '5', x2: '2', y: '10' },
-  ]);
-  const [predictX, setPredictX] = useState<string>('6');
-  const [predictX1, setPredictX1] = useState<string>('6');
-  const [predictX2, setPredictX2] = useState<string>('3');
+  const [simpleRows, setSimpleRows] = useState<{ x: string; y: string }[]>(simpleDemoSets.house.rows);
+  const [multiRows, setMultiRows] = useState<{ x1: string; x2: string; y: string }[]>(multiDemoSets.sales.rows);
+  const [predictX, setPredictX] = useState<string>(simpleDemoSets.house.predictX);
+  const [predictX1, setPredictX1] = useState<string>(multiDemoSets.sales.predictX1);
+  const [predictX2, setPredictX2] = useState<string>(multiDemoSets.sales.predictX2);
   const [result, setResult] = useState<RegressionResult | null>(null);
   const [error, setError] = useState<string>('');
+  const [activeSimpleSet, setActiveSimpleSet] = useState<string>('house');
+  const [activeMultiSet, setActiveMultiSet] = useState<string>('sales');
 
   const calculateSimple = useCallback(() => {
-    const pts = simpleRows
-      .map(r => ({ x: Number(r.x), y: Number(r.y) }))
-      .filter(p => !isNaN(p.x) && !isNaN(p.y));
+    const pts = simpleRows.map(r => ({ x: Number(r.x), y: Number(r.y) })).filter(p => !isNaN(p.x) && !isNaN(p.y));
     const tgtNum = Number(predictX);
     if (isNaN(tgtNum) || !isFinite(tgtNum)) { setError(L('invalid', locale)); setResult(null); return; }
     try {
@@ -71,9 +189,7 @@ export default function RegressionCalculator({ locale = 'en' }: Props) {
   }, [simpleRows, predictX, locale]);
 
   const calculateMultiple = useCallback(() => {
-    const pts = multiRows
-      .map(r => ({ x1: Number(r.x1), x2: Number(r.x2), y: Number(r.y) }))
-      .filter(p => !isNaN(p.x1) && !isNaN(p.x2) && !isNaN(p.y));
+    const pts = multiRows.map(r => ({ x1: Number(r.x1), x2: Number(r.x2), y: Number(r.y) })).filter(p => !isNaN(p.x1) && !isNaN(p.x2) && !isNaN(p.y));
     const tgt1 = Number(predictX1), tgt2 = Number(predictX2);
     if (isNaN(tgt1) || isNaN(tgt2) || !isFinite(tgt1) || !isFinite(tgt2)) { setError(L('invalid', locale)); setResult(null); return; }
     try {
@@ -94,125 +210,231 @@ export default function RegressionCalculator({ locale = 'en' }: Props) {
     else debouncedMultiple();
   }, [method === 'simple' ? simpleRows : multiRows, method === 'simple' ? predictX : predictX1, predictX2, method, debouncedSimple, debouncedMultiple]);
 
+  const loadSimpleDataset = (key: string) => {
+    const ds = simpleDemoSets[key];
+    if (ds) { setSimpleRows([...ds.rows]); setPredictX(ds.predictX); setActiveSimpleSet(key); setResult(null); setError(''); }
+  };
+  const loadMultiDataset = (key: string) => {
+    const ds = multiDemoSets[key];
+    if (ds) { setMultiRows([...ds.rows]); setPredictX1(ds.predictX1); setPredictX2(ds.predictX2); setActiveMultiSet(key); setResult(null); setError(''); }
+  };
+
   const addSimpleRow = () => setSimpleRows([...simpleRows, { x: '', y: '' }]);
   const removeSimpleRow = (i: number) => { if (simpleRows.length <= 2) return; setSimpleRows(simpleRows.filter((_, idx) => idx !== i)); };
-  const updateSimpleRow = (i: number, field: 'x' | 'y', val: string) => { const n = [...simpleRows]; n[i] = { ...n[i], [field]: sanitizeInput(val) }; setSimpleRows(n); };
+  const updateSimpleRow = (i: number, field: 'x' | 'y', val: string) => { const n = [...simpleRows]; n[i] = { ...n[i], [field]: sanitizeInput(val) }; setSimpleRows(n); setActiveSimpleSet('custom'); };
 
   const addMultiRow = () => setMultiRows([...multiRows, { x1: '', x2: '', y: '' }]);
   const removeMultiRow = (i: number) => { if (multiRows.length <= 2) return; setMultiRows(multiRows.filter((_, idx) => idx !== i)); };
-  const updateMultiRow = (i: number, field: 'x1' | 'x2' | 'y', val: string) => { const n = [...multiRows]; n[i] = { ...n[i], [field]: sanitizeInput(val) }; setMultiRows(n); };
+  const updateMultiRow = (i: number, field: 'x1' | 'x2' | 'y', val: string) => { const n = [...multiRows]; n[i] = { ...n[i], [field]: sanitizeInput(val) }; setMultiRows(n); setActiveMultiSet('custom'); };
 
   return (
-    <div className="calculator-card p-6 md:p-8 max-w-4xl mx-auto dark:bg-neutral-900 dark:border-neutral-700" role="application" aria-label={L('title', locale)}>
-      <div className="text-center mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">{L('title', locale)}</h1>
-        <p className="text-neutral-500 dark:text-neutral-400 text-lg leading-relaxed">{L('subtitle', locale)}</p>
+    <div className="calculator-card p-6 md:p-10 max-w-5xl mx-auto" role="application" aria-label={L('title', locale)}>
+      <div className="text-center mb-10">
+        <h1 className="font-serif text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 tracking-tight">{L('title', locale)}</h1>
+        <div className="gold-divider-wide mb-4" />
+        <p className="text-neutral-500 dark:text-neutral-400 text-lg max-w-xl mx-auto leading-relaxed font-light">{L('subtitle', locale)}</p>
       </div>
 
-      <div className="flex gap-2 mb-6 flex-wrap">
+      <MethodIllustration method={method} />
+
+      <div className="flex gap-2 mb-8 flex-wrap justify-center">
         {(['simple', 'multiple'] as RegMethod[]).map((m) => (
           <button key={m} onClick={() => { setMethod(m); setResult(null); setError(''); }}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:outline-none ${method === m ? 'bg-primary text-white shadow-md hover:scale-105' : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700'}`}>
+            className={method === m ? 'btn-tab-active' : 'btn-tab-inactive'} aria-pressed={method === m}>
             {methodLabels[m][locale] ?? methodLabels[m].en}
           </button>
         ))}
       </div>
 
+      <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-gold-500/5 to-gold-600/5 dark:from-gold-500/10 dark:to-gold-600/10 border border-gold-500/10 dark:border-gold-500/20 backdrop-blur-sm">
+        <div className="flex items-start gap-4">
+          <div className="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg className="h-6 w-6 text-gold-600 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d={methodDescriptions[method].icon} /></svg>
+          </div>
+          <div>
+            <h3 className="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-sm tracking-wide">{methodDescriptions[method].title}</h3>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed mt-1">{methodDescriptions[method].description}</p>
+          </div>
+        </div>
+      </div>
+
       {method === 'simple' ? (
         <>
           <div className="mb-6">
-            <label htmlFor="reg-predict-x" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">{L('predictX', locale)}</label>
+            <div className="flex items-center gap-3 mb-3">
+              <span className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">{L('demoData', locale)}</span>
+              <div className="h-px flex-1 bg-gradient-to-r from-neutral-200 dark:from-neutral-700 to-transparent" />
+            </div>
+            <div className="flex gap-2 flex-wrap">
+              {Object.entries(simpleDemoSets).filter(([k]) => k !== 'custom').map(([key, ds]) => (
+                <button key={key} onClick={() => loadSimpleDataset(key)} className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${activeSimpleSet === key ? 'bg-gold-600 text-white shadow-md shadow-gold-500/20' : 'bg-white/60 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700/80 border border-neutral-200/60 dark:border-neutral-700/60'}`}>{ds.label}</button>
+              ))}
+              <button onClick={() => loadSimpleDataset('custom')} className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${activeSimpleSet === 'custom' ? 'bg-gold-700 text-white shadow-md shadow-gold-500/20' : 'bg-white/60 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700/80 border border-neutral-200/60 dark:border-neutral-700/60'}`}>{L('custom', locale)}</button>
+            </div>
+            {activeSimpleSet !== 'custom' && <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-2 italic">{simpleDemoSets[activeSimpleSet]?.context}</p>}
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="reg-predict-x" className="block text-sm font-bold text-neutral-700 dark:text-neutral-300 mb-2">{L('predictX', locale)}</label>
             <input id="reg-predict-x" type="number" step="any" value={predictX} onChange={(e) => setPredictX(e.target.value)} className="input-field" />
           </div>
-          <div className="mb-6">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-sm font-medium text-neutral-700 dark:text-neutral-300">{L('dataPoints', locale)}</h2>
-              <button onClick={addSimpleRow} className="inline-flex items-center gap-1 text-sm text-primary hover:text-primary/80 font-medium hover:scale-105 transition-all duration-200">
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" /></svg>
-                {L('addPoint', locale)}
-              </button>
-            </div>
-            <div className="space-y-2">
-              <div className="grid grid-cols-[1fr_1fr_auto] gap-2 text-xs font-medium text-neutral-500 dark:text-neutral-400 px-1">
-                <span>X</span><span>Y</span><span className="w-8"></span>
+
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">{L('dataPoints', locale)}</span>
+                <span className="num-badge">{simpleRows.length}</span>
               </div>
-              {simpleRows.map((row, i) => (
-                <div className="grid grid-cols-[1fr_1fr_auto] gap-2" key={i}>
-                  <input type="number" step="any" value={row.x} onChange={(e) => updateSimpleRow(i, 'x', e.target.value)} className="input-field py-2" aria-label={`Point ${i + 1} X`} />
-                  <input type="number" step="any" value={row.y} onChange={(e) => updateSimpleRow(i, 'y', e.target.value)} className="input-field py-2" aria-label={`Point ${i + 1} Y`} />
-                  <button onClick={() => removeSimpleRow(i)} disabled={simpleRows.length <= 2} className="w-8 h-8 flex items-center justify-center text-neutral-400 hover:text-red-500 disabled:opacity-30 disabled:cursor-not-allowed rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
-                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                  </button>
-                </div>
-              ))}
+              <button onClick={addSimpleRow} className="btn-secondary">{L('addPoint', locale)}</button>
+            </div>
+            <div className="bg-white/50 dark:bg-neutral-900/40 rounded-2xl border border-neutral-200/60 dark:border-neutral-700/60 overflow-hidden backdrop-blur-sm">
+              {/* Desktop header */}
+              <div className="hidden md:grid data-table-header px-4 py-3 bg-neutral-100/70 dark:bg-neutral-800/70 border-b border-neutral-200/60 dark:border-neutral-700/60 backdrop-blur-sm" style={{ gridTemplateColumns: '40px 1fr 1fr 44px' }}>
+                <span className="text-center">#</span>
+                <span className="px-4">X</span>
+                <span className="px-4">Y</span>
+                <span></span>
+              </div>
+              {/* Mobile header */}
+              <div className="md:hidden px-4 py-2 text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 border-b border-neutral-200/60 dark:border-neutral-700/60">
+                {L('dataPoints', locale)}
+              </div>
+              <div className="p-2 space-y-1">
+                {simpleRows.map((row, i) => (
+                  <div key={i} className="flex flex-col md:grid gap-4 md:gap-6 items-start md:items-center px-2 py-3 rounded-xl transition-all duration-200 hover:bg-white/60 dark:hover:bg-neutral-800/40" style={{ gridTemplateColumns: '40px 1fr 1fr 44px' }}>
+                    <span className="num-badge text-xs scale-90 self-start md:self-center">{i + 1}</span>
+                    <div className="w-full md:border-r-2 md:border-gold-500/20 md:pr-6 px-4">
+                      <input type="number" step="any" value={row.x} onChange={(e) => updateSimpleRow(i, 'x', e.target.value)} className="input-field py-2 w-full" aria-label={`Point ${i + 1} X`} placeholder="X" />
+                    </div>
+                    <div className="w-full px-4 md:pl-6">
+                      <input type="number" step="any" value={row.y} onChange={(e) => updateSimpleRow(i, 'y', e.target.value)} className="input-field py-2 w-full" aria-label={`Point ${i + 1} Y`} placeholder="Y" />
+                    </div>
+                    <button onClick={() => removeSimpleRow(i)} disabled={simpleRows.length <= 2} className="w-9 h-9 flex items-center justify-center text-neutral-400 hover:text-red-500 disabled:opacity-30 disabled:cursor-not-allowed rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200 self-end md:self-center">
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-          <button onClick={calculateSimple} className="w-full btn-primary justify-center shadow-md hover:shadow-lg">{L('calculate', locale)}</button>
+
+          <button onClick={calculateSimple} className="btn-calculate mb-2">
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+            {L('calculate', locale)}
+          </button>
         </>
       ) : (
         <>
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-3">
+              <span className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">{L('demoData', locale)}</span>
+              <div className="h-px flex-1 bg-gradient-to-r from-neutral-200 dark:from-neutral-700 to-transparent" />
+            </div>
+            <div className="flex gap-2 flex-wrap">
+              {Object.entries(multiDemoSets).filter(([k]) => k !== 'custom').map(([key, ds]) => (
+                <button key={key} onClick={() => loadMultiDataset(key)} className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${activeMultiSet === key ? 'bg-gold-600 text-white shadow-md shadow-gold-500/20' : 'bg-white/60 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700/80 border border-neutral-200/60 dark:border-neutral-700/60'}`}>{ds.label}</button>
+              ))}
+              <button onClick={() => loadMultiDataset('custom')} className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${activeMultiSet === 'custom' ? 'bg-gold-700 text-white shadow-md shadow-gold-500/20' : 'bg-white/60 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700/80 border border-neutral-200/60 dark:border-neutral-700/60'}`}>{L('custom', locale)}</button>
+            </div>
+            {activeMultiSet !== 'custom' && <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-2 italic">{multiDemoSets[activeMultiSet]?.context}</p>}
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 calculator-inputs">
             <div>
-              <label htmlFor="reg-predict-x1" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">{L('predictX1', locale)}</label>
+              <label htmlFor="reg-predict-x1" className="block text-sm font-bold text-neutral-700 dark:text-neutral-300 mb-2">{L('predictX1', locale)}</label>
               <input id="reg-predict-x1" type="number" step="any" value={predictX1} onChange={(e) => setPredictX1(e.target.value)} className="input-field" />
             </div>
             <div>
-              <label htmlFor="reg-predict-x2" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">{L('predictX2', locale)}</label>
+              <label htmlFor="reg-predict-x2" className="block text-sm font-bold text-neutral-700 dark:text-neutral-300 mb-2">{L('predictX2', locale)}</label>
               <input id="reg-predict-x2" type="number" step="any" value={predictX2} onChange={(e) => setPredictX2(e.target.value)} className="input-field" />
             </div>
           </div>
-          <div className="mb-6">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-sm font-medium text-neutral-700 dark:text-neutral-300">{L('dataPoints', locale)}</h2>
-              <button onClick={addMultiRow} className="inline-flex items-center gap-1 text-sm text-primary hover:text-primary/80 font-medium hover:scale-105 transition-all duration-200">
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" /></svg>
-                {L('addPoint', locale)}
-              </button>
-            </div>
-            <div className="space-y-2">
-              <div className="grid grid-cols-[1fr_1fr_1fr_auto] gap-2 text-xs font-medium text-neutral-500 dark:text-neutral-400 px-1">
-                <span>X₁</span><span>X₂</span><span>Y</span><span className="w-8"></span>
+
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">{L('dataPoints', locale)}</span>
+                <span className="num-badge">{multiRows.length}</span>
               </div>
-              {multiRows.map((row, i) => (
-                <div className="grid grid-cols-[1fr_1fr_1fr_auto] gap-2" key={i}>
-                  <input type="number" step="any" value={row.x1} onChange={(e) => updateMultiRow(i, 'x1', e.target.value)} className="input-field py-2" aria-label={`Point ${i + 1} X1`} />
-                  <input type="number" step="any" value={row.x2} onChange={(e) => updateMultiRow(i, 'x2', e.target.value)} className="input-field py-2" aria-label={`Point ${i + 1} X2`} />
-                  <input type="number" step="any" value={row.y} onChange={(e) => updateMultiRow(i, 'y', e.target.value)} className="input-field py-2" aria-label={`Point ${i + 1} Y`} />
-                  <button onClick={() => removeMultiRow(i)} disabled={multiRows.length <= 2} className="w-8 h-8 flex items-center justify-center text-neutral-400 hover:text-red-500 disabled:opacity-30 disabled:cursor-not-allowed rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
-                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                  </button>
-                </div>
-              ))}
+              <button onClick={addMultiRow} className="btn-secondary">{L('addPoint', locale)}</button>
+            </div>
+            <div className="bg-white/50 dark:bg-neutral-900/40 rounded-2xl border border-neutral-200/60 dark:border-neutral-700/60 overflow-hidden backdrop-blur-sm">
+              {/* Desktop header */}
+              <div className="hidden md:grid data-table-header px-4 py-3 bg-neutral-100/70 dark:bg-neutral-800/70 border-b border-neutral-200/60 dark:border-neutral-700/60 backdrop-blur-sm" style={{ gridTemplateColumns: '36px 1fr 1fr 1fr 44px' }}>
+                <span className="text-center">#</span>
+                <span className="px-4">X₁</span>
+                <span className="px-4">X₂</span>
+                <span className="px-4">Y</span>
+                <span></span>
+              </div>
+              {/* Mobile header */}
+              <div className="md:hidden px-4 py-2 text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 border-b border-neutral-200/60 dark:border-neutral-700/60">
+                {L('dataPoints', locale)}
+              </div>
+              <div className="p-2 space-y-1">
+                {multiRows.map((row, i) => (
+                  <div key={i} className="flex flex-col md:grid gap-4 md:gap-6 items-start md:items-center px-2 py-3 rounded-xl transition-all duration-200 hover:bg-white/60 dark:hover:bg-neutral-800/40" style={{ gridTemplateColumns: '36px 1fr 1fr 1fr 44px' }}>
+                    <span className="num-badge text-xs scale-90 self-start md:self-center">{i + 1}</span>
+                    <div className="w-full md:border-r-2 md:border-gold-500/20 md:pr-6 px-4">
+                      <input type="number" step="any" value={row.x1} onChange={(e) => updateMultiRow(i, 'x1', e.target.value)} className="input-field py-2 w-full" aria-label={`Point ${i + 1} X1`} placeholder="X₁" />
+                    </div>
+                    <div className="w-full md:border-r-2 md:border-gold-500/20 md:pr-6 px-4">
+                      <input type="number" step="any" value={row.x2} onChange={(e) => updateMultiRow(i, 'x2', e.target.value)} className="input-field py-2 w-full" aria-label={`Point ${i + 1} X2`} placeholder="X₂" />
+                    </div>
+                    <div className="w-full px-4 md:pl-6">
+                      <input type="number" step="any" value={row.y} onChange={(e) => updateMultiRow(i, 'y', e.target.value)} className="input-field py-2 w-full" aria-label={`Point ${i + 1} Y`} placeholder="Y" />
+                    </div>
+                    <button onClick={() => removeMultiRow(i)} disabled={multiRows.length <= 2} className="w-9 h-9 flex items-center justify-center text-neutral-400 hover:text-red-500 disabled:opacity-30 disabled:cursor-not-allowed rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200 self-end md:self-center">
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-          <button onClick={calculateMultiple} className="w-full btn-primary justify-center shadow-md hover:shadow-lg">{L('calculate', locale)}</button>
+
+          <button onClick={calculateMultiple} className="btn-calculate mb-2">
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+            {L('calculate', locale)}
+          </button>
         </>
       )}
 
-      {error && <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl text-sm text-red-700 dark:text-red-300" role="alert">{error}</div>}
+      {error && (
+        <div className="mt-4 p-4 bg-red-50/80 dark:bg-red-900/20 border border-red-200/60 dark:border-red-700/60 rounded-xl text-sm text-red-700 dark:text-red-300 flex items-center gap-2 animate-fade-in-up backdrop-blur-sm" role="alert">
+          <svg className="h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          {error}
+        </div>
+      )}
 
       {result && (
-        <div className="mt-6 p-6 bg-neutral-50 dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 shadow-md">
-          <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">{L('result', locale)}</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-neutral-200 dark:border-neutral-700">
-              <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-1">{L('predictedValue', locale)}</p>
-              <p className="text-xl font-bold text-primary">{result.predictedValue.toFixed(6)}</p>
+        <div className="mt-8 animate-fade-in-up">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">{L('result', locale)}</span>
+            <div className="h-px flex-1 bg-gradient-to-r from-neutral-200 dark:from-neutral-700 to-transparent" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            <div className="result-card-accent">
+              <p className="text-xs font-semibold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-1">{L('predictedValue', locale)}</p>
+              <p className="text-2xl font-bold text-gold-600 dark:text-gold-400 font-serif">{result.predictedValue.toFixed(4)}</p>
             </div>
-            <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-neutral-200 dark:border-neutral-700">
-              <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-1">{L('rSquared', locale)}</p>
-              <p className="text-xl font-bold text-secondary">{(result.rSquared * 100).toFixed(2)}%</p>
+            <div className="result-card">
+              <p className="text-xs font-semibold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-1">{L('rSquared', locale)}</p>
+              <p className="text-2xl font-bold text-gold-500">{(result.rSquared * 100).toFixed(2)}%</p>
             </div>
-            <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-neutral-200 dark:border-neutral-700 sm:col-span-2">
-              <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-1">{L('equation', locale)}</p>
+            <div className="result-card sm:col-span-2">
+              <p className="text-xs font-semibold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-1">{L('equation', locale)}</p>
               <p className="text-sm font-mono text-neutral-800 dark:text-neutral-200">{result.equation}</p>
             </div>
           </div>
-          <div className="mt-4 bg-white dark:bg-neutral-900 p-4 rounded-lg border border-neutral-200 dark:border-neutral-700">
-            <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-2">{L('steps', locale)}</p>
-            <ol className="space-y-1 text-sm text-neutral-700 dark:text-neutral-300">
+          <div className="result-card">
+            <p className="text-xs font-semibold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-3">{L('steps', locale)}</p>
+            <ol className="space-y-2">
               {result.steps.map((step, i) => (
-                <li key={i} className="flex gap-2"><span className="text-neutral-400 dark:text-neutral-500 font-mono">{i + 1}.</span>{step}</li>
+                <li key={i} className="step-item">
+                  <span className="num-badge flex-shrink-0 scale-90">{i + 1}</span>
+                  <span className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">{step}</span>
+                </li>
               ))}
             </ol>
           </div>

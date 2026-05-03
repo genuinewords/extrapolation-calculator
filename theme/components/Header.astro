@@ -19,60 +19,64 @@ const navLinks = [
 ];
 ---
 
-<header dir={dir} class="bg-white/80 dark:bg-neutral-900/80 backdrop-blur-lg border-b border-neutral-200/60 dark:border-neutral-700/60 sticky top-0 z-50 transition-colors duration-200 shadow-sm dark:shadow-[0_1px_3px_rgba(0,0,0,0.4)]">
+<header dir={dir} class="bg-white/70 dark:bg-neutral-950/70 backdrop-blur-xl border-b border-neutral-200/40 dark:border-neutral-800/40 sticky top-0 z-50 transition-colors duration-300">
   <a href="#main-content" class="skip-link">{locale === 'ar' ? 'تخطي إلى المحتوى' : 'Skip to content'}</a>
   <nav class="section-container" aria-label="Main navigation">
-    <div class="flex items-center justify-between h-16 md:h-18">
-      <a href={localizePath('/', locale)} class="flex items-center gap-2.5 text-lg font-bold text-neutral-900 dark:text-neutral-100 hover:text-primary dark:hover:text-primary transition-colors">
-        <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-        <span>{t(locale, 'site.title')}</span>
+    <div class="flex items-center justify-between h-16 md:h-20">
+      <!-- Luxury Logo -->
+      <a href={localizePath('/', locale)} class="flex items-center gap-3 text-lg font-bold text-neutral-900 dark:text-neutral-100 hover:text-gold-600 dark:hover:text-gold-400 transition-colors duration-300 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 border border-gold-500/20 flex items-center justify-center group-hover:shadow-glow-gold transition-all duration-300">
+          <span class="font-serif text-xl text-gold-600 dark:text-gold-400 leading-none">&#10022;</span>
+        </div>
+        <span class="font-serif tracking-wide">{t(locale, 'site.title')}</span>
       </a>
 
-      <div class="hidden md:flex items-center gap-6">
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex items-center gap-8">
         {navLinks.map((link) => (
           <a
             href={link.href}
-            class="text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:text-primary dark:hover:text-primary transition-colors duration-200 px-1 py-0.5 border-b-2 border-transparent hover:border-primary"
+            class="text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-gold-600 dark:hover:text-gold-400 transition-colors duration-300 px-1 py-1 border-b-2 border-transparent hover:border-gold-500/60"
             aria-current={currentPath === link.href ? 'page' : undefined}
           >
             {link.label}
           </a>
         ))}
         <LanguageSwitcher locale={locale} currentPath={currentPath} />
+        <!-- Premium Theme Toggle -->
         <button
           id="theme-toggle"
           type="button"
           aria-label="Toggle dark mode"
-          class="p-2.5 rounded-lg text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-200 hover:scale-110 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          class="p-2.5 rounded-xl text-neutral-600 dark:text-neutral-400 hover:bg-gold-500/10 dark:hover:bg-gold-500/10 transition-all duration-300 hover:scale-110 focus:ring-2 focus:ring-gold-500 focus:outline-none border border-transparent hover:border-gold-500/20"
         >
-          <svg id="theme-icon-sun" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg id="theme-icon-sun" class="h-5 w-5 hidden text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
-          <svg id="theme-icon-moon" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg id="theme-icon-moon" class="h-5 w-5 hidden text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
           </svg>
         </button>
       </div>
 
+      <!-- Mobile Controls -->
       <div class="flex items-center gap-2 md:hidden">
         <button
           id="theme-toggle-mobile"
           type="button"
           aria-label="Toggle dark mode"
-          class="p-2.5 rounded-lg text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-200 hover:scale-110 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          class="p-2.5 rounded-xl text-neutral-600 dark:text-neutral-400 hover:bg-gold-500/10 transition-all duration-300 hover:scale-110 focus:ring-2 focus:ring-gold-500 focus:outline-none border border-transparent hover:border-gold-500/20"
         >
-          <svg id="theme-icon-sun-m" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg id="theme-icon-sun-m" class="h-5 w-5 hidden text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
-          <svg id="theme-icon-moon-m" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg id="theme-icon-moon-m" class="h-5 w-5 hidden text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
           </svg>
         </button>
         <button
           id="mobile-menu-button"
-          class="p-2.5 rounded-lg text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          class="p-2.5 rounded-xl text-neutral-600 dark:text-neutral-400 hover:bg-gold-500/10 transition-all duration-200 focus:ring-2 focus:ring-gold-500 focus:outline-none border border-transparent hover:border-gold-500/20"
           aria-expanded="false"
           aria-controls="mobile-menu"
           aria-label="Toggle menu"
@@ -85,12 +89,13 @@ const navLinks = [
       </div>
     </div>
 
+    <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden pb-6 pt-2" role="navigation" aria-label="Mobile navigation">
       <div class="flex flex-col gap-1">
         {navLinks.map((link) => (
           <a
             href={link.href}
-            class="px-4 py-3 rounded-lg text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-primary transition-all duration-200"
+            class="px-4 py-3 rounded-xl text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:bg-gold-500/5 dark:hover:bg-gold-500/10 hover:text-gold-600 dark:hover:text-gold-400 transition-all duration-300"
           >
             {link.label}
           </a>

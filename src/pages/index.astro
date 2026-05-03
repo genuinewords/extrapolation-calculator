@@ -1,6 +1,6 @@
 ---
-import BaseLayout from '../../theme/layouts/BaseLayout.astro';
-import FAQ from '../../theme/components/FAQ.astro';
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import FAQ from '@theme/components/FAQ.astro';
 import ExtrapolationCalculator from '../components/ExtrapolationCalculator';
 
 const locale = 'en';
@@ -8,21 +8,36 @@ const currentPath = '/';
 ---
 
 <BaseLayout locale={locale} currentPath={currentPath}>
-  <section class="bg-gradient-to-br from-primary/5 via-primary/3 to-white dark:from-primary/10 dark:via-primary/5 dark:to-neutral-950 py-20 md:py-32 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-7xl mx-auto text-center">
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-gold-50 via-white to-gold-100/30 dark:from-neutral-950 dark:via-neutral-900 dark:to-gold-900/10 py-20 md:py-32 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <!-- Subtle decorative elements -->
+    <div class="absolute top-20 left-10 w-64 h-64 bg-gold-200/20 dark:bg-gold-500/5 rounded-full blur-3xl" aria-hidden="true" />
+    <div class="absolute bottom-10 right-10 w-96 h-96 bg-gold-300/10 dark:bg-gold-400/5 rounded-full blur-3xl" aria-hidden="true" />
+
+    <div class="max-w-7xl mx-auto text-center relative z-10">
       <div class="max-w-3xl mx-auto">
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 leading-tight">
+        <!-- Premium Badge -->
+        <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/70 dark:bg-neutral-800/60 backdrop-blur-sm border border-gold-500/20 text-gold-700 dark:text-gold-300 text-sm font-semibold mb-8 animate-fade-in-up shadow-sm">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          Free, Private & Browser-Based
+        </div>
+
+        <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 leading-tight tracking-tight">
           Mathematical<br class="hidden sm:block" /> Calculator Suite
         </h1>
-        <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+
+        <div class="gold-divider-wide mb-6" />
+
+        <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
           Predict, estimate, and analyze with extrapolation, interpolation, and regression — free, private, entirely in your browser.
         </p>
+
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="#calculator" class="btn-primary shadow-lg hover:shadow-xl">
+          <a href="#calculator" class="btn-primary shadow-lg shadow-gold-500/20">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
             Start Calculating
           </a>
-          <a href="#tools" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium text-neutral-700 dark:text-neutral-300 border border-neutral-300 dark:border-neutral-600 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:scale-105 transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          <a href="#tools" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl font-semibold text-neutral-700 dark:text-neutral-300 border border-neutral-300/60 dark:border-neutral-600/60 hover:bg-white/60 dark:hover:bg-neutral-800/60 hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-gold-500 focus:outline-none backdrop-blur-sm">
             Explore Tools
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
           </a>
@@ -31,54 +46,58 @@ const currentPath = '/';
     </div>
   </section>
 
+  <!-- Tools Section -->
   <section id="tools" class="py-20 md:py-28">
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-14">
-        <h2 class="text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Calculator Tools</h2>
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Calculator Tools</h2>
+        <div class="gold-divider mb-4" />
         <p class="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">Three powerful calculators for every mathematical need.</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-        <a href="/interpolation/" class="calculator-card p-8 block group">
-          <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5">
-            <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
+        <a href="/interpolation/" class="tool-card block group relative z-10 stagger-1 animate-stagger">
+          <div class="w-14 h-14 bg-gradient-to-br from-gold-500 to-gold-300 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-gold-500/20 group-hover:shadow-gold-500/40 group-hover:scale-110 transition-all duration-300">
+            <svg class="h-7 w-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
           </div>
-          <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-primary transition-colors">Interpolation</h3>
-          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">Estimate values between known data points using linear, Lagrange, or cubic spline methods.</p>
-          <span class="inline-flex items-center gap-1 text-primary text-sm font-medium">
+          <h3 class="font-serif text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-gold-600 dark:group-hover:text-gold-400 transition-colors duration-200">Interpolation</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-5">Estimate values between known data points using linear, Lagrange, or cubic spline methods.</p>
+          <span class="inline-flex items-center gap-1.5 text-gold-600 dark:text-gold-400 font-semibold text-sm group-hover:gap-2 transition-all duration-200">
             Open Calculator
-            <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+            <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
           </span>
         </a>
-        <a href="/regression/" class="calculator-card p-8 block group">
-          <div class="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center mb-5">
-            <svg class="h-6 w-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
+        <a href="/regression/" class="tool-card block group relative z-10 stagger-2 animate-stagger">
+          <div class="w-14 h-14 bg-gradient-to-br from-gold-600 to-gold-400 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-gold-500/20 group-hover:shadow-gold-500/40 group-hover:scale-110 transition-all duration-300">
+            <svg class="h-7 w-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
           </div>
-          <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-secondary transition-colors">Regression</h3>
-          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">Analyze relationships between variables with simple or multiple regression models.</p>
-          <span class="inline-flex items-center gap-1 text-secondary text-sm font-medium">
+          <h3 class="font-serif text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-gold-600 dark:group-hover:text-gold-400 transition-colors duration-200">Regression</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-5">Analyze relationships between variables with simple or multiple regression models.</p>
+          <span class="inline-flex items-center gap-1.5 text-gold-600 dark:text-gold-400 font-semibold text-sm group-hover:gap-2 transition-all duration-200">
             Open Calculator
-            <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+            <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
           </span>
         </a>
-        <a href="#calculator" class="calculator-card p-8 block group">
-          <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-5">
-            <svg class="h-6 w-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+        <a href="#calculator" class="tool-card block group relative z-10 stagger-3 animate-stagger">
+          <div class="w-14 h-14 bg-gradient-to-br from-gold-700 to-gold-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-gold-500/20 group-hover:shadow-gold-500/40 group-hover:scale-110 transition-all duration-300">
+            <svg class="h-7 w-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
           </div>
-          <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-accent transition-colors">Extrapolation</h3>
-          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">Predict future values beyond your data using linear, exponential, or polynomial models.</p>
-          <span class="inline-flex items-center gap-1 text-accent text-sm font-medium">
+          <h3 class="font-serif text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 group-hover:text-gold-600 dark:group-hover:text-gold-400 transition-colors duration-200">Extrapolation</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-5">Predict future values beyond your data using linear, exponential, or polynomial models.</p>
+          <span class="inline-flex items-center gap-1.5 text-gold-600 dark:text-gold-400 font-semibold text-sm group-hover:gap-2 transition-all duration-200">
             Open Calculator
-            <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+            <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
           </span>
         </a>
       </div>
     </div>
   </section>
 
-  <section id="calculator" class="py-16 md:py-20 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 bg-neutral-50 dark:bg-neutral-900/50">
+  <!-- Calculator Section -->
+  <section id="calculator" class="py-16 md:py-20 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-neutral-50/50 to-white dark:from-neutral-950 dark:via-neutral-900/50 dark:to-neutral-950">
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-10">
-        <h2 class="text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Extrapolation Calculator</h2>
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Extrapolation Calculator</h2>
+        <div class="gold-divider mb-4" />
         <p class="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">Predict values beyond your observed data range.</p>
       </div>
       <ExtrapolationCalculator client:load locale={locale} />

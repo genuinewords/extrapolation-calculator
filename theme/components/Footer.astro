@@ -9,40 +9,67 @@ interface Props {
 const { locale } = Astro.props;
 const dir = isRtl(locale) ? 'rtl' : 'ltr';
 const year = new Date().getFullYear();
+
+const socialIcons = [
+  { name: 'Twitter', href: '#', path: 'M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0012 8v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z' },
+  { name: 'GitHub', href: '#', path: 'M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22' },
+  { name: 'LinkedIn', href: '#', path: 'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 110-4 2 2 0 010 4z' },
+];
 ---
 
-<footer dir={dir} class="bg-neutral-900 dark:bg-neutral-900 text-neutral-300 mt-auto border-t border-neutral-800 dark:border-neutral-700 shadow-[0_-1px_2px_rgba(0,0,0,0.1)] dark:shadow-[0_-1px_2px_rgba(255,255,255,0.05)]">
+<footer dir={dir} class="relative bg-neutral-900 text-neutral-300 mt-auto border-t border-gold-500/20 shadow-[0_-4px_30px_rgba(0,0,0,0.3)] dark:shadow-[0_-4px_30px_rgba(255,255,255,0.03)]">
+  <!-- Gold accent line at top -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-500/40 to-transparent" />
+
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-16">
+      <!-- Brand Column -->
       <div>
-        <div class="flex items-center gap-2.5 mb-4">
-          <svg class="h-7 w-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-          </svg>
-          <h3 class="text-white font-bold text-lg">{t(locale, 'site.title')}</h3>
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 border border-gold-500/20 flex items-center justify-center">
+            <span class="font-serif text-xl text-gold-500 leading-none">&#10022;</span>
+          </div>
+          <h3 class="text-white font-serif text-xl tracking-wide">{t(locale, 'site.title')}</h3>
         </div>
-        <p class="text-sm text-neutral-400 leading-relaxed">{t(locale, 'site.description')}</p>
+        <p class="text-sm text-neutral-400 leading-relaxed max-w-xs">{t(locale, 'site.description')}</p>
+        <!-- Social Icons -->
+        <div class="flex items-center gap-3 mt-6">
+          {socialIcons.map((icon) => (
+            <a href={icon.href} aria-label={icon.name} class="w-9 h-9 rounded-lg bg-neutral-800/80 border border-neutral-700/50 flex items-center justify-center text-neutral-400 hover:text-gold-400 hover:border-gold-500/30 hover:bg-gold-500/10 transition-all duration-300">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d={icon.path} />
+              </svg>
+            </a>
+          ))}
+        </div>
       </div>
+
+      <!-- Links Column -->
       <div>
-        <h3 class="text-white font-semibold mb-4 text-lg">Links</h3>
+        <h3 class="text-white font-serif font-semibold mb-5 text-lg tracking-wide">Links</h3>
         <ul class="space-y-3 text-sm">
-          <li><a href={localizePath('/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.home')}</a></li>
-          <li><a href={localizePath('/interpolation/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>Interpolation</a></li>
-          <li><a href={localizePath('/regression/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>Regression</a></li>
-          <li><a href={localizePath('/about-us/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.about')}</a></li>
-          <li><a href={localizePath('/contact-us/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.contact')}</a></li>
+          <li><a href={localizePath('/', locale)} class="text-neutral-400 hover:text-gold-400 transition-colors duration-300 flex items-center gap-2.5 group"><span class="w-1.5 h-1.5 rounded-full bg-gold-500/40 group-hover:bg-gold-400 transition-colors" />{t(locale, 'nav.home')}</a></li>
+          <li><a href={localizePath('/interpolation/', locale)} class="text-neutral-400 hover:text-gold-400 transition-colors duration-300 flex items-center gap-2.5 group"><span class="w-1.5 h-1.5 rounded-full bg-gold-500/40 group-hover:bg-gold-400 transition-colors" />Interpolation</a></li>
+          <li><a href={localizePath('/regression/', locale)} class="text-neutral-400 hover:text-gold-400 transition-colors duration-300 flex items-center gap-2.5 group"><span class="w-1.5 h-1.5 rounded-full bg-gold-500/40 group-hover:bg-gold-400 transition-colors" />Regression</a></li>
+          <li><a href={localizePath('/about-us/', locale)} class="text-neutral-400 hover:text-gold-400 transition-colors duration-300 flex items-center gap-2.5 group"><span class="w-1.5 h-1.5 rounded-full bg-gold-500/40 group-hover:bg-gold-400 transition-colors" />{t(locale, 'nav.about')}</a></li>
+          <li><a href={localizePath('/contact-us/', locale)} class="text-neutral-400 hover:text-gold-400 transition-colors duration-300 flex items-center gap-2.5 group"><span class="w-1.5 h-1.5 rounded-full bg-gold-500/40 group-hover:bg-gold-400 transition-colors" />{t(locale, 'nav.contact')}</a></li>
         </ul>
       </div>
+
+      <!-- Legal Column -->
       <div>
-        <h3 class="text-white font-semibold mb-4 text-lg">Legal</h3>
+        <h3 class="text-white font-serif font-semibold mb-5 text-lg tracking-wide">Legal</h3>
         <ul class="space-y-3 text-sm">
-          <li><a href={localizePath('/terms/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.terms')}</a></li>
-          <li><a href={localizePath('/privacy/', locale)} class="text-neutral-400 hover:text-white transition-colors duration-200 flex items-center gap-2"><svg class="h-3 w-3" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" /></svg>{t(locale, 'nav.privacy')}</a></li>
+          <li><a href={localizePath('/terms/', locale)} class="text-neutral-400 hover:text-gold-400 transition-colors duration-300 flex items-center gap-2.5 group"><span class="w-1.5 h-1.5 rounded-full bg-gold-500/40 group-hover:bg-gold-400 transition-colors" />{t(locale, 'nav.terms')}</a></li>
+          <li><a href={localizePath('/privacy/', locale)} class="text-neutral-400 hover:text-gold-400 transition-colors duration-300 flex items-center gap-2.5 group"><span class="w-1.5 h-1.5 rounded-full bg-gold-500/40 group-hover:bg-gold-400 transition-colors" />{t(locale, 'nav.privacy')}</a></li>
         </ul>
       </div>
     </div>
-    <div class="border-t border-neutral-800 dark:border-neutral-800 mt-10 pt-8 text-center text-sm text-neutral-500">
-      <p>&copy; {year} {t(locale, 'site.title')}. {t(locale, 'footer.rights')}</p>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-neutral-800/80 mt-12 pt-8 text-center">
+      <div class="gold-divider-wide mb-6" />
+      <p class="text-sm text-neutral-500 font-serif tracking-wide">&copy; {year} {t(locale, 'site.title')}. {t(locale, 'footer.rights')}</p>
     </div>
   </div>
 </footer>

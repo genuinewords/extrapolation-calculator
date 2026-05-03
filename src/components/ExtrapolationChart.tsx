@@ -36,9 +36,15 @@ const ExtrapolationChart = forwardRef<HTMLCanvasElement, Props>(function Extrapo
     }
   }, [ref, chartRef.current]);
 
+  // Detect dark mode for grid colors
+  const isDark = typeof document !== 'undefined' && document.documentElement.classList.contains('dark');
+  const gridColor = isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.04)';
+  const textColor = isDark ? '#a1a1aa' : '#71717a';
+  const tooltipBg = isDark ? 'rgba(24, 24, 27, 0.95)' : 'rgba(24, 24, 27, 0.9)';
+
   if (points.length < 2) {
     return (
-      <div className="h-64 bg-neutral-50 dark:bg-neutral-800 rounded-xl flex items-center justify-center text-neutral-400">
+      <div className="h-64 bg-white/40 dark:bg-neutral-800/40 rounded-2xl flex items-center justify-center text-neutral-400 dark:text-neutral-500 border border-neutral-200/40 dark:border-neutral-700/40 backdrop-blur-sm">
         Add at least 2 data points to see the chart
       </div>
     );
@@ -71,8 +77,8 @@ const ExtrapolationChart = forwardRef<HTMLCanvasElement, Props>(function Extrapo
       {
         label: 'Data Points',
         data: points.map((p) => ({ x: p.x, y: p.y })),
-        backgroundColor: '#3B82F6',
-        borderColor: '#3B82F6',
+        backgroundColor: '#B8860B',
+        borderColor: '#B8860B',
         pointRadius: 6,
         pointHoverRadius: 8,
         showLine: false,
@@ -80,8 +86,8 @@ const ExtrapolationChart = forwardRef<HTMLCanvasElement, Props>(function Extrapo
       {
         label: 'Fit Curve',
         data: curvePoints,
-        borderColor: '#10B981',
-        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+        borderColor: '#D4A853',
+        backgroundColor: 'rgba(212, 168, 83, 0.1)',
         pointRadius: 0,
         showLine: true,
         borderWidth: 2,
@@ -91,8 +97,8 @@ const ExtrapolationChart = forwardRef<HTMLCanvasElement, Props>(function Extrapo
       {
         label: 'Extrapolated Point',
         data: result ? [{ x: targetX, y: result.value }] : [],
-        backgroundColor: '#8B5CF6',
-        borderColor: '#8B5CF6',
+        backgroundColor: '#E8C07A',
+        borderColor: '#E8C07A',
         pointRadius: 8,
         pointHoverRadius: 10,
         pointStyle: 'triangle' as const,
@@ -112,30 +118,35 @@ const ExtrapolationChart = forwardRef<HTMLCanvasElement, Props>(function Extrapo
           usePointStyle: true,
           padding: 16,
           font: { size: 12, family: 'Inter, system-ui, sans-serif' },
+          color: textColor,
         },
       },
       tooltip: {
-        backgroundColor: 'rgba(24, 24, 27, 0.9)',
-        titleFont: { size: 12 },
-        bodyFont: { size: 12 },
+        backgroundColor: tooltipBg,
+        titleFont: { size: 12, color: '#fff' },
+        bodyFont: { size: 12, color: '#fff' },
         padding: 12,
         cornerRadius: 8,
       },
     },
     scales: {
       x: {
-        title: { display: true, text: 'X', font: { size: 12 } },
-        grid: { color: 'rgba(0, 0, 0, 0.05)' },
+        title: { display: true, text: 'X', font: { size: 12, color: textColor } },
+        grid: { color: gridColor },
+        ticks: { color: textColor },
+        border: { color: gridColor },
       },
       y: {
-        title: { display: true, text: 'Y', font: { size: 12 } },
-        grid: { color: 'rgba(0, 0, 0, 0.05)' },
+        title: { display: true, text: 'Y', font: { size: 12, color: textColor } },
+        grid: { color: gridColor },
+        ticks: { color: textColor },
+        border: { color: gridColor },
       },
     },
   };
 
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-700 p-4">
+    <div className="bg-white/60 dark:bg-black/40 rounded-2xl border border-neutral-200/40 dark:border-neutral-700/40 p-4 backdrop-blur-sm">
       <Scatter ref={chartRef} data={data} options={options} />
     </div>
   );

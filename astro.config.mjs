@@ -46,6 +46,11 @@ export default defineConfig({
     }),
   ],
   vite: {
+    resolve: {
+      alias: {
+        '@theme': new URL('./theme', import.meta.url).pathname,
+      },
+    },
     build: {
       rollupOptions: {
         output: {
