@@ -4,23 +4,90 @@ import { t } from '@theme/i18n/utils';
 
 const locale = 'en';
 const currentPath = '/contact-us/';
+
+const contactMethods = [
+  {
+    title: 'Email',
+    description: 'contact@extrapolationcalculator.com',
+    icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+    href: 'mailto:contact@extrapolationcalculator.com',
+  },
+  {
+    title: 'Response Time',
+    description: 'Within 24 hours',
+    icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+    href: null,
+  },
+  {
+    title: 'Availability',
+    description: 'Monday – Friday',
+    icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
+    href: null,
+  },
+];
 ---
 
 <BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'contact.title')} description="Get in touch with the Extrapolation Calculator team.">
-  <div class="max-w-2xl mx-auto py-16 md:py-24">
-    <div class="text-center mb-10">
-      <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Contact Us</h1>
-      <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed">Have questions, feedback, or suggestions? We'd love to hear from you.</p>
-    </div>
+  <!-- Hero -->
+  <section class="relative -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-20 md:py-28 bg-gradient-to-br from-gold-50 via-white to-gold-100/30 dark:from-neutral-950 dark:via-neutral-900 dark:to-gold-900/10 overflow-hidden">
+    <div class="absolute top-20 left-10 w-72 h-72 bg-gold-200/20 dark:bg-gold-500/5 rounded-full blur-3xl" aria-hidden="true" />
+    <div class="absolute bottom-10 right-10 w-96 h-96 bg-gold-300/10 dark:bg-gold-400/5 rounded-full blur-3xl" aria-hidden="true" />
 
-    <div class="calculator-card p-8">
-      <form id="contact-form" class="space-y-6" action="https://api.web3forms.com/submit" method="POST" novalidate>
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 dark:bg-neutral-800/60 backdrop-blur-sm border border-gold-500/20 text-gold-700 dark:text-gold-300 text-sm font-semibold mb-8 animate-fade-in-up shadow-sm">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+        Get in Touch
+      </div>
+      <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 tracking-tight leading-tight">
+        Contact Us
+      </h1>
+      <div class="gold-divider-wide mb-6" />
+      <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed font-light">
+        Have questions, feedback, or suggestions? We'd love to hear from you.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Methods -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 -mt-12 md:-mt-16 relative z-20">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+      {contactMethods.map((method, i) => (
+        <div class={`calculator-card p-6 text-center stagger-${i + 1} animate-stagger`}>
+          <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-gold-500/15 to-gold-600/10 border border-gold-500/15 flex items-center justify-center">
+            <svg class="h-6 w-6 text-gold-600 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={method.icon} />
+            </svg>
+          </div>
+          <h3 class="font-serif text-base font-bold text-neutral-900 dark:text-neutral-100 mb-1 tracking-wide">{method.title}</h3>
+          {method.href ? (
+            <a href={method.href} class="text-sm text-gold-600 dark:text-gold-400 hover:underline">{method.description}</a>
+          ) : (
+            <p class="text-sm text-neutral-500 dark:text-neutral-400">{method.description}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="max-w-2xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+    <div class="calculator-card p-8 md:p-12 relative overflow-hidden">
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold-500/40 to-transparent" />
+      <div class="absolute -top-10 -right-10 w-40 h-40 bg-gold-500/5 rounded-full blur-2xl" aria-hidden="true" />
+
+      <div class="text-center mb-10 relative z-10">
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 tracking-tight">Send a Message</h2>
+        <div class="gold-divider mb-2" />
+        <p class="text-neutral-600 dark:text-neutral-400">Fill out the form below and we'll get back to you promptly.</p>
+      </div>
+
+      <form id="contact-form" class="space-y-8 relative z-10" action="https://api.web3forms.com/submit" method="POST" novalidate>
         <input type="hidden" name="access_key" value={import.meta.env.PUBLIC_CONTACT_FORM_KEY} />
         <input type="hidden" name="subject" value="Contact Form Submission - Extrapolation Calculator" />
         <input type="hidden" name="from_name" value="Extrapolation Calculator" />
 
         <div>
-          <label for="name" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Name</label>
+          <label for="name" class="block text-sm font-bold text-neutral-700 dark:text-neutral-300 mb-2 tracking-wide">Name</label>
           <input
             type="text"
             id="name"
@@ -28,12 +95,13 @@ const currentPath = '/contact-us/';
             required
             autocomplete="name"
             class="input-field"
+            placeholder="Your full name"
             aria-required="true"
           />
         </div>
 
         <div>
-          <label for="email" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Email</label>
+          <label for="email" class="block text-sm font-bold text-neutral-700 dark:text-neutral-300 mb-2 tracking-wide">Email</label>
           <input
             type="email"
             id="email"
@@ -41,18 +109,20 @@ const currentPath = '/contact-us/';
             required
             autocomplete="email"
             class="input-field"
+            placeholder="you@example.com"
             aria-required="true"
           />
         </div>
 
         <div>
-          <label for="message" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Message</label>
+          <label for="message" class="block text-sm font-bold text-neutral-700 dark:text-neutral-300 mb-2 tracking-wide">Message</label>
           <textarea
             id="message"
             name="message"
             rows="5"
             required
             class="input-field resize-y"
+            placeholder="How can we help you?"
             aria-required="true"
           ></textarea>
         </div>
@@ -61,13 +131,14 @@ const currentPath = '/contact-us/';
 
         <button
           type="submit"
-          class="w-full btn-primary justify-center shadow-md hover:shadow-lg"
+          class="w-full btn-calculate shadow-lg shadow-gold-500/20"
         >
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
           Send Message
         </button>
       </form>
     </div>
-  </div>
+  </section>
 </BaseLayout>
 
 <script>
@@ -83,14 +154,16 @@ const currentPath = '/contact-us/';
 
     if (!name || !email || !message) {
       status.textContent = 'Please fill in all fields.';
-      status.className = 'p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg text-sm text-red-700 dark:text-red-300';
+      status.className = 'p-4 bg-red-50/80 dark:bg-red-900/20 border border-red-200/60 dark:border-red-700/60 rounded-xl text-sm text-red-700 dark:text-red-300 backdrop-blur-sm animate-fade-in-up';
+      status.classList.remove('hidden');
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       status.textContent = 'Please enter a valid email address.';
-      status.className = 'p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg text-sm text-red-700 dark:text-red-300';
+      status.className = 'p-4 bg-red-50/80 dark:bg-red-900/20 border border-red-200/60 dark:border-red-700/60 rounded-xl text-sm text-red-700 dark:text-red-300 backdrop-blur-sm animate-fade-in-up';
+      status.classList.remove('hidden');
       return;
     }
 
@@ -101,15 +174,18 @@ const currentPath = '/contact-us/';
       });
       if (response.ok) {
         status.textContent = 'Message sent successfully!';
-        status.className = 'p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg text-sm text-green-700 dark:text-green-300';
+        status.className = 'p-4 bg-green-50/80 dark:bg-green-900/20 border border-green-200/60 dark:border-green-700/60 rounded-xl text-sm text-green-700 dark:text-green-300 backdrop-blur-sm animate-fade-in-up';
+        status.classList.remove('hidden');
         form.reset();
       } else {
         status.textContent = 'Failed to send message. Please try again.';
-        status.className = 'p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg text-sm text-red-700 dark:text-red-300';
+        status.className = 'p-4 bg-red-50/80 dark:bg-red-900/20 border border-red-200/60 dark:border-red-700/60 rounded-xl text-sm text-red-700 dark:text-red-300 backdrop-blur-sm animate-fade-in-up';
+        status.classList.remove('hidden');
       }
     } catch {
       status.textContent = 'Network error. Please try again later.';
-      status.className = 'p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg text-sm text-red-700 dark:text-red-300';
+      status.className = 'p-4 bg-red-50/80 dark:bg-red-900/20 border border-red-200/60 dark:border-red-700/60 rounded-xl text-sm text-red-700 dark:text-red-300 backdrop-blur-sm animate-fade-in-up';
+      status.classList.remove('hidden');
     }
   });
 </script>

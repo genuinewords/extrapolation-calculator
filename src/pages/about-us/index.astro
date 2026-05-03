@@ -4,50 +4,179 @@ import { t } from '@theme/i18n/utils';
 
 const locale = 'en';
 const currentPath = '/about-us/';
+
+const values = [
+  {
+    title: 'Privacy First',
+    description: 'All calculations run entirely in your browser. Your data never leaves your device, and we do not store any inputs or results on our servers.',
+    icon: 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z',
+  },
+  {
+    title: 'Open Source',
+    description: 'Built with Astro, React, and Tailwind CSS. Designed for performance, accessibility, and internationalization across 18 languages.',
+    icon: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+  },
+  {
+    title: 'Precision',
+    description: 'Five mathematical methods — linear, exponential, logarithmic, polynomial, and quadratic — with R² scoring and confidence metrics.',
+    icon: 'M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z',
+  },
+  {
+    title: 'Accessibility',
+    description: 'WCAG-compliant design with keyboard navigation, screen reader support, skip links, and RTL language support including Arabic.',
+    icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z',
+  },
+];
+
+const stats = [
+  { value: '18', label: 'Languages' },
+  { value: '3', label: 'Calculators' },
+  { value: '5', label: 'Methods' },
+  { value: '0', label: 'Data Stored' },
+];
 ---
 
-<BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'about.title')} description="Learn about the Extrapolation Calculator project, our mission, and team.">
-  <div class="page-container">
-    <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-8">About Us</h1>
+<BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'about.title')} description="Learn about the Extrapolation Calculator project, our mission, and values.">
+  <!-- Hero -->
+  <section class="relative -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-20 md:py-28 bg-gradient-to-br from-gold-50 via-white to-gold-100/30 dark:from-neutral-950 dark:via-neutral-900 dark:to-gold-900/10 overflow-hidden">
+    <div class="absolute top-20 right-10 w-72 h-72 bg-gold-200/20 dark:bg-gold-500/5 rounded-full blur-3xl" aria-hidden="true" />
+    <div class="absolute bottom-10 left-10 w-96 h-96 bg-gold-300/10 dark:bg-gold-400/5 rounded-full blur-3xl" aria-hidden="true" />
 
-    <div class="space-y-8">
-      <div class="calculator-card p-8">
-        <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Our Mission</h2>
-        <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed">
-          The Extrapolation Calculator is a free, open-source tool designed to make mathematical
-          prediction accessible to everyone. Whether you're a student learning about data analysis,
-          a researcher forecasting trends, or a professional making business projections, our
-          calculator provides the tools you need — right in your browser.
-        </p>
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 dark:bg-neutral-800/60 backdrop-blur-sm border border-gold-500/20 text-gold-700 dark:text-gold-300 text-sm font-semibold mb-8 animate-fade-in-up shadow-sm">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        About Our Project
       </div>
+      <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 tracking-tight leading-tight">
+        About Us
+      </h1>
+      <div class="gold-divider-wide mb-6" />
+      <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed font-light">
+        A free, open-source mathematical calculator suite designed for precision, privacy, and elegance.
+      </p>
+    </div>
+  </section>
 
-      <div class="calculator-card p-8">
-        <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Privacy First</h2>
-        <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed">
-          We believe your data belongs to you. All calculations are performed entirely within
-          your browser using client-side JavaScript. Your data never leaves your device, and we
-          do not store any calculation inputs or results on our servers.
-        </p>
+  <!-- Mission Statement -->
+  <section class="max-w-4xl mx-auto py-16 md:py-20 px-4 sm:px-6">
+    <div class="calculator-card p-8 md:p-12 text-center relative overflow-hidden">
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold-500/40 to-transparent" />
+      <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 border border-gold-500/20 flex items-center justify-center">
+        <span class="font-serif text-3xl text-gold-600 dark:text-gold-400 leading-none">&#10022;</span>
       </div>
+      <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Our Mission</h2>
+      <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed max-w-2xl mx-auto">
+        We believe advanced mathematical tools should be accessible to everyone. Whether you're a student exploring data analysis,
+        a researcher forecasting trends, or a professional making business projections — our calculators provide the precision you need,
+        entirely within your browser, completely free.
+      </p>
+    </div>
+  </section>
 
-      <div class="calculator-card p-8">
-        <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4">How It Works</h2>
-        <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed">
-          Our calculator supports five extrapolation methods: linear, exponential, logarithmic,
-          polynomial, and quadratic. Each method fits a mathematical model to your data points
-          and projects it beyond the observed range. The R² score and confidence metrics help
-          you assess the reliability of each prediction.
-        </p>
+  <!-- Stats Bar -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 mb-16 md:mb-20">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      {stats.map((stat, i) => (
+        <div class="calculator-card p-6 text-center stagger-{i + 1} animate-stagger">
+          <p class="font-serif text-3xl md:text-4xl font-bold text-gold-600 dark:text-gold-400 mb-1">{stat.value}</p>
+          <p class="text-sm font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-widest">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Values Grid -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 pb-16 md:pb-24">
+    <div class="text-center mb-12">
+      <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 tracking-tight">What We Stand For</h2>
+      <div class="gold-divider mb-2" />
+      <p class="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto">The principles that guide every decision we make.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {values.map((value, i) => (
+        <div class="calculator-card p-8 relative overflow-hidden group stagger-{i + 1} animate-stagger">
+          <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-gold-500/60 to-gold-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div class="flex items-start gap-5">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-gold-500/15 to-gold-600/10 border border-gold-500/15 flex items-center justify-center flex-shrink-0 group-hover:shadow-glow-gold transition-all duration-300">
+              <svg class="h-6 w-6 text-gold-600 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={value.icon} />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-serif text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2 tracking-wide">{value.title}</h3>
+              <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">{value.description}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 pb-16 md:pb-24">
+    <div class="calculator-card p-8 md:p-12 relative overflow-hidden">
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold-500/40 to-transparent" />
+      <div class="text-center mb-10">
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 tracking-tight">How It Works</h2>
+        <div class="gold-divider mb-2" />
+        <p class="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto">Simple, powerful, and entirely in your browser.</p>
       </div>
-
-      <div class="calculator-card p-8">
-        <h2 class="text-2xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Open Source</h2>
-        <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed">
-          Built with modern web technologies including Astro, React, and Tailwind CSS. The
-          project is designed for performance, accessibility, and internationalization, supporting
-          18 languages out of the box.
-        </p>
+      <div class="space-y-8">
+        <div class="flex gap-5">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center">
+              <span class="text-sm font-bold text-gold-600 dark:text-gold-400">1</span>
+            </div>
+            <div class="w-px h-full bg-gold-500/20 my-2" />
+          </div>
+          <div class="pb-6">
+            <h3 class="font-serif text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-1">Enter Your Data</h3>
+            <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">Input your known data points as X and Y values. Add as many points as you need for accurate modeling.</p>
+          </div>
+        </div>
+        <div class="flex gap-5">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center">
+              <span class="text-sm font-bold text-gold-600 dark:text-gold-400">2</span>
+            </div>
+            <div class="w-px h-full bg-gold-500/20 my-2" />
+          </div>
+          <div class="pb-6">
+            <h3 class="font-serif text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-1">Select a Method</h3>
+            <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">Choose from linear, exponential, logarithmic, polynomial, or quadratic models. Each method suits different data patterns.</p>
+          </div>
+        </div>
+        <div class="flex gap-5">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center">
+              <span class="text-sm font-bold text-gold-600 dark:text-gold-400">3</span>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-serif text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-1">Get Your Results</h3>
+            <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">Receive instant predictions with confidence metrics, equations, and interactive visualizations — all computed locally.</p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 pb-16 md:pb-24 text-center">
+    <div class="calculator-card p-10 md:p-14 relative overflow-hidden">
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold-500/40 to-transparent" />
+      <div class="absolute -top-10 -right-10 w-40 h-40 bg-gold-500/5 rounded-full blur-2xl" aria-hidden="true" />
+      <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-gold-500/5 rounded-full blur-2xl" aria-hidden="true" />
+      <div class="relative z-10">
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Ready to Explore?</h2>
+        <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed mb-8 max-w-xl mx-auto">
+          Try our calculators for extrapolation, interpolation, and regression — completely free and private.
+        </p>
+        <a href="/" class="btn-primary inline-flex items-center justify-center gap-2 shadow-lg shadow-gold-500/20">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+          Start Calculating
+        </a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
