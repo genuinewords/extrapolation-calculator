@@ -238,10 +238,18 @@
 
   /* --- Skip Link --- */
   .skip-link {
-    @apply absolute -top-10 left-0 bg-gold-600 text-white px-4 py-2 z-50 transition-all duration-200 rounded-br-lg;
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background: #b5890d;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    z-index: 50;
+    transition: top 0.2s;
+    border-radius: 0 0 0.5rem 0;
   }
   .skip-link:focus {
-    @apply top-0;
+    top: 0;
   }
 
   /* --- Luxury Glow --- */
