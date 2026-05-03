@@ -1,0 +1,29 @@
+# Extrapolation Calculator
+
+> Free online extrapolation calculator for predicting future values using linear, exponential, polynomial, and logarithmic methods.
+
+## Calculator
+- Linear Extrapolation
+- Exponential Growth Calculation
+- Polynomial Trend Analysis
+- Logarithmic Prediction
+- Quadratic Curve Fitting
+- R² Score and Confidence Metrics
+- Export to CSV and PNG
+
+## Pages
+- / - Calculator homepage
+- /about-us/ - About the project
+- /contact-us/ - Contact form
+- /blog/ - Articles about extrapolation methods
+- /terms/ - Terms of service
+- /privacy/ - Privacy policy
+
+## Languages
+Supported in: English, Hindi, Spanish, Russian, French, German, Italian, Portuguese, Bengali, Japanese, Korean, Malay, Polish, Indonesian, Arabic, Bulgarian, Turkish, Swedish
+
+## Technical
+- Built with Astro, React, Tailwind CSS
+- All calculations run client-side
+- No data stored on servers
+- WCAG 2.1 AA accessible
