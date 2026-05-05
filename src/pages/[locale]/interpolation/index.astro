@@ -16,7 +16,7 @@ const { locale } = Astro.props;
 const currentPath = localizePath('/interpolation/', locale);
 ---
 
-<BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'site.title')} description={t(locale, 'site.description')}>
+<BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'interpolation.title')} description={t(locale, 'interpolation.description')}>
   <div class="py-16 md:py-20">
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-10">

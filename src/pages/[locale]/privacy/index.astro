@@ -15,7 +15,7 @@ const { locale } = Astro.props;
 const currentPath = localizePath('/privacy/', locale);
 ---
 
-<BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'nav.privacy')} description="Privacy policy.">
+<BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'privacy.title')} description={t(locale, 'privacy.description')}>
   <div class="max-w-4xl mx-auto py-16 md:py-24">
     <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">{t(locale, 'nav.privacy')}</h1>
     <div class="prose prose-neutral dark:prose-invert max-w-none dark:text-neutral-300">
