@@ -17,7 +17,7 @@ const currentPath = '/interpolation/';
         </a>
         <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Interpolation Calculator</h1>
         <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed max-w-2xl mx-auto">Estimate values between known data points using three powerful interpolation methods.</p>
-        <p class="text-neutral-500 dark:text-neutral-500 text-sm mt-3">Need a different tool? Try our <a href="/" class="text-primary hover:text-primary/80 font-medium transition-colors">Extrapolation Calculator</a>.</p>
+        <p class="text-neutral-500 dark:text-neutral-500 text-sm mt-3">Need a different tool? Try our <a href="/" class="text-primary hover:text-primary/80 font-medium transition-colors">Extrapolation Calculator</a> or <a href="/regression/" class="text-primary hover:text-primary/80 font-medium transition-colors">Regression Calculator</a>.</p>
       </div>
       <InterpolationCalculator client:load locale={locale} />
     </div>
@@ -104,7 +104,7 @@ const currentPath = '/interpolation/';
   <section class="py-12 md:py-16 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Interpolation vs. Extrapolation – Key Differences</h2>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Interpolation and extrapolation are closely related but serve fundamentally different purposes. Understanding when to use each is critical for reliable results.</p>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Interpolation and extrapolation are closely related but serve fundamentally different purposes. Understanding when to use each is critical for reliable results. For values outside your data range, use the <a href="/" class="text-primary hover:text-primary/80 font-medium transition-colors">extrapolation calculator</a>; for analyzing variable relationships, try the <a href="/regression/" class="text-primary hover:text-primary/80 font-medium transition-colors">regression calculator</a>.</p>
 
       <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">When to Use Interpolation vs. Extrapolation</h3>
       <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Use interpolation when you need a value between two known measurements — for example, estimating the temperature at 3 PM when you have readings at 2 PM and 4 PM. Use extrapolation when you need a value outside the observed range — like predicting next year's revenue from past years. Interpolation is inherently safer because it's bounded by existing data; extrapolation carries increasing uncertainty the further you go from known values.</p>
@@ -218,7 +218,7 @@ const currentPath = '/interpolation/';
   <section class="py-12 md:py-16 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Try Our Interpolation Calculator Now</h2>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-8">Scroll up to the calculator, load an example dataset, and see interpolation in action. It takes less than 30 seconds to get your first result.</p>
+      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-8">Scroll up to the calculator, load an example dataset, and see interpolation in action. It takes less than 30 seconds to get your first result. For predicting values beyond your data range, use the <a href="/" class="text-primary hover:text-primary/80 font-medium transition-colors">extrapolation calculator</a>. To analyze variable relationships, try the <a href="/regression/" class="text-primary hover:text-primary/80 font-medium transition-colors">regression calculator</a>.</p>
       <a href="#calculator" class="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-gold-700 via-gold-600 to-gold-500 shadow-lg shadow-gold-600/20 hover:shadow-glow-gold hover:scale-[1.03] active:scale-[0.98] focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none relative overflow-hidden">
         <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
         <svg class="h-5 w-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
