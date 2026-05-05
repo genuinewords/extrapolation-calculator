@@ -9,7 +9,7 @@ const currentPath = '/';
 
 <BaseLayout locale={locale} currentPath={currentPath}>
   <!-- Hero Section -->
-  <section class="bg-gradient-to-br from-gold-50 via-white to-gold-100/30 dark:from-neutral-950 dark:via-neutral-900 dark:to-gold-900/10 py-16 md:py-24 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+  <section class="bg-gradient-to-br from-gold-50 via-[#f8f8fc] to-gold-100/30 dark:from-[#0a0a0a] dark:via-[#0a0a0a] dark:to-gold-900/10 py-16 md:py-24 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
     <div class="absolute top-20 left-10 w-64 h-64 bg-gold-200/20 dark:bg-gold-500/5 rounded-full blur-3xl" aria-hidden="true" />
     <div class="absolute bottom-10 right-10 w-96 h-96 bg-gold-300/10 dark:bg-gold-400/5 rounded-full blur-3xl" aria-hidden="true" />
 
@@ -47,7 +47,7 @@ const currentPath = '/';
   </section>
 
   <!-- Calculator Tool (Above Fold) -->
-  <section id="calculator" class="py-12 md:py-16 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-neutral-50/50 to-white dark:from-neutral-950 dark:via-neutral-900/50 dark:to-neutral-950">
+  <section id="calculator" class="py-12 md:py-16 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto">
       <ExtrapolationCalculator client:load locale={locale} showChart={true} />
     </div>
@@ -56,26 +56,29 @@ const currentPath = '/';
   <!-- What is Extrapolation? -->
   <section class="py-16 md:py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">What is Extrapolation?</h2>
-        <div class="gold-divider mb-4" />
-      </div>
-      <div class="space-y-6 text-neutral-600 dark:text-neutral-400 leading-relaxed text-lg">
-        <p>Extrapolation is a mathematical technique used to estimate values beyond the range of existing data points. Unlike interpolation, which predicts values between known observations, extrapolation extends trends outward to forecast future or unknown outcomes.</p>
-        <p>This powerful method is widely used across numerous fields including finance, engineering, meteorology, and scientific research. When you have a set of observed data points and need to predict what happens next, extrapolation provides the mathematical framework to make those predictions reliable and reproducible.</p>
-        <p>The fundamental principle behind extrapolation is identifying patterns in your existing data and extending those patterns logically. Whether the trend follows a straight line (linear), accelerates rapidly (exponential), levels off gradually (logarithmic), or follows a more complex curve (polynomial), each method offers different insights into how your data might behave beyond the observed range.</p>
-        <p>However, it is crucial to understand that extrapolation carries inherent uncertainty. The further you predict beyond your data range, the less reliable the estimate becomes. This is why our calculator provides R² scores and confidence indicators to help you assess the reliability of each prediction. Understanding these limitations ensures you make informed decisions based on extrapolated values rather than treating them as absolute certainties.</p>
+      <div class="section-card p-8 md:p-12">
+        <div class="text-center mb-12">
+          <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">What is Extrapolation?</h2>
+          <div class="gold-divider mb-4" />
+        </div>
+        <div class="space-y-6 text-neutral-600 dark:text-neutral-400 leading-relaxed text-lg">
+          <p>Extrapolation is a mathematical technique used to estimate values beyond the range of existing data points. Unlike interpolation, which predicts values between known observations, extrapolation extends trends outward to forecast future or unknown outcomes.</p>
+          <p>This powerful method is widely used across numerous fields including finance, engineering, meteorology, and scientific research. When you have a set of observed data points and need to predict what happens next, extrapolation provides the mathematical framework to make those predictions reliable and reproducible.</p>
+          <p>The fundamental principle behind extrapolation is identifying patterns in your existing data and extending those patterns logically. Whether the trend follows a straight line (linear), accelerates rapidly (exponential), levels off gradually (logarithmic), or follows a more complex curve (polynomial), each method offers different insights into how your data might behave beyond the observed range.</p>
+          <p>However, it is crucial to understand that extrapolation carries inherent uncertainty. The further you predict beyond your data range, the less reliable the estimate becomes. This is why our calculator provides R² scores and confidence indicators to help you assess the reliability of each prediction. Understanding these limitations ensures you make informed decisions based on extrapolated values rather than treating them as absolute certainties.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- How This Calculator Works -->
-  <section class="py-16 md:py-20 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+  <section class="py-16 md:py-20">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">How This Calculator Works</h2>
-        <div class="gold-divider mb-4" />
-      </div>
+      <div class="section-card p-8 md:p-12">
+        <div class="text-center mb-12">
+          <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">How This Calculator Works</h2>
+          <div class="gold-divider mb-4" />
+        </div>
       <div class="space-y-8">
         <div class="flex items-start gap-3">
           <span class="flex-shrink-0 w-7 h-7 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-xs font-bold text-gold-600 dark:text-gold-400">1</span>
@@ -99,6 +102,7 @@ const currentPath = '/';
           </div>
         </div>
       </div>
+    </div>
     </div>
   </section>
 
@@ -201,9 +205,10 @@ const currentPath = '/';
   </section>
 
   <!-- Formula Reference -->
-  <section class="py-16 md:py-20 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+  <section class="py-16 md:py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
+      <div class="section-card p-8 md:p-12">
+        <div class="text-center mb-12">
         <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Formula Reference</h2>
         <div class="gold-divider mb-4" />
       </div>
@@ -238,7 +243,9 @@ const currentPath = '/';
         <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-3">R&sup2; (Coefficient of Determination)</h3>
         <div class="bg-neutral-50 dark:bg-neutral-800/60 rounded-xl p-4 font-mono text-gold-600 dark:text-gold-400 text-center tracking-wide">R&sup2; = 1 - SS<sub>res</sub> / SS<sub>tot</sub></div>
         <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-3">SS<sub>res</sub> = sum of squared residuals, SS<sub>tot</sub> = total sum of squares. R&sup2; ranges from 0 (no fit) to 1 (perfect fit). Values above 0.9 indicate an excellent model fit.</p>
+       </div>
       </div>
+    </div>
     </div>
   </section>
 
@@ -323,9 +330,10 @@ const currentPath = '/';
   </section>
 
   <!-- Interpolation vs Extrapolation Comparison -->
-  <section class="py-16 md:py-20 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+  <section class="py-16 md:py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
+      <div class="section-card p-8 md:p-12">
+        <div class="text-center mb-12">
         <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Interpolation vs. Extrapolation</h2>
         <div class="gold-divider mb-4" />
       </div>
@@ -374,14 +382,16 @@ const currentPath = '/';
           </table>
         </div>
       </div>
-      <p class="text-center text-neutral-500 dark:text-neutral-400 mt-6 text-sm">Need to analyze variable relationships instead? Try our <a href="/regression/" class="text-primary hover:text-primary/80 font-medium transition-colors">regression calculator</a> for simple and multiple linear regression.</p>
+       <p class="text-center text-neutral-500 dark:text-neutral-400 mt-6 text-sm">Need to analyze variable relationships instead? Try our <a href="/regression/" class="text-primary hover:text-primary/80 font-medium transition-colors">regression calculator</a> for simple and multiple linear regression.</p>
+      </div>
     </div>
   </section>
 
   <!-- Limitations and Warnings -->
   <section class="py-16 md:py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
+      <div class="section-card p-8 md:p-12">
+        <div class="text-center mb-12">
         <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Limitations and Warnings</h2>
         <div class="gold-divider mb-4" />
       </div>
@@ -416,10 +426,11 @@ const currentPath = '/';
         </div>
       </div>
     </div>
+    </div>
   </section>
 
   <!-- FAQ Section -->
-  <section class="py-16 md:py-20 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+  <section class="py-16 md:py-20">
     <div class="max-w-4xl mx-auto">
       <FAQ locale={locale} items={[
         { question: 'What is extrapolation?', answer: 'Extrapolation is the process of estimating unknown values by extending a known sequence of values or facts beyond the area that is certainly known. It uses mathematical models to predict future or past values based on existing trends in your data.', category: 'general', display: true },
@@ -441,7 +452,8 @@ const currentPath = '/';
   <!-- Related Tools -->
   <section id="tools" class="py-16 md:py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
+      <div class="section-card p-8 md:p-12">
+        <div class="text-center mb-12">
         <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Related Tools</h2>
         <div class="gold-divider mb-4" />
       </div>
@@ -468,7 +480,9 @@ const currentPath = '/';
             <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
           </span>
         </a>
+       </div>
       </div>
+    </div>
     </div>
   </section>
 </BaseLayout>

@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --page-bg: #f8f8fc;
+  --section-bg: #f0f0f5;
+  --section-bg-gradient: linear-gradient(135deg, rgba(212,175,55,0.03) 0%, rgba(240,240,245,1) 50%, rgba(212,175,55,0.02) 100%);
+  --card-bg: rgba(255,255,255,0.85);
+  --card-bg-gradient: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(250,248,240,0.85) 100%);
+  --card-border: 1px solid rgba(212,175,55,0.4);
+  --card-border-hover: 1px solid rgba(212,175,55,0.9);
+  --card-shadow: 0 4px 16px -4px rgba(0,0,0,0.06), 0 1px 4px -1px rgba(212,175,55,0.08);
+  --card-shadow-hover: 0 10px 25px -5px rgba(0,0,0,0.1), 0 0 12px -2px rgba(212,175,55,0.15);
+  --card-radius: 16px;
+  --transition-smooth: all 0.2s ease;
+  --gold: rgba(212,175,55,1);
+  --gold-40: rgba(212,175,55,0.4);
+  --gold-80: rgba(212,175,55,0.8);
+}
+
+.dark {
+  --page-bg: #0a0a0a;
+  --section-bg: #141414;
+  --section-bg-gradient: linear-gradient(135deg, rgba(212,175,55,0.04) 0%, rgba(20,20,20,1) 50%, rgba(212,175,55,0.02) 100%);
+  --card-bg: rgba(20,20,20,0.85);
+  --card-bg-gradient: linear-gradient(135deg, rgba(20,20,20,0.9) 0%, rgba(30,28,20,0.85) 100%);
+  --card-border: 1px solid rgba(212,175,55,0.3);
+  --card-border-hover: 1px solid rgba(212,175,55,0.8);
+  --card-shadow: 0 4px 16px -4px rgba(0,0,0,0.4), 0 1px 4px -1px rgba(212,175,55,0.06);
+  --card-shadow-hover: 0 10px 25px -5px rgba(0,0,0,0.5), 0 0 12px -2px rgba(212,175,55,0.12);
+  --card-radius: 16px;
+}
+
 @layer base {
   *,
   *::before,
@@ -14,11 +44,13 @@
   }
 
   body {
-    @apply font-sans text-neutral-900 bg-neutral-50 antialiased leading-relaxed;
+    @apply font-sans text-neutral-900 antialiased leading-relaxed;
+    background-color: var(--page-bg);
   }
 
   .dark body {
-    @apply text-neutral-100 bg-neutral-950;
+    @apply text-neutral-100;
+    background-color: var(--page-bg);
   }
 
   :focus-visible {
@@ -31,48 +63,44 @@
 }
 
 @layer components {
-  /* --- Luxury Glass Cards --- */
   .calculator-card {
-    @apply rounded-3xl bg-white/80 backdrop-blur-sm border border-white/20 shadow-luxury;
-    @apply transition-all duration-300;
+    border-radius: var(--card-radius);
+    background: var(--card-bg-gradient);
+    backdrop-filter: blur(8px);
+    border: var(--card-border);
+    box-shadow: var(--card-shadow);
+    transition: var(--transition-smooth);
   }
   .calculator-card:hover {
-    @apply shadow-luxury-hover;
-    transform: translateY(-4px) scale(1.01);
-  }
-  .dark .calculator-card {
-    @apply bg-black/60 backdrop-blur-md border-white/10 shadow-luxury-dark;
-  }
-  .dark .calculator-card:hover {
-    @apply shadow-luxury-dark-hover border-white/15;
+    border: var(--card-border-hover);
+    box-shadow: var(--card-shadow-hover);
     transform: translateY(-4px) scale(1.01);
   }
 
-  /* Tool card on homepage */
   .tool-card {
-    @apply rounded-3xl bg-white/80 backdrop-blur-sm border border-white/20 p-8;
-    @apply transition-all duration-300 relative overflow-hidden;
-    @apply hover:shadow-luxury-hover hover:border-gold-500/20;
+    @apply p-8 relative overflow-hidden;
+    border-radius: var(--card-radius);
+    background: var(--card-bg-gradient);
+    backdrop-filter: blur(8px);
+    border: var(--card-border);
+    box-shadow: var(--card-shadow);
+    transition: var(--transition-smooth);
   }
   .tool-card:hover {
+    border: var(--card-border-hover);
+    box-shadow: var(--card-shadow-hover);
     transform: translateY(-6px) scale(1.02);
-  }
-  .dark .tool-card {
-    @apply bg-black/60 backdrop-blur-md border-white/10 shadow-luxury-dark;
-  }
-  .dark .tool-card:hover {
-    @apply border-gold-500/20 shadow-luxury-dark-hover;
   }
   .tool-card::before {
     content: '';
-    @apply absolute inset-0 opacity-0 transition-opacity duration-500 rounded-3xl;
+    @apply absolute inset-0 opacity-0 transition-opacity duration-500;
+    border-radius: var(--card-radius);
     background: linear-gradient(135deg, rgba(184,134,11,0.06) 0%, rgba(59,130,246,0.04) 100%);
   }
   .tool-card:hover::before {
     @apply opacity-100;
   }
 
-  /* --- Luxury Buttons --- */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all duration-300;
     @apply bg-gradient-to-r from-gold-600 to-gold-500;
@@ -117,10 +145,12 @@
   .btn-secondary {
     @apply inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-medium rounded-2xl transition-all duration-200;
     @apply bg-white/70 backdrop-blur-sm text-neutral-700 dark:text-neutral-200;
-    @apply border border-neutral-200/80 dark:border-neutral-700/80;
+    border: var(--card-border);
     @apply hover:bg-white dark:hover:bg-neutral-800/80 hover:scale-105;
-    @apply hover:border-gold-500/30 dark:hover:border-gold-500/20;
     @apply focus:ring-2 focus:ring-gold-400 focus:outline-none;
+  }
+  .btn-secondary:hover {
+    border: var(--card-border-hover);
   }
 
   .btn-tab {
@@ -135,15 +165,16 @@
     @apply hover:bg-neutral-200/80 dark:hover:bg-neutral-700/80 hover:text-neutral-900 dark:hover:text-neutral-200;
   }
 
-  /* --- Luxury Inputs --- */
   .input-field {
     @apply w-full px-4 py-3 text-sm leading-relaxed rounded-xl;
-    @apply border-2 border-neutral-300;
+    border: var(--card-border);
     @apply focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500/30;
     @apply transition-all duration-300;
-    @apply hover:border-neutral-400;
     background-color: #ffffff;
     color: #18181b;
+  }
+  .input-field:hover {
+    border: var(--card-border-hover);
   }
   select.input-field {
     @apply appearance-none;
@@ -167,7 +198,6 @@
     border-color: #f87171 !important;
   }
 
-  /* --- Data Table --- */
   .data-table-header {
     @apply grid gap-2 text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 px-1 mb-1;
   }
@@ -182,36 +212,46 @@
     @apply shadow-sm;
   }
 
-  /* --- Number Badge --- */
   .num-badge {
     @apply inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold;
     @apply bg-gold-500/10 text-gold-600 dark:bg-gold-500/15 dark:text-gold-400;
-    border: 1px solid rgba(184,134,11,0.15);
+    border: 1px solid rgba(212,175,55,0.25);
   }
 
-  /* --- Result Cards --- */
   .result-card {
-    @apply bg-white/70 backdrop-blur-sm p-5 rounded-2xl border border-white/30;
-    @apply transition-all duration-200 hover:shadow-md;
+    @apply p-5;
+    border-radius: var(--card-radius);
+    background: var(--card-bg-gradient);
+    backdrop-filter: blur(8px);
+    border: var(--card-border);
+    box-shadow: var(--card-shadow);
+    transition: var(--transition-smooth);
   }
-  .dark .result-card {
-    @apply bg-black/40 border-white/10;
+  .result-card:hover {
+    border: var(--card-border-hover);
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-2px) scale(1.005);
   }
   .result-card-accent {
     @apply result-card border-l-4 border-l-gold-500;
   }
 
-  /* --- Method Illustration --- */
   .method-illustration {
-    @apply w-full h-32 rounded-2xl bg-gradient-to-br from-neutral-50/80 to-neutral-100/60 dark:from-neutral-800/60 dark:to-neutral-900/60;
-    @apply border border-neutral-200/60 dark:border-neutral-700/60;
-    @apply flex items-center justify-center overflow-hidden backdrop-blur-sm;
+    @apply w-full h-32 flex items-center justify-center overflow-hidden;
+    border-radius: var(--card-radius);
+    background: var(--section-bg-gradient);
+    border: var(--card-border);
+    backdrop-filter: blur(8px);
   }
 
-  /* --- Step Item --- */
   .step-item {
-    @apply flex gap-4 items-start p-4 rounded-2xl transition-all duration-200;
-    @apply hover:bg-white/50 dark:hover:bg-neutral-800/40;
+    @apply flex gap-4 items-start p-4 rounded-2xl;
+    transition: var(--transition-smooth);
+  }
+  .step-item:hover {
+    background: var(--card-bg-gradient);
+    border: var(--card-border);
+    box-shadow: var(--card-shadow);
   }
   .step-item .num-badge {
     @apply mt-0.5;
@@ -220,7 +260,6 @@
     font-size: 0.8rem;
   }
 
-  /* --- Gold Divider --- */
   .gold-divider {
     @apply w-12 h-px bg-gold-500 mx-auto my-4;
   }
@@ -228,7 +267,6 @@
     @apply w-24 h-px bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto my-6;
   }
 
-  /* --- Section --- */
   .section-container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
@@ -236,10 +274,15 @@
     @apply max-w-4xl mx-auto py-16 md:py-24;
   }
 
-
-  /* --- Luxury Glow --- */
   .luxury-glow {
     @apply shadow-glow-gold;
+  }
+
+  .section-card {
+    border-radius: var(--card-radius);
+    background: var(--section-bg-gradient);
+    border: var(--card-border);
+    box-shadow: var(--card-shadow);
   }
 
   [dir="rtl"] {
@@ -247,7 +290,6 @@
   }
 }
 
-/* --- Skip Link (outside @layer for higher specificity) --- */
 .skip-link {
   position: absolute !important;
   top: -100px !important;
@@ -263,20 +305,22 @@
   top: 0 !important;
 }
 
-/* --- Dark mode input overrides (outside @layer for higher specificity) --- */
 .dark .input-field {
-  background-color: #27272a !important;
+  background-color: #1a1a1a !important;
   color: #f4f4f5 !important;
-  border-color: #3f3f46 !important;
+  border-color: rgba(212,175,55,0.3) !important;
 }
 .dark .input-field:hover {
-  border-color: #52525b !important;
+  border-color: rgba(212,175,55,0.6) !important;
+}
+.dark .input-field:focus {
+  border-color: #B8860B !important;
 }
 .dark select.input-field {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23d4d4d8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E") !important;
 }
 .dark select.input-field option {
-  background-color: #27272a !important;
+  background-color: #1a1a1a !important;
   color: #f4f4f5 !important;
 }
 .dark .input-field::placeholder {
@@ -289,7 +333,40 @@
   border-color: #ef4444 !important;
 }
 
-/* --- Animations --- */
+.dark .calculator-card {
+  background: var(--card-bg-gradient);
+  border: var(--card-border);
+}
+.dark .calculator-card:hover {
+  border: var(--card-border-hover);
+}
+
+.dark .tool-card {
+  background: var(--card-bg-gradient);
+  border: var(--card-border);
+}
+.dark .tool-card:hover {
+  border: var(--card-border-hover);
+}
+
+.dark .result-card {
+  background: var(--card-bg-gradient);
+  border: var(--card-border);
+}
+.dark .result-card:hover {
+  border: var(--card-border-hover);
+}
+
+.dark .method-illustration {
+  background: var(--section-bg-gradient);
+  border: var(--card-border);
+}
+
+.dark .step-item:hover {
+  background: var(--card-bg-gradient);
+  border: var(--card-border);
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -334,14 +411,12 @@
   animation: staggerFadeIn 0.5s ease-out forwards;
 }
 
-/* Stagger delays */
 .stagger-1 { animation-delay: 0.1s; }
 .stagger-2 { animation-delay: 0.2s; }
 .stagger-3 { animation-delay: 0.3s; }
 .stagger-4 { animation-delay: 0.4s; }
 .stagger-5 { animation-delay: 0.5s; }
 
-/* --- Mobile --- */
 @media (max-width: 768px) {
   .calculator-inputs {
     grid-template-columns: 1fr;

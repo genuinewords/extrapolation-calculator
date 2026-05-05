@@ -42,8 +42,9 @@ const currentPath = '/interpolation/';
   </section>
 
   <!-- Types of Interpolation Methods Explained -->
-  <section class="py-12 md:py-16 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+  <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="section-card p-8 md:p-12">
       <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Types of Interpolation Methods Explained</h2>
       <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Different data patterns call for different interpolation strategies. Choosing the right method depends on how your data behaves — smooth vs. abrupt, linear vs. curved — and how many points you have.</p>
 
@@ -58,6 +59,7 @@ const currentPath = '/interpolation/';
 
       <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Bilinear &amp; Trilinear Interpolation for 2D/3D Data</h3>
       <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">When data depends on two or three independent variables (like temperature as a function of both latitude and altitude), bilinear or trilinear interpolation extends the 1D approach to higher dimensions. It performs linear interpolation along each axis sequentially. While our calculator focuses on 1D methods, the same principles apply: find the enclosing cell, weight the corner values, and estimate the interior point.</p>
+      </div>
     </div>
   </section>
 
@@ -101,8 +103,9 @@ const currentPath = '/interpolation/';
   </section>
 
   <!-- Interpolation vs. Extrapolation -->
-  <section class="py-12 md:py-16 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+  <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="section-card p-8 md:p-12">
       <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Interpolation vs. Extrapolation – Key Differences</h2>
       <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Interpolation and extrapolation are closely related but serve fundamentally different purposes. Understanding when to use each is critical for reliable results. For values outside your data range, use the <a href="/" class="text-primary hover:text-primary/80 font-medium transition-colors">extrapolation calculator</a>; for analyzing variable relationships, try the <a href="/regression/" class="text-primary hover:text-primary/80 font-medium transition-colors">regression calculator</a>.</p>
 
@@ -138,6 +141,7 @@ const currentPath = '/interpolation/';
           </tbody>
         </table>
       </div>
+      </div>
     </div>
   </section>
 
@@ -162,8 +166,9 @@ const currentPath = '/interpolation/';
   </section>
 
   <!-- FAQ -->
-  <section class="py-12 md:py-16 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+  <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="section-card p-8 md:p-12">
       <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Frequently Asked Questions About Interpolation Calculators</h2>
 
       <div class="space-y-4">
@@ -183,6 +188,7 @@ const currentPath = '/interpolation/';
           <summary class="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-neutral-900 dark:text-white cursor-pointer">Is the Interpolation Calculator Free?<svg class="h-5 w-5 text-gold-500/60 dark:text-gold-400/60 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></summary>
           <div class="px-6 pb-4 text-neutral-600 dark:text-gray-300 leading-relaxed">Yes, 100% free with no limits. No account required, no usage caps, no premium tiers. Every method — linear, Lagrange, and cubic spline — is available to everyone. We believe mathematical tools should be accessible to all.</div>
         </details>
+      </div>
       </div>
     </div>
   </section>
@@ -215,8 +221,9 @@ const currentPath = '/interpolation/';
   </section>
 
   <!-- Try It Now (CTA) -->
-  <section class="py-12 md:py-16 bg-gradient-to-b from-neutral-50/50 to-white dark:from-neutral-900/50 dark:to-neutral-950">
+  <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="section-card p-8 md:p-12">
       <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Try Our Interpolation Calculator Now</h2>
       <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-8">Scroll up to the calculator, load an example dataset, and see interpolation in action. It takes less than 30 seconds to get your first result. For predicting values beyond your data range, use the <a href="/" class="text-primary hover:text-primary/80 font-medium transition-colors">extrapolation calculator</a>. To analyze variable relationships, try the <a href="/regression/" class="text-primary hover:text-primary/80 font-medium transition-colors">regression calculator</a>.</p>
       <a href="#calculator" class="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-gold-700 via-gold-600 to-gold-500 shadow-lg shadow-gold-600/20 hover:shadow-glow-gold hover:scale-[1.03] active:scale-[0.98] focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none relative overflow-hidden">
@@ -224,6 +231,7 @@ const currentPath = '/interpolation/';
         <svg class="h-5 w-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
         <span class="relative z-10">Start Calculating</span>
       </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
