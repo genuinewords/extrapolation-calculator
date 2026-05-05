@@ -34,8 +34,5 @@
   },
   "overrides": {
     "shiki": "^1.29.2"
-  },
-  "engines": {
-    "node": "20.x"
   }
 }
