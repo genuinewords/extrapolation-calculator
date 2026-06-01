@@ -104,7 +104,7 @@ describe('i18n utilities', () => {
 
   describe('t (translations)', () => {
     it('should return English strings for en', () => {
-      expect(t('en', 'site.title')).toBe('Extrapolation Calculator – Free Online Predictor');
+      expect(t('en', 'site.title')).toBe('Extrapolation Calculator – Free Online Value Predictor');
       expect(t('en', 'nav.home')).toBe('Home');
     });
 

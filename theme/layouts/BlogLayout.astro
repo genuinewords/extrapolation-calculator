@@ -49,6 +49,8 @@ const blogSchema: Record<string, unknown> = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="google-site-verification" content="AVoChEVeeZ7SyLvShE344lwOkUYBe4iILRRZL9WDNnw" />
     <script is:inline>
       (function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()
     </script>
@@ -65,29 +67,31 @@ const blogSchema: Record<string, unknown> = {
     {publishDate && <meta property="article:published_time" content={publishDate.toISOString()} />}
     {author && <meta property="article:author" content={author} />}
 
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content={featuredImage ? "summary_large_image" : "summary"} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    {featuredImage && <meta name="twitter:image" content={featuredImage} />}
 
     {alternateUrls.map(({ locale: altLocale, url: altUrl }) => (
       <link rel="alternate" hreflang={altLocale} href={new URL(altUrl, Astro.site).href} />
     ))}
+    <link rel="alternate" hreflang="x-default" href={Astro.site?.href} />
 
     <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
   </head>
-  <body class="min-h-screen flex flex-col bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 transition-colors duration-200">
+  <body class="min-h-screen flex flex-col bg-[#f8f8fc] dark:bg-[#0a0a0a] text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
     <Header locale={locale} currentPath={currentPath} />
     <main id="main-content" class="flex-1 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <article class="max-w-3xl mx-auto py-16 md:py-24">
         <header class="mb-10">
           {category && (
-            <span class="inline-block bg-primary/10 text-primary text-xs font-semibold px-4 py-1.5 rounded-full mb-4 tracking-wide uppercase">{category}</span>
+            <span class="inline-block bg-gold-500/10 text-gold-600 dark:text-gold-400 text-xs font-semibold px-4 py-1.5 rounded-full mb-4 tracking-wide uppercase border border-gold-500/20">{category}</span>
           )}
-          <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 leading-tight">{title}</h1>
+          <h1 class="font-serif text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 leading-tight">{title}</h1>
           <div class="flex items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400">
             {author && (
               <span class="flex items-center gap-1.5">

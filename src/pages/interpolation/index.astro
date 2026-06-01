@@ -6,59 +6,98 @@ const locale = 'en';
 const currentPath = '/interpolation/';
 ---
 
-<BaseLayout locale={locale} currentPath={currentPath} title="Interpolation Calculator – Estimate Values Online" description="Free interpolation calculator using linear, Lagrange polynomial, and cubic spline methods. Estimate values between known data points instantly.">
-  <!-- Hero + Calculator (above fold) -->
-  <div id="calculator" class="py-12 md:py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-10">
-        <a href="/" class="inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 font-medium mb-4 transition-colors">
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
-          Back to Home
-        </a>
-        <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Interpolation Calculator</h1>
-        <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed max-w-2xl mx-auto">Estimate values between known data points using three powerful interpolation methods.</p>
-        <p class="text-neutral-500 dark:text-neutral-500 text-sm mt-3">Need a different tool? Try our <a href="/" class="text-primary hover:text-primary/80 font-medium transition-colors">Extrapolation Calculator</a> or <a href="/regression/" class="text-primary hover:text-primary/80 font-medium transition-colors">Regression Calculator</a>.</p>
+<BaseLayout locale={locale} currentPath={currentPath} title="Interpolation Calculator – Estimate Values Between Data Points" description="Free interpolation calculator with linear, Lagrange polynomial, and cubic spline methods. Estimate values between known data points instantly. Try it now!" schemaOrg={{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Interpolation Calculator",
+  "applicationCategory": "MathApplication",
+  "operatingSystem": "Web Browser",
+  "description": "Free interpolation calculator using linear, Lagrange polynomial, and cubic spline methods.",
+  "featureList": ["Linear Interpolation", "Lagrange Polynomial", "Natural Cubic Spline"],
+}}>
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-gold-50 via-[#f8f8fc] to-gold-100/30 dark:from-[#0a0a0a] dark:via-[#0a0a0a] dark:to-gold-900/10 py-16 md:py-24 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div class="absolute top-20 left-10 w-64 h-64 bg-gold-200/20 dark:bg-gold-500/5 rounded-full blur-3xl" aria-hidden="true" />
+    <div class="absolute bottom-10 right-10 w-96 h-96 bg-gold-300/10 dark:bg-gold-400/5 rounded-full blur-3xl" aria-hidden="true" />
+
+    <div class="max-w-7xl mx-auto text-center relative z-10">
+      <div class="max-w-3xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/70 dark:bg-neutral-800/60 backdrop-blur-sm border border-gold-500/20 text-gold-700 dark:text-gold-300 text-sm font-semibold mb-8 animate-fade-in-up shadow-sm">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
+          Free, Private &amp; Browser-Based
+        </div>
+
+        <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 leading-tight tracking-tight">
+          Interpolation Calculator
+        </h1>
+
+        <div class="gold-divider-wide mb-6" />
+
+        <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+          Estimate values between known data points — linear, Lagrange polynomial &amp; cubic spline methods. Free, private, entirely in your browser.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="#calculator" class="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-gold-700 via-gold-600 to-gold-500 shadow-lg shadow-gold-600/20 hover:shadow-glow-gold hover:scale-[1.03] active:scale-[0.98] focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none relative overflow-hidden">
+            <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
+            <svg class="h-5 w-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+            <span class="relative z-10 tracking-wide">Start Calculating</span>
+          </a>
+          <a href="#methods" class="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-gold-600 via-gold-500 to-gold-400 shadow-lg shadow-gold-500/20 hover:shadow-glow-gold hover:scale-[1.03] active:scale-[0.98] focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none relative overflow-hidden border border-gold-400/30">
+            <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
+            <span class="relative z-10 tracking-wide">Explore Methods</span>
+            <svg class="h-4 w-4 relative z-10 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+          </a>
+        </div>
+
+        <p class="text-neutral-500 dark:text-neutral-500 text-sm mt-6">Need a different tool? Try our <a href="/" class="text-gold-600 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-medium transition-colors">Extrapolation Calculator</a> or <a href="/regression/" class="text-gold-600 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-medium transition-colors">Regression Calculator</a>.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- Calculator Tool (Above Fold) -->
+  <section id="calculator" class="py-12 md:py-16 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
       <InterpolationCalculator client:load locale={locale} />
     </div>
-  </div>
+  </section>
 
   <!-- What Is an Interpolation Calculator? -->
   <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">What Is an Interpolation Calculator?</h2>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">An interpolation calculator is a tool that estimates unknown values lying between known data points. Given a set of observed (X, Y) pairs, it constructs a mathematical curve through those points and reads off the Y value at any X within the range — giving you a reliable estimate without collecting more data.</p>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-8">Whether you're filling gaps in sensor readings, estimating intermediate temperatures, or smoothing financial time-series, an interpolation calculator removes guesswork and replaces it with mathematically sound predictions.</p>
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-8 mb-4">What Is an Interpolation Calculator?</h2>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">An interpolation calculator is a tool that estimates unknown values lying between known data points. Given a set of observed (X, Y) pairs, it constructs a mathematical curve through those points and reads off the Y value at any X within the range — giving you a reliable estimate without collecting more data.</p>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-8">Whether you're filling gaps in sensor readings, estimating intermediate temperatures, or smoothing financial time-series, an interpolation calculator removes guesswork and replaces it with mathematically sound predictions.</p>
 
-      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Definition of Interpolation in Mathematics</h3>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">In mathematics, interpolation is the process of constructing a function — or a set of piecewise functions — that passes exactly through a given set of data points. The resulting curve can then be evaluated at any intermediate X value to produce an estimated Y. Unlike extrapolation (which ventures outside the data range), interpolation stays within the observed domain, making it significantly more reliable.</p>
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Definition of Interpolation in Mathematics</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">In mathematics, interpolation is the process of constructing a function — or a set of piecewise functions — that passes exactly through a given set of data points. The resulting curve can then be evaluated at any intermediate X value to produce an estimated Y. Unlike extrapolation (which ventures outside the data range), interpolation stays within the observed domain, making it significantly more reliable.</p>
 
-      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">How an Interpolation Calculator Works</h3>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Our calculator accepts your (X, Y) data points and a target X value, then applies the method you choose. Linear interpolation draws a straight line between the two nearest points. Lagrange polynomial fits a single curve through all points. Cubic spline builds smooth, flexible segments between each pair. The result is an interpolated Y value with step-by-step math shown for transparency.</p>
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">How an Interpolation Calculator Works</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Our calculator accepts your (X, Y) data points and a target X value, then applies the method you choose. Linear interpolation draws a straight line between the two nearest points. Lagrange polynomial fits a single curve through all points. Cubic spline builds smooth, flexible segments between each pair. The result is an interpolated Y value with step-by-step math shown for transparency.</p>
 
-      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Why Use an Interpolation Calculator Instead of Manual Calculation</h3>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Manual interpolation — especially with Lagrange polynomials or cubic splines — involves solving systems of equations and computing large polynomial expressions. A calculator eliminates arithmetic errors, handles edge cases automatically, and produces results in milliseconds. It also provides visual graph output and R² diagnostics that would take significant effort by hand.</p>
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Why Use an Interpolation Calculator Instead of Manual Calculation</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Manual interpolation — especially with Lagrange polynomials or cubic splines — involves solving systems of equations and computing large polynomial expressions. A calculator eliminates arithmetic errors, handles edge cases automatically, and produces results in milliseconds. It also provides visual graph output and R² diagnostics that would take significant effort by hand.</p>
     </div>
   </section>
 
   <!-- Types of Interpolation Methods Explained -->
-  <section class="py-12 md:py-16">
+  <section id="methods" class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="section-card p-8 md:p-12">
-      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Types of Interpolation Methods Explained</h2>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Different data patterns call for different interpolation strategies. Choosing the right method depends on how your data behaves — smooth vs. abrupt, linear vs. curved — and how many points you have.</p>
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-8 mb-4">Types of Interpolation Methods Explained</h2>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Different data patterns call for different interpolation strategies. Choosing the right method depends on how your data behaves — smooth vs. abrupt, linear vs. curved — and how many points you have.</p>
 
-      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Linear Interpolation – Formula &amp; Use Cases</h3>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Linear interpolation connects two adjacent data points with a straight line and estimates the Y value on that line. The formula is <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">y = y₁ + (x − x₁) · (y₂ − y₁) / (x₂ − x₁)</code>. It's fast, stable, and ideal for evenly-spaced data like hourly temperature readings or regular time-series intervals. The trade-off is that it can't capture curvature between points.</p>
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Linear Interpolation – Formula &amp; Use Cases</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Linear interpolation connects two adjacent data points with a straight line and estimates the Y value on that line. The formula is <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">y = y₁ + (x − x₁) · (y₂ − y₁) / (x₂ − x₁)</code>. It's fast, stable, and ideal for evenly-spaced data like hourly temperature readings or regular time-series intervals. The trade-off is that it can't capture curvature between points.</p>
 
-      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Polynomial Interpolation (Lagrange, Newton)</h3>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Polynomial interpolation fits a single polynomial of degree n−1 through all n data points. The Lagrange form constructs the polynomial as a weighted sum of basis polynomials, each zero at all but one data point. Newton's divided-difference form builds the same polynomial incrementally. Both produce the same result. Best for smooth data with few points (≤5), but beware of Runge's phenomenon — oscillations that appear with many points.</p>
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Polynomial Interpolation (Lagrange, Newton)</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Polynomial interpolation fits a single polynomial of degree n−1 through all n data points. The Lagrange form constructs the polynomial as a weighted sum of basis polynomials, each zero at all but one data point. Newton's divided-difference form builds the same polynomial incrementally. Both produce the same result. Best for smooth data with few points (≤5), but beware of Runge's phenomenon — oscillations that appear with many points.</p>
 
-      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Spline Interpolation (Cubic, Quadratic)</h3>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Spline interpolation fits piecewise polynomials — typically cubic — between consecutive data points, with continuity conditions at each knot. A natural cubic spline has continuous first and second derivatives, producing an incredibly smooth curve that avoids the oscillation problems of high-degree polynomials. It's the gold standard for interpolation: stable, accurate, and visually smooth.</p>
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Spline Interpolation (Cubic, Quadratic)</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Spline interpolation fits piecewise polynomials — typically cubic — between consecutive data points, with continuity conditions at each knot. A natural cubic spline has continuous first and second derivatives, producing an incredibly smooth curve that avoids the oscillation problems of high-degree polynomials. It's the gold standard for interpolation: stable, accurate, and visually smooth.</p>
 
-      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Bilinear &amp; Trilinear Interpolation for 2D/3D Data</h3>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">When data depends on two or three independent variables (like temperature as a function of both latitude and altitude), bilinear or trilinear interpolation extends the 1D approach to higher dimensions. It performs linear interpolation along each axis sequentially. While our calculator focuses on 1D methods, the same principles apply: find the enclosing cell, weight the corner values, and estimate the interior point.</p>
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Bilinear &amp; Trilinear Interpolation for 2D/3D Data</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">When data depends on two or three independent variables (like temperature as a function of both latitude and altitude), bilinear or trilinear interpolation extends the 1D approach to higher dimensions. It performs linear interpolation along each axis sequentially. While our calculator focuses on 1D methods, the same principles apply: find the enclosing cell, weight the corner values, and estimate the interior point.</p>
       </div>
     </div>
   </section>
@@ -66,36 +105,36 @@ const currentPath = '/interpolation/';
   <!-- Step-by-Step Guide -->
   <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Step-by-Step Guide to Using Our Interpolation Calculator</h2>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-8">Getting an interpolated value takes just three steps. Here's a detailed walkthrough for each.</p>
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-8 mb-4">Step-by-Step Guide to Using Our Interpolation Calculator</h2>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-8">Getting an interpolated value takes just three steps. Here's a detailed walkthrough for each.</p>
 
       <div class="space-y-8">
         <div class="flex items-start gap-3">
           <span class="flex-shrink-0 w-7 h-7 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-xs font-bold text-gold-600 dark:text-gold-400">1</span>
           <div>
-            <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-0 mb-1">How to Enter X and Y Data Points</h3>
-            <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">Type your known data pairs into the interactive table. Each row takes an X and Y value. Click "Add Point" for more rows, or use the example data buttons to load a pre-built dataset. For Lagrange, limit to 5 points; for cubic spline, ensure your X values are strictly increasing.</p>
+            <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-0 mb-1">How to Enter X and Y Data Points</h3>
+            <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed text-sm">Type your known data pairs into the interactive table. Each row takes an X and Y value. Click "Add Point" for more rows, or use the example data buttons to load a pre-built dataset. For Lagrange, limit to 5 points; for cubic spline, ensure your X values are strictly increasing.</p>
           </div>
         </div>
         <div class="flex items-start gap-3">
           <span class="flex-shrink-0 w-7 h-7 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-xs font-bold text-gold-600 dark:text-gold-400">2</span>
           <div>
-            <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-0 mb-1">Selecting the Right Interpolation Method</h3>
-            <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">Choose Linear for straight-line data or quick estimates. Choose Lagrange for smooth curves with few points. Choose Cubic Spline for the smoothest possible curve through all points — especially when you have many data points where Lagrange would oscillate.</p>
+            <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-0 mb-1">Selecting the Right Interpolation Method</h3>
+            <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed text-sm">Choose Linear for straight-line data or quick estimates. Choose Lagrange for smooth curves with few points. Choose Cubic Spline for the smoothest possible curve through all points — especially when you have many data points where Lagrange would oscillate.</p>
           </div>
         </div>
         <div class="flex items-start gap-3">
           <span class="flex-shrink-0 w-7 h-7 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-xs font-bold text-gold-600 dark:text-gold-400">3</span>
           <div>
-            <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-0 mb-1">Reading the Output – Interpolated Value &amp; Graph</h3>
-            <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">The result panel shows the interpolated Y value, the method used, and a step-by-step breakdown of the calculation. The chart visualizes your data points and the fitted curve so you can visually confirm accuracy.</p>
+            <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-0 mb-1">Reading the Output – Interpolated Value &amp; Graph</h3>
+            <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed text-sm">The result panel shows the interpolated Y value, the method used, and a step-by-step breakdown of the calculation. The chart visualizes your data points and the fitted curve so you can visually confirm accuracy.</p>
           </div>
         </div>
         <div class="flex items-start gap-3">
           <span class="flex-shrink-0 w-7 h-7 rounded-full bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-xs font-bold text-gold-600 dark:text-gold-400">4</span>
           <div>
-            <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-0 mb-1">Common Errors &amp; How to Avoid Them</h3>
-            <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">Duplicate X values will cause errors — every X must be unique. For cubic spline, your target X must lie within the data range (interpolation, not extrapolation). For Lagrange, more than 5 points often leads to oscillation; switch to spline instead. Always check that your input values are valid numbers.</p>
+            <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-0 mb-1">Common Errors &amp; How to Avoid Them</h3>
+            <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed text-sm">Duplicate X values will cause errors — every X must be unique. For cubic spline, your target X must lie within the data range (interpolation, not extrapolation). For Lagrange, more than 5 points often leads to oscillation; switch to spline instead. Always check that your input values are valid numbers.</p>
           </div>
         </div>
       </div>
@@ -106,35 +145,35 @@ const currentPath = '/interpolation/';
   <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="section-card p-8 md:p-12">
-      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Interpolation vs. Extrapolation – Key Differences</h2>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Interpolation and extrapolation are closely related but serve fundamentally different purposes. Understanding when to use each is critical for reliable results. For values outside your data range, use the <a href="/" class="text-primary hover:text-primary/80 font-medium transition-colors">extrapolation calculator</a>; for analyzing variable relationships, try the <a href="/regression/" class="text-primary hover:text-primary/80 font-medium transition-colors">regression calculator</a>.</p>
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-8 mb-4">Interpolation vs. Extrapolation – Key Differences</h2>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Interpolation and extrapolation are closely related but serve fundamentally different purposes. Understanding when to use each is critical for reliable results. For values outside your data range, use the <a href="/" class="text-gold-600 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-medium transition-colors">extrapolation calculator</a>; for analyzing variable relationships, try the <a href="/regression/" class="text-gold-600 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-medium transition-colors">regression calculator</a>.</p>
 
-      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">When to Use Interpolation vs. Extrapolation</h3>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Use interpolation when you need a value between two known measurements — for example, estimating the temperature at 3 PM when you have readings at 2 PM and 4 PM. Use extrapolation when you need a value outside the observed range — like predicting next year's revenue from past years. Interpolation is inherently safer because it's bounded by existing data; extrapolation carries increasing uncertainty the further you go from known values.</p>
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">When to Use Interpolation vs. Extrapolation</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Use interpolation when you need a value between two known measurements — for example, estimating the temperature at 3 PM when you have readings at 2 PM and 4 PM. Use extrapolation when you need a value outside the observed range — like predicting next year's revenue from past years. Interpolation is inherently safer because it's bounded by existing data; extrapolation carries increasing uncertainty the further you go from known values.</p>
 
-      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Practical Examples Showing the Difference</h3>
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Practical Examples Showing the Difference</h3>
       <div class="overflow-x-auto mb-6">
         <table class="w-full text-sm border-collapse">
           <thead>
             <tr class="bg-gold-500/5 dark:bg-gold-500/10">
-              <th class="text-left px-4 py-3 font-semibold text-neutral-900 dark:text-white border-b border-neutral-200 dark:border-neutral-700">Scenario</th>
-              <th class="text-left px-4 py-3 font-semibold text-neutral-900 dark:text-white border-b border-neutral-200 dark:border-neutral-700">Interpolation</th>
-              <th class="text-left px-4 py-3 font-semibold text-neutral-900 dark:text-white border-b border-neutral-200 dark:border-neutral-700">Extrapolation</th>
+              <th class="text-left px-4 py-3 font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-700">Scenario</th>
+              <th class="text-left px-4 py-3 font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-700">Interpolation</th>
+              <th class="text-left px-4 py-3 font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-700">Extrapolation</th>
             </tr>
           </thead>
-          <tbody class="text-neutral-600 dark:text-gray-300">
+          <tbody class="text-neutral-600 dark:text-neutral-400">
             <tr class="border-b border-neutral-100 dark:border-neutral-800">
-              <td class="px-4 py-3 font-medium text-neutral-900 dark:text-white">Temperature at 3 PM</td>
+              <td class="px-4 py-3 font-medium text-neutral-900 dark:text-neutral-100">Temperature at 3 PM</td>
               <td class="px-4 py-3 text-green-600 dark:text-green-400">Between 2 PM &amp; 4 PM readings — reliable</td>
               <td class="px-4 py-3 text-amber-600 dark:text-amber-400">Predicting midnight — uncertain</td>
             </tr>
             <tr class="border-b border-neutral-100 dark:border-neutral-800 bg-white/40 dark:bg-neutral-800/20">
-              <td class="px-4 py-3 font-medium text-neutral-900 dark:text-white">Stock price day 6</td>
+              <td class="px-4 py-3 font-medium text-neutral-900 dark:text-neutral-100">Stock price day 6</td>
               <td class="px-4 py-3 text-green-600 dark:text-green-400">Between day 5 &amp; day 7 — bounded</td>
               <td class="px-4 py-3 text-amber-600 dark:text-amber-400">Predicting day 30 — speculative</td>
             </tr>
             <tr class="border-b border-neutral-100 dark:border-neutral-800">
-              <td class="px-4 py-3 font-medium text-neutral-900 dark:text-white">Height at age 10</td>
+              <td class="px-4 py-3 font-medium text-neutral-900 dark:text-neutral-100">Height at age 10</td>
               <td class="px-4 py-3 text-green-600 dark:text-green-400">Between ages 9 &amp; 11 — accurate</td>
               <td class="px-4 py-3 text-amber-600 dark:text-amber-400">Predicting age 25 — growth stops</td>
             </tr>
@@ -148,20 +187,20 @@ const currentPath = '/interpolation/';
   <!-- Real-World Applications -->
   <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Real-World Applications of Interpolation</h2>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Interpolation isn't just a textbook concept — it's used every day across engineering, finance, science, and computer graphics to fill in missing information with mathematically grounded estimates.</p>
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-8 mb-4">Real-World Applications of Interpolation</h2>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Interpolation isn't just a textbook concept — it's used every day across engineering, finance, science, and computer graphics to fill in missing information with mathematically grounded estimates.</p>
 
-      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Interpolation in Engineering (Stress, Temperature)</h3>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Engineers use interpolation to estimate material properties at conditions not directly tested. If a steel alloy's yield stress is known at 20°C and 100°C, linear interpolation gives a reliable estimate at 60°C. Thermodynamic tables, fluid dynamics charts, and structural load curves all rely on interpolation to provide values between measured rows.</p>
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Interpolation in Engineering (Stress, Temperature)</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Engineers use interpolation to estimate material properties at conditions not directly tested. If a steel alloy's yield stress is known at 20°C and 100°C, linear interpolation gives a reliable estimate at 60°C. Thermodynamic tables, fluid dynamics charts, and structural load curves all rely on interpolation to provide values between measured rows.</p>
 
-      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Interpolation for Financial Forecasting</h3>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Financial analysts interpolate yield curves — plotting interest rates against bond maturities — to estimate rates for maturities that aren't actively traded. Cubic spline interpolation is the industry standard for constructing smooth yield curves from a sparse set of observed bond prices, ensuring no arbitrage opportunities arise from the fitted curve.</p>
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Interpolation for Financial Forecasting</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Financial analysts interpolate yield curves — plotting interest rates against bond maturities — to estimate rates for maturities that aren't actively traded. Cubic spline interpolation is the industry standard for constructing smooth yield curves from a sparse set of observed bond prices, ensuring no arbitrage opportunities arise from the fitted curve.</p>
 
-      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Interpolation in Computer Graphics &amp; Animation</h3>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">Every smooth curve on your screen — from Bezier paths in vector graphics to keyframe animation in video games — uses interpolation. Animators set key poses at specific frames, and the software interpolates the in-between frames using cubic splines. Image resizing, color gradient rendering, and 3D mesh deformation all depend on fast interpolation algorithms running at 60 frames per second.</p>
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Interpolation in Computer Graphics &amp; Animation</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Every smooth curve on your screen — from Bezier paths in vector graphics to keyframe animation in video games — uses interpolation. Animators set key poses at specific frames, and the software interpolates the in-between frames using cubic splines. Image resizing, color gradient rendering, and 3D mesh deformation all depend on fast interpolation algorithms running at 60 frames per second.</p>
 
-      <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mt-6 mb-2">Scientific Data Analysis &amp; Missing Data Points</h3>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-6">When sensors drop readings due to noise, equipment failure, or transmission errors, interpolation fills the gaps. Climate scientists reconstruct missing temperature records. Biologists estimate unmeasured gene expression levels. Astronomers interpolate telescope data across cloudy nights. In every case, interpolation preserves the integrity of continuous datasets without introducing the bias that simple averaging or deletion would cause.</p>
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Scientific Data Analysis &amp; Missing Data Points</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">When sensors drop readings due to noise, equipment failure, or transmission errors, interpolation fills the gaps. Climate scientists reconstruct missing temperature records. Biologists estimate unmeasured gene expression levels. Astronomers interpolate telescope data across cloudy nights. In every case, interpolation preserves the integrity of continuous datasets without introducing the bias that simple averaging or deletion would cause.</p>
     </div>
   </section>
 
@@ -169,24 +208,24 @@ const currentPath = '/interpolation/';
   <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="section-card p-8 md:p-12">
-      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Frequently Asked Questions About Interpolation Calculators</h2>
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-8 mb-4">Frequently Asked Questions About Interpolation Calculators</h2>
 
       <div class="space-y-4">
         <details class="calculator-card overflow-hidden border-l-4 border-l-gold-500/40 group">
-          <summary class="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-neutral-900 dark:text-white cursor-pointer">Can Interpolation Handle Non-Linear Data?<svg class="h-5 w-5 text-gold-500/60 dark:text-gold-400/60 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></summary>
-          <div class="px-6 pb-4 text-neutral-600 dark:text-gray-300 leading-relaxed">Yes. While linear interpolation assumes straight-line relationships, polynomial and cubic spline methods are specifically designed for non-linear data. Cubic spline handles curves, peaks, and valleys with smooth transitions — making it the best choice for most real-world non-linear datasets.</div>
+          <summary class="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-neutral-900 dark:text-neutral-100 cursor-pointer">Can Interpolation Handle Non-Linear Data?<svg class="h-5 w-5 text-gold-500/60 dark:text-gold-400/60 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></summary>
+          <div class="px-6 pb-4 text-neutral-600 dark:text-neutral-400 leading-relaxed">Yes. While linear interpolation assumes straight-line relationships, polynomial and cubic spline methods are specifically designed for non-linear data. Cubic spline handles curves, peaks, and valleys with smooth transitions — making it the best choice for most real-world non-linear datasets.</div>
         </details>
         <details class="calculator-card overflow-hidden border-l-4 border-l-gold-500/40 group">
-          <summary class="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-neutral-900 dark:text-white cursor-pointer">What Is the Most Accurate Interpolation Method?<svg class="h-5 w-5 text-gold-500/60 dark:text-gold-400/60 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></summary>
-          <div class="px-6 pb-4 text-neutral-600 dark:text-gray-300 leading-relaxed">For most practical purposes, cubic spline interpolation is the most accurate general-purpose method. It produces the smoothest curve, avoids oscillation, and maintains continuous derivatives at every point. However, if your data is truly linear, simple linear interpolation is equally accurate and much faster. The "best" method always depends on your data's underlying behavior.</div>
+          <summary class="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-neutral-900 dark:text-neutral-100 cursor-pointer">What Is the Most Accurate Interpolation Method?<svg class="h-5 w-5 text-gold-500/60 dark:text-gold-400/60 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></summary>
+          <div class="px-6 pb-4 text-neutral-600 dark:text-neutral-400 leading-relaxed">For most practical purposes, cubic spline interpolation is the most accurate general-purpose method. It produces the smoothest curve, avoids oscillation, and maintains continuous derivatives at every point. However, if your data is truly linear, simple linear interpolation is equally accurate and much faster. The "best" method always depends on your data's underlying behavior.</div>
         </details>
         <details class="calculator-card overflow-hidden border-l-4 border-l-gold-500/40 group">
-          <summary class="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-neutral-900 dark:text-white cursor-pointer">Do I Need to Install Software to Use an Interpolation Calculator?<svg class="h-5 w-5 text-gold-500/60 dark:text-gold-400/60 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></summary>
-          <div class="px-6 pb-4 text-neutral-600 dark:text-gray-300 leading-relaxed">No. Our interpolation calculator runs entirely in your web browser. There's nothing to download, install, or sign up for. All calculations happen client-side using JavaScript, so your data never leaves your device. Open the page, enter your data, and get results instantly.</div>
+          <summary class="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-neutral-900 dark:text-neutral-100 cursor-pointer">Do I Need to Install Software to Use an Interpolation Calculator?<svg class="h-5 w-5 text-gold-500/60 dark:text-gold-400/60 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></summary>
+          <div class="px-6 pb-4 text-neutral-600 dark:text-neutral-400 leading-relaxed">No. Our interpolation calculator runs entirely in your web browser. There's nothing to download, install, or sign up for. All calculations happen client-side using JavaScript, so your data never leaves your device. Open the page, enter your data, and get results instantly.</div>
         </details>
         <details class="calculator-card overflow-hidden border-l-4 border-l-gold-500/40 group">
-          <summary class="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-neutral-900 dark:text-white cursor-pointer">Is the Interpolation Calculator Free?<svg class="h-5 w-5 text-gold-500/60 dark:text-gold-400/60 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></summary>
-          <div class="px-6 pb-4 text-neutral-600 dark:text-gray-300 leading-relaxed">Yes, 100% free with no limits. No account required, no usage caps, no premium tiers. Every method — linear, Lagrange, and cubic spline — is available to everyone. We believe mathematical tools should be accessible to all.</div>
+          <summary class="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-neutral-900 dark:text-neutral-100 cursor-pointer">Is the Interpolation Calculator Free?<svg class="h-5 w-5 text-gold-500/60 dark:text-gold-400/60 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></summary>
+          <div class="px-6 pb-4 text-neutral-600 dark:text-neutral-400 leading-relaxed">Yes, 100% free with no limits. No account required, no usage caps, no premium tiers. Every method — linear, Lagrange, and cubic spline — is available to everyone. We believe mathematical tools should be accessible to all.</div>
         </details>
       </div>
       </div>
@@ -196,25 +235,25 @@ const currentPath = '/interpolation/';
   <!-- Why Our Calculator Stands Out -->
   <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Why Our Interpolation Calculator Stands Out</h2>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-8">Not all interpolation tools are created equal. Here's what makes ours different.</p>
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-8 mb-4">Why Our Interpolation Calculator Stands Out</h2>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-8">Not all interpolation tools are created equal. Here's what makes ours different.</p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="calculator-card p-6">
-          <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mb-2">Supports Multiple Interpolation Methods</h3>
-          <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">Linear, Lagrange polynomial, and natural cubic spline — all in one tool. Switch methods with one click and compare results instantly.</p>
+          <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">Supports Multiple Interpolation Methods</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed text-sm">Linear, Lagrange polynomial, and natural cubic spline — all in one tool. Switch methods with one click and compare results instantly.</p>
         </div>
         <div class="calculator-card p-6">
-          <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mb-2">Interactive Graph Visualization</h3>
-          <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">See your data points and the fitted curve rendered live. Visual confirmation helps you spot bad fits before relying on the numbers.</p>
+          <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">Interactive Graph Visualization</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed text-sm">See your data points and the fitted curve rendered live. Visual confirmation helps you spot bad fits before relying on the numbers.</p>
         </div>
         <div class="calculator-card p-6">
-          <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mb-2">Dark Mode &amp; Responsive Design</h3>
-          <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">Comfortable to use at any hour, on any device. The calculator adapts to your screen size and color preference automatically.</p>
+          <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">Dark Mode &amp; Responsive Design</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed text-sm">Comfortable to use at any hour, on any device. The calculator adapts to your screen size and color preference automatically.</p>
         </div>
         <div class="calculator-card p-6">
-          <h3 class="text-xl font-semibold text-neutral-900 dark:text-white mb-2">No Sign-Up, Completely Free</h3>
-          <p class="text-neutral-600 dark:text-gray-300 leading-relaxed text-sm">Zero barriers. No account, no email, no payment. Open the page and start calculating. Your data stays in your browser.</p>
+          <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">No Sign-Up, Completely Free</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed text-sm">Zero barriers. No account, no email, no payment. Open the page and start calculating. Your data stays in your browser.</p>
         </div>
       </div>
     </div>
@@ -224,8 +263,8 @@ const currentPath = '/interpolation/';
   <section class="py-12 md:py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <div class="section-card p-8 md:p-12">
-      <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mt-8 mb-4">Try Our Interpolation Calculator Now</h2>
-      <p class="text-neutral-600 dark:text-gray-300 leading-relaxed mb-8">Scroll up to the calculator, load an example dataset, and see interpolation in action. It takes less than 30 seconds to get your first result. For predicting values beyond your data range, use the <a href="/" class="text-primary hover:text-primary/80 font-medium transition-colors">extrapolation calculator</a>. To analyze variable relationships, try the <a href="/regression/" class="text-primary hover:text-primary/80 font-medium transition-colors">regression calculator</a>.</p>
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-8 mb-4">Try Our Interpolation Calculator Now</h2>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-8">Scroll up to the calculator, load an example dataset, and see interpolation in action. It takes less than 30 seconds to get your first result. For predicting values beyond your data range, use the <a href="/" class="text-gold-600 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-medium transition-colors">extrapolation calculator</a>. To analyze variable relationships, try the <a href="/regression/" class="text-gold-600 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-medium transition-colors">regression calculator</a>.</p>
       <a href="#calculator" class="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-gold-700 via-gold-600 to-gold-500 shadow-lg shadow-gold-600/20 hover:shadow-glow-gold hover:scale-[1.03] active:scale-[0.98] focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none relative overflow-hidden">
         <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
         <svg class="h-5 w-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>

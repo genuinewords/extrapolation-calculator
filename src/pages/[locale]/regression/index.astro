@@ -16,14 +16,21 @@ const { locale } = Astro.props;
 const currentPath = localizePath('/regression/', locale);
 ---
 
-<BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'regression.title')} description={t(locale, 'regression.description')}>
+<BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'regression.title')} description={t(locale, 'regression.description')} schemaOrg={{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": t(locale, 'regression.title'),
+  "applicationCategory": "MathApplication",
+  "operatingSystem": "Web Browser",
+  "description": t(locale, 'regression.description'),
+  "featureList": ["Simple Linear Regression", "Multiple Linear Regression", "R-Squared Analysis"],
+}}>
   <div class="py-16 md:py-20">
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-10">
-        <a href={localizePath('/', locale)} class="inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 font-medium mb-4 transition-colors">
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
-          {t(locale, 'nav.home')}
-        </a>
+        <h1 class="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 leading-tight tracking-tight">{t(locale, 'regression.title').split(' – ')[0]}</h1>
+        <div class="gold-divider-wide mb-6" />
+        <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed max-w-2xl mx-auto">{t(locale, 'regression.description')}</p>
       </div>
       <RegressionCalculator client:load locale={locale} />
     </div>

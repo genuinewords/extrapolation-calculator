@@ -5,12 +5,12 @@ type TranslationDict = Record<TranslationKey, string>;
 
 const translations: Record<Locale, TranslationDict> = {
   en: {
-    'site.title': 'Extrapolation Calculator – Free Online Predictor',
-    'site.description': 'Free online extrapolation calculator to predict future values using linear, exponential, polynomial, and logarithmic methods. Get instant results with R² scoring.',
-    'interpolation.title': 'Interpolation Calculator – Estimate Values Online',
-    'interpolation.description': 'Free interpolation calculator using linear, Lagrange polynomial, and cubic spline methods. Estimate unknown values between known data points instantly.',
-    'regression.title': 'Regression Calculator – Analyze & Predict Online',
-    'regression.description': 'Free regression calculator for simple and multiple linear regression. Calculate coefficients, R-squared, and make predictions in seconds.',
+    'site.title': 'Extrapolation Calculator – Free Online Value Predictor',
+    'site.description': 'Free online extrapolation calculator to predict future values using linear, exponential, polynomial, and logarithmic methods. Get instant results with R².',
+    'interpolation.title': 'Interpolation Calculator – Estimate Values Between Data Points',
+    'interpolation.description': 'Free interpolation calculator with linear, Lagrange polynomial, and cubic spline methods. Estimate values between known data points instantly. Try it now!',
+    'regression.title': 'Regression Calculator – Analyze Variables & Predict Online',
+    'regression.description': 'Free regression calculator for simple and multiple linear regression. Get coefficients, R-squared, and predictions instantly in your browser. Try it now!',
     'about.description': 'Learn about the Extrapolation Calculator: free, open-source, privacy-first math tools for extrapolation, interpolation, and regression in 18 languages.',
     'contact.description': 'Reach the Extrapolation Calculator team for questions, feedback, or suggestions. We respond within 24 hours, Monday through Friday.',
     'privacy.title': 'Privacy Policy – Extrapolation Calculator',
