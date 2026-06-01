@@ -1,0 +1,92 @@
+---
+title: "Interpolation vs Extrapolation: When to Use Each Method"
+description: A clear guide to the key differences between interpolation and extrapolation, when each method is appropriate, and how to avoid common pitfalls in your predictions.
+publishDate: 2025-02-10
+author: Extrapolation Calculator Team
+category: Fundamentals
+featuredImage: ""
+---
+
+Interpolation and extrapolation are two sides of the same coin — both estimate unknown values from known data points, but they operate in fundamentally different territories. Interpolation fills gaps *between* observations; extrapolation ventures *beyond* them. Choosing the wrong one can turn a reliable estimate into a wild guess.
+
+## The Core Difference
+
+**Interpolation** estimates values within the range of your existing data. If you know the temperature at 2 PM and 4 PM, interpolating the temperature at 3 PM gives you a bounded, high-confidence estimate.
+
+**Extrapolation** estimates values outside the range of your data. Using those same temperature readings to predict the temperature at midnight is extrapolation — you're extending the trend beyond the observed window, where conditions may change dramatically.
+
+The distinction is simple but the implications are profound: interpolation is inherently safer because it is constrained by data on both sides. Extrapolation has no such guardrails.
+
+## When to Use Interpolation
+
+Interpolation is the right choice when you need to estimate a value that falls between two or more known data points. Common scenarios include:
+
+- **Filling gaps in sensor data** — a weather station that logs every hour but missed the 3 PM reading
+- **Generating smooth curves** — animators and graphic designers use spline interpolation to create fluid motion between keyframes
+- **Financial yield curves** — bond traders interpolate interest rates for maturities not actively traded
+- **Engineering look-up tables** — material properties at untabulated temperatures or pressures
+
+Our [interpolation calculator](/interpolation/) supports three methods: linear interpolation (fast, good for evenly-spaced data), Lagrange polynomial (smooth curves with few points), and natural cubic spline (the gold standard for smooth, stable interpolation).
+
+## When to Use Extrapolation
+
+Extrapolation is necessary when you need to predict beyond the observed range. Real-world applications include:
+
+- **Revenue forecasting** — projecting next quarter's sales from historical data
+- **Population modeling** — estimating future population from census records
+- **Scientific prediction** — forecasting climate variables beyond measured ranges
+- **Capacity planning** — predicting when server traffic will exceed current infrastructure
+
+Our [extrapolation calculator](/) offers five methods: linear, exponential, logarithmic, polynomial, and quadratic. Each captures a different trend pattern — the key is matching the method to your data's behavior.
+
+## Accuracy Comparison
+
+| Factor | Interpolation | Extrapolation |
+|--------|--------------|---------------|
+| Confidence | High — bounded by data | Decreases with distance from data |
+| Error range | Narrow and predictable | Wide and unpredictable |
+| Risk of failure | Low | Significant, especially far from data |
+| Best use | Filling gaps | Forecasting trends |
+| Required data | At least 2 points | At least 2 points (more = better) |
+
+The further you extrapolate beyond your data, the less reliable the prediction becomes. A linear extrapolation that fits perfectly within the data range (R² = 0.99) can still produce absurd results if the underlying trend changes — which is exactly what happens when you project population growth without accounting for carrying capacity, or predict stock prices through a market crash.
+
+## The Danger Zone: When Extrapolation Fails
+
+History is full of extrapolation disasters:
+
+- **Pre-2008 housing prices** — linear extrapolation assumed prices would keep rising indefinitely
+- **Early COVID models** — exponential extrapolation overestimated long-term spread without accounting for behavioral changes
+- **Technology forecasts** — projecting current growth rates decades forward ignores physical and economic limits
+
+The pattern is always the same: a trend that holds within the observed range breaks down outside it. This is why domain knowledge must accompany mathematical extrapolation. Numbers alone don't know when the rules change.
+
+## A Practical Decision Framework
+
+Ask yourself these questions:
+
+1. **Is my target value between known data points?** → Use the [interpolation calculator](/interpolation/)
+2. **Is my target value beyond the data range?** → Use the [extrapolation calculator](/)
+3. **Do I need to model a variable relationship rather than predict a specific value?** → Use the [regression calculator](/regression/)
+4. **How far beyond the data am I predicting?** → The further out, the more cautious you should be
+5. **Could the underlying trend change?** → If yes, extrapolation carries significant risk
+
+## Combining Methods for Robust Results
+
+The most reliable approach is often to use both methods together:
+
+1. **Interpolate within your data range** to validate that your chosen method fits well
+2. **Check the R² score** — a poor fit inside the data range means extrapolation will be unreliable
+3. **Extrapolate conservatively** — predict only slightly beyond the data range
+4. **Compare multiple extrapolation methods** — if linear and exponential give wildly different predictions, neither should be trusted far out
+5. **Apply domain knowledge** — statistical predictions must be checked against physical, economic, or logical constraints
+
+## Key Takeaways
+
+- Interpolation estimates **between** data points; extrapolation estimates **beyond** them
+- Interpolation is inherently more reliable because it is bounded by observations
+- Extrapolation is essential for forecasting but carries increasing uncertainty with distance
+- Always check R² and confidence metrics — and combine mathematical results with domain expertise
+- Use our [interpolation calculator](/interpolation/) for within-range estimates and our [extrapolation calculator](/) for beyond-range predictions
+
+Both tools are free, private, and run entirely in your browser — your data never leaves your device.
