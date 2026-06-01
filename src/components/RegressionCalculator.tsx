@@ -14,19 +14,6 @@ const methodLabels: Record<RegMethod, Record<string, string>> = {
   multiple: { en: 'Multiple Regression', hi: 'बहु प्रतिगमन', es: 'Regresión Múltiple', ru: 'Множественная Регрессия', fr: 'Régression Multiple', de: 'Mehrfache Regression', it: 'Regressione Multipla', pt: 'Regressão Múltipla', bn: 'বহু নির্ভরণ', ja: '重回帰', ko: '다중 회귀', ms: 'Regresi Berganda', pl: 'Regresja Wielokrotna', id: 'Regresi Berganda', ar: 'انحدار متعدد', bg: 'Множествена Регресия', tr: 'Çoklu Regresyon', sv: 'Multipel Regression' },
 };
 
-const methodDescriptions: Record<RegMethod, { title: string; description: string; icon: string }> = {
-  simple: {
-    title: 'Simple Linear Regression',
-    description: 'Model the relationship between one independent variable (X) and a dependent variable (Y). Calculates slope, intercept, and R² to assess fit quality.',
-    icon: 'M4 12h16M4 12l4-4m-4 4l4 4',
-  },
-  multiple: {
-    title: 'Multiple Linear Regression',
-    description: 'Model the relationship between two independent variables (X₁, X₂) and a dependent variable (Y). Computes coefficients β₀, β₁, β₂ using matrix math.',
-    icon: 'M4 8h16M4 12h16M4 16h16',
-  },
-};
-
 const simpleDemoSets: Record<string, { label: string; rows: { x: string; y: string }[]; predictX: string; context: string }> = {
   house: {
     label: 'House Prices',
@@ -287,18 +274,6 @@ export default function RegressionCalculator({ locale = 'en' }: Props) {
             {methodLabels[m][locale] ?? methodLabels[m].en}
           </button>
         ))}
-      </div>
-
-      <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-gold-500/5 to-gold-600/5 dark:from-gold-500/10 dark:to-gold-600/10 border border-gold-500/10 dark:border-gold-500/20 backdrop-blur-sm">
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-            <svg className="h-6 w-6 text-gold-600 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d={methodDescriptions[method].icon} /></svg>
-          </div>
-          <div>
-            <h3 className="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-sm tracking-wide">{methodDescriptions[method].title}</h3>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed mt-1">{methodDescriptions[method].description}</p>
-          </div>
-        </div>
       </div>
 
       {method === 'simple' ? (

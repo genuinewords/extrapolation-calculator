@@ -15,24 +15,6 @@ const methodLabels: Record<InterpMethod, Record<string, string>> = {
   spline: { en: 'Cubic Spline', hi: 'घन स्पलाइन', es: 'Spline Cúbico', ru: 'Кубический Сплайн', fr: 'Spline Cubique', de: 'Kubischer Spline', it: 'Spline Cubica', pt: 'Spline Cúbico', bn: 'কিউবিক স্প্লাইন', ja: '3次スプライン', ko: '3차 스플라인', ms: 'Spline Kubik', pl: 'Funkcja Sklejana', id: 'Spline Kubik', ar: 'شريحة تكعيبية', bg: 'Кубичен Сплайн', tr: 'Kübik Spline', sv: 'Kubisk Spline' },
 };
 
-const methodDescriptions: Record<InterpMethod, { title: string; description: string; icon: string }> = {
-  linear: {
-    title: 'Linear Interpolation',
-    description: 'Connect adjacent data points with straight lines. Fast and stable — ideal for evenly-spaced data like hourly temperature readings.',
-    icon: 'M4 12h16M4 12l4-4m-4 4l4 4',
-  },
-  lagrange: {
-    title: 'Lagrange Polynomial',
-    description: 'Fit a single polynomial through ALL data points. Perfect for smooth curves with few points (≤5). Warning: oscillates with many points.',
-    icon: 'M3 12c2-4 6-8 12-8s10 4 12 8-6 8-12 8-10-4-12-8',
-  },
-  spline: {
-    title: 'Natural Cubic Spline',
-    description: 'Fit piecewise cubic curves with smooth connections. The gold standard for interpolation — smooth, stable, and accurate.',
-    icon: 'M4 60 Q80 10 160 60 T320 60',
-  },
-};
-
 const dummyDataByMethod: Record<InterpMethod, { rows: { x: string; y: string }[]; targetX: string; label: string }> = {
   linear: {
     label: 'Linear',
@@ -123,7 +105,7 @@ function L(key: string, locale: string): string {
 }
 
 function MethodIllustration({ method }: { method: InterpMethod }) {
-  const desc = methodDescriptions[method];
+
   return (
     <div className="method-illustration mb-8">
       <svg viewBox="0 0 320 120" className="w-full h-full" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -260,18 +242,6 @@ export default function InterpolationCalculator({ locale = 'en' }: Props) {
             {methodLabels[m][locale] ?? methodLabels[m].en}
           </button>
         ))}
-      </div>
-
-      <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-gold-500/5 to-gold-600/5 dark:from-gold-500/10 dark:to-gold-600/10 border border-gold-500/10 dark:border-gold-500/20 backdrop-blur-sm">
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-            <svg className="h-6 w-6 text-gold-600 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d={methodDescriptions[method].icon} /></svg>
-          </div>
-          <div>
-            <h3 className="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-sm tracking-wide">{methodDescriptions[method].title}</h3>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed mt-1">{methodDescriptions[method].description}</p>
-          </div>
-        </div>
       </div>
 
       {/* Load Example Data */}

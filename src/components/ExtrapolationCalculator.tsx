@@ -21,34 +21,6 @@ const methodLabels: Record<MethodKey, Record<string, string>> = {
   quadratic: { en: 'Quadratic', hi: 'द्विघात', es: 'Cuadrático', ru: 'Квадратичный', fr: 'Quadratique', de: 'Quadratisch', it: 'Quadratico', pt: 'Quadrático', bn: 'দ্বিঘাত', ja: '二次', ko: '이차', ms: 'Kuadratik', pl: 'Kwadratowa', id: 'Kuadratik', ar: 'تربيعي', bg: 'Квадратичен', tr: 'Karesel', sv: 'Kvadratisk' },
 };
 
-const methodDescriptions: Record<MethodKey, { title: string; description: string; icon: string }> = {
-  linear: {
-    title: 'Linear Growth',
-    description: 'Constant rate of change. Best for steady trends like monthly revenue or temperature increases.',
-    icon: 'M4 12h16M4 12l4-4m-4 4l4 4',
-  },
-  exponential: {
-    title: 'Exponential Growth',
-    description: 'Accelerating growth. Ideal for population, viral spread, compound interest, or bacterial colonies.',
-    icon: 'M3 17c3-4 6-7 12-7M3 17l4-4m-4 4l4 4',
-  },
-  logarithmic: {
-    title: 'Logarithmic Decay',
-    description: 'Rapid initial change that slows over time. Perfect for learning curves or diminishing returns.',
-    icon: 'M3 7c3 4 6 7 12 7M3 7l4 4m-4-4l4-4',
-  },
-  polynomial: {
-    title: 'Polynomial Curve',
-    description: 'Complex multi-directional trends. Use for data with peaks and valleys like market cycles.',
-    icon: 'M3 12c2-4 4-6 8-6s6 2 8 6-2 6-6 6-6-2-8-6',
-  },
-  quadratic: {
-    title: 'Quadratic Parabola',
-    description: 'U-shaped or inverted U trends. Great for projectile motion or profit maximization curves.',
-    icon: 'M4 16c2-6 6-10 10-10s8 4 10 10',
-  },
-};
-
 const dummyDataByMethod: Record<MethodKey, { rows: { x: string; y: string }[]; targetX: string; label: string }> = {
   linear: {
     label: 'Linear',
@@ -155,7 +127,7 @@ function L(key: string, locale: string): string {
 }
 
 function MethodIllustration({ method }: { method: MethodKey }) {
-  const desc = methodDescriptions[method];
+
   return (
     <div className="method-illustration mb-8">
       <svg viewBox="0 0 320 120" className="w-full h-full" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -339,21 +311,6 @@ export default function ExtrapolationCalculator({ locale = 'en', showChart = tru
             {methodLabels[m][locale] ?? methodLabels[m].en}
           </button>
         ))}
-      </div>
-
-      {/* Method Description */}
-      <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-gold-500/5 to-gold-600/5 dark:from-gold-500/10 dark:to-gold-600/10 border border-gold-500/10 dark:border-gold-500/20 backdrop-blur-sm">
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-            <svg className="h-6 w-6 text-gold-600 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d={methodDescriptions[method].icon} />
-            </svg>
-          </div>
-          <div>
-            <h3 className="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-sm tracking-wide">{methodDescriptions[method].title}</h3>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed mt-1">{methodDescriptions[method].description}</p>
-          </div>
-        </div>
       </div>
 
       {/* Load Example Data */}
