@@ -1,0 +1,171 @@
+---
+title: "Interpolation Methods Compared: Linear vs Lagrange vs Cubic Spline"
+description: A practical comparison of three interpolation methods — linear, Lagrange polynomial, and natural cubic spline — with examples, use cases, and when each one is best.
+publishDate: 2025-03-05
+author: Extrapolation Calculator Team
+category: Methods
+featuredImage: ""
+---
+
+You have a set of known data points, and you need to estimate a value that falls between them. Which interpolation method should you use? Linear is fast and simple. Lagrange polynomial fits every point exactly. Cubic spline gives you the smoothest curve. Each has a sweet spot — and each can mislead you if applied carelessly.
+
+This guide compares three interpolation methods head to head, with worked examples, a decision framework, and practical recommendations. If you're also predicting values *beyond* your data range, see our guide on [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation.mdx/) for that distinction.
+
+## What Is Interpolation?
+
+Interpolation estimates unknown values within the range of known data points. Unlike [extrapolation calculator](https://www.extrapolationcalculator.com/) methods that project beyond observed data, interpolation is bounded — your estimate is always surrounded by real measurements on both sides.
+
+This constraint makes interpolation inherently more reliable. The estimated value is constrained by the data, which is why engineers, scientists, and analysts reach for interpolation whenever the target point falls inside their dataset.
+
+The three methods our [interpolation calculator](/interpolation/) supports — linear, Lagrange polynomial, and natural cubic spline — take fundamentally different approaches to the same problem. Here's how they compare.
+
+## Linear Interpolation
+
+### How It Works
+
+Linear interpolation connects two neighboring data points with a straight line and reads off the value at your target x. It finds the two points that bracket your target, calculates the slope between them, and extends that slope to the target point.
+
+The formula is straightforward:
+
+**y = y₁ + (x − x₁) × (y₂ − y₁) / (x₂ − x₁)**
+
+Where (x₁, y₁) and (x₂, y₂) are the two bracketing points.
+
+### When It Works Best
+
+- **Evenly spaced data** where the underlying trend is roughly linear
+- **Quick estimates** where speed matters more than precision
+- **Large datasets** where computing a complex model would be expensive
+- **Tabular lookups** — engineering tables, financial yield curves, sensor readings
+
+### Where It Falls Short
+
+Linear interpolation assumes a straight line between every pair of adjacent points. If your data has any curvature — accelerating growth, decelerating returns, or oscillation — the straight-line assumption introduces error. The estimated value will always lie on the chord between two points, never on a smooth curve through them.
+
+This is especially visible with sparse data. If you only have five points tracing a parabola, linear interpolation will produce a jagged, piecewise-straight estimate that undershoots peaks and overshoots valleys.
+
+## Lagrange Polynomial Interpolation
+
+### How It Works
+
+Lagrange interpolation constructs a single polynomial that passes through *every* data point exactly. For n points, it builds a polynomial of degree n−1 using weighted basis functions — each basis function equals 1 at its own data point and 0 at all others.
+
+The result is a mathematically exact fit: the polynomial touches every point. No residual, no error at the known data.
+
+### When It Works Best
+
+- **Small datasets** (2–5 points) where you want an exact fit
+- **Smooth underlying trends** where a single polynomial can capture the pattern
+- **Theoretical analysis** where mathematical elegance matters
+- **Educational purposes** — the method is transparent and instructive
+
+Our [interpolation calculator](/interpolation/) limits Lagrange to a maximum of 5 points, which is where the method performs best.
+
+### Where It Falls Short
+
+Lagrange polynomials suffer from **Runge's phenomenon** — wild oscillations between data points when the degree gets high. A degree-8 polynomial fitting 9 points may swing dramatically between consecutive observations, producing interpolated values that are mathematically correct but physically absurd.
+
+This is why we cap it at 5 points. Beyond that, the oscillations make the method unreliable. If you have more than 5 points and need a smooth curve, cubic spline is the better choice.
+
+Lagrange also doesn't handle new points gracefully — adding a single observation changes the entire polynomial, which makes it impractical for incremental datasets.
+
+## Natural Cubic Spline Interpolation
+
+### How It Works
+
+A cubic spline fits a separate cubic polynomial between each pair of adjacent data points, then stitches them together with matching conditions. At every interior point, the adjacent cubics share the same value, the same first derivative (slope), and the same second derivative (curvature). The "natural" condition sets the second derivative to zero at both endpoints.
+
+The result is the smoothest possible curve through your data — mathematically, it minimizes the total curvature across all segments.
+
+### When It Works Best
+
+- **Smooth curves** — animation keyframes, engineering profiles, scientific data
+- **Moderate to large datasets** where linear is too rough and Lagrange oscillates
+- **Physical systems** where the underlying process is continuous and differentiable
+- **Any scenario where visual smoothness matters** — chart rendering, CAD, signal processing
+
+### Where It Falls Short
+
+Cubic spline cannot extrapolate — it only works within the data range. If your target x is below the smallest data point or above the largest, the method throws an error. This is by design: extrapolating with a spline is dangerously unreliable because the cubic segments are unconstrained beyond the endpoints.
+
+Spline computation is also more expensive than linear interpolation. For very large datasets (thousands of points), the tridiagonal system solve adds overhead, though it's still efficient compared to high-degree polynomials.
+
+For understanding model fit quality across methods, our guide to [R² scores](/blog/r-squared-confidence.mdx/) explains how to evaluate whether your chosen method actually matches your data's pattern.
+
+## Head-to-Head Comparison
+
+| Feature | Linear | Lagrange | Cubic Spline |
+|---------|--------|----------|--------------|
+| Fit quality | Approximate | Exact at data points | Exact at data points |
+| Smoothness | None (piecewise straight) | Can oscillate | Smooth (continuous derivatives) |
+| Max points | Unlimited | 5 (recommended) | Unlimited |
+| Extrapolation | Limited (uses boundary segment) | Possible but risky | Not supported |
+| Computation speed | Fastest | Moderate | Moderate |
+| Best for | Quick estimates, linear trends | Small datasets, exact fits | Smooth curves, physical data |
+| Biggest risk | Misses curvature | Runge's phenomenon | Cannot extrapolate |
+
+## A Worked Example
+
+Consider these four data points tracking temperature over a day:
+
+| Hour | Temperature (°C) |
+|------|-------------------|
+| 6 | 12 |
+| 10 | 18 |
+| 14 | 26 |
+| 18 | 20 |
+
+We want the temperature at 12 PM (hour 12).
+
+**Linear interpolation**: Between (10, 18) and (14, 26). Slope = (26−18)/(14−10) = 2. Result: 18 + 2×2 = **22°C**.
+
+**Lagrange polynomial**: Fits a degree-3 polynomial through all four points. The polynomial dips slightly below the linear estimate because it accounts for the subsequent drop at hour 18. Result: approximately **23.5°C**.
+
+**Natural cubic spline**: Fits cubic segments with continuous curvature. The spline recognizes that the temperature is still rising at hour 12 but decelerating toward the peak. Result: approximately **23.2°C**.
+
+The differences are small in this example, but they matter. Linear undershoots because it ignores curvature. Lagrange overshoots slightly because the high-degree polynomial wobbles. The spline lands between them — smooth, bounded, and physically reasonable.
+
+## How to Choose the Right Method
+
+Use this decision framework:
+
+1. **Is your data roughly linear?** Use linear interpolation — it's fast, simple, and won't mislead you
+2. **Do you have 5 or fewer points and need an exact fit?** Use Lagrange polynomial
+3. **Do you need a smooth curve through many points?** Use cubic spline
+4. **Are you working with physical or engineering data?** Use cubic spline — real systems are smooth
+5. **Do you need to predict beyond the data range?** None of these methods are safe for that — use our [free extrapolation calculator](https://www.extrapolationcalculator.com/) instead, which offers [linear](/blog/linear-extrapolation.mdx/), [exponential](/blog/exponential-growth.mdx/), and [logarithmic](/blog/logarithmic-diminishing-returns.mdx/) extrapolation methods
+6. **Are you comparing model types?** Our guide on [polynomial vs linear methods](/blog/polynomial-vs-linear.mdx/) covers the tradeoffs in detail
+
+## Practical Tips
+
+- **Always visualize your data first** — if it looks like a straight line, use linear interpolation; if it curves, use spline
+- **Check for outliers** — a single bad point distorts Lagrange dramatically and affects spline curvature
+- **Linear is never wrong** — it's just less precise for curved data. If you're unsure, linear gives a defensible baseline
+- **Don't mix interpolation and extrapolation** — interpolate within your range, extrapolate with dedicated methods
+- **More points help all methods** — but Lagrange degrades with too many, while linear and spline improve
+
+## Conclusion
+
+Linear interpolation is fast and reliable for roughly linear data. Lagrange polynomial gives exact fits for small datasets but oscillates with more points. Natural cubic spline produces the smoothest curves and handles moderate-to-large datasets well, but cannot extrapolate.
+
+The right choice depends on your data's shape, your point count, and whether you need speed, smoothness, or exactness. Try all three methods on the same dataset using our [interpolation calculator](/interpolation/) and compare the results — the differences tell you a lot about your data's underlying pattern.
+
+For numerical predictions beyond your data range, the [extrapolation calculator](https://www.extrapolationcalculator.com/) provides five methods suited to different trend patterns.
+
+## Frequently Asked Questions
+
+### Which interpolation method is the most accurate?
+
+No single method is always most accurate. Linear is most accurate for truly linear data. Cubic spline is most accurate for smooth, continuous physical processes. Lagrange is most accurate when you have very few points and the underlying function is polynomial. The best method matches your data's actual pattern.
+
+### When should I avoid cubic spline interpolation?
+
+Avoid cubic spline when you need to extrapolate beyond your data range — it only works within the bounds of your dataset. Also be cautious with data that has sharp corners or discontinuities, where the smoothness constraint of the spline may smooth out real features.
+
+### Is Lagrange interpolation better than linear?
+
+Not necessarily. Lagrange fits every point exactly, but that exactness can produce wild oscillations between points (Runge's phenomenon) when you have more than 5–6 observations. Linear interpolation is more stable and predictable, especially with noisy or irregular data.
+
+### Can I use interpolation for forecasting?
+
+No. Interpolation estimates values *between* known data points. Forecasting requires predicting beyond the observed range, which is extrapolation. Use an [extrapolation calculator](https://www.extrapolationcalculator.com/) for forecasting — it provides methods designed for beyond-range prediction.
