@@ -36,7 +36,7 @@ const currentPath = '/';
             <svg class="h-5 w-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
             <span class="relative z-10 tracking-wide">Start Calculating</span>
           </a>
-          <a href="#formulas" class="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-gold-600 via-gold-500 to-gold-400 shadow-lg shadow-gold-500/20 hover:shadow-glow-gold hover:scale-[1.03] active:scale-[0.98] focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none relative overflow-hidden border border-gold-400/30">
+          <a href="#methods" class="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-gold-600 via-gold-500 to-gold-400 shadow-lg shadow-gold-500/20 hover:shadow-glow-gold hover:scale-[1.03] active:scale-[0.98] focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none relative overflow-hidden border border-gold-400/30">
             <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
             <span class="relative z-10 tracking-wide">Explore Methods</span>
             <svg class="h-4 w-4 relative z-10 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
@@ -106,7 +106,106 @@ const currentPath = '/';
     </div>
   </section>
 
-  <section id="formulas" class="py-8 md:py-12">
+  <!-- Extrapolation Methods Explained -->
+  <section id="methods" class="py-8 md:py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-8">
+        <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Extrapolation Methods Explained</h2>
+        <div class="gold-divider mb-4" />
+        <p class="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">Choose the right mathematical model for your data pattern.</p>
+      </div>
+
+      <div class="space-y-8">
+        <div class="calculator-card p-6 md:p-8 border-l-4 border-l-gold-500">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center flex-shrink-0">
+              <svg class="h-6 w-6 text-gold-600 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16M4 12l4-4m-4 4l4 4" /></svg>
+            </div>
+            <div>
+              <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-xl mb-1">Linear Extrapolation</h3>
+              <p class="text-sm text-gold-600 dark:text-gold-400 font-medium">Best for: Steady, constant-rate trends</p>
+            </div>
+          </div>
+          <div class="text-neutral-600 dark:text-neutral-400 leading-relaxed space-y-3">
+            <p>Linear extrapolation assumes your data follows a straight-line trend. It fits a line using the least-squares method, minimizing the sum of squared vertical distances between observed points and the fitted line. The equation takes the form <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">y = mx + b</code>, where <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">m</code> is the slope and <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">b</code> is the y-intercept.</p>
+            <p>This method is the simplest and most interpretable. It works exceptionally well when your data shows a consistent increase or decrease over time. Common applications include predicting monthly revenue growth, temperature changes over seasons, or distance traveled at constant speed.</p>
+            <p><strong class="text-neutral-800 dark:text-neutral-200">When to use:</strong> Your data points form an approximately straight pattern, the rate of change is relatively constant, and you need a simple, interpretable model. Minimum 2 data points required.</p>
+          </div>
+        </div>
+
+        <div class="calculator-card p-6 md:p-8 border-l-4 border-l-gold-400">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gold-400/10 border border-gold-400/20 flex items-center justify-center flex-shrink-0">
+              <svg class="h-6 w-6 text-gold-500 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 17c3-4 6-7 12-7M3 17l4-4m-4 4l4 4" /></svg>
+            </div>
+            <div>
+              <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-xl mb-1">Exponential Extrapolation</h3>
+              <p class="text-sm text-gold-500 dark:text-gold-400 font-medium">Best for: Rapidly accelerating or decaying trends</p>
+            </div>
+          </div>
+          <div class="text-neutral-600 dark:text-neutral-400 leading-relaxed space-y-3">
+            <p>Exponential extrapolation models data that grows or decays at a rate proportional to its current value. The fitted curve follows the equation <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">y = a &middot; e^(bx)</code>, where <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">a</code> is the initial value and <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">b</code> controls the growth/decay rate.</p>
+            <p>The calculator linearizes the exponential model by taking the natural logarithm of Y values, then applies linear regression to find the optimal parameters. This transformation allows efficient least-squares fitting while capturing exponential behavior.</p>
+            <p><strong class="text-neutral-800 dark:text-neutral-200">When to use:</strong> Population growth, compound interest, viral spread, bacterial colony expansion, radioactive decay, or any phenomenon where growth accelerates over time. All Y values must be positive. Minimum 2 data points required.</p>
+          </div>
+        </div>
+
+        <div class="calculator-card p-6 md:p-8 border-l-4 border-l-gold-300">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gold-300/10 border border-gold-300/20 flex items-center justify-center flex-shrink-0">
+              <svg class="h-6 w-6 text-gold-500 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7c3 4 6 7 12 7M3 7l4 4m-4-4l4-4" /></svg>
+            </div>
+            <div>
+              <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-xl mb-1">Logarithmic Extrapolation</h3>
+              <p class="text-sm text-gold-500 dark:text-gold-400 font-medium">Best for: Rapid initial change that slows over time</p>
+            </div>
+          </div>
+          <div class="text-neutral-600 dark:text-neutral-400 leading-relaxed space-y-3">
+            <p>Logarithmic extrapolation models data where change is rapid initially but diminishes over time. The equation takes the form <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">y = a + b &middot; ln(x)</code>, capturing the characteristic curve of diminishing returns.</p>
+            <p>This method transforms X values using the natural logarithm before fitting a linear model, which captures the concave-down pattern common in many natural and economic processes.</p>
+            <p><strong class="text-neutral-800 dark:text-neutral-200">When to use:</strong> Learning curves, skill acquisition rates, diminishing returns in economics, saturation effects in chemistry, or any situation where progress slows over time. All X values must be positive. Minimum 2 data points required.</p>
+          </div>
+        </div>
+
+        <div class="calculator-card p-6 md:p-8 border-l-4 border-l-gold-600">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gold-600/10 border border-gold-600/20 flex items-center justify-center flex-shrink-0">
+              <svg class="h-6 w-6 text-gold-600 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12c2-4 4-6 8-6s6 2 8 6-2 6-6 6-6-2-8-6" /></svg>
+            </div>
+            <div>
+              <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-xl mb-1">Polynomial Extrapolation</h3>
+              <p class="text-sm text-gold-600 dark:text-gold-400 font-medium">Best for: Complex multi-directional trends with peaks and valleys</p>
+            </div>
+          </div>
+          <div class="text-neutral-600 dark:text-neutral-400 leading-relaxed space-y-3">
+            <p>Polynomial extrapolation fits a curve of degree <em>n</em> to your data using the general equation <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">y = a&#8345;x&#8319; + a&#8345;&#8331;&#8321;x&#8319;&#8315;&#185; + ... + a&#8321;x + a&#8320;</code>. Our calculator uses degree 3 (cubic) by default, which can capture one peak and one valley.</p>
+            <p>The fitting process uses Gaussian elimination on the Vandermonde matrix system to find optimal coefficients. Higher-degree polynomials can fit more complex shapes but carry greater risk of overfitting.</p>
+            <p><strong class="text-neutral-800 dark:text-neutral-200">When to use:</strong> Market cycles with booms and busts, seasonal patterns, engineering stress-strain curves, or any data showing multiple direction changes. Minimum n+1 data points required (4 points for degree 3). Beware of Runge's phenomenon at high degrees.</p>
+          </div>
+        </div>
+
+        <div class="calculator-card p-6 md:p-8 border-l-4 border-l-gold-700">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gold-700/10 border border-gold-700/20 flex items-center justify-center flex-shrink-0">
+              <svg class="h-6 w-6 text-gold-600 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16c2-6 6-10 10-10s8 4 10 10" /></svg>
+            </div>
+            <div>
+              <h3 class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 text-xl mb-1">Quadratic Extrapolation</h3>
+              <p class="text-sm text-gold-700 dark:text-gold-400 font-medium">Best for: U-shaped or inverted-U parabolic trends</p>
+            </div>
+          </div>
+          <div class="text-neutral-600 dark:text-neutral-400 leading-relaxed space-y-3">
+            <p>Quadratic extrapolation is a special case of polynomial fitting with degree 2, following <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">y = ax&sup2; + bx + c</code>. It captures a single curve direction change, producing either a U-shape (a > 0) or inverted U (a < 0).</p>
+            <p>This is the simplest model that can capture non-linearity while remaining interpretable. The vertex of the parabola represents the minimum or maximum of the modeled phenomenon.</p>
+            <p><strong class="text-neutral-800 dark:text-neutral-200">When to use:</strong> Projectile motion trajectories, profit maximization curves, cost optimization, braking distance vs. speed, or any parabolic relationship. Minimum 3 data points required.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Formula Reference -->
+  <section class="py-8 md:py-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="section-card p-6 md:p-8">
         <div class="text-center mb-8">

@@ -43,7 +43,7 @@ const currentPath = '/regression/';
             <svg class="h-5 w-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
             <span class="relative z-10 tracking-wide">Start Calculating</span>
           </a>
-          <a href="#calculator" class="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-gold-600 via-gold-500 to-gold-400 shadow-lg shadow-gold-500/20 hover:shadow-glow-gold hover:scale-[1.03] active:scale-[0.98] focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none relative overflow-hidden border border-gold-400/30">
+          <a href="#methods" class="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-gold-600 via-gold-500 to-gold-400 shadow-lg shadow-gold-500/20 hover:shadow-glow-gold hover:scale-[1.03] active:scale-[0.98] focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none relative overflow-hidden border border-gold-400/30">
             <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
             <span class="relative z-10 tracking-wide">Explore Methods</span>
             <svg class="h-4 w-4 relative z-10 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
@@ -77,6 +77,28 @@ const currentPath = '/regression/';
 
       <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Why Use a Regression Calculator Instead of Manual Calculation</h3>
       <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Computing regression coefficients by hand involves sums of squares, cross-products, and — for multiple regression — matrix inversion. Even a small dataset of 10 points requires dozens of arithmetic operations where a single error throws off every result. A calculator eliminates arithmetic mistakes, handles the matrix algebra instantly, and gives you not just coefficients but diagnostic statistics like R² that would take significant extra effort to compute manually.</p>
+    </div>
+  </section>
+
+  <!-- Types of Regression Methods Explained -->
+  <section id="methods" class="py-8 md:py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="section-card p-6 md:p-8">
+      <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-8 mb-4">Types of Regression Methods Explained</h2>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Different relationships call for different regression approaches. The right method depends on how many predictors you have, whether the relationship is linear, and what kind of outcome you're modeling.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Simple Linear Regression – Formula &amp; Use Cases</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">Simple linear regression fits a straight line through your data: <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">Y = β₀ + β₁X</code>. The slope β₁ tells you how much Y changes for each unit increase in X, and the intercept β₀ is the predicted Y when X equals zero. Use it when you have one predictor and a roughly linear relationship — for example, predicting house price from square footage, or exam score from study hours.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Multiple Linear Regression – Two or More Independent Variables</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">When the outcome depends on several factors simultaneously, multiple linear regression models <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">Y = β₀ + β₁X₁ + β₂X₂ + … + βₖXₖ</code>. Each β coefficient represents the effect of one predictor while holding the others constant. This is essential when confounding variables exist — for instance, predicting salary from both years of experience and education level, where ignoring either would bias the results.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Polynomial Regression – Capturing Curved Relationships</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">When a straight line doesn't fit, polynomial regression adds squared, cubed, or higher-power terms: <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">Y = β₀ + β₁X + β₂X²</code>. A quadratic (degree 2) captures U-shaped or inverted-U patterns. A cubic (degree 3) handles one inflection point. Use it for phenomena like diminishing returns, growth curves, or projectile motion — anywhere the rate of change itself changes. For estimating specific values between known data points rather than fitting a trend, try the <a href="/interpolation/" class="text-gold-600 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-medium transition-colors">interpolation calculator</a>.</p>
+
+      <h3 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mt-6 mb-2">Logistic Regression – For Binary Outcomes</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">When the dependent variable is categorical — yes/no, pass/fail, disease/healthy — logistic regression models the probability of belonging to a class. Instead of predicting Y directly, it predicts <code class="text-gold-600 dark:text-gold-400 font-mono bg-gold-50 dark:bg-gold-900/20 px-1.5 py-0.5 rounded text-sm">ln(p / (1 − p))</code> as a linear function of X. While our calculator focuses on linear and multiple regression, logistic regression is the go-to method for classification problems and is widely used in medicine, marketing, and machine learning.</p>
+      </div>
     </div>
   </section>
 
