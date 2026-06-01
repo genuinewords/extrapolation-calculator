@@ -153,7 +153,7 @@ R² measures how well the model fits the observed data, not how accurately it wi
 
 ### Misconception 2: Higher R² Always Means a Better Model
 
-As discussed, a higher R² can result from overfitting rather than genuine explanatory power. A linear model with R² = 0.88 that reflects a real physical relationship is far more valuable for extrapolation than a degree-5 polynomial with R² = 1.00 that merely memorizes the training data.
+As discussed, a higher R² can result from overfitting rather than genuine explanatory power. A linear model with R² = 0.88 that reflects a real physical relationship is far more valuable for extrapolation than a degree-5 polynomial with R² = 1.00 that merely memorizes the training data. This overfitting problem is especially pronounced in machine learning — see [extrapolation in machine learning](/blog/extrapolation-machine-learning.mdx/) for why ML generalization beyond training data is so challenging.
 
 ### Misconception 3: R² Below 0.5 is Useless
 
@@ -195,7 +195,7 @@ Putting all of this together, here is a structured framework for using R² and c
 
 **Step 1: Collect and inspect your data.** Before fitting any model, look at your data. Plot it. Identify any obvious patterns, outliers, or structural breaks. Understanding your data's shape will help you choose appropriate methods.
 
-**Step 2: Fit multiple models.** Use the [extrapolation calculator](/) to fit several candidate methods — linear, exponential, logarithmic, and polynomial. Record R², adjusted R², and confidence for each.
+**Step 2: Fit multiple models.** Use the [extrapolation calculator](/) to fit several candidate methods — linear, exponential, logarithmic, and polynomial. Record R², adjusted R², and confidence for each. You can also perform this analysis in a spreadsheet — see our tutorial on [how to extrapolate data in Excel](/blog/how-to-extrapolate-data-in-excel.mdx/) for step-by-step instructions.
 
 **Step 3: Eliminate poor fits.** Remove any model with R² below 0.3 or with a large gap between R² and adjusted R² (suggesting overfitting).
 

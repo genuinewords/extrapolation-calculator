@@ -13,7 +13,7 @@ Interpolation and extrapolation are two sides of the same coin — both estimate
 
 **Interpolation** estimates values within the range of your existing data. If you know the temperature at 2 PM (72°F) and 4 PM (78°F), interpolating the temperature at 3 PM gives you a bounded, high-confidence estimate — around 75°F using linear interpolation. You know the answer must fall between 72 and 78, because the data on both sides constrains the result.
 
-**Extrapolation** estimates values outside the range of your data. Using those same temperature readings to predict the temperature at midnight is extrapolation — you're extending the trend beyond the observed window, where conditions may change dramatically. The temperature at midnight could easily be 55°F or 40°F, not the 48°F that a naive linear projection would suggest, because temperatures follow diurnal cycles that your two-point dataset cannot capture.
+**Extrapolation** estimates values outside the range of your data. Using those same temperature readings to predict the temperature at midnight is [extrapolation](/blog/what-is-extrapolation.mdx/) — you're extending the trend beyond the observed window, where conditions may change dramatically. The temperature at midnight could easily be 55°F or 40°F, not the 48°F that a naive linear projection would suggest, because temperatures follow diurnal cycles that your two-point dataset cannot capture.
 
 The distinction is simple but the implications are profound: interpolation is inherently safer because it is constrained by data on both sides. Extrapolation has no such guardrails. Every unit of distance you move beyond the observed range introduces compounding uncertainty.
 
@@ -98,7 +98,7 @@ History is full of extrapolation disasters:
 - **Club of Rome (1972)** — "The Limits to Growth" report extrapolated resource depletion and pollution forward, predicting collapse by the 1990s; technological innovation and substitution effects delayed many of these outcomes
 - **Y2K staffing projections** — companies extrapolated their growing IT workforce needs forward and over-hired, only to face a sharp correction afterward
 
-The pattern is always the same: a trend that holds within the observed range breaks down outside it. This is why domain knowledge must accompany mathematical extrapolation. Numbers alone don't know when the rules change.
+The pattern is always the same: a trend that holds within the observed range breaks down outside it. This is why domain knowledge must accompany mathematical extrapolation. Numbers alone don't know when the rules change. This is a core challenge in [extrapolation in machine learning](/blog/extrapolation-machine-learning.mdx/), where models trained on one data distribution often fail when encountering out-of-distribution inputs.
 
 A useful mental model: **extrapolation assumes stationarity** — that the process generating your data continues to operate under the same rules. When that assumption is violated, even the most mathematically rigorous extrapolation will fail. The question is never "can I extrapolate?" but "do I have reason to believe the underlying process remains stable?"
 

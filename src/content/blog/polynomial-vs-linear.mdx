@@ -7,7 +7,7 @@ category: Methods
 featuredImage: ""
 ---
 
-When you need to predict values beyond the range of your observed data, the choice of extrapolation method is one of the most consequential decisions you will make. Pick a model that is too simple, and you miss real structure in your data. Pick one that is too flexible, and your predictions fly off into nonsense. The two most common approaches — linear and polynomial extrapolation — sit at opposite ends of this simplicity-flexibility spectrum, and understanding when to use each is essential for anyone working with data prediction.
+When you need to predict values beyond the range of your observed data, the choice of [extrapolation](/blog/what-is-extrapolation.mdx/) method is one of the most consequential decisions you will make. Pick a model that is too simple, and you miss real structure in your data. Pick one that is too flexible, and your predictions fly off into nonsense. The two most common approaches — linear and polynomial extrapolation — sit at opposite ends of this simplicity-flexibility spectrum, and understanding when to use each is essential for anyone working with data prediction.
 
 This guide walks through the mathematics, the trade-offs, and a practical decision framework so you can confidently choose the right method for your dataset. You can experiment with both approaches directly using our [extrapolation calculator](/), which lets you fit models of any degree and compare their performance side by side.
 
@@ -238,7 +238,7 @@ Dose-response curves, drug concentration over time, and growth curves in develop
 
 ## Conclusion
 
-The choice between polynomial and linear extrapolation is not about which method is universally better — it is about which method is better for *your specific data*. Linear extrapolation offers stability and interpretability; polynomial extrapolation offers flexibility and accuracy for curved relationships. The art lies in using the simplest model that captures the genuine structure in your data without chasing noise.
+The choice between polynomial and linear extrapolation is not about which method is universally better — it is about which method is better for *your specific data*. Linear extrapolation offers stability and interpretability; polynomial extrapolation offers flexibility and accuracy for curved relationships. The art lies in using the simplest model that captures the genuine structure in your data without chasing noise. For a concise side-by-side comparison with worked examples, see [polynomial extrapolation vs linear](/blog/polynomial-extrapolation-vs-linear.mdx/).
 
 The R² decision framework — start linear, increase degree if needed, validate rigorously, and always sanity-check — provides a repeatable process for making this choice. Combined with awareness of overfitting warning signs and an understanding of when each method excels, you can make extrapolation decisions with confidence rather than guesswork.
 
