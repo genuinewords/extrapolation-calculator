@@ -116,14 +116,19 @@
   }
 
   .btn-calculate {
-    @apply inline-flex items-center justify-center gap-2.5 w-full px-8 py-4 rounded-2xl font-bold text-white text-lg transition-all duration-300;
+    @apply inline-flex items-center justify-center gap-3 w-full px-10 py-5 rounded-2xl font-bold text-white transition-all duration-300;
+    @apply text-xl tracking-wide;
     @apply bg-gradient-to-r from-gold-700 via-gold-600 to-gold-500;
-    @apply shadow-lg shadow-gold-600/20;
+    @apply shadow-xl shadow-gold-600/25;
     @apply hover:shadow-glow-gold-lg;
     @apply hover:scale-[1.02] active:scale-[0.98];
     @apply focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none;
     @apply relative overflow-hidden;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.04em;
+    min-height: 64px;
+  }
+  .btn-calculate svg {
+    @apply h-6 w-6 flex-shrink-0;
   }
   .btn-calculate::after {
     content: '';
