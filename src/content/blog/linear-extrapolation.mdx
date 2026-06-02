@@ -267,3 +267,33 @@ A practical workflow is to always start with linear extrapolation, evaluate its 
 Linear extrapolation remains a foundational tool in any analyst's toolkit. Its strengths — simplicity, interpretability, and conservatism — make it the first method to reach for when projecting trends into the future. Its weaknesses — inability to capture curvature and decreasing accuracy with distance from observed data — demand that it be applied thoughtfully and supplemented with fit quality metrics like [R² and confidence metrics](/blog/r-squared-confidence.mdx/).
 
 The key insight is knowing when linear extrapolation is the right tool and when it is time to switch to something more flexible. By visualizing your data, evaluating R², comparing methods, checking residuals, and respecting the limits of your observed range, you can extract reliable insights from linear extrapolation while avoiding its most common and costly pitfalls. Try it yourself with our [extrapolation calculator](/), and when you need more statistical rigor including confidence intervals and hypothesis testing, the [regression calculator](/regression/) provides the full framework for robust, defensible analysis.
+
+## Frequently Asked Questions
+
+<details class="faq-item">
+<summary>When is linear extrapolation most reliable?</summary>
+
+Linear extrapolation is most reliable when your data follows a roughly constant rate of change, you have enough points to confirm the linear pattern (ideally 5+), and you're projecting only a short distance beyond the observed range. Check the R² score — values above 0.9 indicate a strong linear relationship.
+
+</details>
+
+<details class="faq-item">
+<summary>What if my data curves — should I still use linear?</summary>
+
+If your data clearly curves, linear extrapolation will underestimate or overestimate depending on the curve direction. Try [polynomial extrapolation](/blog/polynomial-extrapolation-vs-linear.mdx/) or [exponential extrapolation](/blog/exponential-growth.mdx/) instead. Compare R² scores across methods — the highest R² usually indicates the best fit.
+
+</details>
+
+<details class="faq-item">
+<summary>How many data points do I need for linear extrapolation?</summary>
+
+Technically, two points define a line. But for reliable results, use at least 5–6 points to confirm the linear trend and reduce the influence of outliers. More points give you a better [R² score](/blog/r-squared-confidence.mdx/) and more confidence in the projection.
+
+</details>
+
+<details class="faq-item">
+<summary>Can linear extrapolation handle negative trends?</summary>
+
+Yes. Linear extrapolation works for any constant rate of change, whether positive or negative. A negative slope simply means the predicted value decreases as x increases. The same formula and reliability principles apply regardless of direction.
+
+</details>

@@ -243,3 +243,33 @@ The choice between polynomial and linear extrapolation is not about which method
 The R² decision framework — start linear, increase degree if needed, validate rigorously, and always sanity-check — provides a repeatable process for making this choice. Combined with awareness of overfitting warning signs and an understanding of when each method excels, you can make extrapolation decisions with confidence rather than guesswork.
 
 Ready to put this into practice? Try our [extrapolation calculator](/) with your own data, compare linear and polynomial fits, and see the R² differences for yourself. If your data falls within an observed range and you need intermediate values, our [interpolation calculator](/interpolation/) may be the better tool. And for a deeper dive into goodness-of-fit, our guide to [R² score](/blog/r-squared-confidence.mdx/) interpretation covers the nuances that simple thresholds miss.
+
+## Frequently Asked Questions
+
+<details class="faq-item">
+<summary>What degree polynomial should I use for extrapolation?</summary>
+
+Start with the lowest degree that gives an acceptable R² score. Degree 1 (linear) is safest. If R² is below 0.7, try degree 2 (quadratic). Rarely go above degree 3 — higher degrees fit training data better but produce wildly unstable predictions beyond the observed range.
+
+</details>
+
+<details class="faq-item">
+<summary>Why does polynomial extrapolation sometimes give crazy results?</summary>
+
+High-degree polynomials can oscillate wildly between and beyond data points — a phenomenon called Runge's phenomenon. The polynomial fits the training points exactly but swings dramatically in the gaps. This is why [polynomial vs linear extrapolation](/blog/polynomial-extrapolation-vs-linear.mdx/) is such an important decision: flexibility comes at the cost of stability.
+
+</details>
+
+<details class="faq-item">
+<summary>Is a higher R² always better for extrapolation?</summary>
+
+No. A very high R² with a high-degree polynomial may indicate overfitting — the model memorizes the training data but doesn't capture the true underlying pattern. Always sanity-check extrapolated values against domain knowledge. An R² of 0.85 with a simple model is often more trustworthy than 0.99 with a complex one.
+
+</details>
+
+<details class="faq-item">
+<summary>Can I use polynomial extrapolation for long-term forecasts?</summary>
+
+With caution. Polynomial extrapolation becomes increasingly unreliable the further you project beyond your data. For long-term forecasting, [linear](/blog/linear-extrapolation.mdx/) or [logarithmic](/blog/logarithmic-diminishing-returns.mdx/) methods are generally safer because they don't diverge as dramatically.
+
+</details>

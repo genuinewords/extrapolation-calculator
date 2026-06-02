@@ -94,18 +94,30 @@ Traditional numerical forecasting? Try the [extrapolation calculator](https://ww
 
 Extrapolation in machine learning is inherently difficult, but it is not impossible. Linear models, constrained architectures, symbolic regression, and physics-informed approaches each offer pathways to more reliable out-of-distribution predictions. The key is recognizing when extrapolation is required, selecting methods suited to the task, and validating aggressively beyond the training distribution. Experiment with different approaches, measure what fails, and iterate. When you need a straightforward way to project trends without building a full ML pipeline, try the [extrapolation calculator](https://www.extrapolationcalculator.com/).
 
-### Can neural networks extrapolate?
+<details class="faq-item">
+<summary>Can neural networks extrapolate?</summary>
 
 Standard neural networks are poor at extrapolation. They learn to interpolate between training examples and tend to produce flat or erratic predictions outside the training range. Specialized architectures with monotonic constraints or physics-informed loss functions can improve extrapolation, but vanilla networks generally cannot.
 
-### Why is extrapolation hard in machine learning?
+</details>
+
+<details class="faq-item">
+<summary>Why is extrapolation hard in machine learning?</summary>
 
 Extrapolation is hard because ML models learn statistical patterns from training data rather than causal rules. When inputs fall outside the training distribution, there are no patterns to follow, and the model has no principled basis for its predictions. This leads to unpredictable and often wildly incorrect outputs.
 
-### What is the difference between interpolation and extrapolation in ML?
+</details>
+
+<details class="faq-item">
+<summary>What is the difference between interpolation and extrapolation in ML?</summary>
 
 Interpolation predicts within the range of training data, where the model can reference nearby examples. Extrapolation predicts outside that range, where no reference points exist. Interpolation is typically accurate; extrapolation is typically uncertain and error-prone.
 
-### Which ML models can extrapolate?
+</details>
+
+<details class="faq-item">
+<summary>Which ML models can extrapolate?</summary>
 
 Linear regression extrapolates naturally by extending its fitted line. Linear models with regularization (ridge, lasso) behave similarly. Random forests with linear leaves, symbolic regression models, and physics-informed neural networks can also extrapolate with varying degrees of reliability. Most other models — including standard neural networks, decision trees, and k-nearest neighbors — cannot.
+
+</details>

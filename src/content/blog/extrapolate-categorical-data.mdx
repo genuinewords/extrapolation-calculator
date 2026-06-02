@@ -118,18 +118,30 @@ The key is matching your method to your data type. Use classification for catego
 
 ## Frequently Asked Questions
 
-### Can you extrapolate non-numeric data?
+<details class="faq-item">
+<summary>Can you extrapolate non-numeric data?</summary>
 
 Not using traditional extrapolation methods, which require numerical inputs. You can predict future categories using classification models like logistic regression, Random Forest, or Markov chains. These methods estimate the probability of each category rather than extending a numeric trend.
 
-### What is the best method to predict categorical data?
+</details>
+
+<details class="faq-item">
+<summary>What is the best method to predict categorical data?</summary>
 
 It depends on your situation. Logistic regression is best for binary outcomes. Multinomial logistic regression handles multiple unordered categories. Random Forest and XGBoost capture complex patterns but require more data. Markov chains work well for sequential category transitions.
 
-### Is logistic regression extrapolation?
+</details>
+
+<details class="faq-item">
+<summary>Is logistic regression extrapolation?</summary>
 
 Not in the strict mathematical sense. Logistic regression is a classification method that predicts the probability of a category. It becomes a form of categorical data extrapolation when you apply it to new data outside your training range — but the underlying mechanism is classification, not curve extrapolation.
 
-### Can you forecast categories in Excel?
+</details>
+
+<details class="faq-item">
+<summary>Can you forecast categories in Excel?</summary>
 
 Yes, with limitations. Excel's built-in logistic regression tools are minimal, but you can use add-ins like the Analysis ToolPak for basic classification. For more advanced categorical forecasting — multinomial models, Random Forest, Markov chains — Python or R are far more capable.
+
+</details>

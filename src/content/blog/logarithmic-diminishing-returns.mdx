@@ -197,3 +197,33 @@ Logarithmic extrapolation fills a crucial gap in the forecaster's toolkit. It ad
 The key to using it effectively is to combine statistical evidence (high R², well-behaved residuals) with domain understanding (a plausible mechanism for diminishing returns). When both lines of evidence agree, logarithmic extrapolation produces forecasts that are not just numerically plausible but genuinely informative.
 
 Start by entering your data into the [extrapolation calculator](/), compare the logarithmic fit against linear and exponential alternatives, and let the [R² score](/blog/r-squared-confidence.mdx/) guide your model selection. Supplement the numbers with your understanding of the underlying process, and you will be well equipped to make reliable forecasts in any domain where progress slows but does not stop.
+
+## Frequently Asked Questions
+
+<details class="faq-item">
+<summary>When should I use logarithmic extrapolation?</summary>
+
+Use logarithmic extrapolation when your data shows growth that is clearly decelerating — each additional unit of input produces a smaller increase in output. This pattern appears in learning curves, market saturation, skill acquisition, and many physical processes. If growth is accelerating, use [exponential extrapolation](/blog/exponential-growth.mdx/) instead.
+
+</details>
+
+<details class="faq-item">
+<summary>Can logarithmic extrapolation handle negative x values?</summary>
+
+No. The natural logarithm is undefined for x ≤ 0. All your x-values must be positive. If your data includes zero or negative x-values, the calculator falls back to linear extrapolation.
+
+</details>
+
+<details class="faq-item">
+<summary>Is logarithmic extrapolation conservative?</summary>
+
+Yes, which is one of its strengths. Because it models decelerating growth, logarithmic extrapolation tends to produce more conservative predictions than exponential or polynomial methods. This makes it safer for long-range forecasts where you expect growth to plateau.
+
+</details>
+
+<details class="faq-item">
+<summary>How do I know if my data follows a logarithmic pattern?</summary>
+
+Plot your data. If the curve rises quickly at first and then flattens out, logarithmic is a good candidate. Compare R² scores between logarithmic and [linear extrapolation](/blog/linear-extrapolation.mdx/) — if logarithmic has a significantly higher R², the diminishing-returns pattern is real.
+
+</details>

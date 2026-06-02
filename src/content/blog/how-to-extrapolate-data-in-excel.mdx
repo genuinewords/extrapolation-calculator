@@ -163,18 +163,30 @@ For faster results with five different extrapolation methods — and no formula 
 
 ## Frequently Asked Questions
 
-### Can Excel extrapolate data?
+<details class="faq-item">
+<summary>Can Excel extrapolate data?</summary>
 
 Yes. Excel offers several built-in tools for extrapolation: the TREND function, FORECAST.LINEAR function, chart trendlines, and the Forecast Sheet feature. All use linear regression by default, though trendlines and Forecast Sheets support other patterns.
 
-### What is the TREND function in Excel?
+</details>
+
+<details class="faq-item">
+<summary>What is the TREND function in Excel?</summary>
 
 TREND calculates predicted y-values along a linear trend based on your known data. Its syntax is `=TREND(known_y's, known_x's, new_x's)`. It fits a straight line through your data using least squares and returns the projected values for the new x-values you specify.
 
-### How do I extend a trendline in Excel?
+</details>
+
+<details class="faq-item">
+<summary>How do I extend a trendline in Excel?</summary>
 
 Add a trendline to your chart by right-clicking a data point and selecting "Add Trendline." In the Trendline Options, set the "Forward" forecast field to the number of periods you want to project beyond your data. The trendline will extend visually into the future range.
 
-### Is FORECAST.LINEAR accurate?
+</details>
+
+<details class="faq-item">
+<summary>Is FORECAST.LINEAR accurate?</summary>
 
 FORECAST.LINEAR is accurate for data that follows a genuine linear trend. Like all linear methods, it becomes unreliable when the underlying pattern is non-linear or when you project far beyond the observed data range. Always check the R² value to assess fit quality before trusting the prediction.
+
+</details>

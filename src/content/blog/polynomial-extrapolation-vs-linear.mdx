@@ -107,18 +107,30 @@ You do not need specialized software to get started. Excel can fit linear trends
 
 Linear extrapolation is simple, stable, and well-suited to short-term forecasts on steady data. Polynomial extrapolation is more flexible and captures curved patterns, but it carries higher risk the further you project. The right choice depends entirely on the shape of your data — not on which method is more sophisticated. Fit your model to your pattern, keep projections conservative, and always validate with a goodness-of-fit measure. Try both methods on your data with the [free extrapolation calculator](https://www.extrapolationcalculator.com/).
 
-### What is the difference between linear and polynomial extrapolation?
+<details class="faq-item">
+<summary>What is the difference between linear and polynomial extrapolation?</summary>
 
 Linear extrapolation projects data along a straight line assuming a constant rate of change. Polynomial extrapolation fits a curved equation to the data, allowing the rate of change itself to increase or decrease. Linear is simpler and more stable; polynomial is more flexible but less predictable beyond the data range.
 
-### When should I use polynomial extrapolation?
+</details>
+
+<details class="faq-item">
+<summary>When should I use polynomial extrapolation?</summary>
 
 Use polynomial extrapolation when your data clearly curves — such as accelerating growth or seasonal patterns — and you have enough points (typically eight or more) to support a reliable curve fit. Avoid it for small datasets or long-range forecasts where the curve can become unstable.
 
-### Is polynomial extrapolation more accurate?
+</details>
+
+<details class="faq-item">
+<summary>Is polynomial extrapolation more accurate?</summary>
 
 It can be more accurate for data with genuine curvature, because it captures patterns that a straight line misses. However, accuracy drops quickly as you move further from the observed data, and higher-degree polynomials can produce wild results. Always compare both methods and check fit statistics.
 
-### Can I use polynomial extrapolation in Excel?
+</details>
+
+<details class="faq-item">
+<summary>Can I use polynomial extrapolation in Excel?</summary>
 
 Yes. Excel's LINEST function can fit polynomial curves by supplying raised powers of x as additional inputs. You can also add a polynomial trendline to a chart and display the equation on the graph. For step-by-step guidance, our [linear extrapolation guide](/blog/linear-extrapolation.mdx/) covers the Excel workflow in detail.
+
+</details>

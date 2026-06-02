@@ -261,3 +261,33 @@ The key takeaways:
 - When in doubt, compare multiple models and prefer simplicity
 
 Whether you are projecting population growth, forecasting investment returns, or estimating technology adoption, the [extrapolation calculator](/) gives you the tools to fit and evaluate exponential models quickly. Use it wisely, and remember that the best model is not the one that fits the data most closely — it is the one that captures the true structure of the process you are trying to predict.
+
+## Frequently Asked Questions
+
+<details class="faq-item">
+<summary>When should I use exponential extrapolation?</summary>
+
+Use exponential extrapolation when your data shows accelerating growth — each period's increase is larger than the last. Common examples include viral content spread, compound interest, and early-stage population growth. If the growth rate is roughly constant, [linear extrapolation](/blog/linear-extrapolation.mdx/) is more appropriate.
+
+</details>
+
+<details class="faq-item">
+<summary>Is exponential extrapolation accurate for long-term forecasts?</summary>
+
+No. Exponential models project ever-increasing growth rates that eventually exceed physical or economic limits. They work well for short- to medium-term forecasts but become unreliable over long horizons where growth must decelerate due to resource constraints, market saturation, or carrying capacity.
+
+</details>
+
+<details class="faq-item">
+<summary>What happens if my data has negative values?</summary>
+
+Exponential models require positive y-values because the logarithmic transformation is undefined for zero and negative numbers. If your data contains negative values, the calculator falls back to linear extrapolation as a safe alternative.
+
+</details>
+
+<details class="faq-item">
+<summary>How does exponential differ from logarithmic extrapolation?</summary>
+
+Exponential extrapolation models accelerating growth that curves upward, while [logarithmic extrapolation](/blog/logarithmic-diminishing-returns.mdx/) models decelerating growth that flattens out. Choose exponential when growth is speeding up and logarithmic when gains are slowing down.
+
+</details>

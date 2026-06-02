@@ -154,18 +154,30 @@ For numerical predictions beyond your data range, the [extrapolation calculator]
 
 ## Frequently Asked Questions
 
-### Which interpolation method is the most accurate?
+<details class="faq-item">
+<summary>Which interpolation method is the most accurate?</summary>
 
 No single method is always most accurate. Linear is most accurate for truly linear data. Cubic spline is most accurate for smooth, continuous physical processes. Lagrange is most accurate when you have very few points and the underlying function is polynomial. The best method matches your data's actual pattern.
 
-### When should I avoid cubic spline interpolation?
+</details>
+
+<details class="faq-item">
+<summary>When should I avoid cubic spline interpolation?</summary>
 
 Avoid cubic spline when you need to extrapolate beyond your data range — it only works within the bounds of your dataset. Also be cautious with data that has sharp corners or discontinuities, where the smoothness constraint of the spline may smooth out real features.
 
-### Is Lagrange interpolation better than linear?
+</details>
+
+<details class="faq-item">
+<summary>Is Lagrange interpolation better than linear?</summary>
 
 Not necessarily. Lagrange fits every point exactly, but that exactness can produce wild oscillations between points (Runge's phenomenon) when you have more than 5–6 observations. Linear interpolation is more stable and predictable, especially with noisy or irregular data.
 
-### Can I use interpolation for forecasting?
+</details>
+
+<details class="faq-item">
+<summary>Can I use interpolation for forecasting?</summary>
 
 No. Interpolation estimates values *between* known data points. Forecasting requires predicting beyond the observed range, which is extrapolation. Use an [extrapolation calculator](https://www.extrapolationcalculator.com/) for forecasting — it provides methods designed for beyond-range prediction.
+
+</details>

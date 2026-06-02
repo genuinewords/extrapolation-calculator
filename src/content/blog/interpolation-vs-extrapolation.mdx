@@ -164,3 +164,33 @@ This kind of disciplined, multi-method approach dramatically reduces the risk of
 - Use our [interpolation calculator](/interpolation/) for within-range estimates and our [extrapolation calculator](/) for beyond-range predictions
 
 Both tools are free, private, and run entirely in your browser — your data never leaves your device.
+
+## Frequently Asked Questions
+
+<details class="faq-item">
+<summary>Is interpolation always more accurate than extrapolation?</summary>
+
+Yes, in general. Interpolation is bounded by data on both sides, which constrains the estimate. Extrapolation extends beyond known data where no boundary exists. However, interpolation accuracy still depends on choosing the right method and having enough data points to capture the underlying pattern.
+
+</details>
+
+<details class="faq-item">
+<summary>Can I use extrapolation for short distances beyond my data?</summary>
+
+Yes, and short-distance extrapolation is often quite reliable — especially with high R² values. The key risk multiplier is distance: the further beyond your data, the more likely the underlying trend has changed. Always combine statistical projections with domain knowledge.
+
+</details>
+
+<details class="faq-item">
+<summary>Which calculator should I use for gap-filling vs forecasting?</summary>
+
+Use the [interpolation calculator](/interpolation/) when your target value falls between known data points. Use the [extrapolation calculator](https://www.extrapolationcalculator.com/) when you need to predict beyond the observed range. Use the [regression calculator](/regression/) when you want to model the relationship between variables rather than predict a specific point.
+
+</details>
+
+<details class="faq-item">
+<summary>What is the safest extrapolation method?</summary>
+
+Linear extrapolation is generally the safest because it makes the fewest assumptions about the data's shape. It projects a constant rate of change, which is conservative. More complex methods like [exponential](/blog/exponential-growth.mdx/) or polynomial can fit the training data better but may diverge dramatically beyond it.
+
+</details>

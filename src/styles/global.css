@@ -378,6 +378,81 @@ article.prose h4 {
   color: #d4af37 !important;
 }
 
+article.prose details.faq-item {
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  background: rgba(255,255,255,0.6);
+  transition: all 0.2s ease;
+}
+article.prose details.faq-item:hover {
+  border-color: rgba(212,175,55,0.6);
+  box-shadow: 0 2px 8px rgba(212,175,55,0.1);
+}
+article.prose details.faq-item[open] {
+  border-color: rgba(212,175,55,0.7);
+  box-shadow: 0 4px 12px rgba(212,175,55,0.12);
+  background: rgba(255,255,255,0.85);
+}
+article.prose details.faq-item summary {
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: #92700c;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+article.prose details.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+article.prose details.faq-item summary::after {
+  content: '+';
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: #92700c;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+article.prose details.faq-item[open] summary::after {
+  content: '−';
+  color: #92700c;
+}
+article.prose details.faq-item > p,
+article.prose details.faq-item > div {
+  padding: 0 1.25rem 1rem;
+  color: #404040;
+  line-height: 1.7;
+}
+.dark article.prose details.faq-item {
+  border-color: rgba(212,175,55,0.25);
+  background: rgba(20,20,20,0.6);
+}
+.dark article.prose details.faq-item:hover {
+  border-color: rgba(212,175,55,0.5);
+  box-shadow: 0 2px 8px rgba(212,175,55,0.08);
+}
+.dark article.prose details.faq-item[open] {
+  border-color: rgba(212,175,55,0.6);
+  box-shadow: 0 4px 12px rgba(212,175,55,0.1);
+  background: rgba(25,25,25,0.85);
+}
+.dark article.prose details.faq-item summary {
+  color: #d4af37;
+}
+.dark article.prose details.faq-item summary::after {
+  color: #d4af37;
+}
+.dark article.prose details.faq-item[open] summary::after {
+  color: #d4af37;
+}
+.dark article.prose details.faq-item > p,
+.dark article.prose details.faq-item > div {
+  color: #a3a3a3;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;

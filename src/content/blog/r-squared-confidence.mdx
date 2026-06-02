@@ -214,3 +214,33 @@ Putting all of this together, here is a structured framework for using R² and c
 R² and the confidence metric are essential tools for evaluating extrapolation quality, but they are starting points, not endpoints. A high R² tells you that your model is consistent with observed data; it does not tell you that this consistency will persist beyond the data's range. The most reliable extrapolations come from combining good statistical fit with strong domain understanding and a healthy dose of skepticism.
 
 When you next use the [extrapolation calculator](/), take a moment to compare methods, check adjusted R², and think about whether the model's assumptions match the reality of your data. And if you are working within your data's range rather than beyond it, the [interpolation calculator](/interpolation/) may give you more reliable results with the same statistical toolkit. The numbers are only as good as the judgment behind them.
+
+## Frequently Asked Questions
+
+<details class="faq-item">
+<summary>What is a good R² value for extrapolation?</summary>
+
+It depends on your field, but generally R² > 0.7 indicates a reasonable fit. For precise forecasting, aim for R² > 0.85. However, remember that a high R² within the data range doesn't guarantee accurate extrapolation — it only measures how well the model fits the observed points.
+
+</details>
+
+<details class="faq-item">
+<summary>Can R² be negative?</summary>
+
+Yes, for nonlinear models. R² is defined as 1 − (SS_residual / SS_total). If the model fits worse than a horizontal line at the mean, SS_residual exceeds SS_total and R² goes negative. A negative R² is a strong warning that the chosen method is inappropriate for the data.
+
+</details>
+
+<details class="faq-item">
+<summary>Should I always pick the method with the highest R²?</summary>
+
+Not necessarily. The method with the highest R² may be overfitting, especially if it's a high-degree polynomial. Use adjusted R² to penalize model complexity, and always validate extrapolated values against domain knowledge. A simpler model with slightly lower R² is often more reliable for prediction.
+
+</details>
+
+<details class="faq-item">
+<summary>How is R² different from confidence?</summary>
+
+R² measures how well the regression line fits the observed data — it's a measure of fit quality. Confidence refers to the reliability of the extrapolation itself. A high R² gives you more confidence in the method, but confidence also depends on how far you're extrapolating and whether the underlying trend could change.
+
+</details>
