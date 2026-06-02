@@ -13,7 +13,8 @@ But knowing how to extrapolate data in Excel requires choosing the right method 
 
 ### The Four Excel Extrapolation Methods at a Glance
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Four methods overview: formula-based, single-cell, chart trendline, and full forecast sheet">
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Overview of four Excel extrapolation methods">
   <rect width="600" height="200" fill="#f8f8fc"/>
   <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
     <g transform="translate(20, 30)">
@@ -54,6 +55,8 @@ But knowing how to extrapolate data in Excel requires choosing the right method 
     </g>
   </g>
 </svg>
+  <figcaption>Four ways to extrapolate data in Excel: TREND function, FORECAST.LINEAR, chart trendlines, and Forecast Sheet — compared side by side for ease of use and Excel version compatibility.</figcaption>
+</figure>
 
 ## Method 1: Using the TREND Function
 
@@ -73,7 +76,8 @@ The TREND function calculates predicted values along a linear trend. It takes yo
 
 ### Visual Overview
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="TREND function: known data extends into predicted values via a linear trendline">
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="TREND function: known data extends into predicted values via a linear trendline">
   <defs>
     <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#d4af37" stop-opacity="0.18"/>
@@ -122,6 +126,8 @@ The TREND function calculates predicted values along a linear trend. It takes yo
     </g>
   </g>
 </svg>
+  <figcaption>Excel TREND function illustration: six months of known sales data (gold points, M1–M6) are fit with a least-squares linear trendline that extends forward to predict four future months (blue points, M7–M10). The dashed gold line shows the underlying linear model used to extrapolate values beyond the observed range.</figcaption>
+</figure>
 
 ### Step-by-Step Example
 
@@ -162,7 +168,8 @@ FORECAST.LINEAR (available in Excel 2016 and later) predicts a single y-value fo
 
 ### Visual Overview
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="FORECAST.LINEAR: single x input returns one predicted y value on a linear trendline">
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="FORECAST.LINEAR: single x input returns one predicted y value on a linear trendline">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e40af"/>
@@ -198,6 +205,8 @@ FORECAST.LINEAR (available in Excel 2016 and later) predicts a single y-value fo
     <line x1="300" y1="125" x2="505" y2="55" stroke="#1e40af" stroke-width="1.2" marker-end="url(#arrow)"/>
   </g>
 </svg>
+  <figcaption>Excel FORECAST.LINEAR example: a single target x-value of 12 is fed into the formula along with the known y-range (B2:B7) and x-range (A2:A7), returning one predicted y-value of approximately $32,857. The blue point on the gold trendline marks where the projection lands.</figcaption>
+</figure>
 
 ### Step-by-Step Example
 
@@ -218,7 +227,8 @@ A trendline adds a visual projection to your Excel chart. You can choose the typ
 
 ### Visual Overview
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Trendline chart: data points with a linear trendline extending forward into the future">
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Trendline chart: data points with a linear trendline extending forward into the future">
   <rect width="600" height="300" fill="#f8f8fc"/>
   <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
     <text x="40" y="22" font-weight="600" fill="#0a0a0a">Trendline — Visual Forecast in a Chart</text>
@@ -248,6 +258,8 @@ A trendline adds a visual projection to your Excel chart. You can choose the typ
     <text x="510" y="295" font-size="11" font-family="monospace" fill="#0a0a0a" font-weight="600">R² = 0.998</text>
   </g>
 </svg>
+  <figcaption>Excel chart trendline: a linear trendline is overlaid on the sales scatter plot and extended forward to project the next four periods (blue points). The chart displays the trendline equation (y = 2,143x + 7,857) and an R² value of 0.998, indicating an excellent linear fit that supports confident extrapolation.</figcaption>
+</figure>
 
 ### Step-by-Step Instructions
 
@@ -274,7 +286,8 @@ The Forecast Sheet feature (Excel 2016+) generates a complete forecast with a ch
 
 ### Visual Overview
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Forecast Sheet: full chart with historical data, predicted line, and upper/lower confidence interval bands, plus a forecast table">
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Forecast Sheet: full chart with historical data, predicted line, and upper/lower confidence interval bands, plus a forecast table">
   <defs>
     <linearGradient id="ciFill" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.30"/>
@@ -334,6 +347,8 @@ The Forecast Sheet feature (Excel 2016+) generates a complete forecast with a ch
     </g>
   </g>
 </svg>
+  <figcaption>Excel Forecast Sheet: a one-click dashboard combining a historical chart (gold line, M1–M7), a forecast continuation (blue line, M8–M11) with a 95% confidence interval band (gray shaded area), and a forecast table listing predicted values for each future period. This view is ideal for reports where readers need both the numbers and an at-a-glance visualization of forecast uncertainty.</figcaption>
+</figure>
 
 ### Step-by-Step Instructions
 
