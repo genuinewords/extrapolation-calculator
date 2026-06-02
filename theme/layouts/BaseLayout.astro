@@ -123,8 +123,28 @@ const personSchema = {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+
+    {locale !== 'en' && (
+      <script is:inline src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+      <script is:inline>
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'hi,es,ru,fr,de,it,pt,bn,ja,ko,ms,pl,id,ar,bg,tr,sv',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: true
+          }, 'google_translate_element');
+        }
+      </script>
+    )}
   </head>
   <body class="min-h-screen flex flex-col bg-[#f8f8fc] dark:bg-[#0a0a0a] text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
+    {locale !== 'en' && (
+      <div id="google_translate_element" class="fixed top-0 left-0 z-[60]"></div>
+      <script is:inline>
+        (function(){var locale=document.documentElement.lang;if(locale&&locale!=='en'){var interval=setInterval(function(){var sel=document.querySelector('.goog-te-combo');if(sel){sel.value=locale;sel.dispatchEvent(new Event('change'));clearInterval(interval)}},200);setTimeout(function(){clearInterval(interval)},8000)}})();
+      </script>
+    )}
     <Header locale={locale} currentPath={currentPath} />
     <main id="main-content" class="flex-1 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <slot />
