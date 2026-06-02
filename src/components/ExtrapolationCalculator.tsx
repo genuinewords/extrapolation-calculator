@@ -126,46 +126,6 @@ function L(key: string, locale: string): string {
   return uiLabels[l]?.[key] ?? uiLabels.en[key] ?? key;
 }
 
-function MethodIllustration({ method }: { method: MethodKey }) {
-
-  return (
-    <div className="method-illustration mb-8">
-      <svg viewBox="0 0 320 120" className="w-full h-full" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <g className="text-neutral-200 dark:text-neutral-700" strokeWidth="1">
-          {[0, 80, 160, 240, 320].map(x => <line key={`vx${x}`} x1={x} y1={0} x2={x} y2={120} />)}
-          {[0, 30, 60, 90, 120].map(y => <line key={`hy${y}`} x1={0} y1={y} x2={320} y2={y} />)}
-        </g>
-        {[
-          [40, 90], [100, 70], [160, 50], [220, 35], [260, 25]
-        ].map(([cx, cy], i) => (
-          <circle key={i} cx={cx} cy={cy} r="4" fill="#D4A853" stroke="none" />
-        ))}
-        {method === 'linear' && (
-          <line x1="20" y1="100" x2="300" y2="20" className="text-gold-500" strokeDasharray="4" />
-        )}
-        {method === 'exponential' && (
-          <path d="M20 100 Q100 80 160 60 T300 10" className="text-gold-400" fill="none" strokeDasharray="4" />
-        )}
-        {method === 'logarithmic' && (
-          <path d="M20 20 Q80 30 120 50 T300 100" className="text-gold-300" fill="none" strokeDasharray="4" />
-        )}
-        {method === 'polynomial' && (
-          <path d="M20 60 Q80 20 140 60 T220 30 T300 70" className="text-gold-500" fill="none" strokeDasharray="4" />
-        )}
-        {method === 'quadratic' && (
-          <path d="M20 100 Q160 0 300 100" className="text-gold-400" fill="none" strokeDasharray="4" />
-        )}
-        <g className="text-gold-600">
-          <line x1="260" y1="25" x2="290" y2="15" />
-          <polygon points="295,12 290,15 292,20" fill="currentColor" stroke="none" />
-        </g>
-        <text x="160" y="115" textAnchor="middle" className="text-neutral-400 dark:text-neutral-500" style={{ fontSize: '10px', fill: 'currentColor', stroke: 'none' }}>X →</text>
-        <text x="10" y="60" textAnchor="middle" className="text-neutral-400 dark:text-neutral-500" style={{ fontSize: '10px', fill: 'currentColor', stroke: 'none' }} transform="rotate(-90 10 60)">Y →</text>
-      </svg>
-    </div>
-  );
-}
-
 export default function ExtrapolationCalculator({ locale = 'en', showChart = true }: Props) {
   const [inputRows, setInputRows] = useState<{ x: string; y: string }[]>(demoDatasets.temperature.rows);
   const [method, setMethod] = useState<MethodKey>('linear');

@@ -1,12 +1,15 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, lazy, Suspense } from 'react';
 import { simpleRegression, multipleRegression } from '../utils/regression';
 import type { RegressionResult } from '../utils/regression';
-import { sanitizeInput, debounce } from '../utils/validation';
+import { sanitizeInput, debounce, exportToCSV, downloadCSV, downloadPNG } from '../utils/validation';
+
+const RegressionChart = lazy(() => import('./RegressionChart'));
 
 type RegMethod = 'simple' | 'multiple';
 
 interface Props {
   locale?: string;
+  showChart?: boolean;
 }
 
 const methodLabels: Record<RegMethod, Record<string, string>> = {
@@ -109,98 +112,7 @@ function L(key: string, locale: string): string {
   return ui[l]?.[key] ?? ui.en[key] ?? key;
 }
 
-function MethodIllustration({ method }: { method: RegMethod }) {
-  return (
-    <div className="method-illustration mb-8">
-      <svg viewBox="0 0 320 120" className="w-full h-full" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <g className="text-neutral-200 dark:text-neutral-700" strokeWidth="1">
-          {[0, 80, 160, 240, 320].map(x => <line key={`vx${x}`} x1={x} y1={0} x2={x} y2={120} />)}
-          {[0, 30, 60, 90, 120].map(y => <line key={`hy${y}`} x1={0} y1={y} x2={320} y2={y} />)}
-        </g>
-      {/* Load Example Data */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-3">
-          <span className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">Load Example Data</span>
-          <div className="h-px flex-1 bg-gradient-to-r from-neutral-200 dark:from-neutral-700 to-transparent" />
-        </div>
-        <div className="flex gap-2 flex-wrap">
-          <button
-            onClick={() => {
-              setMethod('simple');
-              setSimpleRows([
-                { x: '10', y: '150' }, { x: '12', y: '180' }, { x: '15', y: '220' },
-                { x: '18', y: '260' }, { x: '20', y: '290' }, { x: '25', y: '350' },
-              ]);
-              setPredictX('22');
-              setResult(null);
-              setError('');
-              setActiveSimpleSet('custom');
-            }}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
-              method === 'simple'
-                ? 'bg-gold-600 text-white shadow-md shadow-gold-500/20'
-                : 'bg-white/60 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700/80 border border-neutral-200/60 dark:border-neutral-700/60'
-            }`}
-          >
-            Simple Regression
-          </button>
-          <button
-            onClick={() => {
-              setMethod('multiple');
-              setMultiRows([
-                { x1: '2', x2: '1', y: '12' }, { x1: '3', x2: '2', y: '18' }, { x1: '4', x2: '1', y: '20' },
-                { x1: '5', x2: '3', y: '28' }, { x1: '6', x2: '2', y: '30' }, { x1: '7', x2: '4', y: '38' },
-              ]);
-              setPredictX1('6');
-              setPredictX2('3');
-              setResult(null);
-              setError('');
-              setActiveMultiSet('custom');
-            }}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
-              method === 'multiple'
-                ? 'bg-gold-600 text-white shadow-md shadow-gold-500/20'
-                : 'bg-white/60 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700/80 border border-neutral-200/60 dark:border-neutral-700/60'
-            }`}
-          >
-            Multiple Regression
-          </button>
-        </div>
-      </div>
-
-      {method === 'simple' ? (
-          <>
-            {[[40, 90], [80, 75], [120, 60], [160, 50], [200, 40], [240, 30], [280, 20]].map(([cx, cy], i) => (
-              <circle key={i} cx={cx} cy={cy} r="4" fill="#D4A853" stroke="none" />
-            ))}
-            <line x1="20" y1="100" x2="300" y2="15" className="text-gold-500" strokeWidth="2.5" />
-            <line x1="20" y1="92" x2="300" y2="7" className="text-gold-500" strokeWidth="1" strokeDasharray="4" opacity="0.5" />
-            <line x1="20" y1="108" x2="300" y2="23" className="text-gold-500" strokeWidth="1" strokeDasharray="4" opacity="0.5" />
-          </>
-        ) : (
-          <>
-            <line x1="40" y1="100" x2="160" y2="100" className="text-neutral-400" strokeWidth="1" />
-            <line x1="40" y1="100" x2="80" y2="60" className="text-neutral-400" strokeWidth="1" />
-            <line x1="160" y1="100" x2="200" y2="60" className="text-neutral-400" strokeWidth="1" />
-            <line x1="80" y1="60" x2="200" y2="60" className="text-neutral-400" strokeWidth="1" />
-            <circle cx="60" cy="80" r="4" fill="#D4A853" stroke="none" />
-            <circle cx="100" cy="70" r="4" fill="#D4A853" stroke="none" />
-            <circle cx="140" cy="55" r="4" fill="#D4A853" stroke="none" />
-            <circle cx="180" cy="40" r="4" fill="#D4A853" stroke="none" />
-            <polygon points="40,90 180,90 200,50 60,50" className="text-gold-500" strokeWidth="1.5" strokeDasharray="4" fill="rgba(212,168,83,0.05)" />
-            <text x="100" y="115" textAnchor="middle" className="text-neutral-400" style={{ fontSize: '9px', fill: 'currentColor', stroke: 'none' }}>X₁ →</text>
-            <text x="50" y="75" textAnchor="middle" className="text-neutral-400" style={{ fontSize: '9px', fill: 'currentColor', stroke: 'none' }} transform="rotate(-35 50 75)">X₂ →</text>
-            <text x="10" y="60" textAnchor="middle" className="text-neutral-400" style={{ fontSize: '9px', fill: 'currentColor', stroke: 'none' }} transform="rotate(-90 10 60)">Y →</text>
-          </>
-        )}
-        <text x="160" y="115" textAnchor="middle" className="text-neutral-400 dark:text-neutral-500" style={{ fontSize: '10px', fill: 'currentColor', stroke: 'none' }}>X →</text>
-        <text x="10" y="60" textAnchor="middle" className="text-neutral-400 dark:text-neutral-500" style={{ fontSize: '10px', fill: 'currentColor', stroke: 'none' }} transform="rotate(-90 10 60)">Y →</text>
-      </svg>
-    </div>
-  );
-}
-
-export default function RegressionCalculator({ locale = 'en' }: Props) {
+export default function RegressionCalculator({ locale = 'en', showChart = true }: Props) {
   const [method, setMethod] = useState<RegMethod>('simple');
   const [simpleRows, setSimpleRows] = useState<{ x: string; y: string }[]>(simpleDemoSets.house.rows);
   const [multiRows, setMultiRows] = useState<{ x1: string; x2: string; y: string }[]>(multiDemoSets.sales.rows);
@@ -211,6 +123,7 @@ export default function RegressionCalculator({ locale = 'en' }: Props) {
   const [error, setError] = useState<string>('');
   const [activeSimpleSet, setActiveSimpleSet] = useState<string>('house');
   const [activeMultiSet, setActiveMultiSet] = useState<string>('sales');
+  const chartRef = useRef<HTMLCanvasElement | null>(null);
 
   const calculateSimple = useCallback(() => {
     const pts = simpleRows.map(r => ({ x: Number(r.x), y: Number(r.y) })).filter(p => !isNaN(p.x) && !isNaN(p.y));
@@ -456,6 +369,37 @@ export default function RegressionCalculator({ locale = 'en' }: Props) {
               ))}
             </ol>
           </div>
+
+          {showChart && method === 'simple' && (
+            <div className="mb-6">
+              <Suspense fallback={<div className="h-64 bg-white/40 dark:bg-neutral-800/40 rounded-2xl animate-pulse flex items-center justify-center text-neutral-400 backdrop-blur-sm border border-neutral-200/40 dark:border-neutral-700/40">Loading chart...</div>}>
+                <RegressionChart
+                  points={simpleRows.map((r) => ({ x: Number(r.x), y: Number(r.y) })).filter((p) => !isNaN(p.x) && !isNaN(p.y))}
+                  result={result}
+                  predictX={Number(predictX) || 0}
+                  method="simple"
+                  ref={chartRef}
+                />
+              </Suspense>
+            </div>
+          )}
+
+          {method === 'simple' && (
+            <div className="flex flex-wrap gap-2">
+              <button onClick={() => {
+                const validPoints = simpleRows.map(r => ({ x: Number(r.x), y: Number(r.y) })).filter(p => !isNaN(p.x) && !isNaN(p.y));
+                const content = exportToCSV(validPoints);
+                downloadCSV(content, 'regression-result.csv');
+              }} className="btn-secondary" aria-label="Export CSV">
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                CSV
+              </button>
+              <button onClick={() => downloadPNG(chartRef.current, 'regression-chart.png')} className="btn-secondary" aria-label="Export PNG">
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                PNG
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

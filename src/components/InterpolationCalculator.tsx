@@ -1,12 +1,15 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, lazy, Suspense } from 'react';
 import type { Point, InterpolationResult } from '../utils/interpolation';
 import { interpolationMethods } from '../utils/interpolation';
-import { sanitizeInput, debounce } from '../utils/validation';
+import { sanitizeInput, debounce, exportToCSV, downloadCSV, downloadPNG } from '../utils/validation';
+
+const InterpolationChart = lazy(() => import('./InterpolationChart'));
 
 type InterpMethod = 'linear' | 'lagrange' | 'spline';
 
 interface Props {
   locale?: string;
+  showChart?: boolean;
 }
 
 const methodLabels: Record<InterpMethod, Record<string, string>> = {
@@ -104,48 +107,14 @@ function L(key: string, locale: string): string {
   return ui[l]?.[key] ?? ui.en[key] ?? key;
 }
 
-function MethodIllustration({ method }: { method: InterpMethod }) {
-
-  return (
-    <div className="method-illustration mb-8">
-      <svg viewBox="0 0 320 120" className="w-full h-full" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <g className="text-neutral-200 dark:text-neutral-700" strokeWidth="1">
-          {[0, 80, 160, 240, 320].map(x => <line key={`vx${x}`} x1={x} y1={0} x2={x} y2={120} />)}
-          {[0, 30, 60, 90, 120].map(y => <line key={`hy${y}`} x1={0} y1={y} x2={320} y2={y} />)}
-        </g>
-        {[[40, 90], [100, 70], [160, 50], [220, 35], [260, 25]].map(([cx, cy], i) => (
-          <circle key={`known${i}`} cx={cx} cy={cy} r="5" fill="#D4A853" stroke="#D4A853" strokeWidth="2" />
-        ))}
-        <polygon points="140,60 145,55 150,60 145,65" fill="#B8860B" stroke="#B8860B" strokeWidth="2" />
-        {method === 'linear' && (
-          <>
-            <line x1="40" y1="90" x2="100" y2="70" className="text-gold-500" strokeWidth="2" />
-            <line x1="100" y1="70" x2="160" y2="50" className="text-gold-500" strokeWidth="2" />
-            <line x1="160" y1="50" x2="220" y2="35" className="text-gold-500" strokeWidth="2" />
-            <line x1="220" y1="35" x2="260" y2="25" className="text-gold-500" strokeWidth="2" />
-          </>
-        )}
-        {method === 'lagrange' && (
-          <path d="M20 100 Q130 20 300 10" className="text-gold-500" strokeWidth="2" strokeDasharray="0" />
-        )}
-        {method === 'spline' && (
-          <path d="M40 90 C80 70, 120 50, 160 50 S240 30, 260 25" className="text-gold-400" strokeWidth="2" fill="none" />
-        )}
-        <text x="145" y="45" textAnchor="middle" className="text-gold-600" style={{ fontSize: '14px', fontWeight: 'bold', fill: '#B8860B', stroke: 'none' }}>?</text>
-        <text x="160" y="115" textAnchor="middle" className="text-neutral-400 dark:text-neutral-500" style={{ fontSize: '10px', fill: 'currentColor', stroke: 'none' }}>Known Points →</text>
-        <text x="10" y="60" textAnchor="middle" className="text-neutral-400 dark:text-neutral-500" style={{ fontSize: '10px', fill: 'currentColor', stroke: 'none' }} transform="rotate(-90 10 60)">Y →</text>
-      </svg>
-    </div>
-  );
-}
-
-export default function InterpolationCalculator({ locale = 'en' }: Props) {
+export default function InterpolationCalculator({ locale = 'en', showChart = true }: Props) {
   const [inputRows, setInputRows] = useState<{ x: string; y: string }[]>(demoDatasets.temperature.rows);
   const [method, setMethod] = useState<InterpMethod>('linear');
   const [targetX, setTargetX] = useState<string>(demoDatasets.temperature.targetX);
   const [result, setResult] = useState<InterpolationResult | null>(null);
   const [error, setError] = useState<string>('');
   const [activeDataset, setActiveDataset] = useState<string>('temperature');
+  const chartRef = useRef<HTMLCanvasElement | null>(null);
 
   const calculate = useCallback(
     (pts: Point[], meth: InterpMethod, tgt: string) => {
@@ -233,6 +202,16 @@ export default function InterpolationCalculator({ locale = 'en' }: Props) {
     });
     calculate(pts, method, targetX);
   };
+
+  const handleExportCSV = () => {
+    const validPoints = inputRows
+      .map((r) => ({ x: Number(r.x), y: Number(r.y) }))
+      .filter((p) => !isNaN(p.x) && !isNaN(p.y));
+    const content = exportToCSV(validPoints);
+    downloadCSV(content, 'interpolation-result.csv');
+  };
+
+  const handleExportPNG = () => downloadPNG(chartRef.current, 'interpolation-chart.png');
 
   return (
     <div className="calculator-card p-6 md:p-10 max-w-5xl mx-auto" role="application" aria-label={L('title', locale)}>
@@ -401,6 +380,31 @@ export default function InterpolationCalculator({ locale = 'en' }: Props) {
                 </li>
               ))}
             </ol>
+          </div>
+
+          {showChart && (
+            <div className="mb-6">
+              <Suspense fallback={<div className="h-64 bg-white/40 dark:bg-neutral-800/40 rounded-2xl animate-pulse flex items-center justify-center text-neutral-400 backdrop-blur-sm border border-neutral-200/40 dark:border-neutral-700/40">Loading chart...</div>}>
+                <InterpolationChart
+                  points={inputRows.map((r) => ({ x: Number(r.x), y: Number(r.y) })).filter((p) => !isNaN(p.x) && !isNaN(p.y))}
+                  interpolatedX={Number(targetX) || 0}
+                  interpolatedY={result.value}
+                  method={method}
+                  ref={chartRef}
+                />
+              </Suspense>
+            </div>
+          )}
+
+          <div className="flex flex-wrap gap-2">
+            <button onClick={handleExportCSV} className="btn-secondary" aria-label="Export CSV">
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+              CSV
+            </button>
+            <button onClick={handleExportPNG} className="btn-secondary" aria-label="Export PNG">
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+              PNG
+            </button>
           </div>
         </div>
       )}

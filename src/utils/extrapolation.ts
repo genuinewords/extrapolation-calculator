@@ -62,12 +62,6 @@ export function exponential(points: Point[], targetX: number): CalculationResult
   const linResult = linear(logY, targetX);
 
   const a = Math.exp(linResult.value);
-  const predictedActual = positivePoints.map((p) => Math.exp(logY.find((lp) => lp.x === p.x)!.y));
-  const predictedFromLinear = positivePoints.map((p) => {
-    const lp = logY.find((l) => l.x === p.x)!;
-    const linPred = linResult.equation.includes('NaN') ? 0 : 0;
-    return Math.exp(p.y > 0 ? Math.log(p.y) : 0);
-  });
 
   const xs = positivePoints.map((p) => p.x);
   const ys = positivePoints.map((p) => p.y);
