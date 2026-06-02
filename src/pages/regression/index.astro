@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '@theme/layouts/BaseLayout.astro';
 import RegressionCalculator from '../../components/RegressionCalculator';
+import ExpertReview from '@theme/components/ExpertReview.astro';
+import References from '@theme/components/References.astro';
 
 const locale = 'en';
 const currentPath = '/regression/';
@@ -233,6 +235,18 @@ const currentPath = '/regression/';
       </div>
     </div>
   </section>
+
+  <!-- Expert Review -->
+  <ExpertReview />
+
+  <!-- References -->
+  <References references={[
+    'Montgomery, D.C., Peck, E.A., & Vining, G.G. (2021). Introduction to Linear Regression Analysis (6th ed.). Wiley.',
+    'Hastie, T., Tibshirani, R., & Friedman, J. (2009). The Elements of Statistical Learning (2nd ed.). Springer.',
+    'Draper, N.R., & Smith, H. (1998). Applied Regression Analysis (3rd ed.). Wiley.',
+    'Kutner, M.H., Nachtsheim, C.J., & Neter, J. (2004). Applied Linear Regression Models (4th ed.). McGraw-Hill.',
+    'Greene, W.H. (2018). Econometric Analysis (8th ed.). Pearson.',
+  ]} />
 
   <!-- FAQ -->
   <section class="py-8 md:py-12">

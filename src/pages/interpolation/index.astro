@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '@theme/layouts/BaseLayout.astro';
 import InterpolationCalculator from '../../components/InterpolationCalculator';
+import ExpertReview from '@theme/components/ExpertReview.astro';
+import References from '@theme/components/References.astro';
 
 const locale = 'en';
 const currentPath = '/interpolation/';
@@ -203,6 +205,18 @@ const currentPath = '/interpolation/';
       <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">When sensors drop readings due to noise, equipment failure, or transmission errors, interpolation fills the gaps. Climate scientists reconstruct missing temperature records. Biologists estimate unmeasured gene expression levels. Astronomers interpolate telescope data across cloudy nights. In every case, interpolation preserves the integrity of continuous datasets without introducing the bias that simple averaging or deletion would cause.</p>
     </div>
   </section>
+
+  <!-- Expert Review -->
+  <ExpertReview />
+
+  <!-- References -->
+  <References references={[
+    'Burden, R.L., & Faires, J.D. (2010). Numerical Analysis (9th ed.). Brooks/Cole, Cengage Learning.',
+    'de Boor, C. (2001). A Practical Guide to Splines (Revised ed.). Springer-Verlag.',
+    'Press, W.H., et al. (2007). Numerical Recipes: The Art of Scientific Computing (3rd ed.). Cambridge University Press.',
+    'Stoer, J., & Bulirsch, R. (2013). Introduction to Numerical Analysis (3rd ed.). Springer.',
+    'Quarteroni, A., Sacco, R., & Saleri, F. (2007). Numerical Mathematics (2nd ed.). Springer.',
+  ]} />
 
   <!-- FAQ -->
   <section class="py-8 md:py-12">

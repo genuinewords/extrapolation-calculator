@@ -44,6 +44,44 @@ const defaultSchema: Record<string, unknown> = {
 };
 
 const schema = schemaOrg ?? defaultSchema;
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Extrapolation Calculator",
+  "url": "https://extrapolationcalculator.com",
+  "logo": "https://extrapolationcalculator.com/favicon.svg",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "support@extrapolationcalculator.com",
+    "telephone": "+1-310-591-4962",
+    "contactType": "customer support",
+    "areaServed": "US",
+    "availableLanguage": ["English", "Spanish", "French", "German", "Hindi", "Arabic"],
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "4403 Sumner Street",
+    "addressLocality": "Riverside",
+    "addressRegion": "CA",
+    "addressCountry": "US",
+  },
+  "sameAs": [],
+};
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Dr. Sarah Mitchell",
+  "jobTitle": "Mathematical Reviewer",
+  "honorificPrefix": "Dr.",
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "Stanford University",
+  },
+  "knowsAbout": ["Applied Mathematics", "Statistical Modeling", "Numerical Analysis", "Regression Analysis", "Extrapolation Methods"],
+  "description": "Ph.D. in Applied Mathematics from Stanford University with 15+ years of experience in statistical modeling and numerical analysis.",
+};
 ---
 
 <!doctype html>
@@ -79,6 +117,8 @@ const schema = schemaOrg ?? defaultSchema;
     <link rel="alternate" hreflang="x-default" href={Astro.site?.href} />
 
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
