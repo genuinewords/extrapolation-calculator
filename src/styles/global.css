@@ -367,6 +367,17 @@
   border: var(--card-border);
 }
 
+article.prose h2,
+article.prose h3,
+article.prose h4 {
+  color: #92700c !important;
+}
+.dark article.prose h2,
+.dark article.prose h3,
+.dark article.prose h4 {
+  color: #d4af37 !important;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
