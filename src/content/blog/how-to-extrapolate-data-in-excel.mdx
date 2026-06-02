@@ -11,6 +11,50 @@ Excel is one of the most widely used tools for data forecasting. Whether you're 
 
 But knowing how to extrapolate data in Excel requires choosing the right method for your situation. This guide walks you through four approaches — from simple formulas to one-click forecast sheets — so you can pick the one that fits your data and skill level. If you're new to the concept itself, start with our guide on [what is extrapolation](/blog/what-is-extrapolation/).
 
+### The Four Excel Extrapolation Methods at a Glance
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Four methods overview: formula-based, single-cell, chart trendline, and full forecast sheet">
+  <rect width="600" height="200" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <g transform="translate(20, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">1</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">TREND</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">Formula</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">multiple</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">values</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">All Excel</text>
+    </g>
+    <g transform="translate(165, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">2</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">FORECAST</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">.LINEAR</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">single</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">value</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">2016+</text>
+    </g>
+    <g transform="translate(310, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">3</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">Trendline</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">visual</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">chart</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">overlay</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">All Excel</text>
+    </g>
+    <g transform="translate(455, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">4</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">Forecast</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">Sheet</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">one-click</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">dashboard</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">2016+</text>
+    </g>
+  </g>
+</svg>
+
 ## Method 1: Using the TREND Function
 
 ### What It Does
@@ -26,6 +70,58 @@ The TREND function calculates predicted values along a linear trend. It takes yo
 - **known_y's**: The range of known dependent values (e.g., sales figures)
 - **known_x's**: The range of known independent values (e.g., month numbers)
 - **new_x's**: The x-values you want to predict for
+
+### Visual Overview
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="TREND function: known data extends into predicted values via a linear trendline">
+  <defs>
+    <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="280" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">TREND Function — Linear Projection</text>
+    <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <path d="M 40 220 L 560 80" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M 130 205 L 175 180 L 220 158 L 265 138 L 310 115 L 355 95 L 400 80 L 445 65 L 490 50 L 535 38" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <path d="M 400 80 L 445 65 L 490 50 L 535 38 L 535 240 L 400 240 Z" fill="url(#trendFill)"/>
+    <line x1="400" y1="40" x2="400" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="425" y="232" font-size="10" fill="#64748b">predicted</text>
+    <g fill="#d4af37">
+      <circle cx="130" cy="205" r="4"/>
+      <circle cx="175" cy="180" r="4"/>
+      <circle cx="220" cy="158" r="4"/>
+      <circle cx="265" cy="138" r="4"/>
+      <circle cx="310" cy="115" r="4"/>
+      <circle cx="355" cy="95" r="4"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="400" cy="80" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="445" cy="65" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="490" cy="50" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="535" cy="38" r="5" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="120" y="258" font-size="10" fill="#64748b">M1</text>
+    <text x="165" y="258" font-size="10" fill="#64748b">M2</text>
+    <text x="210" y="258" font-size="10" fill="#64748b">M3</text>
+    <text x="255" y="258" font-size="10" fill="#64748b">M4</text>
+    <text x="300" y="258" font-size="10" fill="#64748b">M5</text>
+    <text x="345" y="258" font-size="10" fill="#64748b">M6</text>
+    <text x="388" y="258" font-size="10" fill="#1e40af" font-weight="600">M7</text>
+    <text x="433" y="258" font-size="10" fill="#1e40af" font-weight="600">M8</text>
+    <text x="478" y="258" font-size="10" fill="#1e40af" font-weight="600">M9</text>
+    <text x="523" y="258" font-size="10" fill="#1e40af" font-weight="600">M10</text>
+    <g transform="translate(0,0)">
+      <circle cx="155" cy="100" r="4" fill="#d4af37"/>
+      <text x="166" y="104" font-size="10">Known data (gold)</text>
+      <circle cx="155" cy="118" r="4" fill="#1e40af"/>
+      <text x="166" y="122" font-size="10">Predicted (blue)</text>
+    </g>
+  </g>
+</svg>
 
 ### Step-by-Step Example
 
@@ -64,6 +160,45 @@ FORECAST.LINEAR (available in Excel 2016 and later) predicts a single y-value fo
 - **known_y's**: The range of known dependent values
 - **known_x's**: The range of known independent values
 
+### Visual Overview
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="FORECAST.LINEAR: single x input returns one predicted y value on a linear trendline">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e40af"/>
+    </marker>
+  </defs>
+  <rect width="600" height="280" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">FORECAST.LINEAR — Single-Point Prediction</text>
+    <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <path d="M 70 220 L 530 50" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M 90 210 L 150 190 L 210 170 L 270 145 L 330 120 L 390 95 L 450 70 L 510 50" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <g fill="#d4af37">
+      <circle cx="90" cy="210" r="4"/>
+      <circle cx="150" cy="190" r="4"/>
+      <circle cx="210" cy="170" r="4"/>
+      <circle cx="270" cy="145" r="4"/>
+      <circle cx="330" cy="120" r="4"/>
+      <circle cx="390" cy="95" r="4"/>
+      <circle cx="450" cy="70" r="4"/>
+      <circle cx="510" cy="50" r="4"/>
+    </g>
+    <line x1="510" y1="50" x2="510" y2="240" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <line x1="40" y1="50" x2="510" y2="50" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="510" cy="50" r="6" fill="#1e40af" stroke="#fff" stroke-width="2"/>
+    <text x="500" y="258" font-size="10" fill="#1e40af" font-weight="600">x = 12</text>
+    <text x="22" y="54" font-size="10" fill="#1e40af" font-weight="600">y ≈ $32,857</text>
+    <g>
+      <rect x="120" y="100" width="180" height="50" rx="6" fill="#fff" stroke="#1e40af" stroke-width="1.5"/>
+      <text x="130" y="120" font-size="10" font-weight="600" fill="#0a0a0a">Cell formula</text>
+      <text x="130" y="138" font-size="10" font-family="monospace" fill="#1e40af">=FORECAST.LINEAR(12, B2:B7, A2:A7)</text>
+    </g>
+    <line x1="300" y1="125" x2="505" y2="55" stroke="#1e40af" stroke-width="1.2" marker-end="url(#arrow)"/>
+  </g>
+</svg>
+
 ### Step-by-Step Example
 
 Using the same sales data, predict revenue for month 12:
@@ -80,6 +215,39 @@ FORECAST.LINEAR is the simplest way to get a quick single-value extrapolation. F
 ### What It Does
 
 A trendline adds a visual projection to your Excel chart. You can choose the type of trendline (linear, polynomial, exponential) and extend it forward to see where your data is heading. This is the most intuitive method because you can *see* the forecast.
+
+### Visual Overview
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Trendline chart: data points with a linear trendline extending forward into the future">
+  <rect width="600" height="300" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">Trendline — Visual Forecast in a Chart</text>
+    <rect x="40" y="40" width="520" height="220" fill="#fff" stroke="#e5e7eb"/>
+    <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="140" x2="540" y2="140" stroke="#e5e7eb" stroke-dasharray="3 3"/>
+    <line x1="380" y1="60" x2="380" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="200" y="55" font-size="10" fill="#64748b">Historical data</text>
+    <text x="420" y="55" font-size="10" fill="#64748b">Forecast region</text>
+    <path d="M 80 220 L 130 200 L 180 180 L 230 160 L 280 140 L 330 115 L 380 100 L 430 80 L 480 60 L 530 40" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <g fill="#d4af37">
+      <circle cx="80" cy="220" r="4"/>
+      <circle cx="130" cy="200" r="4"/>
+      <circle cx="180" cy="180" r="4"/>
+      <circle cx="230" cy="160" r="4"/>
+      <circle cx="280" cy="140" r="4"/>
+      <circle cx="330" cy="115" r="4"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="380" cy="100" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="430" cy="80" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="480" cy="60" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="530" cy="40" r="5" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="455" y="280" font-size="11" font-family="monospace" fill="#d4af37" font-weight="600">y = 2,143x + 7,857</text>
+    <text x="510" y="295" font-size="11" font-family="monospace" fill="#0a0a0a" font-weight="600">R² = 0.998</text>
+  </g>
+</svg>
 
 ### Step-by-Step Instructions
 
@@ -103,6 +271,69 @@ Trendlines are best when you need a visual forecast for presentations or reports
 ### What It Does
 
 The Forecast Sheet feature (Excel 2016+) generates a complete forecast with a chart, confidence intervals, and a table of predicted values — all in one click. It's the fastest way to get a professional-looking forecast.
+
+### Visual Overview
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Forecast Sheet: full chart with historical data, predicted line, and upper/lower confidence interval bands, plus a forecast table">
+  <defs>
+    <linearGradient id="ciFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.10"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="320" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">Forecast Sheet — Chart + Confidence Interval + Table</text>
+    <rect x="40" y="40" width="380" height="220" fill="#fff" stroke="#e5e7eb"/>
+    <line x1="60" y1="240" x2="400" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="260" y1="60" x2="260" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <path d="M 70 220 L 100 205 L 130 190 L 160 175 L 190 160 L 220 145 L 250 125 L 280 110 L 310 90 L 340 75 L 370 60" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <path d="M 260 110 L 280 90 L 310 65 L 340 45 L 370 25 L 370 95 L 340 105 L 310 115 L 280 130 L 260 110 Z" fill="url(#ciFill)" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 2"/>
+    <g fill="#d4af37">
+      <circle cx="70" cy="220" r="3.5"/>
+      <circle cx="100" cy="205" r="3.5"/>
+      <circle cx="130" cy="190" r="3.5"/>
+      <circle cx="160" cy="175" r="3.5"/>
+      <circle cx="190" cy="160" r="3.5"/>
+      <circle cx="220" cy="145" r="3.5"/>
+      <circle cx="250" cy="125" r="3.5"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="280" cy="110" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="310" cy="90" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="340" cy="75" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="370" cy="60" r="4" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="135" y="55" font-size="10" fill="#64748b">Historical</text>
+    <text x="285" y="55" font-size="10" fill="#1e40af" font-weight="600">Forecast</text>
+    <rect x="60" y="265" width="350" height="14" fill="#94a3b8" fill-opacity="0.3"/>
+    <text x="66" y="275" font-size="9" fill="#475569">95% confidence interval</text>
+    <g transform="translate(440, 50)">
+      <rect x="0" y="0" width="140" height="210" fill="#fff" stroke="#e5e7eb" rx="4"/>
+      <text x="10" y="18" font-size="10" font-weight="600" fill="#0a0a0a">Forecast table</text>
+      <line x1="10" y1="25" x2="130" y2="25" stroke="#e5e7eb"/>
+      <text x="10" y="42" font-size="9" fill="#64748b">Period</text>
+      <text x="80" y="42" font-size="9" fill="#64748b">Value</text>
+      <line x1="10" y1="48" x2="130" y2="48" stroke="#e5e7eb"/>
+      <text x="10" y="62" font-size="9" fill="#1e40af">M7</text>
+      <text x="80" y="62" font-size="9" fill="#1e40af">$22,143</text>
+      <text x="10" y="78" font-size="9" fill="#1e40af">M8</text>
+      <text x="80" y="78" font-size="9" fill="#1e40af">$24,286</text>
+      <text x="10" y="94" font-size="9" fill="#1e40af">M9</text>
+      <text x="80" y="94" font-size="9" fill="#1e40af">$26,429</text>
+      <text x="10" y="110" font-size="9" fill="#1e40af">M10</text>
+      <text x="80" y="110" font-size="9" fill="#1e40af">$28,571</text>
+      <text x="10" y="126" font-size="9" fill="#1e40af">M11</text>
+      <text x="80" y="126" font-size="9" fill="#1e40af">$30,714</text>
+      <text x="10" y="142" font-size="9" fill="#1e40af">M12</text>
+      <text x="80" y="142" font-size="9" fill="#1e40af">$32,857</text>
+      <line x1="10" y1="152" x2="130" y2="152" stroke="#e5e7eb"/>
+      <text x="10" y="168" font-size="9" fill="#64748b" font-style="italic">CI: ±$2,400</text>
+      <text x="10" y="184" font-size="9" fill="#64748b" font-style="italic">95% level</text>
+    </g>
+  </g>
+</svg>
 
 ### Step-by-Step Instructions
 
