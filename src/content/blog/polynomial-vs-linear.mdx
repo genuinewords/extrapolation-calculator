@@ -7,7 +7,7 @@ category: Methods
 featuredImage: ""
 ---
 
-When you need to predict values beyond the range of your observed data, the choice of [extrapolation](/blog/what-is-extrapolation.mdx/) method is one of the most consequential decisions you will make. Pick a model that is too simple, and you miss real structure in your data. Pick one that is too flexible, and your predictions fly off into nonsense. The two most common approaches — linear and polynomial extrapolation — sit at opposite ends of this simplicity-flexibility spectrum, and understanding when to use each is essential for anyone working with data prediction.
+When you need to predict values beyond the range of your observed data, the choice of [extrapolation](/blog/what-is-extrapolation/) method is one of the most consequential decisions you will make. Pick a model that is too simple, and you miss real structure in your data. Pick one that is too flexible, and your predictions fly off into nonsense. The two most common approaches — linear and polynomial extrapolation — sit at opposite ends of this simplicity-flexibility spectrum, and understanding when to use each is essential for anyone working with data prediction.
 
 This guide walks through the mathematics, the trade-offs, and a practical decision framework so you can confidently choose the right method for your dataset. You can experiment with both approaches directly using our [extrapolation calculator](/), which lets you fit models of any degree and compare their performance side by side.
 
@@ -29,7 +29,7 @@ Linear extrapolation is polynomial extrapolation with degree 1. The equation is 
 
 **y = a₀ + a₁x**
 
-This model assumes a constant rate of change — the slope a₁ is the same everywhere along the line. There are no curves, no turning points, no surprises. If your data follows a roughly constant trend, [linear extrapolation](/blog/linear-extrapolation.mdx/) will serve you well.
+This model assumes a constant rate of change — the slope a₁ is the same everywhere along the line. There are no curves, no turning points, no surprises. If your data follows a roughly constant trend, [linear extrapolation](/blog/linear-extrapolation/) will serve you well.
 
 ### When Linear Excels
 
@@ -42,7 +42,7 @@ This model assumes a constant rate of change — the slope a₁ is the same ever
 
 The obvious limitation is that the real world is rarely perfectly linear. Growth accelerates, decay slows down, markets saturate. If your data contains genuine curvature — and you can distinguish that curvature from noise — then a linear model will systematically mispredict, underestimating values where the true trend curves upward and overestimating where it curves downward.
 
-This is where the distinction between [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation.mdx/) becomes critical. Even if a linear model interpolates reasonably well within your data range, its extrapolations can be systematically biased if the true relationship is curved.
+This is where the distinction between [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation/) becomes critical. Even if a linear model interpolates reasonably well within your data range, its extrapolations can be systematically biased if the true relationship is curved.
 
 ## Quadratic Extrapolation (Degree 2): When a Curve Is Needed
 
@@ -110,7 +110,7 @@ Fitting y = a₀ + a₁x gives approximately:
 
 **y = −3.07 + 10.54x**
 
-The [R² score](/blog/r-squared-confidence.mdx/) for this linear model is approximately **0.93**. Not terrible, but notice that the residuals show a clear pattern: the model underpredicts at both ends of the range and overpredicts in the middle. That systematic residual pattern is a signal that the model is missing real structure.
+The [R² score](/blog/r-squared-confidence/) for this linear model is approximately **0.93**. Not terrible, but notice that the residuals show a clear pattern: the model underpredicts at both ends of the range and overpredicts in the middle. That systematic residual pattern is a signal that the model is missing real structure.
 
 Extrapolating to month 12: **y = −3.07 + 10.54 × 12 = 123.4**
 
@@ -152,11 +152,11 @@ Some datasets have genuine S-curves or inflection points that require three term
 
 ### Step 4: Compare R² Scores Critically
 
-If a higher degree barely improves R², stick with the simpler model. This is the principle of parsimony. The [R² score](/blog/r-squared-confidence.mdx/) should increase substantially to justify each additional parameter. You can also use adjusted R², which penalizes additional terms, to make this comparison more rigorous.
+If a higher degree barely improves R², stick with the simpler model. This is the principle of parsimony. The [R² score](/blog/r-squared-confidence/) should increase substantially to justify each additional parameter. You can also use adjusted R², which penalizes additional terms, to make this comparison more rigorous.
 
 ### Step 5: Always Sanity-Check Extrapolated Values
 
-No matter what R² tells you, compare your extrapolated predictions against domain knowledge. If your model predicts that a country's population will be 50 billion in 30 years, something is wrong — regardless of how good the fit statistics look. If your [exponential extrapolation](/blog/exponential-growth.mdx/) or polynomial model produces physically impossible values, reduce the degree.
+No matter what R² tells you, compare your extrapolated predictions against domain knowledge. If your model predicts that a country's population will be 50 billion in 30 years, something is wrong — regardless of how good the fit statistics look. If your [exponential extrapolation](/blog/exponential-growth/) or polynomial model produces physically impossible values, reduce the degree.
 
 ### Step 6: Consider Alternatives
 
@@ -172,7 +172,7 @@ If going from degree 2 to degree 3 improves R² by 0.10, and degree 3 to degree 
 
 ### Extrapolated Values Are Orders of Magnitude Beyond Your Data
 
-This is the most dangerous sign. If your observed data ranges from 10 to 100, and your model predicts 50,000 for the next period, the polynomial has diverged. High-degree terms dominate outside the data range, and the model is no longer reflecting the underlying process. This is especially common with [exponential extrapolation](/blog/exponential-growth.mdx/) as well, but polynomial divergence can be even more dramatic and harder to anticipate because the direction of divergence depends on the leading coefficient's sign.
+This is the most dangerous sign. If your observed data ranges from 10 to 100, and your model predicts 50,000 for the next period, the polynomial has diverged. High-degree terms dominate outside the data range, and the model is no longer reflecting the underlying process. This is especially common with [exponential extrapolation](/blog/exponential-growth/) as well, but polynomial divergence can be even more dramatic and harder to anticipate because the direction of divergence depends on the leading coefficient's sign.
 
 ### Very Large Coefficients
 
@@ -215,7 +215,7 @@ In physics, projectile trajectories are exactly quadratic (neglecting air resist
 
 Financial time series are notoriously difficult to extrapolate. Stock prices, interest rates, and exchange rates are dominated by stochastic processes that no polynomial can capture. That said, longer-term economic trends — GDP growth, inflation trends, demographic shifts — often show enough structure to benefit from careful polynomial fitting, typically at degree 2 or 3.
 
-Revenue forecasting is a common application. Early-stage companies often show accelerating growth (quadratic or [exponential extrapolation](/blog/exponential-growth.mdx/)), while mature companies may show decelerating growth that a [logarithmic extrapolation](/blog/logarithmic-diminishing-returns.mdx/) captures better.
+Revenue forecasting is a common application. Early-stage companies often show accelerating growth (quadratic or [exponential extrapolation](/blog/exponential-growth/)), while mature companies may show decelerating growth that a [logarithmic extrapolation](/blog/logarithmic-diminishing-returns/) captures better.
 
 ### Environmental Science
 
@@ -238,11 +238,11 @@ Dose-response curves, drug concentration over time, and growth curves in develop
 
 ## Conclusion
 
-The choice between polynomial and linear extrapolation is not about which method is universally better — it is about which method is better for *your specific data*. Linear extrapolation offers stability and interpretability; polynomial extrapolation offers flexibility and accuracy for curved relationships. The art lies in using the simplest model that captures the genuine structure in your data without chasing noise. For a concise side-by-side comparison with worked examples, see [polynomial extrapolation vs linear](/blog/polynomial-extrapolation-vs-linear.mdx/).
+The choice between polynomial and linear extrapolation is not about which method is universally better — it is about which method is better for *your specific data*. Linear extrapolation offers stability and interpretability; polynomial extrapolation offers flexibility and accuracy for curved relationships. The art lies in using the simplest model that captures the genuine structure in your data without chasing noise. For a concise side-by-side comparison with worked examples, see [polynomial extrapolation vs linear](/blog/polynomial-extrapolation-vs-linear/).
 
 The R² decision framework — start linear, increase degree if needed, validate rigorously, and always sanity-check — provides a repeatable process for making this choice. Combined with awareness of overfitting warning signs and an understanding of when each method excels, you can make extrapolation decisions with confidence rather than guesswork.
 
-Ready to put this into practice? Try our [extrapolation calculator](/) with your own data, compare linear and polynomial fits, and see the R² differences for yourself. If your data falls within an observed range and you need intermediate values, our [interpolation calculator](/interpolation/) may be the better tool. And for a deeper dive into goodness-of-fit, our guide to [R² score](/blog/r-squared-confidence.mdx/) interpretation covers the nuances that simple thresholds miss.
+Ready to put this into practice? Try our [extrapolation calculator](/) with your own data, compare linear and polynomial fits, and see the R² differences for yourself. If your data falls within an observed range and you need intermediate values, our [interpolation calculator](/interpolation/) may be the better tool. And for a deeper dive into goodness-of-fit, our guide to [R² score](/blog/r-squared-confidence/) interpretation covers the nuances that simple thresholds miss.
 
 ## Frequently Asked Questions
 
@@ -256,7 +256,7 @@ Start with the lowest degree that gives an acceptable R² score. Degree 1 (linea
 <details class="faq-item">
 <summary>Why does polynomial extrapolation sometimes give crazy results?</summary>
 
-High-degree polynomials can oscillate wildly between and beyond data points — a phenomenon called Runge's phenomenon. The polynomial fits the training points exactly but swings dramatically in the gaps. This is why [polynomial vs linear extrapolation](/blog/polynomial-extrapolation-vs-linear.mdx/) is such an important decision: flexibility comes at the cost of stability.
+High-degree polynomials can oscillate wildly between and beyond data points — a phenomenon called Runge's phenomenon. The polynomial fits the training points exactly but swings dramatically in the gaps. This is why [polynomial vs linear extrapolation](/blog/polynomial-extrapolation-vs-linear/) is such an important decision: flexibility comes at the cost of stability.
 
 </details>
 
@@ -270,6 +270,6 @@ No. A very high R² with a high-degree polynomial may indicate overfitting — t
 <details class="faq-item">
 <summary>Can I use polynomial extrapolation for long-term forecasts?</summary>
 
-With caution. Polynomial extrapolation becomes increasingly unreliable the further you project beyond your data. For long-term forecasting, [linear](/blog/linear-extrapolation.mdx/) or [logarithmic](/blog/logarithmic-diminishing-returns.mdx/) methods are generally safer because they don't diverge as dramatically.
+With caution. Polynomial extrapolation becomes increasingly unreliable the further you project beyond your data. For long-term forecasting, [linear](/blog/linear-extrapolation/) or [logarithmic](/blog/logarithmic-diminishing-returns/) methods are generally safer because they don't diverge as dramatically.
 
 </details>

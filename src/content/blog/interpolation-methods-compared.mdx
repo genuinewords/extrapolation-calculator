@@ -9,11 +9,11 @@ featuredImage: ""
 
 You have a set of known data points, and you need to estimate a value that falls between them. Which interpolation method should you use? Linear is fast and simple. Lagrange polynomial fits every point exactly. Cubic spline gives you the smoothest curve. Each has a sweet spot — and each can mislead you if applied carelessly.
 
-This guide compares three interpolation methods head to head, with worked examples, a decision framework, and practical recommendations. If you're also predicting values *beyond* your data range, see our guide on [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation.mdx/) for that distinction.
+This guide compares three interpolation methods head to head, with worked examples, a decision framework, and practical recommendations. If you're also predicting values *beyond* your data range, see our guide on [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation/) for that distinction.
 
 ## What Is Interpolation?
 
-Interpolation estimates unknown values within the range of known data points. Unlike [extrapolation](/blog/what-is-extrapolation.mdx/) methods that project beyond observed data, interpolation is bounded — your estimate is always surrounded by real measurements on both sides.
+Interpolation estimates unknown values within the range of known data points. Unlike [extrapolation](/blog/what-is-extrapolation/) methods that project beyond observed data, interpolation is bounded — your estimate is always surrounded by real measurements on both sides.
 
 This constraint makes interpolation inherently more reliable. The estimated value is constrained by the data, which is why engineers, scientists, and analysts reach for interpolation whenever the target point falls inside their dataset.
 
@@ -90,7 +90,7 @@ Cubic spline cannot extrapolate — it only works within the data range. If your
 
 Spline computation is also more expensive than linear interpolation. For very large datasets (thousands of points), the tridiagonal system solve adds overhead, though it's still efficient compared to high-degree polynomials.
 
-For understanding model fit quality across methods, our guide to [R² scores](/blog/r-squared-confidence.mdx/) explains how to evaluate whether your chosen method actually matches your data's pattern.
+For understanding model fit quality across methods, our guide to [R² scores](/blog/r-squared-confidence/) explains how to evaluate whether your chosen method actually matches your data's pattern.
 
 ## Head-to-Head Comparison
 
@@ -133,8 +133,8 @@ Use this decision framework:
 2. **Do you have 5 or fewer points and need an exact fit?** Use Lagrange polynomial
 3. **Do you need a smooth curve through many points?** Use cubic spline
 4. **Are you working with physical or engineering data?** Use cubic spline — real systems are smooth
-5. **Do you need to predict beyond the data range?** None of these methods are safe for that — use our [free extrapolation calculator](https://www.extrapolationcalculator.com/) instead, which offers [linear](/blog/linear-extrapolation.mdx/), [exponential](/blog/exponential-growth.mdx/), and [logarithmic](/blog/logarithmic-diminishing-returns.mdx/) extrapolation methods
-6. **Are you comparing model types?** Our guide on [polynomial vs linear methods](/blog/polynomial-vs-linear.mdx/) covers the tradeoffs in detail
+5. **Do you need to predict beyond the data range?** None of these methods are safe for that — use our [free extrapolation calculator](https://www.extrapolationcalculator.com/) instead, which offers [linear](/blog/linear-extrapolation/), [exponential](/blog/exponential-growth/), and [logarithmic](/blog/logarithmic-diminishing-returns/) extrapolation methods
+6. **Are you comparing model types?** Our guide on [polynomial vs linear methods](/blog/polynomial-vs-linear/) covers the tradeoffs in detail
 
 ## Practical Tips
 

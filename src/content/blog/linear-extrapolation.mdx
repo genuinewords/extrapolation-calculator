@@ -13,7 +13,7 @@ Linear extrapolation is one of the simplest and most widely used methods for pre
 
 At its core, linear extrapolation assumes that the relationship between two variables continues at the same constant rate beyond the data you have already observed. If a quantity has been increasing by roughly five units per time step, linear extrapolation predicts that it will keep increasing by five units per time step into the future. This stands in contrast to more flexible methods that allow the rate of change itself to change — for instance, accelerating growth or decelerating returns — which linear extrapolation deliberately ignores.
 
-This makes linear extrapolation fundamentally different from [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation.mdx/), where the goal is to fill in values *between* known data points rather than beyond them. Interpolation operates within the safety of observed boundaries, while [extrapolation](/blog/what-is-extrapolation.mdx/) ventures outside the boundary of observed data, which inherently carries more uncertainty and demands greater caution in interpretation. The distinction matters: an interpolated value is supported by data on both sides, whereas an extrapolated value has data only on one side, leaving it exposed to the risk that the underlying trend has shifted.
+This makes linear extrapolation fundamentally different from [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation/), where the goal is to fill in values *between* known data points rather than beyond them. Interpolation operates within the safety of observed boundaries, while [extrapolation](/blog/what-is-extrapolation/) ventures outside the boundary of observed data, which inherently carries more uncertainty and demands greater caution in interpretation. The distinction matters: an interpolated value is supported by data on both sides, whereas an extrapolated value has data only on one side, leaving it exposed to the risk that the underlying trend has shifted.
 
 The linear variant specifically insists on a straight-line projection rather than a curve, making it the most conservative and easily understood form of extrapolation available. While more complex methods exist — and we will discuss them later — the linear approach gives you a baseline that is hard to beat in terms of transparency and ease of communication to non-technical stakeholders. When you tell a client that revenue has been growing by about $25,000 per year and you expect that to continue, the logic is immediately clear. No one needs to understand exponential functions or polynomial coefficients to grasp the projection.
 
@@ -30,9 +30,9 @@ It is also the right choice when the phenomenon you are modeling is fundamentall
 
 ### When Linear Extrapolation Fails
 
-Linear extrapolation breaks down whenever the underlying process accelerates, decelerates, or reverses direction. Predicting compound interest with a straight line will dramatically underestimate growth over long periods. Estimating bacterial colony size with a linear model ignores the exponential explosion that occurs during the log phase of growth. In these cases, [exponential extrapolation](/blog/exponential-growth.mdx/) or [logarithmic extrapolation](/blog/logarithmic-diminishing-returns.mdx/) will capture the trend far more effectively than a straight line ever could.
+Linear extrapolation breaks down whenever the underlying process accelerates, decelerates, or reverses direction. Predicting compound interest with a straight line will dramatically underestimate growth over long periods. Estimating bacterial colony size with a linear model ignores the exponential explosion that occurs during the log phase of growth. In these cases, [exponential extrapolation](/blog/exponential-growth/) or [logarithmic extrapolation](/blog/logarithmic-diminishing-returns/) will capture the trend far more effectively than a straight line ever could.
 
-Similarly, if your data follows a U-shaped or oscillating pattern — think seasonal sales cycles, diurnal temperature variations, or economic business cycles — a straight line will miss the structure entirely. [Polynomial extrapolation](/blog/polynomial-vs-linear.mdx/) can fit curves that linear models cannot, though it introduces its own risks at the extrapolation boundary.
+Similarly, if your data follows a U-shaped or oscillating pattern — think seasonal sales cycles, diurnal temperature variations, or economic business cycles — a straight line will miss the structure entirely. [Polynomial extrapolation](/blog/polynomial-vs-linear/) can fit curves that linear models cannot, though it introduces its own risks at the extrapolation boundary.
 
 The worst outcomes occur when analysts treat a linear projection as a guaranteed forecast rather than a conditional estimate. No extrapolation method can predict structural breaks — moments when the underlying process changes fundamentally, such as a market disruption, a policy shift, or a technological leap. Linear extrapolation is particularly vulnerable to these breaks because it offers no mechanism to detect or adapt to them.
 
@@ -144,21 +144,21 @@ Linear extrapolation is not the only option available. Understanding when it out
 
 ### Linear vs. Exponential Extrapolation
 
-[Exponential extrapolation](/blog/exponential-growth.mdx/) fits a curve of the form y = a·eᵏˣ, capturing situations where growth accelerates over time. If revenue in our example had been growing by a fixed percentage rather than a fixed dollar amount — say 15% year over year — then exponential extrapolation would produce more accurate long-range predictions because each year's increase builds on a larger base.
+[Exponential extrapolation](/blog/exponential-growth/) fits a curve of the form y = a·eᵏˣ, capturing situations where growth accelerates over time. If revenue in our example had been growing by a fixed percentage rather than a fixed dollar amount — say 15% year over year — then exponential extrapolation would produce more accurate long-range predictions because each year's increase builds on a larger base.
 
 However, when the rate of change is genuinely constant in absolute terms, exponential extrapolation overfits the data and produces increasingly unrealistic projections that grow without bound. A linear model is more honest about what the data actually supports in this scenario. The key question is whether growth is additive (linear) or multiplicative (exponential), and this depends on the underlying mechanism generating the data.
 
 ### Linear vs. Logarithmic Extrapolation
 
-[Logarithmic extrapolation](/blog/logarithmic-diminishing-returns.mdx/) models diminishing returns — situations where each additional unit of input produces a smaller increment in output. If you are studying the effect of advertising spend on conversions, a logarithmic model often reflects reality better than a linear one, because the marginal impact of each additional dollar tends to shrink as spending increases.
+[Logarithmic extrapolation](/blog/logarithmic-diminishing-returns/) models diminishing returns — situations where each additional unit of input produces a smaller increment in output. If you are studying the effect of advertising spend on conversions, a logarithmic model often reflects reality better than a linear one, because the marginal impact of each additional dollar tends to shrink as spending increases.
 
 Linear extrapolation fails here because it assumes the same return per unit forever, which rarely holds in marketing, education, pharmacology, or any domain subject to saturation effects. The first dollar of ad spend may bring ten new customers, but the thousandth dollar might only bring one. A straight line cannot capture this deceleration.
 
 ### Linear vs. Polynomial Extrapolation
 
-[Polynomial extrapolation](/blog/polynomial-vs-linear.mdx/) can fit curves of arbitrary flexibility by increasing the polynomial degree. A quadratic model captures a single bend, a cubic model captures two bends, and so on. The danger is overfitting: a high-degree polynomial can pass through every data point perfectly yet produce wild, oscillating predictions outside the observed range. This is known as Runge's phenomenon and is a well-studied problem in numerical analysis.
+[Polynomial extrapolation](/blog/polynomial-vs-linear/) can fit curves of arbitrary flexibility by increasing the polynomial degree. A quadratic model captures a single bend, a cubic model captures two bends, and so on. The danger is overfitting: a high-degree polynomial can pass through every data point perfectly yet produce wild, oscillating predictions outside the observed range. This is known as Runge's phenomenon and is a well-studied problem in numerical analysis.
 
-Linear extrapolation is the most resistant to runaway behavior beyond the data boundary because it cannot curve. This conservatism is both its greatest strength and its greatest limitation. It will never produce an absurdly high projection just because the polynomial coefficients happen to amplify, but it will also never capture a genuine curve in the data. For a practical comparison with worked examples, see [polynomial extrapolation vs linear](/blog/polynomial-extrapolation-vs-linear.mdx/).
+Linear extrapolation is the most resistant to runaway behavior beyond the data boundary because it cannot curve. This conservatism is both its greatest strength and its greatest limitation. It will never produce an absurdly high projection just because the polynomial coefficients happen to amplify, but it will also never capture a genuine curve in the data. For a practical comparison with worked examples, see [polynomial extrapolation vs linear](/blog/polynomial-extrapolation-vs-linear/).
 
 ### Using Regression for Robustness
 
@@ -200,7 +200,7 @@ The most frequent and consequential mistake is projecting too far beyond the obs
 
 ### Ignoring Non-Linearity in the Data
 
-Always plot your data before fitting any model. If the scatter plot shows visible curvature — even subtle curvature — a linear model will systematically mispredict, overestimating on one side of the range and underestimating on the other. Consider using [polynomial extrapolation](/blog/polynomial-vs-linear.mdx/) or the [interpolation calculator](/interpolation/) to explore whether a different functional form better captures the trend. The cost of checking is minimal; the cost of ignoring non-linearity can be substantial.
+Always plot your data before fitting any model. If the scatter plot shows visible curvature — even subtle curvature — a linear model will systematically mispredict, overestimating on one side of the range and underestimating on the other. Consider using [polynomial extrapolation](/blog/polynomial-vs-linear/) or the [interpolation calculator](/interpolation/) to explore whether a different functional form better captures the trend. The cost of checking is minimal; the cost of ignoring non-linearity can be substantial.
 
 ### Confusing Precision with Accuracy
 
@@ -228,7 +228,7 @@ For linear extrapolation, an R² below 0.7 is a strong warning sign that the dat
 
 However, R² alone is not sufficient to validate a linear model. A dataset with a slight curve can still produce an R² of 0.95, yet the linear extrapolation will systematically deviate at the extremes. This is why experienced analysts never rely on R² in isolation. Always inspect residual plots for patterns — if residuals show a systematic curve rather than random scatter, the linear model is missing structure that matters for prediction. The residual plot should look like a random cloud of points centered around zero; any funnel shape, curve, or clustering indicates a violation of the linear assumption.
 
-It is also worth noting that R² always increases when you add more parameters to a model, even if those parameters are meaningless. This is why adjusted R² — which penalizes for the number of predictors — is often preferred when comparing models of different complexity. Since linear extrapolation uses only one predictor (x), the raw R² and adjusted R² will be very close, but the distinction becomes important if you ever add additional variables. For a deeper treatment of these metrics and how to interpret them alongside confidence intervals and standard errors, see our guide to [R² and confidence metrics](/blog/r-squared-confidence.mdx/).
+It is also worth noting that R² always increases when you add more parameters to a model, even if those parameters are meaningless. This is why adjusted R² — which penalizes for the number of predictors — is often preferred when comparing models of different complexity. Since linear extrapolation uses only one predictor (x), the raw R² and adjusted R² will be very close, but the distinction becomes important if you ever add additional variables. For a deeper treatment of these metrics and how to interpret them alongside confidence intervals and standard errors, see our guide to [R² and confidence metrics](/blog/r-squared-confidence/).
 
 ## Practical Tips for Reliable Results
 
@@ -254,7 +254,7 @@ Consider moving beyond linear extrapolation when any of the following conditions
 
 - **R² drops below 0.7**: The linear model is capturing less than 70% of the variance, suggesting a fundamentally different relationship between the variables.
 - **Residuals show a systematic pattern**: If the residuals (prediction errors) form a curve rather than appearing as random scatter around zero, a non-linear model will fit better and produce more reliable extrapolations.
-- **Domain knowledge suggests non-linearity**: If you are modeling phenomena like compound growth, saturation, threshold effects, or feedback loops, reach for [exponential extrapolation](/blog/exponential-growth.mdx/), [logarithmic extrapolation](/blog/logarithmic-diminishing-returns.mdx/), or [polynomial extrapolation](/blog/polynomial-vs-linear.mdx/) instead.
+- **Domain knowledge suggests non-linearity**: If you are modeling phenomena like compound growth, saturation, threshold effects, or feedback loops, reach for [exponential extrapolation](/blog/exponential-growth/), [logarithmic extrapolation](/blog/logarithmic-diminishing-returns/), or [polynomial extrapolation](/blog/polynomial-vs-linear/) instead.
 - **The extrapolation range is large**: When you need to project far beyond observed data, a more flexible model — combined with stronger domain justification — is essential to capture behavior that a straight line cannot represent.
 - **Multiple methods disagree sharply**: If linear and exponential projections diverge dramatically for the same target point, it signals that the data does not clearly favor either model, and you should investigate the underlying mechanism before trusting either result.
 
@@ -264,7 +264,7 @@ A practical workflow is to always start with linear extrapolation, evaluate its 
 
 ## Conclusion
 
-Linear extrapolation remains a foundational tool in any analyst's toolkit. Its strengths — simplicity, interpretability, and conservatism — make it the first method to reach for when projecting trends into the future. Its weaknesses — inability to capture curvature and decreasing accuracy with distance from observed data — demand that it be applied thoughtfully and supplemented with fit quality metrics like [R² and confidence metrics](/blog/r-squared-confidence.mdx/).
+Linear extrapolation remains a foundational tool in any analyst's toolkit. Its strengths — simplicity, interpretability, and conservatism — make it the first method to reach for when projecting trends into the future. Its weaknesses — inability to capture curvature and decreasing accuracy with distance from observed data — demand that it be applied thoughtfully and supplemented with fit quality metrics like [R² and confidence metrics](/blog/r-squared-confidence/).
 
 The key insight is knowing when linear extrapolation is the right tool and when it is time to switch to something more flexible. By visualizing your data, evaluating R², comparing methods, checking residuals, and respecting the limits of your observed range, you can extract reliable insights from linear extrapolation while avoiding its most common and costly pitfalls. Try it yourself with our [extrapolation calculator](/), and when you need more statistical rigor including confidence intervals and hypothesis testing, the [regression calculator](/regression/) provides the full framework for robust, defensible analysis.
 
@@ -280,14 +280,14 @@ Linear extrapolation is most reliable when your data follows a roughly constant 
 <details class="faq-item">
 <summary>What if my data curves — should I still use linear?</summary>
 
-If your data clearly curves, linear extrapolation will underestimate or overestimate depending on the curve direction. Try [polynomial extrapolation](/blog/polynomial-extrapolation-vs-linear.mdx/) or [exponential extrapolation](/blog/exponential-growth.mdx/) instead. Compare R² scores across methods — the highest R² usually indicates the best fit.
+If your data clearly curves, linear extrapolation will underestimate or overestimate depending on the curve direction. Try [polynomial extrapolation](/blog/polynomial-extrapolation-vs-linear/) or [exponential extrapolation](/blog/exponential-growth/) instead. Compare R² scores across methods — the highest R² usually indicates the best fit.
 
 </details>
 
 <details class="faq-item">
 <summary>How many data points do I need for linear extrapolation?</summary>
 
-Technically, two points define a line. But for reliable results, use at least 5–6 points to confirm the linear trend and reduce the influence of outliers. More points give you a better [R² score](/blog/r-squared-confidence.mdx/) and more confidence in the projection.
+Technically, two points define a line. But for reliable results, use at least 5–6 points to confirm the linear trend and reduce the influence of outliers. More points give you a better [R² score](/blog/r-squared-confidence/) and more confidence in the projection.
 
 </details>
 

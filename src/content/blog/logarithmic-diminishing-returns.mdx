@@ -77,9 +77,9 @@ Let us verify a few points:
 Now let us extrapolate to month 36:
 - y = 1000 + 1400 · ln(36) = 1000 + 1400 · 3.58 ≈ 6,012
 
-A [linear extrapolation](/blog/linear-extrapolation.mdx/) approach would project steady growth based on the average rate, likely predicting something like 6,500–7,000 users by month 36. An [exponential extrapolation](/blog/exponential-growth.mdx/) model would project far more — potentially 8,000 or higher. But the logarithmic model, respecting the deceleration pattern, predicts roughly 6,012, which is the most plausible forecast for a product whose growth is clearly saturating.
+A [linear extrapolation](/blog/linear-extrapolation/) approach would project steady growth based on the average rate, likely predicting something like 6,500–7,000 users by month 36. An [exponential extrapolation](/blog/exponential-growth/) model would project far more — potentially 8,000 or higher. But the logarithmic model, respecting the deceleration pattern, predicts roughly 6,012, which is the most plausible forecast for a product whose growth is clearly saturating.
 
-You can replicate this analysis yourself by entering the data into the [extrapolation calculator](/) and selecting the logarithmic model to see the fitted curve and projected values. For a spreadsheet-based workflow, our guide on [how to extrapolate data in Excel](/blog/how-to-extrapolate-data-in-excel.mdx/) walks through the process step by step.
+You can replicate this analysis yourself by entering the data into the [extrapolation calculator](/) and selecting the logarithmic model to see the fitted curve and projected values. For a spreadsheet-based workflow, our guide on [how to extrapolate data in Excel](/blog/how-to-extrapolate-data-in-excel/) walks through the process step by step.
 
 ## Real-World Applications
 
@@ -93,7 +93,7 @@ Training programs in corporate settings use logarithmic models to estimate how m
 
 Every product or service with a finite addressable market eventually faces diminishing growth. Social media platforms, smartphone adoption, streaming service subscriptions — all follow an S-curve that begins with rapid uptake and transitions into a long logarithmic tail as the market matures. During that tail phase, logarithmic extrapolation provides the most realistic forecasts.
 
-This concept also connects closely to [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation.mdx/) — interpolation estimates within your observed data range and is generally reliable, but extrapolation into the future always carries uncertainty. Logarithmic models at least anchor that uncertainty in a shape that reflects how saturation works.
+This concept also connects closely to [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation/) — interpolation estimates within your observed data range and is generally reliable, but extrapolation into the future always carries uncertainty. Logarithmic models at least anchor that uncertainty in a shape that reflects how saturation works.
 
 ### Physical Processes
 
@@ -132,9 +132,9 @@ If you are unsure which model fits better, the decision often comes down to exam
 
 Choosing the right extrapolation model is not guesswork. Here is a structured approach:
 
-**1. Plot your data.** Visual inspection is surprisingly effective. If the curve appears to flatten, logarithmic is a strong candidate. If it appears to steepen, consider exponential. If it looks straight, linear may suffice. For curves that change direction, [polynomial vs linear methods](/blog/polynomial-vs-linear.mdx/) may be worth exploring, and our [polynomial extrapolation vs linear comparison](/blog/polynomial-extrapolation-vs-linear.mdx/) provides a focused side-by-side analysis.
+**1. Plot your data.** Visual inspection is surprisingly effective. If the curve appears to flatten, logarithmic is a strong candidate. If it appears to steepen, consider exponential. If it looks straight, linear may suffice. For curves that change direction, [polynomial vs linear methods](/blog/polynomial-vs-linear/) may be worth exploring, and our [polynomial extrapolation vs linear comparison](/blog/polynomial-extrapolation-vs-linear/) provides a focused side-by-side analysis.
 
-**2. Compare fit statistics.** Fit the data using multiple models and compare their [R² score](/blog/r-squared-confidence.mdx/) values. The model with the highest R² captures the most variance in the data. However, do not rely on R² alone — a polynomial model will always have a higher R² than a simpler model on the same data, so you must balance fit quality against model complexity.
+**2. Compare fit statistics.** Fit the data using multiple models and compare their [R² score](/blog/r-squared-confidence/) values. The model with the highest R² captures the most variance in the data. However, do not rely on R² alone — a polynomial model will always have a higher R² than a simpler model on the same data, so you must balance fit quality against model complexity.
 
 **3. Examine residuals.** Plot the residuals (observed minus predicted) for each model. Random, evenly scattered residuals suggest a good fit. Systematic patterns in the residuals — such as consistently positive residuals at high x values — suggest the model is systematically biased in that region.
 
@@ -196,14 +196,14 @@ Logarithmic extrapolation fills a crucial gap in the forecaster's toolkit. It ad
 
 The key to using it effectively is to combine statistical evidence (high R², well-behaved residuals) with domain understanding (a plausible mechanism for diminishing returns). When both lines of evidence agree, logarithmic extrapolation produces forecasts that are not just numerically plausible but genuinely informative.
 
-Start by entering your data into the [extrapolation calculator](/), compare the logarithmic fit against linear and exponential alternatives, and let the [R² score](/blog/r-squared-confidence.mdx/) guide your model selection. Supplement the numbers with your understanding of the underlying process, and you will be well equipped to make reliable forecasts in any domain where progress slows but does not stop.
+Start by entering your data into the [extrapolation calculator](/), compare the logarithmic fit against linear and exponential alternatives, and let the [R² score](/blog/r-squared-confidence/) guide your model selection. Supplement the numbers with your understanding of the underlying process, and you will be well equipped to make reliable forecasts in any domain where progress slows but does not stop.
 
 ## Frequently Asked Questions
 
 <details class="faq-item">
 <summary>When should I use logarithmic extrapolation?</summary>
 
-Use logarithmic extrapolation when your data shows growth that is clearly decelerating — each additional unit of input produces a smaller increase in output. This pattern appears in learning curves, market saturation, skill acquisition, and many physical processes. If growth is accelerating, use [exponential extrapolation](/blog/exponential-growth.mdx/) instead.
+Use logarithmic extrapolation when your data shows growth that is clearly decelerating — each additional unit of input produces a smaller increase in output. This pattern appears in learning curves, market saturation, skill acquisition, and many physical processes. If growth is accelerating, use [exponential extrapolation](/blog/exponential-growth/) instead.
 
 </details>
 
@@ -224,6 +224,6 @@ Yes, which is one of its strengths. Because it models decelerating growth, logar
 <details class="faq-item">
 <summary>How do I know if my data follows a logarithmic pattern?</summary>
 
-Plot your data. If the curve rises quickly at first and then flattens out, logarithmic is a good candidate. Compare R² scores between logarithmic and [linear extrapolation](/blog/linear-extrapolation.mdx/) — if logarithmic has a significantly higher R², the diminishing-returns pattern is real.
+Plot your data. If the curve rises quickly at first and then flattens out, logarithmic is a good candidate. Compare R² scores between logarithmic and [linear extrapolation](/blog/linear-extrapolation/) — if logarithmic has a significantly higher R², the diminishing-returns pattern is real.
 
 </details>

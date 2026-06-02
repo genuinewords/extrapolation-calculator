@@ -54,7 +54,7 @@ const currentPath = currentPage > 1 ? `/blog/${currentPage}/` : '/blog/';
               </span>
             )}
             <h2 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
-              <a href={`/blog/${post.id}/`} class="hover:text-primary transition-colors">
+              <a href={`/blog/${post.id.replace(/\.mdx$/, '')}/`} class="hover:text-primary transition-colors">
                 {post.data.title}
               </a>
             </h2>

@@ -33,7 +33,7 @@ const totalPages = Math.max(1, Math.ceil(sortedPosts.length / POSTS_PER_PAGE));
               </span>
             )}
             <h2 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
-              <a href={`/blog/${post.id}/`} class="hover:text-primary transition-colors">
+              <a href={`/blog/${post.id.replace(/\.mdx$/, '')}/`} class="hover:text-primary transition-colors">
                 {post.data.title}
               </a>
             </h2>

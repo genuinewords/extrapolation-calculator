@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map((post) => ({
-    params: { slug: post.id },
+    params: { slug: post.id.replace(/\.mdx$/, '') },
     props: { post },
   }));
 }
@@ -13,13 +13,14 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 const locale = 'en';
+const slug = post.id.replace(/\.mdx$/, '');
 ---
 
 <BlogLayout
   locale={locale}
   title={post.data.title}
   description={post.data.description}
-  currentPath={`/blog/${post.id}/`}
+  currentPath={`/blog/${slug}/`}
   publishDate={post.data.publishDate}
   author={post.data.author}
   category={post.data.category}

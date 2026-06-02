@@ -9,7 +9,7 @@ featuredImage: ""
 
 Exponential growth is one of the most powerful — and most dangerous — patterns in mathematics. Unlike steady, additive growth where things increase by a fixed amount each step, exponential growth means things increase by a fixed *percentage* each step. The result is a curve that starts deceptively slow and then rockets upward with breathtaking speed. If you have ever watched a savings account grow through compound interest, seen a viral video rack up views, or tracked the early spread of a pandemic, you have witnessed exponential growth in action.
 
-This article dives deep into exponential extrapolation: what it is, how the math works, when to use it, and — critically — when to be skeptical of it. If you are new to the concept, our beginner-friendly guide on [what is extrapolation](/blog/what-is-extrapolation.mdx/) covers the fundamentals. We will walk through the underlying model, see how calculators actually fit these curves to data, explore a fully worked example, and discuss real-world applications from biology, finance, epidemiology, and technology. By the end, you will know how to use exponential extrapolation responsibly and how to recognize the warning signs when it is leading you astray.
+This article dives deep into exponential extrapolation: what it is, how the math works, when to use it, and — critically — when to be skeptical of it. If you are new to the concept, our beginner-friendly guide on [what is extrapolation](/blog/what-is-extrapolation/) covers the fundamentals. We will walk through the underlying model, see how calculators actually fit these curves to data, explore a fully worked example, and discuss real-world applications from biology, finance, epidemiology, and technology. By the end, you will know how to use exponential extrapolation responsibly and how to recognize the warning signs when it is leading you astray.
 
 ## What Is Exponential Growth?
 
@@ -147,7 +147,7 @@ Consider a few cautionary examples:
 
 The core problem is that exponential models assume the growth rate **b** remains constant forever. In reality, growth rates change. They slow as markets saturate, as resources deplete, as competition increases, and as negative feedback loops engage. A responsible forecaster always asks: "What would cause the growth rate to change?"
 
-This is also why understanding the distinction between [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation.mdx/) is so important. Interpolation — estimating values *between* known data points — is generally safer because the model is constrained by data on both sides. Extrapolation — estimating values *beyond* the data — has no such guardrails, and the further you extrapolate, the more likely the model is to diverge from reality.
+This is also why understanding the distinction between [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation/) is so important. Interpolation — estimating values *between* known data points — is generally safer because the model is constrained by data on both sides. Extrapolation — estimating values *beyond* the data — has no such guardrails, and the further you extrapolate, the more likely the model is to diverge from reality.
 
 ## Comparison with Linear and Logarithmic Methods
 
@@ -155,13 +155,13 @@ Exponential growth is not the only pattern your data might follow. Choosing the 
 
 ### Linear Extrapolation
 
-[Linear extrapolation](/blog/linear-extrapolation.mdx/) assumes a constant rate of change: **y = a + bx**. Each unit increase in x adds the same absolute amount to y. This is appropriate when the growth is additive rather than multiplicative — for example, predicting monthly salary expenses when headcount grows at a steady rate, or projecting fuel consumption at a constant rate per mile.
+[Linear extrapolation](/blog/linear-extrapolation/) assumes a constant rate of change: **y = a + bx**. Each unit increase in x adds the same absolute amount to y. This is appropriate when the growth is additive rather than multiplicative — for example, predicting monthly salary expenses when headcount grows at a steady rate, or projecting fuel consumption at a constant rate per mile.
 
 Linear models are safer for long-range extrapolation because they do not accelerate, but they will systematically underpredict if the true process is exponential.
 
 ### Logarithmic Extrapolation
 
-[Logarithmic extrapolation](/blog/logarithmic-diminishing-returns.mdx/) assumes diminishing returns: growth that is rapid at first but progressively slows. The model is **y = a + b · ln(x)**. This is appropriate when early gains are large but each additional unit of input yields less and less output — for example, the effect of study hours on test scores, or the yield of farmland as more fertilizer is applied.
+[Logarithmic extrapolation](/blog/logarithmic-diminishing-returns/) assumes diminishing returns: growth that is rapid at first but progressively slows. The model is **y = a + b · ln(x)**. This is appropriate when early gains are large but each additional unit of input yields less and less output — for example, the effect of study hours on test scores, or the yield of farmland as more fertilizer is applied.
 
 Logarithmic models are the mirror image of exponential ones: where exponential curves accelerate, logarithmic curves decelerate. Using a logarithmic model when the true process is exponential will severely underpredict future values.
 
@@ -178,7 +178,7 @@ Avoid exponential extrapolation when:
 - The data contains zero or negative values
 - You are projecting far beyond the range of your data
 
-For a deeper comparison of curve-fitting approaches, see our discussion of [polynomial vs linear methods](/blog/polynomial-vs-linear.mdx/). For the ML perspective on why models struggle beyond their training range, see [extrapolation in machine learning](/blog/extrapolation-machine-learning.mdx/).
+For a deeper comparison of curve-fitting approaches, see our discussion of [polynomial vs linear methods](/blog/polynomial-vs-linear/). For the ML perspective on why models struggle beyond their training range, see [extrapolation in machine learning](/blog/extrapolation-machine-learning/).
 
 ## Evaluating Fit Using R²
 
@@ -198,7 +198,7 @@ A few practical tips for interpreting R²:
 - **R² between 0.70 and 0.90** is moderate. The exponential trend is present but there is substantial noise or deviation.
 - **R² below 0.70** is weak. Consider whether a different model (linear, logarithmic, or polynomial) might fit better.
 
-You should also look at **residual plots** — the difference between each observed value and the model's prediction. If the residuals show a systematic pattern (for example, they are all negative at low x and positive at high x), the exponential model may not be the right choice even if R² appears acceptable. Our article on [R² and confidence](/blog/r-squared-confidence.mdx/) goes into more detail on how to interpret these statistics and build confidence intervals around your projections.
+You should also look at **residual plots** — the difference between each observed value and the model's prediction. If the residuals show a systematic pattern (for example, they are all negative at low x and positive at high x), the exponential model may not be the right choice even if R² appears acceptable. Our article on [R² and confidence](/blog/r-squared-confidence/) goes into more detail on how to interpret these statistics and build confidence intervals around your projections.
 
 When comparing models, prefer the simplest model that achieves an adequate fit. If a linear model gives R² = 0.92 and an exponential model gives R² = 0.93, the linear model is likely the better choice — it is simpler, easier to interpret, and less prone to producing wild extrapolations.
 
@@ -267,7 +267,7 @@ Whether you are projecting population growth, forecasting investment returns, or
 <details class="faq-item">
 <summary>When should I use exponential extrapolation?</summary>
 
-Use exponential extrapolation when your data shows accelerating growth — each period's increase is larger than the last. Common examples include viral content spread, compound interest, and early-stage population growth. If the growth rate is roughly constant, [linear extrapolation](/blog/linear-extrapolation.mdx/) is more appropriate.
+Use exponential extrapolation when your data shows accelerating growth — each period's increase is larger than the last. Common examples include viral content spread, compound interest, and early-stage population growth. If the growth rate is roughly constant, [linear extrapolation](/blog/linear-extrapolation/) is more appropriate.
 
 </details>
 
@@ -288,6 +288,6 @@ Exponential models require positive y-values because the logarithmic transformat
 <details class="faq-item">
 <summary>How does exponential differ from logarithmic extrapolation?</summary>
 
-Exponential extrapolation models accelerating growth that curves upward, while [logarithmic extrapolation](/blog/logarithmic-diminishing-returns.mdx/) models decelerating growth that flattens out. Choose exponential when growth is speeding up and logarithmic when gains are slowing down.
+Exponential extrapolation models accelerating growth that curves upward, while [logarithmic extrapolation](/blog/logarithmic-diminishing-returns/) models decelerating growth that flattens out. Choose exponential when growth is speeding up and logarithmic when gains are slowing down.
 
 </details>

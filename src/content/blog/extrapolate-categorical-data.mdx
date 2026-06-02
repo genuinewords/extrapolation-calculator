@@ -23,7 +23,7 @@ Common examples include:
 - **Yes/No responses** (survey answers, subscription status)
 - **Blood type** (A, B, AB, O)
 
-Unlike numerical data, categorical values have no natural ordering or distance. "Electronics" is not greater than "Clothing" the way 50 is greater than 30. This distinction is what makes extrapolation for categorical variables so different from [linear extrapolation](/blog/linear-extrapolation.mdx/) on numbers.
+Unlike numerical data, categorical values have no natural ordering or distance. "Electronics" is not greater than "Clothing" the way 50 is greater than 30. This distinction is what makes extrapolation for categorical variables so different from [linear extrapolation](/blog/linear-extrapolation/) on numbers.
 
 ## What Does Extrapolation Mean for Categorical Data?
 
@@ -31,7 +31,7 @@ Traditional extrapolation works on numerical patterns — you fit a line or curv
 
 For example, predicting whether next month's top-selling product will be "Electronics" or "Clothing" is forecasting categorical outcomes. You're answering a classification question, not computing a point on a trend line.
 
-This distinction matters because the math behind numerical extrapolation — slopes, intercepts, [R² scores](/blog/r-squared-confidence.mdx/) — doesn't directly apply. Instead, categorical data extrapolation relies on probability models and classification algorithms that estimate the likelihood of each possible category at a future point.
+This distinction matters because the math behind numerical extrapolation — slopes, intercepts, [R² scores](/blog/r-squared-confidence/) — doesn't directly apply. Instead, categorical data extrapolation relies on probability models and classification algorithms that estimate the likelihood of each possible category at a future point.
 
 ## Methods to Extrapolate Categorical Data
 
@@ -61,13 +61,13 @@ Machine learning classifiers — including Random Forest, XGBoost, and k-Nearest
 | XGBoost | High accuracy needs | Yes |
 | k-NN | Small datasets with clear clusters | Yes |
 
-These models are not "extrapolation" in the classical sense, but they serve the same purpose: predicting beyond the data you've already observed. For more on why predicting beyond observed data is inherently challenging, see our guide to [extrapolation in machine learning](/blog/extrapolation-machine-learning.mdx/).
+These models are not "extrapolation" in the classical sense, but they serve the same purpose: predicting beyond the data you've already observed. For more on why predicting beyond observed data is inherently challenging, see our guide to [extrapolation in machine learning](/blog/extrapolation-machine-learning/).
 
 ### Markov Chains
 
 For **sequential categorical data**, Markov chains model the probability of transitioning from one category to another. If you know a user's current product choice, a Markov chain can predict their next one based on observed transition patterns.
 
-This approach works well for customer journey prediction and state changes in systems. The [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation.mdx/) distinction still applies — Markov chains extrapolate when you project multiple steps beyond observed transitions.
+This approach works well for customer journey prediction and state changes in systems. The [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation/) distinction still applies — Markov chains extrapolate when you project multiple steps beyond observed transitions.
 
 ### Naive Bayes
 
@@ -102,13 +102,13 @@ Here's where terminology gets confusing. Predicting categories is technically **
 
 But the *goal* is the same: predicting beyond what you've already seen. When someone asks "can you extrapolate non-numeric data?", they're really asking "can you predict future categories?" — and the answer is yes, using classification models rather than trend-line methods.
 
-The distinction matters for choosing tools. Numerical extrapolation uses curve fitting and trend projection. Categorical prediction uses probability models and classifiers. Understanding this difference prevents you from applying the wrong technique, as we discuss in our guide on [polynomial vs linear methods](/blog/polynomial-vs-linear.mdx/).
+The distinction matters for choosing tools. Numerical extrapolation uses curve fitting and trend projection. Categorical prediction uses probability models and classifiers. Understanding this difference prevents you from applying the wrong technique, as we discuss in our guide on [polynomial vs linear methods](/blog/polynomial-vs-linear/).
 
 ## When Should You Use a Calculator?
 
 Traditional extrapolation calculators like the [extrapolation calculator](https://www.extrapolationcalculator.com/) are designed for numerical data. They fit curves through numeric points and project forward. If your data is numbers with a clear trend, these calculators give you fast, reliable results. For estimating values within your existing data range rather than beyond it, the [interpolation calculator](/interpolation/) supports linear, Lagrange, and cubic spline methods on numerical datasets.
 
-For categorical data forecasting, you'll typically need statistical software: Python (scikit-learn), R, or Excel add-ins that support logistic regression and classification. For numerical extrapolation in a spreadsheet, our guide on [how to extrapolate data in Excel](/blog/how-to-extrapolate-data-in-excel.mdx/) covers the workflow in detail. The methods that handle categorical outcomes are more complex than a simple curve fit.
+For categorical data forecasting, you'll typically need statistical software: Python (scikit-learn), R, or Excel add-ins that support logistic regression and classification. For numerical extrapolation in a spreadsheet, our guide on [how to extrapolate data in Excel](/blog/how-to-extrapolate-data-in-excel/) covers the workflow in detail. The methods that handle categorical outcomes are more complex than a simple curve fit.
 
 ## Conclusion
 

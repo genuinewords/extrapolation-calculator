@@ -9,7 +9,7 @@ featuredImage: ""
 
 ## Introduction
 
-Choosing the wrong extrapolation method can turn a promising forecast into an expensive mistake. Polynomial extrapolation vs linear is one of the most common dilemmas analysts face when projecting trends beyond their data. If you are new to the concept, see our beginner guide on [what is extrapolation](/blog/what-is-extrapolation.mdx/) first. Both methods are widely used, but each is built for a fundamentally different type of data pattern. Use the wrong one and you will either flatten out real growth or send predictions spiraling out of control. This article breaks down how each method works, compares them side by side, and shows you exactly when to reach for one over the other.
+Choosing the wrong extrapolation method can turn a promising forecast into an expensive mistake. Polynomial extrapolation vs linear is one of the most common dilemmas analysts face when projecting trends beyond their data. If you are new to the concept, see our beginner guide on [what is extrapolation](/blog/what-is-extrapolation/) first. Both methods are widely used, but each is built for a fundamentally different type of data pattern. Use the wrong one and you will either flatten out real growth or send predictions spiraling out of control. This article breaks down how each method works, compares them side by side, and shows you exactly when to reach for one over the other.
 
 ## What is Linear Extrapolation?
 
@@ -17,7 +17,7 @@ Linear extrapolation extends an existing straight-line trend into the future. It
 
 Imagine a business whose sales increase by roughly $1,000 every month. If January brought in $5,000 and February brought in $6,000, linear extrapolation predicts March at $7,000, April at $8,000, and so on. The line simply keeps climbing at that same steady pace.
 
-Linear extrapolation works best when your data follows a stable, steady trend with no signs of curving upward or downward. It is the simplest method available and, for short-term forecasts on consistent data, it is often the most reliable choice. For a deeper dive into the mechanics, check out our [linear extrapolation guide](/blog/linear-extrapolation.mdx/).
+Linear extrapolation works best when your data follows a stable, steady trend with no signs of curving upward or downward. It is the simplest method available and, for short-term forecasts on consistent data, it is often the most reliable choice. For a deeper dive into the mechanics, check out our [linear extrapolation guide](/blog/linear-extrapolation/).
 
 ## What is Polynomial Extrapolation?
 
@@ -25,7 +25,7 @@ Polynomial extrapolation extends a curved trend by fitting a polynomial equation
 
 Consider a startup whose user growth starts slow but accelerates each quarter. A straight line would underestimate that momentum, but a polynomial curve bends to match the increasing rate of change. That makes polynomial extrapolation especially useful for nonlinear forecasting scenarios where trends clearly curve.
 
-The trade-off is complexity. Higher-degree polynomials fit historical data more closely, but they can behave erratically beyond the data range. Still, when your data clearly curves and linear methods fall short, polynomial extrapolation delivers a more realistic projection. Learn more about the broader [polynomial vs linear methods](/blog/polynomial-vs-linear.mdx/) on our blog.
+The trade-off is complexity. Higher-degree polynomials fit historical data more closely, but they can behave erratically beyond the data range. Still, when your data clearly curves and linear methods fall short, polynomial extrapolation delivers a more realistic projection. Learn more about the broader [polynomial vs linear methods](/blog/polynomial-vs-linear/) on our blog.
 
 ## Side-by-Side Comparison
 
@@ -60,7 +60,7 @@ The trade-off is complexity. Higher-degree polynomials fit historical data more 
 3. Are you projecting far beyond your data? → Stick with linear or a low-degree polynomial to limit risk.
 4. Do you have fewer than six points? → Use linear regardless of appearance.
 
-Choosing the right extrapolation methods comes down to matching the math to the shape of your data. For more on the conceptual foundations, see our post on [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation.mdx/).
+Choosing the right extrapolation methods comes down to matching the math to the shape of your data. For more on the conceptual foundations, see our post on [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation/).
 
 ## A Practical Example
 
@@ -89,19 +89,19 @@ The quarter-over-quarter increases are $5K, $7K, $9K, and $11K — each jump gro
 | Q6 | $50K | $55K |
 | Q7 | $58K | $70K |
 
-The linear model underestimates future revenue because it cannot account for the acceleration. The polynomial model reflects the growing momentum and produces higher — and likely more accurate — forecasts. That said, the polynomial prediction for Q7 jumps sharply to $70K, which illustrates how quickly curved models can escalate. You can check model fit using the [R² score](/blog/r-squared-confidence.mdx/) to see which method better explains your data.
+The linear model underestimates future revenue because it cannot account for the acceleration. The polynomial model reflects the growing momentum and produces higher — and likely more accurate — forecasts. That said, the polynomial prediction for Q7 jumps sharply to $70K, which illustrates how quickly curved models can escalate. You can check model fit using the [R² score](/blog/r-squared-confidence/) to see which method better explains your data.
 
 ## Risks and Limitations
 
 No extrapolation method is foolproof. Linear extrapolation misses curvature entirely, so it will systematically underestimate accelerating trends and overestimate decelerating ones. If your data even slightly curves, a linear projection will drift further from reality with each step.
 
-Polynomial extrapolation carries the opposite risk. Higher-degree polynomials can fit historical data beautifully but then explode in unexpected directions once you step beyond the observed range. This instability, related to Runge's phenomenon, makes long-term polynomial forecasts unreliable. Small changes in the input data can also produce dramatically different curves. These challenges mirror the broader problem of [extrapolation in machine learning](/blog/extrapolation-machine-learning.mdx/), where models also struggle to make reliable predictions outside their training range.
+Polynomial extrapolation carries the opposite risk. Higher-degree polynomials can fit historical data beautifully but then explode in unexpected directions once you step beyond the observed range. This instability, related to Runge's phenomenon, makes long-term polynomial forecasts unreliable. Small changes in the input data can also produce dramatically different curves. These challenges mirror the broader problem of [extrapolation in machine learning](/blog/extrapolation-machine-learning/), where models also struggle to make reliable predictions outside their training range.
 
-Both methods depend heavily on data quality. Outliers, measurement errors, and missing points can distort a linear slope or bend a polynomial in the wrong direction. In the polynomial vs linear extrapolation debate, the safest approach is to use the simplest method that fits your data well and never project too far into the unknown. For data that grows exponentially rather than polynomially, see our guide on [exponential extrapolation](/blog/exponential-growth.mdx/).
+Both methods depend heavily on data quality. Outliers, measurement errors, and missing points can distort a linear slope or bend a polynomial in the wrong direction. In the polynomial vs linear extrapolation debate, the safest approach is to use the simplest method that fits your data well and never project too far into the unknown. For data that grows exponentially rather than polynomially, see our guide on [exponential extrapolation](/blog/exponential-growth/).
 
 ## Tools for Both Methods
 
-You do not need specialized software to get started. Excel can fit linear trends with the SLOPE and INTERCEPT functions, and polynomial trends with the LINEST function — our [how to extrapolate data in Excel](/blog/how-to-extrapolate-data-in-excel.mdx/) guide covers both approaches in detail. Python users can leverage NumPy's polyfit and polyval for polynomial work, while R offers the lm function for both linear and polynomial models. For quick numerical forecasting, the [extrapolation calculator](https://www.extrapolationcalculator.com/) supports both linear and polynomial methods. If you need to fill gaps within your data range first, try the [interpolation calculator](/interpolation/). For modeling the underlying relationship between variables, the [regression calculator](/regression/) provides detailed regression analysis.
+You do not need specialized software to get started. Excel can fit linear trends with the SLOPE and INTERCEPT functions, and polynomial trends with the LINEST function — our [how to extrapolate data in Excel](/blog/how-to-extrapolate-data-in-excel/) guide covers both approaches in detail. Python users can leverage NumPy's polyfit and polyval for polynomial work, while R offers the lm function for both linear and polynomial models. For quick numerical forecasting, the [extrapolation calculator](https://www.extrapolationcalculator.com/) supports both linear and polynomial methods. If you need to fill gaps within your data range first, try the [interpolation calculator](/interpolation/). For modeling the underlying relationship between variables, the [regression calculator](/regression/) provides detailed regression analysis.
 
 ## Conclusion
 
@@ -131,6 +131,6 @@ It can be more accurate for data with genuine curvature, because it captures pat
 <details class="faq-item">
 <summary>Can I use polynomial extrapolation in Excel?</summary>
 
-Yes. Excel's LINEST function can fit polynomial curves by supplying raised powers of x as additional inputs. You can also add a polynomial trendline to a chart and display the equation on the graph. For step-by-step guidance, our [linear extrapolation guide](/blog/linear-extrapolation.mdx/) covers the Excel workflow in detail.
+Yes. Excel's LINEST function can fit polynomial curves by supplying raised powers of x as additional inputs. You can also add a polynomial trendline to a chart and display the equation on the graph. For step-by-step guidance, our [linear extrapolation guide](/blog/linear-extrapolation/) covers the Excel workflow in detail.
 
 </details>

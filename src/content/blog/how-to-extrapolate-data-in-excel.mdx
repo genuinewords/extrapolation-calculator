@@ -9,7 +9,7 @@ featuredImage: ""
 
 Excel is one of the most widely used tools for data forecasting. Whether you're projecting quarterly revenue, estimating next month's inventory needs, or predicting user growth, Excel has built-in functions that make extrapolation accessible to anyone with a spreadsheet.
 
-But knowing how to extrapolate data in Excel requires choosing the right method for your situation. This guide walks you through four approaches — from simple formulas to one-click forecast sheets — so you can pick the one that fits your data and skill level. If you're new to the concept itself, start with our guide on [what is extrapolation](/blog/what-is-extrapolation.mdx/).
+But knowing how to extrapolate data in Excel requires choosing the right method for your situation. This guide walks you through four approaches — from simple formulas to one-click forecast sheets — so you can pick the one that fits your data and skill level. If you're new to the concept itself, start with our guide on [what is extrapolation](/blog/what-is-extrapolation/).
 
 ## Method 1: Using the TREND Function
 
@@ -73,7 +73,7 @@ Using the same sales data, predict revenue for month 12:
 
 The result will be approximately $32,857 — nearly double month 1's value, reflecting the steady upward trend.
 
-FORECAST.LINEAR is the simplest way to get a quick single-value extrapolation. For [linear extrapolation](/blog/linear-extrapolation.mdx/) on stable data, this one formula is often all you need.
+FORECAST.LINEAR is the simplest way to get a quick single-value extrapolation. For [linear extrapolation](/blog/linear-extrapolation/) on stable data, this one formula is often all you need.
 
 ## Method 3: Using a Trendline in a Chart
 
@@ -92,7 +92,7 @@ A trendline adds a visual projection to your Excel chart. You can choose the typ
    - Under **Forecast**, set **Forward** to the number of periods you want to project (e.g., 6 months)
    - Check **Display Equation on chart** and **Display R-squared value** to see the fit quality
 
-The trendline extends beyond your data, showing the projected values visually. The R² value tells you how well the line fits — see our guide to [R² scores](/blog/r-squared-confidence.mdx/) for interpretation.
+The trendline extends beyond your data, showing the projected values visually. The R² value tells you how well the line fits — see our guide to [R² scores](/blog/r-squared-confidence/) for interpretation.
 
 ### When to Use This Method
 
@@ -129,14 +129,14 @@ Forecast Sheet is ideal for business reports where you need both the numbers and
 | Trendline | Visual forecasting | All versions | Easy |
 | Forecast Sheet | Advanced forecast with seasonality | 2016+ | Easiest |
 
-Each method assumes a linear relationship by default, though trendlines and Forecast Sheets support other patterns. For comparing linear vs curved approaches, see our guide on [polynomial vs linear extrapolation](/blog/polynomial-extrapolation-vs-linear.mdx/).
+Each method assumes a linear relationship by default, though trendlines and Forecast Sheets support other patterns. For comparing linear vs curved approaches, see our guide on [polynomial vs linear extrapolation](/blog/polynomial-extrapolation-vs-linear/).
 
 ## Tips & Best Practices
 
 - **Check for outliers first** — a single anomalous data point can pull the trendline far from reality
 - **Use enough historical data** — at least 5–6 data points for a meaningful trend; fewer than that and you're guessing
 - **Validate the trend before extending it** — if your R² is below 0.7, the linear model may not fit well enough for reliable extrapolation
-- **Linear trends work best for stable data** — if your growth is accelerating or decelerating, consider polynomial or [exponential extrapolation](/blog/exponential-growth.mdx/) methods
+- **Linear trends work best for stable data** — if your growth is accelerating or decelerating, consider polynomial or [exponential extrapolation](/blog/exponential-growth/) methods
 - **Don't forecast too far ahead** — the further beyond your data, the less reliable any extrapolation becomes
 
 ## Limitations of Excel Extrapolation

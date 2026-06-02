@@ -67,13 +67,13 @@ This is perhaps the most critical point in this entire discussion. R² measures 
 
 Consider a simple example: suppose you have data showing the growth of a plant over 10 days. The plant grows steadily, and a linear model gives R² = 0.92. Does that mean the plant will continue growing linearly for the next 100 days? Of course not — at some point, growth will plateau due to resource constraints, and the linear model will massively overpredict.
 
-This is why understanding the nature of your data matters as much as the statistical metrics. The distinction between [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation.mdx/) is essential: interpolation estimates within observed bounds (where R² is a good reliability indicator), while extrapolation ventures beyond observed bounds (where R² tells you only that your trend line is consistent with past data, not that it will continue).
+This is why understanding the nature of your data matters as much as the statistical metrics. The distinction between [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation/) is essential: interpolation estimates within observed bounds (where R² is a good reliability indicator), while extrapolation ventures beyond observed bounds (where R² tells you only that your trend line is consistent with past data, not that it will continue).
 
 ### The Polynomial Trap
 
 Polynomial models are particularly deceptive. A higher-degree polynomial will almost always produce a higher R² on the training data, because it has more flexibility to wiggle through every point. But polynomials of high degree tend to diverge dramatically outside the data range. A cubic or quartic model that fits beautifully within your observed range might curve sharply upward or downward the moment you step beyond it, producing nonsensical projections.
 
-This is why understanding [polynomial vs linear methods](/blog/polynomial-vs-linear.mdx/) is so important. Linear models are more constrained and therefore more stable in extrapolation, even if their R² is lower. A lower R² with a physically reasonable model is almost always preferable to a higher R² with a model that has no theoretical justification.
+This is why understanding [polynomial vs linear methods](/blog/polynomial-vs-linear/) is so important. Linear models are more constrained and therefore more stable in extrapolation, even if their R² is lower. A lower R² with a physically reasonable model is almost always preferable to a higher R² with a model that has no theoretical justification.
 
 ## Worked Example: Comparing R² Across Different Methods on the Same Data
 
@@ -99,7 +99,7 @@ You want to project revenue for quarter 8 using different methods. Here are the 
 
 The exponential model has a near-perfect R², and the polynomial has a literally perfect one. But which projection should you trust?
 
-If revenue growth is being driven by compounding network effects, the exponential model may be justified, and the [exponential extrapolation](/blog/exponential-growth.mdx/) projection of 530 could be reasonable. If the business is in a mature market where growth naturally decelerates, the logarithmic model might be more appropriate despite its lower R² — the concept of [logarithmic extrapolation](/blog/logarithmic-diminishing-returns.mdx/) captures diminishing returns that the exponential model ignores. If the growth is driven by steady linear expansion (adding a fixed number of customers per quarter), the linear model is the safest choice.
+If revenue growth is being driven by compounding network effects, the exponential model may be justified, and the [exponential extrapolation](/blog/exponential-growth/) projection of 530 could be reasonable. If the business is in a mature market where growth naturally decelerates, the logarithmic model might be more appropriate despite its lower R² — the concept of [logarithmic extrapolation](/blog/logarithmic-diminishing-returns/) captures diminishing returns that the exponential model ignores. If the growth is driven by steady linear expansion (adding a fixed number of customers per quarter), the linear model is the safest choice.
 
 The polynomial model should be viewed with deep suspicion. Its perfect R² is a mathematical artifact of having enough degrees of freedom to pass through every point, not evidence of genuine understanding. The Q8 projection of 710 is likely an overestimate driven by the polynomial's tendency to swing wildly beyond the training range.
 
@@ -119,7 +119,7 @@ Using R² for model selection requires a more nuanced approach than simply picki
 
 6. **Validate visually.** Look at the plotted trend line alongside your data points. Sometimes a model with a slightly lower R² will visually "look right" while a higher-R² model will show suspicious curvature at the edges.
 
-This approach aligns well with understanding [linear extrapolation](/blog/linear-extrapolation.mdx/) as a baseline: start with the simplest reasonable model and only add complexity when the data and domain knowledge justify it.
+This approach aligns well with understanding [linear extrapolation](/blog/linear-extrapolation/) as a baseline: start with the simplest reasonable model and only add complexity when the data and domain knowledge justify it.
 
 ## Adjusted R² and Why It Matters for Polynomial Degrees
 
@@ -153,7 +153,7 @@ R² measures how well the model fits the observed data, not how accurately it wi
 
 ### Misconception 2: Higher R² Always Means a Better Model
 
-As discussed, a higher R² can result from overfitting rather than genuine explanatory power. A linear model with R² = 0.88 that reflects a real physical relationship is far more valuable for extrapolation than a degree-5 polynomial with R² = 1.00 that merely memorizes the training data. This overfitting problem is especially pronounced in machine learning — see [extrapolation in machine learning](/blog/extrapolation-machine-learning.mdx/) for why ML generalization beyond training data is so challenging.
+As discussed, a higher R² can result from overfitting rather than genuine explanatory power. A linear model with R² = 0.88 that reflects a real physical relationship is far more valuable for extrapolation than a degree-5 polynomial with R² = 1.00 that merely memorizes the training data. This overfitting problem is especially pronounced in machine learning — see [extrapolation in machine learning](/blog/extrapolation-machine-learning/) for why ML generalization beyond training data is so challenging.
 
 ### Misconception 3: R² Below 0.5 is Useless
 
@@ -195,7 +195,7 @@ Putting all of this together, here is a structured framework for using R² and c
 
 **Step 1: Collect and inspect your data.** Before fitting any model, look at your data. Plot it. Identify any obvious patterns, outliers, or structural breaks. Understanding your data's shape will help you choose appropriate methods.
 
-**Step 2: Fit multiple models.** Use the [extrapolation calculator](/) to fit several candidate methods — linear, exponential, logarithmic, and polynomial. Record R², adjusted R², and confidence for each. You can also perform this analysis in a spreadsheet — see our tutorial on [how to extrapolate data in Excel](/blog/how-to-extrapolate-data-in-excel.mdx/) for step-by-step instructions.
+**Step 2: Fit multiple models.** Use the [extrapolation calculator](/) to fit several candidate methods — linear, exponential, logarithmic, and polynomial. Record R², adjusted R², and confidence for each. You can also perform this analysis in a spreadsheet — see our tutorial on [how to extrapolate data in Excel](/blog/how-to-extrapolate-data-in-excel/) for step-by-step instructions.
 
 **Step 3: Eliminate poor fits.** Remove any model with R² below 0.3 or with a large gap between R² and adjusted R² (suggesting overfitting).
 

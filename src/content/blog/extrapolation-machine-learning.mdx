@@ -15,9 +15,9 @@ Machine learning models are impressively good at predicting within the patterns 
 
 Extrapolation in machine learning means predicting target values for inputs that fall outside the range of the training data. If a model is trained on house prices between $100,000 and $500,000, asking it to estimate the price of a $1,000,000 home is an extrapolation task. The model has never seen data in that region, so its prediction is inherently uncertain.
 
-This stands in contrast to interpolation, where predictions are made within the range of observed data points. Interpolation is generally reliable because the model can rely on nearby examples to guide its output. ML [extrapolation](/blog/what-is-extrapolation.mdx/), on the other hand, forces the model into territory where no reference points exist — making it a form of out of distribution prediction that most algorithms are not designed to handle well.
+This stands in contrast to interpolation, where predictions are made within the range of observed data points. Interpolation is generally reliable because the model can rely on nearby examples to guide its output. ML [extrapolation](/blog/what-is-extrapolation/), on the other hand, forces the model into territory where no reference points exist — making it a form of out of distribution prediction that most algorithms are not designed to handle well.
 
-In practice, the boundary between interpolation and extrapolation is not always sharp. Data points may be sparse in certain regions, turning what looks like interpolation into a de facto extrapolation problem. For a deeper look at this boundary, see our guide on [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation.mdx/).
+In practice, the boundary between interpolation and extrapolation is not always sharp. Data points may be sparse in certain regions, turning what looks like interpolation into a de facto extrapolation problem. For a deeper look at this boundary, see our guide on [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation/).
 
 ## Why ML Models Struggle with Extrapolation
 
@@ -27,7 +27,7 @@ The "out of distribution" problem is central here. A model trained on one data d
 
 Extrapolation neural networks face a fundamental limitation: neural networks are essentially high-dimensional interpolators. Their outputs are weighted combinations of training examples, so they tend to produce smooth, averaged predictions outside their training range rather than following true trends. Decision trees and random forests have a different but equally limiting problem — they cannot predict values beyond the range of their leaf nodes. A tree that splits data into leaves with maximum value 500 will never output 501, regardless of the input.
 
-Even ensemble methods and deep architectures inherit these issues. Without explicit mechanisms to handle unseen regions, models default to behaviors that are mathematically safe but practically wrong. Understanding [R² scores](/blog/r-squared-confidence.mdx/) can help quantify how badly a model degrades when pushed outside its training domain.
+Even ensemble methods and deep architectures inherit these issues. Without explicit mechanisms to handle unseen regions, models default to behaviors that are mathematically safe but practically wrong. Understanding [R² scores](/blog/r-squared-confidence/) can help quantify how badly a model degrades when pushed outside its training domain.
 
 ## Methods That Improve Extrapolation in ML
 
@@ -35,7 +35,7 @@ No single method eliminates the extrapolation problem entirely, but several appr
 
 ### Linear Regression
 
-Linear regression is one of the few models that naturally extrapolates. Because it fits a linear function to the data, it extends that function indefinitely in both directions. While this can produce unrealistic predictions if the true relationship is nonlinear, it at least follows a consistent trend rather than flattening out. For simple use cases, [linear extrapolation](/blog/linear-extrapolation.mdx/) remains a practical baseline.
+Linear regression is one of the few models that naturally extrapolates. Because it fits a linear function to the data, it extends that function indefinitely in both directions. While this can produce unrealistic predictions if the true relationship is nonlinear, it at least follows a consistent trend rather than flattening out. For simple use cases, [linear extrapolation](/blog/linear-extrapolation/) remains a practical baseline.
 
 ### Random Forests with Linear Leaves
 
@@ -67,7 +67,7 @@ Extrapolation challenges appear across many industries and research domains.
 
 ## Extrapolation vs Interpolation in ML
 
-Understanding the difference between interpolation and extrapolation is critical for choosing the right model and setting realistic expectations. The table below highlights the key distinctions. For a more detailed comparison, see our article on [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation.mdx/).
+Understanding the difference between interpolation and extrapolation is critical for choosing the right model and setting realistic expectations. The table below highlights the key distinctions. For a more detailed comparison, see our article on [interpolation vs extrapolation](/blog/interpolation-vs-extrapolation/).
 
 | Aspect | Interpolation | Extrapolation |
 |--------|--------------|---------------|
@@ -82,7 +82,7 @@ Interpolation benefits from dense reference points that anchor predictions. Extr
 
 - **Validate on out-of-distribution test sets.** Standard train-test splits keep evaluation within the training distribution. Deliberately hold out data from different ranges or conditions to measure true extrapolation performance.
 - **Use domain knowledge to constrain predictions.** Incorporate known physical laws, monotonic relationships, or boundary conditions into the modeling process. This prevents the model from producing physically impossible results.
-- **Combine ML with traditional statistical methods.** Hybrid approaches that blend learned patterns with principled extrapolation techniques — such as [extrapolation methods](/blog/polynomial-vs-linear.mdx/) drawn from classical statistics — tend to outperform pure ML in out-of-distribution settings. For a focused comparison of the two most common classical methods, see [polynomial extrapolation vs linear](/blog/polynomial-extrapolation-vs-linear.mdx/).
+- **Combine ML with traditional statistical methods.** Hybrid approaches that blend learned patterns with principled extrapolation techniques — such as [extrapolation methods](/blog/polynomial-vs-linear/) drawn from classical statistics — tend to outperform pure ML in out-of-distribution settings. For a focused comparison of the two most common classical methods, see [polynomial extrapolation vs linear](/blog/polynomial-extrapolation-vs-linear/).
 
 ## Tools & Resources
 
