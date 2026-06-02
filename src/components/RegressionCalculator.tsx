@@ -87,7 +87,7 @@ const multiDemoSets: Record<string, { label: string; rows: { x1: string; x2: str
 };
 
 const ui: Record<string, Record<string, string>> = {
-  en: { title: 'Regression Calculator', subtitle: 'Analyze relationships between variables', method: 'Method', predictX: 'Predict at X', predictX1: 'Predict at X₁', predictX2: 'Predict at X₂', calculate: 'Calculate', addPoint: 'Add Point', remove: 'Remove', result: 'Result', equation: 'Equation', rSquared: 'R² Score', predictedValue: 'Predicted Value', steps: 'Steps', dataPoints: 'Data Points', invalid: 'Please enter valid numbers', minPoints: 'At least 2 data points required for simple, 3 for multiple', singularMatrix: 'Singular matrix: variables may be collinear', demoData: 'Demo Data', custom: 'Custom', coefficients: 'Coefficients', loadExample: 'Load Example Data' },
+  en: { title: 'Regression Calculator', subtitle: 'Analyze relationships between variables', method: 'Method', predictX: 'Predict at X', predictX1: 'Predict at X₁', predictX2: 'Predict at X₂', calculate: 'Calculate Now', addPoint: 'Add Point', remove: 'Remove', result: 'Result', equation: 'Equation', rSquared: 'R² Score', predictedValue: 'Predicted Value', steps: 'Steps', dataPoints: 'Data Points', invalid: 'Please enter valid numbers', minPoints: 'At least 2 data points required for simple, 3 for multiple', singularMatrix: 'Singular matrix: variables may be collinear', demoData: 'Demo Data', custom: 'Custom', coefficients: 'Coefficients', loadExample: 'Load Example Data' },
   es: { title: 'Calculadora de Regresión', subtitle: 'Analiza relaciones entre variables', method: 'Método', predictX: 'Predecir en X', predictX1: 'Predecir en X₁', predictX2: 'Predecir en X₂', calculate: 'Calcular', addPoint: 'Agregar Punto', remove: 'Eliminar', result: 'Resultado', equation: 'Ecuación', rSquared: 'Puntuación R²', predictedValue: 'Valor Predicho', steps: 'Pasos', dataPoints: 'Puntos de Datos', invalid: 'Ingrese números válidos', minPoints: 'Al menos 2 puntos para simple, 3 para múltiple', singularMatrix: 'Matriz singular: variables pueden ser colineales', demoData: 'Datos Demo', custom: 'Personalizado', coefficients: 'Coeficientes', loadExample: 'Cargar Datos de Ejemplo' },
   fr: { title: 'Calculateur de Régression', subtitle: 'Analysez les relations entre les variables', method: 'Méthode', predictX: 'Prédire à X', predictX1: 'Prédire à X₁', predictX2: 'Prédire à X₂', calculate: 'Calculer', addPoint: 'Ajouter un Point', remove: 'Supprimer', result: 'Résultat', equation: 'Équation', rSquared: 'Score R²', predictedValue: 'Valeur Prédite', steps: 'Étapes', dataPoints: 'Points de Données', invalid: 'Entrez des nombres valides', minPoints: 'Au moins 2 points pour simple, 3 pour multiple', singularMatrix: 'Matrice singulière: variables colinéaires', demoData: 'Données Démo', custom: 'Personnalisé', coefficients: 'Coefficients', loadExample: 'Charger les Données d\'exemple' },
   de: { title: 'Regressionsrechner', subtitle: 'Analysieren Sie Beziehungen zwischen Variablen', method: 'Methode', predictX: 'Vorhersage bei X', predictX1: 'Vorhersage bei X₁', predictX2: 'Vorhersage bei X₂', calculate: 'Berechnen', addPoint: 'Punkt Hinzufügen', remove: 'Entfernen', result: 'Ergebnis', equation: 'Gleichung', rSquared: 'R²-Wert', predictedValue: 'Vorhergesagter Wert', steps: 'Schritte', dataPoints: 'Datenpunkte', invalid: 'Bitte gültige Zahlen eingeben', minPoints: 'Mindestens 2 Punkte für einfach, 3 für mehrfach', singularMatrix: 'Singuläre Matrix: Variablen kollinear', demoData: 'Demo-Daten', custom: 'Benutzerdefiniert', coefficients: 'Koeffizienten', loadExample: 'Beispieldaten Laden' },
@@ -296,9 +296,9 @@ export default function RegressionCalculator({ locale = 'en', showChart = true }
             </div>
           </div>
 
-          <button onClick={calculateSimple} className="btn-calculate mb-2">
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-            {L('calculate', locale)}
+          <button onClick={calculateSimple} className="w-full py-5 px-10 rounded-2xl font-bold text-xl text-white tracking-wide bg-gradient-to-r from-gold-700 via-gold-500 to-gold-400 shadow-xl shadow-gold-500/30 hover:shadow-2xl hover:shadow-gold-500/50 hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none border border-white/10 dark:border-gold-500/30 mb-2 relative overflow-hidden group">
+            <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-transparent via-white/30 to-transparent" style={{animation: 'shimmer 2s infinite'}} />
+            <span className="relative z-10">{L('calculate', locale)}</span>
           </button>
         </>
       ) : (
@@ -371,9 +371,9 @@ export default function RegressionCalculator({ locale = 'en', showChart = true }
             </div>
           </div>
 
-          <button onClick={calculateMultiple} className="btn-calculate mb-2">
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-            {L('calculate', locale)}
+          <button onClick={calculateMultiple} className="w-full py-5 px-10 rounded-2xl font-bold text-xl text-white tracking-wide bg-gradient-to-r from-gold-700 via-gold-500 to-gold-400 shadow-xl shadow-gold-500/30 hover:shadow-2xl hover:shadow-gold-500/50 hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:outline-none border border-white/10 dark:border-gold-500/30 mb-2 relative overflow-hidden group">
+            <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-transparent via-white/30 to-transparent" style={{animation: 'shimmer 2s infinite'}} />
+            <span className="relative z-10">{L('calculate', locale)}</span>
           </button>
         </>
       )}
