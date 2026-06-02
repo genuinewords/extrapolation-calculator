@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+.goog-te-banner-frame,
+.goog-te-banner-frameSkip,
+body .goog-te-banner-frame {
+  display: none !important;
+}
+body {
+  top: 0 !important;
+}
+
 :root {
   --page-bg: #f8f8fc;
   --section-bg: #f0f0f5;
