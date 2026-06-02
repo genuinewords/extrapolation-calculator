@@ -1,14 +1,19 @@
 ---
+interface Reference {
+  text: string;
+  url?: string;
+}
+
 interface Props {
-  references?: string[];
+  references?: Reference[];
 }
 
 const {
   references = [
-    'Montgomery, D.C., Peck, E.A., & Vining, G.G. (2021). Introduction to Linear Regression Analysis (6th ed.). Wiley.',
-    'Burden, R.L., & Faires, J.D. (2010). Numerical Analysis (9th ed.). Brooks/Cole, Cengage Learning.',
-    'Press, W.H., et al. (2007). Numerical Recipes: The Art of Scientific Computing (3rd ed.). Cambridge University Press.',
-    'Weisstein, E.W. "Least Squares Fitting." From MathWorld — A Wolfram Web Resource.',
+    { text: 'Montgomery, D.C., Peck, E.A., & Vining, G.G. (2021). Introduction to Linear Regression Analysis (6th ed.). Wiley.', url: 'https://www.wiley.com/en-us/Introduction+to+Linear+Regression+Analysis%2C+6th+Edition-p-9781119578968' },
+    { text: 'Burden, R.L., & Faires, J.D. (2010). Numerical Analysis (9th ed.). Brooks/Cole, Cengage Learning.', url: 'https://www.cengage.com/c/numerical-analysis-9e-burden/' },
+    { text: 'Press, W.H., et al. (2007). Numerical Recipes: The Art of Scientific Computing (3rd ed.). Cambridge University Press.', url: 'https://numerical.recipes/' },
+    { text: 'Weisstein, E.W. "Least Squares Fitting." From MathWorld — A Wolfram Web Resource.', url: 'https://mathworld.wolfram.com/LeastSquaresFitting.html' },
   ],
 } = Astro.props;
 ---
@@ -22,7 +27,13 @@ const {
       </div>
       <ol class="space-y-3 list-decimal list-inside">
         {references.map((ref) => (
-          <li class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed pl-2">{ref}</li>
+          <li class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed pl-2">
+            {ref.url ? (
+              <a href={ref.url} rel="nofollow noopener" target="_blank" class="text-neutral-600 dark:text-neutral-400 hover:text-gold-600 dark:hover:text-gold-400 transition-colors underline decoration-neutral-300 dark:decoration-neutral-600 underline-offset-2 hover:decoration-gold-500">{ref.text}<svg class="inline h-3 w-3 ml-1 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></a>
+            ) : (
+              ref.text
+            )}
+          </li>
         ))}
       </ol>
     </div>
