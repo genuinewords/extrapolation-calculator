@@ -17,42 +17,12 @@ interface Props {
 const { locale } = Astro.props;
 
 const defaultFAQs: FAQItem[] = [
-  {
-    question: 'What is extrapolation?',
-    answer: 'Extrapolation is the process of estimating unknown values by extending a known sequence of values beyond the range of observed data. It involves using mathematical models to predict future or past values based on existing trends.',
-    category: 'general',
-    display: true,
-  },
-  {
-    question: 'What is linear extrapolation?',
-    answer: 'Linear extrapolation uses a straight line to extend the trend of existing data points. It assumes a constant rate of change and works best when the data follows a linear pattern.',
-    category: 'calculator',
-    display: true,
-  },
-  {
-    question: 'What is exponential extrapolation?',
-    answer: 'Exponential extrapolation assumes that the data grows at a rate proportional to its current value, resulting in a curve that increases increasingly rapidly. It is commonly used for population growth and compound interest calculations.',
-    category: 'calculator',
-    display: true,
-  },
-  {
-    question: 'How accurate is extrapolation?',
-    answer: 'The accuracy of extrapolation depends on how well the chosen model fits the data and how far beyond the observed range you predict. The R² score and confidence level provided by our calculator help you assess reliability.',
-    category: 'technical',
-    display: true,
-  },
-  {
-    question: 'What is R² score?',
-    answer: 'R² (coefficient of determination) measures how well the regression model fits the observed data. Values range from 0 to 1, where 1 indicates a perfect fit and 0 means the model explains none of the variance.',
-    category: 'technical',
-    display: true,
-  },
-  {
-    question: 'Is my data stored on your servers?',
-    answer: 'No. All calculations are performed entirely in your browser. Your data never leaves your device, and we do not store any personal information or calculation inputs on our servers.',
-    category: 'general',
-    display: true,
-  },
+  { question: t(locale, 'faq.q1'), answer: t(locale, 'faq.a1'), category: 'general', display: true },
+  { question: t(locale, 'faq.q2'), answer: t(locale, 'faq.a2'), category: 'calculator', display: true },
+  { question: t(locale, 'faq.q3'), answer: t(locale, 'faq.a3'), category: 'calculator', display: true },
+  { question: t(locale, 'faq.q4'), answer: t(locale, 'faq.a4'), category: 'technical', display: true },
+  { question: t(locale, 'faq.q5'), answer: t(locale, 'faq.a5'), category: 'technical', display: true },
+  { question: t(locale, 'faq.q6'), answer: t(locale, 'faq.a6'), category: 'general', display: true },
 ];
 
 const faqs = Astro.props.items ?? defaultFAQs;
