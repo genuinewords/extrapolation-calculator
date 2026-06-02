@@ -52,6 +52,31 @@ Where:
 
 The slope **m** tells you how much y changes for every one-unit increase in x. If m = 3, your predicted value rises by 3 units for each step forward in x. The intercept **b** anchors the line to the y-axis and shifts the entire prediction up or down. Together, these two parameters fully define the line — and therefore fully define every extrapolated prediction the model will make.
 
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Linear model y equals mx plus b: slope and intercept visualization">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Linear Model: y = mx + b</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="140" x2="540" y2="140" stroke="#e5e7eb" stroke-dasharray="3 3"/>
+      <text x="20" y="144" font-size="9" fill="#64748b">x-axis</text>
+      <text x="62" y="36" font-size="9" fill="#64748b">y-axis</text>
+      <line x1="60" y1="100" x2="540" y2="50" stroke="#d4af37" stroke-width="2.5"/>
+      <circle cx="60" cy="100" r="4" fill="#1e40af" stroke="#fff" stroke-width="1.5"/>
+      <text x="35" y="98" font-size="10" font-weight="600" fill="#1e40af">b</text>
+      <text x="50" y="115" font-size="9" fill="#64748b">intercept</text>
+      <line x1="180" y1="78" x2="180" y2="240" stroke="#94a3b8" stroke-dasharray="2 2"/>
+      <line x1="180" y1="78" x2="280" y2="78" stroke="#94a3b8" stroke-dasharray="2 2"/>
+      <text x="220" y="74" font-size="9" fill="#64748b">Δx = 1</text>
+      <text x="195" y="200" font-size="9" fill="#d4af37" font-weight="600">Δy = m</text>
+      <text x="220" y="255" font-size="10" fill="#0a0a0a" font-weight="600">y = mx + b</text>
+      <text x="430" y="65" font-size="9" fill="#d4af37" font-weight="600">m = slope</text>
+    </g>
+  </svg>
+  <figcaption>The linear model y = mx + b visualized. The intercept b is the y-value at x = 0, and the slope m represents the constant rate of change in y for each unit increase in x. Once both parameters are determined, the line can be extended indefinitely in either direction to extrapolate future or past values.</figcaption>
+</figure>
+
 ### The Least Squares Method
 
 When you have more than two data points, they rarely all fall perfectly on a single straight line. Real data is noisy, and the challenge is to find the line that best represents the overall trend. The least squares method solves this by finding the line that minimizes the total squared error between observed values and the line's predictions. This is the standard approach because it produces the best linear unbiased estimator (BLUE) under the Gauss-Markov assumptions — conditions that are met in many practical situations.
@@ -67,6 +92,38 @@ These formulas find the single line that makes the sum of squared residuals as s
 The least squares approach also has an elegant geometric interpretation: it projects the vector of observed y-values onto the column space of the design matrix, finding the closest possible fit in the Euclidean sense. This connection to linear algebra underpins the broader theory of regression analysis and explains why least squares is so widely adopted — it is not merely a heuristic but has deep mathematical foundations.
 
 An important property of the least squares line is that it always passes through the point (x̄, ȳ), where x̄ and ȳ are the means of the x and y values respectively. This means the line is anchored at the center of mass of the data, which provides a useful sanity check when computing by hand: if your fitted line does not pass through the mean point, something has gone wrong in the calculation.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Least squares regression: data points scattered around a best-fit line that minimizes squared residuals">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Least Squares: Minimizing Squared Residuals</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="120" x2="540" y2="80" stroke="#d4af37" stroke-width="2.5"/>
+      <g fill="#1e40af">
+        <circle cx="100" cy="180" r="4"/>
+        <circle cx="160" cy="155" r="4"/>
+        <circle cx="220" cy="135" r="4"/>
+        <circle cx="280" cy="125" r="4"/>
+        <circle cx="340" cy="105" r="4"/>
+        <circle cx="400" cy="90" r="4"/>
+        <circle cx="460" cy="75" r="4"/>
+      </g>
+      <line x1="100" y1="180" x2="100" y2="167" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="160" y1="155" x2="160" y2="148" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="220" y1="135" x2="220" y2="128" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="280" y1="125" x2="280" y2="108" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="340" y1="105" x2="340" y2="95" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="400" y1="90" x2="400" y2="78" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="460" y1="75" x2="460" y2="65" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+      <text x="470" y="50" font-size="9" fill="#ef4444">residual (eᵢ)</text>
+      <circle cx="280" cy="115" r="5" fill="#d4af37" stroke="#fff" stroke-width="1.5"/>
+      <text x="288" y="118" font-size="9" fill="#0a0a0a" font-weight="600">(x̄, ȳ)</text>
+    </g>
+  </svg>
+  <figcaption>Least squares regression: the gold line represents the best-fit line that minimizes the sum of squared vertical distances (residuals, shown as red dashed lines) between observed data points (blue circles) and the predicted values on the line. The line always passes through the centroid (x̄, ȳ) — a useful sanity check when computing the fit by hand.</figcaption>
+</figure>
 
 ### Calculating the Slope from Two Points
 

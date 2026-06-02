@@ -104,6 +104,41 @@ For understanding model fit quality across methods, our guide to [R² scores](/b
 | Best for | Quick estimates, linear trends | Small datasets, exact fits | Smooth curves, physical data |
 | Biggest risk | Misses curvature | Runge's phenomenon | Cannot extrapolate |
 
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Linear vs Lagrange vs cubic spline interpolation on the same four data points">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="10" fill="#374151">
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Three Methods on the Same Data</text>
+      <g fill="#1e40af">
+        <circle cx="100" cy="200" r="4.5"/>
+        <circle cx="200" cy="140" r="4.5"/>
+        <circle cx="300" cy="80" r="4.5"/>
+        <circle cx="400" cy="160" r="4.5"/>
+      </g>
+      <path d="M 100 200 L 200 140 L 300 80 L 400 160" stroke="#d4af37" stroke-width="2" stroke-dasharray="4 2"/>
+      <path d="M 100 200 Q 200 130, 300 80 Q 400 130, 400 160" stroke="#1e40af" stroke-width="2" fill="none"/>
+      <path d="M 100 200 C 200 130, 250 100, 300 80 C 350 90, 380 140, 400 160" stroke="#059669" stroke-width="2.5" fill="none"/>
+      <g transform="translate(420, 50)">
+        <rect x="0" y="0" width="160" height="100" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <line x1="10" y1="22" x2="40" y2="22" stroke="#d4af37" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="48" y="25" font-size="10">Linear (piecewise)</text>
+        <line x1="10" y1="44" x2="40" y2="44" stroke="#1e40af" stroke-width="2"/>
+        <text x="48" y="47" font-size="10">Lagrange (curved)</text>
+        <line x1="10" y1="66" x2="40" y2="66" stroke="#059669" stroke-width="2.5"/>
+        <text x="48" y="69" font-size="10">Cubic spline (smooth)</text>
+        <circle cx="25" cy="86" r="3.5" fill="#1e40af"/>
+        <text x="48" y="89" font-size="10">Data points</text>
+      </g>
+      <text x="120" y="260" font-size="9" fill="#d4af37" font-weight="600">Linear</text>
+      <text x="220" y="260" font-size="9" fill="#1e40af" font-weight="600">Lagrange</text>
+      <text x="330" y="260" font-size="9" fill="#059669" font-weight="600">Spline</text>
+    </g>
+  </svg>
+  <figcaption>Three interpolation methods applied to the same four data points. Linear (gold dashed) connects adjacent points with straight segments — simple but misses curvature. Lagrange (blue) fits a single polynomial through all points — exact but can oscillate. Cubic spline (green) stitches cubic segments with continuous derivatives — smooth and stable for moderate datasets. The choice depends on data shape, point count, and whether extrapolation is needed.</figcaption>
+</figure>
+
 ## A Worked Example
 
 Consider these four data points tracking temperature over a day:

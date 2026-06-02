@@ -55,6 +55,49 @@ This approach is exactly what our [extrapolation calculator](/) uses under the h
 
 There are some caveats. The log transformation means the least-squares fit minimizes errors in **ln(y)** rather than **y**, which effectively weights smaller y-values more heavily. If your data spans several orders of magnitude, this can produce a fit that looks poor on the original scale. Additionally, all y-values must be positive, since the logarithm of zero or a negative number is undefined. If your dataset contains zero or negative values, exponential extrapolation is not appropriate.
 
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Log transformation: exponential curve becomes a straight line when y is replaced by ln y">
+    <g transform="translate(30, 30)">
+      <rect x="0" y="0" width="260" height="220" fill="#fff" stroke="#e5e7eb" rx="4"/>
+      <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Original Scale: y vs x</text>
+      <line x1="30" y1="190" x2="240" y2="190" stroke="#9ca3af" stroke-width="1"/>
+      <line x1="30" y1="30" x2="30" y2="190" stroke="#9ca3af" stroke-width="1"/>
+      <path d="M 50 185 L 80 175 L 110 160 L 140 140 L 170 115 L 200 85 L 230 50" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+      <g fill="#1e40af">
+        <circle cx="50" cy="185" r="3.5"/>
+        <circle cx="80" cy="175" r="3.5"/>
+        <circle cx="110" cy="160" r="3.5"/>
+        <circle cx="140" cy="140" r="3.5"/>
+        <circle cx="170" cy="115" r="3.5"/>
+        <circle cx="200" cy="85" r="3.5"/>
+        <circle cx="230" cy="50" r="3.5"/>
+      </g>
+      <text x="130" y="210" text-anchor="middle" font-size="10" fill="#64748b">Exponential curve</text>
+    </g>
+    <g transform="translate(310, 30)">
+      <rect x="0" y="0" width="260" height="220" fill="#fff" stroke="#e5e7eb" rx="4"/>
+      <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Log Scale: ln(y) vs x</text>
+      <line x1="30" y1="190" x2="240" y2="190" stroke="#9ca3af" stroke-width="1"/>
+      <line x1="30" y1="30" x2="30" y2="190" stroke="#9ca3af" stroke-width="1"/>
+      <path d="M 50 175 L 230 50" stroke="#d4af37" stroke-width="2.5"/>
+      <g fill="#1e40af">
+        <circle cx="50" cy="175" r="3.5"/>
+        <circle cx="80" cy="155" r="3.5"/>
+        <circle cx="110" cy="135" r="3.5"/>
+        <circle cx="140" cy="115" r="3.5"/>
+        <circle cx="170" cy="95" r="3.5"/>
+        <circle cx="200" cy="75" r="3.5"/>
+        <circle cx="230" cy="50" r="3.5"/>
+      </g>
+      <text x="130" y="210" text-anchor="middle" font-size="10" fill="#64748b">Linear fit (much easier!)</text>
+    </g>
+    <line x1="290" y1="140" x2="305" y2="140" stroke="#0a0a0a" stroke-width="1.5"/>
+    <polygon points="305,135 313,140 305,145" fill="#0a0a0a"/>
+    <text x="170" y="265" text-anchor="middle" font-size="10" fill="#0a0a0a" font-weight="600">Take ln(y) → exponential becomes linear</text>
+  </svg>
+  <figcaption>Log transformation in exponential fitting: on the original y vs x scale (left), the data follows a curved exponential path. After applying the natural logarithm to y (right), the same data points fall on a straight line that can be fit with ordinary least squares. This trick converts a nonlinear fitting problem into a linear one — the foundation of the calculator's exponential method.</figcaption>
+</figure>
+
 ## Worked Example: Population Growth
 
 Let us walk through a concrete example. Suppose a small town tracks its population over five years:
@@ -233,6 +276,36 @@ In biology, the **carrying capacity** (often denoted K) is the maximum populatio
 **y = K / (1 + e^(-c(x - d)))**
 
 This S-shaped curve starts exponential, inflects at K/2, and asymptotically approaches K. If your data is in the early exponential phase but you have reason to believe a carrying capacity exists, logistic extrapolation may be more appropriate than pure exponential.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Logistic S-curve: exponential growth that flattens as it approaches carrying capacity">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Logistic S-Curve vs Pure Exponential</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="60" x2="540" y2="60" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="495" y="55" font-size="10" fill="#94a3b8">K (carrying capacity)</text>
+      <path d="M 80 230 Q 100 220, 130 200 T 200 100 Q 230 65, 280 60 L 540 60" stroke="#1e40af" stroke-width="2.5" fill="none"/>
+      <path d="M 80 230 Q 130 195, 180 145 Q 230 80, 280 5" stroke="#d4af37" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+      <g fill="#1e40af">
+        <circle cx="80" cy="230" r="4"/>
+        <circle cx="130" cy="200" r="4"/>
+        <circle cx="180" cy="155" r="4"/>
+        <circle cx="230" cy="95" r="4"/>
+        <circle cx="280" cy="68" r="4"/>
+        <circle cx="330" cy="63" r="4"/>
+        <circle cx="400" cy="61" r="4"/>
+        <circle cx="500" cy="60" r="4"/>
+      </g>
+      <text x="430" y="85" font-size="10" font-weight="600" fill="#1e40af">Logistic (S-curve)</text>
+      <text x="120" y="115" font-size="10" font-weight="600" fill="#d4af37">Exponential</text>
+      <text x="60" y="260" font-size="9" fill="#64748b" font-style="italic">Reaches limit; growth decelerates</text>
+      <text x="60" y="272" font-size="9" fill="#64748b" font-style="italic">vs. exponential which has no limit</text>
+    </g>
+  </svg>
+  <figcaption>Logistic S-curve compared to a pure exponential model. The blue curve grows rapidly at first, then decelerates as it approaches the carrying capacity K (dashed horizontal line). The gold dashed exponential curve, in contrast, has no upper limit and continues to accelerate indefinitely — a useful comparison for understanding why unbounded exponential extrapolation eventually produces unrealistic predictions in real biological or market systems.</figcaption>
+</figure>
 
 ### Market Saturation
 

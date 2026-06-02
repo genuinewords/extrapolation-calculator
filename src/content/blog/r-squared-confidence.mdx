@@ -49,6 +49,58 @@ While there is no universal rule that applies to every discipline, general guide
 
 These thresholds are not rigid boundaries. In some fields like social sciences, an R² of 0.3 might be considered respectable because human behavior is inherently noisy. In physics or engineering, anything below 0.9 might be deemed unacceptable. When working with the [regression calculator](/regression/), always consider the domain you are working in and what level of fit is expected for that type of data.
 
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="R-squared interpretation scale from poor to good fit, visualized with example data patterns">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">R² Interpretation Scale</text>
+      <rect x="40" y="40" width="520" height="200" fill="#fff" stroke="#e5e7eb"/>
+      <rect x="40" y="40" width="156" height="200" fill="#fee2e2" fill-opacity="0.4"/>
+      <rect x="196" y="40" width="208" height="200" fill="#fef3c7" fill-opacity="0.4"/>
+      <rect x="404" y="40" width="156" height="200" fill="#d1fae5" fill-opacity="0.4"/>
+      <line x1="196" y1="40" x2="196" y2="240" stroke="#9ca3af" stroke-dasharray="3 3"/>
+      <line x1="404" y1="40" x2="404" y2="240" stroke="#9ca3af" stroke-dasharray="3 3"/>
+      <text x="118" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">Poor (0.0–0.3)</text>
+      <text x="300" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#d97706">Moderate (0.3–0.7)</text>
+      <text x="482" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#059669">Good (0.7–1.0)</text>
+      <g transform="translate(50, 90)">
+        <line x1="0" y1="100" x2="120" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 80 L 120 60" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="20" cy="40" r="3.5" fill="#1e40af"/>
+        <circle cx="40" cy="90" r="3.5" fill="#1e40af"/>
+        <circle cx="60" cy="20" r="3.5" fill="#1e40af"/>
+        <circle cx="80" cy="70" r="3.5" fill="#1e40af"/>
+        <circle cx="100" cy="50" r="3.5" fill="#1e40af"/>
+        <text x="60" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.15</text>
+      </g>
+      <g transform="translate(220, 90)">
+        <line x1="0" y1="100" x2="160" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 80 L 160 30" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="20" cy="60" r="3.5" fill="#1e40af"/>
+        <circle cx="50" cy="55" r="3.5" fill="#1e40af"/>
+        <circle cx="80" cy="50" r="3.5" fill="#1e40af"/>
+        <circle cx="110" cy="40" r="3.5" fill="#1e40af"/>
+        <circle cx="140" cy="45" r="3.5" fill="#1e40af"/>
+        <text x="80" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.55</text>
+      </g>
+      <g transform="translate(430, 90)">
+        <line x1="0" y1="100" x2="120" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 90 L 120 20" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="15" cy="82" r="3.5" fill="#1e40af"/>
+        <circle cx="35" cy="68" r="3.5" fill="#1e40af"/>
+        <circle cx="55" cy="55" r="3.5" fill="#1e40af"/>
+        <circle cx="75" cy="42" r="3.5" fill="#1e40af"/>
+        <circle cx="95" cy="30" r="3.5" fill="#1e40af"/>
+        <text x="60" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.92</text>
+      </g>
+    </g>
+  </svg>
+  <figcaption>R² interpretation scale visualized. The red zone (0.0–0.3) represents a poor fit where points scatter widely around the trend line. The yellow zone (0.3–0.7) shows moderate fit with visible scatter. The green zone (0.7–1.0) represents a good fit where points cluster tightly around the line. These thresholds are guidelines, not rules — domain context matters: social science often accepts 0.3, while physics may demand 0.9+.</figcaption>
+</figure>
+
 ### What About R² = 1?
 
 A perfect R² of 1.0 is not necessarily a cause for celebration. It can indicate overfitting, especially if you have few data points and a complex model. A polynomial of degree n-1 will always pass perfectly through n data points, yielding R² = 1, but such a model will produce wildly erratic extrapolations. This is one of the most important caveats in all of regression analysis, and we will return to it later.
@@ -74,6 +126,35 @@ This is why understanding the nature of your data matters as much as the statist
 Polynomial models are particularly deceptive. A higher-degree polynomial will almost always produce a higher R² on the training data, because it has more flexibility to wiggle through every point. But polynomials of high degree tend to diverge dramatically outside the data range. A cubic or quartic model that fits beautifully within your observed range might curve sharply upward or downward the moment you step beyond it, producing nonsensical projections.
 
 This is why understanding [polynomial vs linear methods](/blog/polynomial-vs-linear/) is so important. Linear models are more constrained and therefore more stable in extrapolation, even if their R² is lower. A lower R² with a physically reasonable model is almost always preferable to a higher R² with a model that has no theoretical justification.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Polynomial trap: a high-degree polynomial that fits data perfectly inside the range but diverges wildly outside">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">The Polynomial Trap: R²=1.0, Prediction=Absurd</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="220" y1="40" x2="220" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="100" y="55" font-size="10" fill="#64748b">Training data</text>
+      <text x="240" y="55" font-size="10" fill="#dc2626" font-weight="600">Extrapolation diverges!</text>
+      <path d="M 80 180 Q 100 140, 120 150 Q 140 100, 160 130 Q 180 80, 200 90 Q 215 70, 220 75" stroke="#d4af37" stroke-width="2" fill="none"/>
+      <path d="M 220 75 Q 240 -80, 280 280 Q 320 100, 360 30 Q 400 -20, 500 240" stroke="#dc2626" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+      <g fill="#1e40af">
+        <circle cx="80" cy="180" r="3.5"/>
+        <circle cx="100" cy="150" r="3.5"/>
+        <circle cx="120" cy="160" r="3.5"/>
+        <circle cx="140" cy="115" r="3.5"/>
+        <circle cx="160" cy="135" r="3.5"/>
+        <circle cx="180" cy="90" r="3.5"/>
+        <circle cx="200" cy="95" r="3.5"/>
+        <circle cx="220" cy="78" r="3.5"/>
+      </g>
+      <text x="100" y="200" font-size="9" fill="#64748b">R² = 1.00 (perfect!)</text>
+      <text x="430" y="265" font-size="10" fill="#dc2626" font-weight="600">Prediction: -150 (nonsensical!)</text>
+    </g>
+  </svg>
+  <figcaption>The polynomial trap visualized. Inside the data range (left of the dashed line), a high-degree polynomial wiggles through every training point and achieves a perfect R² = 1.00. But the moment you step beyond the observed range (right of the dashed line), the same polynomial diverges wildly — swinging from very high to very low values, producing predictions that are mathematically perfect inside but practically absurd outside. This is why R² alone is a poor guide for extrapolation.</figcaption>
+</figure>
 
 ## Worked Example: Comparing R² Across Different Methods on the Same Data
 

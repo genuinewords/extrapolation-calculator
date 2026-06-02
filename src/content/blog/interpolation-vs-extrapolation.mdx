@@ -19,6 +19,40 @@ The distinction is simple but the implications are profound: interpolation is in
 
 To put it numerically: if your data spans from x = 0 to x = 100, an interpolation at x = 50 is typically accurate to within the noise of your measurements. An extrapolation to x = 150 may carry error margins several times larger — and at x = 200, the prediction may be essentially meaningless. The rate at which confidence degrades depends on the method and the data, but the directional truth is universal: **extrapolation error grows with distance from the data boundary**.
 
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Interpolation zone (bounded by data) vs extrapolation zone (beyond data) with confidence cones">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Interpolation (safe) vs Extrapolation (risky)</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <rect x="100" y="40" width="280" height="200" fill="#10b981" fill-opacity="0.08"/>
+      <path d="M 100 50 L 380 230" stroke="#10b981" stroke-width="2"/>
+      <path d="M 100 230 L 380 50" stroke="#10b981" stroke-width="2" stroke-dasharray="3 3"/>
+      <text x="240" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#059669">Interpolation zone</text>
+      <text x="240" y="155" text-anchor="middle" font-size="9" fill="#059669" font-style="italic">bounded by data on both sides</text>
+      <text x="240" y="170" text-anchor="middle" font-size="9" fill="#059669" font-style="italic">narrow prediction cone</text>
+      <path d="M 380 110 L 500 40" stroke="#1e40af" stroke-width="2"/>
+      <path d="M 380 170 L 500 240" stroke="#1e40af" stroke-width="2" stroke-dasharray="3 3"/>
+      <path d="M 380 110 L 540 -30" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <path d="M 380 170 L 540 320" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <text x="450" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#dc2626">Extrapolation zone</text>
+      <text x="450" y="155" text-anchor="middle" font-size="9" fill="#dc2626" font-style="italic">no data on the far side</text>
+      <text x="450" y="170" text-anchor="middle" font-size="9" fill="#dc2626" font-style="italic">cone widens with distance</text>
+      <g fill="#1e40af">
+        <circle cx="100" cy="180" r="4"/>
+        <circle cx="200" cy="155" r="4"/>
+        <circle cx="300" cy="120" r="4"/>
+        <circle cx="380" cy="95" r="4"/>
+      </g>
+      <line x1="380" y1="40" x2="380" y2="240" stroke="#0a0a0a" stroke-width="1.5"/>
+      <text x="385" y="255" font-size="9" fill="#0a0a0a" font-weight="700">data boundary</text>
+      <text x="475" y="105" font-size="9" fill="#1e40af" font-weight="600">best estimate</text>
+    </g>
+  </svg>
+  <figcaption>Interpolation versus extrapolation as prediction cones. On the left (green zone), the prediction is bounded by data points on both sides — the cone of plausible values stays narrow. On the right (red zone, beyond the data boundary marked by the vertical line), the prediction has no anchor on the far side, and the cone widens with distance from the data. This widening uncertainty is the fundamental reason extrapolation is inherently riskier than interpolation.</figcaption>
+</figure>
+
 ## When to Use Interpolation
 
 Interpolation is the right choice when you need to estimate a value that falls between two or more known data points. Common scenarios include:

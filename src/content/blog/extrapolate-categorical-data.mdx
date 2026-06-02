@@ -25,6 +25,51 @@ Common examples include:
 
 Unlike numerical data, categorical values have no natural ordering or distance. "Electronics" is not greater than "Clothing" the way 50 is greater than 30. This distinction is what makes extrapolation for categorical variables so different from [linear extrapolation](/blog/linear-extrapolation/) on numbers.
 
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Numerical versus categorical data: a continuous number line versus discrete category labels">
+    <rect width="600" height="240" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Numerical vs Categorical Data</text>
+      <g transform="translate(40, 50)">
+        <text x="240" y="0" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">Numerical: continuous, ordered</text>
+        <line x1="0" y1="40" x2="480" y2="40" stroke="#9ca3af" stroke-width="2"/>
+        <line x1="0" y1="30" x2="0" y2="50" stroke="#9ca3af"/>
+        <line x1="120" y1="30" x2="120" y2="50" stroke="#9ca3af"/>
+        <line x1="240" y1="30" x2="240" y2="50" stroke="#9ca3af"/>
+        <line x1="360" y1="30" x2="360" y2="50" stroke="#9ca3af"/>
+        <line x1="480" y1="30" x2="480" y2="50" stroke="#9ca3af"/>
+        <text x="0" y="68" text-anchor="middle" font-size="10">0</text>
+        <text x="120" y="68" text-anchor="middle" font-size="10">25</text>
+        <text x="240" y="68" text-anchor="middle" font-size="10">50</text>
+        <text x="360" y="68" text-anchor="middle" font-size="10">75</text>
+        <text x="480" y="68" text-anchor="middle" font-size="10">100</text>
+        <g fill="#1e40af">
+          <circle cx="80" cy="40" r="4"/>
+          <circle cx="180" cy="40" r="4"/>
+          <circle cx="320" cy="40" r="4"/>
+          <circle cx="420" cy="40" r="4"/>
+        </g>
+        <text x="240" y="100" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">"50 is between 25 and 75"</text>
+      </g>
+      <g transform="translate(40, 170)">
+        <text x="240" y="0" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">Categorical: discrete, unordered</text>
+        <g transform="translate(0, 20)">
+          <rect x="20" y="0" width="100" height="30" rx="4" fill="#dbeafe" stroke="#1e40af"/>
+          <text x="70" y="20" text-anchor="middle" font-size="10" fill="#0a0a0a">Electronics</text>
+          <rect x="140" y="0" width="100" height="30" rx="4" fill="#fef3c7" stroke="#d97706"/>
+          <text x="190" y="20" text-anchor="middle" font-size="10" fill="#0a0a0a">Clothing</text>
+          <rect x="260" y="0" width="100" height="30" rx="4" fill="#d1fae5" stroke="#059669"/>
+          <text x="310" y="20" text-anchor="middle" font-size="10" fill="#0a0a0a">Home</text>
+          <rect x="380" y="0" width="100" height="30" rx="4" fill="#fce7f3" stroke="#be185d"/>
+          <text x="430" y="20" text-anchor="middle" font-size="10" fill="#0a0a0a">Sports</text>
+        </g>
+        <text x="240" y="65" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">"Electronics" is not "between" anything</text>
+      </g>
+    </g>
+  </svg>
+  <figcaption>Numerical versus categorical data illustrated. Numerical data lives on a continuous, ordered number line (top) — "50" sits precisely between "25" and "75", which makes linear and polynomial extrapolation possible. Categorical data consists of discrete, unordered labels (bottom) — "Electronics" is not greater than, less than, or between any other category. This fundamental difference is why categorical data extrapolation requires classification models rather than trend-line methods.</figcaption>
+</figure>
+
 ## What Does Extrapolation Mean for Categorical Data?
 
 Traditional extrapolation works on numerical patterns — you fit a line or curve through known data points and extend it beyond the observed range. For categorical data, you're not projecting a value on a number line. You're predicting which category a future observation will belong to.

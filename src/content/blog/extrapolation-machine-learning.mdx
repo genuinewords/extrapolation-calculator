@@ -29,6 +29,35 @@ Extrapolation neural networks face a fundamental limitation: neural networks are
 
 Even ensemble methods and deep architectures inherit these issues. Without explicit mechanisms to handle unseen regions, models default to behaviors that are mathematically safe but practically wrong. Understanding [R² scores](/blog/r-squared-confidence/) can help quantify how badly a model degrades when pushed outside its training domain.
 
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="ML extrapolation failure: neural networks flatten out beyond training range while linear models continue the trend">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Why ML Models Fail at Extrapolation</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="280" y1="40" x2="280" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="120" y="55" font-size="10" fill="#64748b">Training range</text>
+      <text x="350" y="55" font-size="10" fill="#dc2626" font-weight="600">Outside training range</text>
+      <path d="M 80 220 Q 110 180, 140 140 Q 180 100, 220 80 L 280 75" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+      <path d="M 280 75 L 480 70" stroke="#d4af37" stroke-width="2.5" fill="none" stroke-dasharray="4 2"/>
+      <path d="M 280 75 Q 320 73, 360 72 Q 420 70, 480 69" stroke="#1e40af" stroke-width="2" fill="none"/>
+      <text x="430" y="95" font-size="10" font-weight="600" fill="#1e40af">NN: flattens</text>
+      <text x="430" y="60" font-size="10" font-weight="600" fill="#d4af37">Linear: continues trend</text>
+      <g fill="#1e40af">
+        <circle cx="80" cy="220" r="3.5"/>
+        <circle cx="120" cy="180" r="3.5"/>
+        <circle cx="160" cy="140" r="3.5"/>
+        <circle cx="200" cy="100" r="3.5"/>
+        <circle cx="240" cy="85" r="3.5"/>
+        <circle cx="280" cy="75" r="3.5"/>
+      </g>
+      <text x="60" y="265" font-size="9" fill="#64748b" font-style="italic">Neural networks produce averaged, flat predictions outside their training range</text>
+    </g>
+  </svg>
+  <figcaption>Why ML models fail at extrapolation. Inside the training range (left of the dashed line), a neural network (blue) follows the data closely. But beyond it (right of the dashed line), the network's output flattens to a near-constant value — it has no learned pattern to extend. A linear model (gold dashed), by contrast, continues its trend indefinitely. This fundamental limitation affects all interpolator-style models: they can blend known examples but cannot invent new ones.</figcaption>
+</figure>
+
 ## Methods That Improve Extrapolation in ML
 
 No single method eliminates the extrapolation problem entirely, but several approaches can meaningfully improve out-of-distribution predictions.

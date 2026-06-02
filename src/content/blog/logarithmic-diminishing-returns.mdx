@@ -37,6 +37,38 @@ Key characteristics of this model:
 
 The parameter **b** deserves particular attention. A positive b means the curve rises and flattens (the classic diminishing-returns shape). A negative b means the curve falls and flattens, which can model processes like cost reduction over time. The magnitude of b controls how pronounced the curvature is — a larger |b| means a more dramatically curved shape, while a smaller |b| produces a shape closer to linear.
 
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Logarithmic curve: rapid initial growth that decelerates and flattens as x increases">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Logarithmic Curve: y = a + b·ln(x)</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <path d="M 80 220 Q 130 165, 180 130 Q 240 100, 300 80 Q 380 60, 480 45" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+      <g fill="#1e40af">
+        <circle cx="80" cy="220" r="4"/>
+        <circle cx="130" cy="165" r="4"/>
+        <circle cx="180" cy="130" r="4"/>
+        <circle cx="240" cy="100" r="4"/>
+        <circle cx="300" cy="80" r="4"/>
+        <circle cx="380" cy="62" r="4"/>
+        <circle cx="480" cy="48" r="4"/>
+      </g>
+      <text x="80" y="260" font-size="9" fill="#64748b">x=1</text>
+      <text x="125" y="260" font-size="9" fill="#64748b">x=3</text>
+      <text x="175" y="260" font-size="9" fill="#64748b">x=6</text>
+      <text x="235" y="260" font-size="9" fill="#64748b">x=12</text>
+      <text x="295" y="260" font-size="9" fill="#64748b">x=24</text>
+      <text x="375" y="260" font-size="9" fill="#64748b">x=48</text>
+      <text x="475" y="260" font-size="9" fill="#64748b">x=96</text>
+      <text x="380" y="35" font-size="10" font-weight="600" fill="#d4af37">Rapid at first, then flattens</text>
+      <text x="80" y="195" font-size="9" fill="#1e40af" font-weight="600">high marginal gain</text>
+      <text x="430" y="80" font-size="9" fill="#1e40af" font-weight="600">low marginal gain</text>
+    </g>
+  </svg>
+  <figcaption>The logarithmic model y = a + b·ln(x) visualized. The curve rises steeply at small x values, then progressively flattens as x increases — the mathematical signature of diminishing returns. The marginal gain (slope) shrinks continuously: doubling x from 12 to 24 adds less to y than doubling from 3 to 6 did. This shape matches real-world saturation processes like learning curves and market adoption.</figcaption>
+</figure>
+
 ## Why Diminishing Returns Happen in Real Systems
 
 Diminishing returns are not a statistical artifact — they are a fundamental property of many physical, economic, and cognitive systems. Understanding why they occur helps you recognize when logarithmic extrapolation is the right tool.
@@ -127,6 +159,37 @@ The key insight is that exponential models assume **positive feedback** — succ
 Using an exponential model when the true pattern is logarithmic will lead to wildly overestimated predictions. Conversely, using a logarithmic model on exponentially growing data will severely underestimate future values. The stakes of this choice are high, particularly in business forecasting and scientific modeling.
 
 If you are unsure which model fits better, the decision often comes down to examining residuals and fit quality — which brings us to the next section.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Exponential vs logarithmic: accelerating curve versus decelerating curve, mirrored shapes">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Exponential (↑↑) vs Logarithmic (↓↓)</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <path d="M 80 220 Q 180 200, 280 130 Q 380 50, 480 10" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+      <path d="M 80 30 Q 200 70, 300 140 Q 400 200, 480 230" stroke="#1e40af" stroke-width="2.5" fill="none"/>
+      <g fill="#d4af37">
+        <circle cx="80" cy="220" r="3.5"/>
+        <circle cx="180" cy="200" r="3.5"/>
+        <circle cx="280" cy="130" r="3.5"/>
+        <circle cx="380" cy="50" r="3.5"/>
+        <circle cx="480" cy="10" r="3.5"/>
+      </g>
+      <g fill="#1e40af">
+        <circle cx="80" cy="30" r="3.5"/>
+        <circle cx="180" cy="80" r="3.5"/>
+        <circle cx="280" cy="140" r="3.5"/>
+        <circle cx="380" cy="200" r="3.5"/>
+        <circle cx="480" cy="230" r="3.5"/>
+      </g>
+      <text x="380" y="40" font-size="10" font-weight="600" fill="#d4af37">Exponential: accelerating</text>
+      <text x="120" y="180" font-size="10" font-weight="600" fill="#1e40af">Logarithmic: decelerating</text>
+      <text x="60" y="260" font-size="9" fill="#64748b" font-style="italic">Mirror-image shapes: each is the inverse of the other</text>
+    </g>
+  </svg>
+  <figcaption>Exponential vs logarithmic as mirror-image curves. The gold exponential curve accelerates upward (concave up) — each step adds more than the last, characteristic of positive-feedback processes like compound interest. The blue logarithmic curve decelerates (concave down) — each step adds less, characteristic of saturating processes like market adoption. Choosing the wrong shape leads to dramatically wrong long-range predictions.</figcaption>
+</figure>
 
 ## How to Decide Between Logarithmic and Other Methods
 

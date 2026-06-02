@@ -73,6 +73,36 @@ Moving to degree 3 (cubic) and beyond introduces additional turning points:
 | 4 (Quartic) | 3 | Complex multi-phase patterns |
 | 5+ | 4+ | Highly flexible, increasingly unstable |
 
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Polynomial degrees compared: linear, quadratic, cubic, and quartic curves with increasing turning points">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="10" fill="#374151">
+      <g transform="translate(30, 30)">
+        <rect x="0" y="0" width="260" height="220" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Degree 1 (Linear) & Degree 2 (Quadratic)</text>
+        <line x1="30" y1="190" x2="240" y2="190" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="30" x2="30" y2="190" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="180" x2="240" y2="100" stroke="#d4af37" stroke-width="2"/>
+        <path d="M 30 190 Q 100 60, 240 50" stroke="#1e40af" stroke-width="2" fill="none"/>
+        <text x="60" y="170" font-size="9" fill="#d4af37" font-weight="600">Linear</text>
+        <text x="180" y="60" font-size="9" fill="#1e40af" font-weight="600">Quadratic</text>
+      </g>
+      <g transform="translate(310, 30)">
+        <rect x="0" y="0" width="260" height="220" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Degree 3 (Cubic) & Degree 4 (Quartic)</text>
+        <line x1="30" y1="190" x2="240" y2="190" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="30" x2="30" y2="190" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 30 170 Q 80 50, 130 130 Q 180 200, 240 70" stroke="#d4af37" stroke-width="2" fill="none"/>
+        <path d="M 30 100 Q 70 200, 110 60 Q 150 50, 190 180 Q 220 200, 240 90" stroke="#1e40af" stroke-width="2" fill="none"/>
+        <text x="50" y="120" font-size="9" fill="#d4af37" font-weight="600">Cubic</text>
+        <text x="180" y="190" font-size="9" fill="#1e40af" font-weight="600">Quartic</text>
+      </g>
+      <text x="300" y="275" text-anchor="middle" font-size="10" fill="#64748b" font-style="italic">Higher degree = more turning points but more instability</text>
+    </g>
+  </svg>
+  <figcaption>Polynomial degrees compared visually. Degree 1 (linear, gold straight line) and degree 2 (quadratic, blue curve with one bend) remain stable. Degree 3 (cubic, gold S-shape) and degree 4 (quartic, blue wavy curve) introduce additional turning points and can capture complex patterns, but at the cost of stability — the wiggles near the edges are a preview of the instability that emerges when extrapolating beyond the data.</figcaption>
+</figure>
+
 ### When Higher Degrees Make Sense
 
 There are legitimate cases for cubic and higher-degree models. If your data genuinely oscillates — think seasonal temperature patterns, wave propagation, or cyclical economic indicators — then a model with multiple turning points may be warranted. A cubic can capture an S-shaped adoption curve (slow start, rapid growth, slow finish) that a quadratic cannot.
@@ -131,6 +161,39 @@ Fitting a degree-4 polynomial to these 8 points gives R² ≈ 0.9999 — essenti
 ### The Takeaway
 
 In this example, the quadratic model is the clear winner. It captures the acceleration pattern, achieves an excellent R², and extrapolates to a plausible month-12 value. The linear model underpredicts because it cannot account for acceleration. The degree-4 model adds instability without meaningful accuracy gains.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Linear vs quadratic fit on accelerating startup revenue data, with extrapolation to month 12">
+    <rect width="600" height="300" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Linear vs Quadratic: Startup Revenue</text>
+      <rect x="40" y="40" width="520" height="220" fill="#fff" stroke="#e5e7eb"/>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="370" y1="60" x2="370" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="195" y="55" font-size="10" fill="#64748b">Observed (months 1–8)</text>
+      <text x="380" y="55" font-size="10" fill="#64748b">Extrapolation</text>
+      <path d="M 90 220 L 130 200 L 170 178 L 210 155 L 250 130 L 290 102 L 330 75 L 370 50" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+      <g fill="#d4af37">
+        <circle cx="90" cy="220" r="4"/>
+        <circle cx="130" cy="200" r="4"/>
+        <circle cx="170" cy="178" r="4"/>
+        <circle cx="210" cy="155" r="4"/>
+        <circle cx="250" cy="130" r="4"/>
+        <circle cx="290" cy="102" r="4"/>
+        <circle cx="330" cy="75" r="4"/>
+        <circle cx="370" cy="50" r="4"/>
+      </g>
+      <path d="M 90 222 L 460 25" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4 2"/>
+      <text x="440" y="60" font-size="10" fill="#94a3b8" font-weight="600">Linear: $123K</text>
+      <path d="M 370 50 Q 410 35, 450 25" stroke="#1e40af" stroke-width="2.5" fill="none"/>
+      <text x="450" y="20" font-size="10" fill="#1e40af" font-weight="600">Quadratic: $165K</text>
+      <text x="40" y="278" font-size="9" fill="#64748b">Linear R² ≈ 0.93 (underfits acceleration)</text>
+      <text x="40" y="290" font-size="9" fill="#64748b">Quadratic R² ≈ 0.9997 (captures acceleration)</text>
+    </g>
+  </svg>
+  <figcaption>Linear vs quadratic fit on the same accelerating startup-revenue dataset. The linear model (gray dashed) achieves R² ≈ 0.93 but systematically underfits the acceleration, projecting only $123K at month 12. The quadratic model (blue solid) follows the data almost exactly and projects a more plausible $165K at month 12. This example shows why polynomial degree should match the curvature present in the data — neither too simple (linear) nor excessively complex (degree 4+).</figcaption>
+</figure>
 
 You can replicate this analysis yourself with the [extrapolation calculator](/) — enter the data, try different polynomial degrees, and compare both the R² values and the extrapolated predictions.
 

@@ -30,6 +30,41 @@ Here is what each variable represents:
 
 The formula calculates the rate of change between two known points and then applies that same rate to project a new value at a different point along the line. Let us walk through a quick example. Suppose your sales were $10,000 in month 1 and $16,000 in month 4. You want to predict sales for month 7.
 
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Linear extrapolation formula: known data points connected by a line that extends to predict a future value">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Linear Extrapolation: Extending a Known Trend</text>
+      <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <text x="22" y="62" font-size="10" fill="#64748b">$22K</text>
+      <text x="22" y="132" font-size="10" fill="#64748b">$16K</text>
+      <text x="22" y="202" font-size="10" fill="#64748b">$10K</text>
+      <line x1="40" y1="200" x2="40" y2="200" stroke="none"/>
+      <line x1="40" y1="200" x2="200" y2="200" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <line x1="200" y1="40" x2="200" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <line x1="460" y1="40" x2="460" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <path d="M 80 200 L 200 130 L 460 60" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+      <g fill="#d4af37">
+        <circle cx="80" cy="200" r="5" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="200" cy="130" r="5" stroke="#fff" stroke-width="1.5"/>
+      </g>
+      <g fill="#1e40af">
+        <circle cx="460" cy="60" r="6" stroke="#fff" stroke-width="2"/>
+      </g>
+      <text x="65" y="220" font-size="10" font-weight="600" fill="#0a0a0a">M1</text>
+      <text x="80" y="186" font-size="9" fill="#64748b">$10,000</text>
+      <text x="180" y="120" font-size="9" fill="#64748b">$16,000</text>
+      <text x="180" y="150" font-size="10" font-weight="600" fill="#0a0a0a">M4</text>
+      <text x="440" y="50" font-size="9" fill="#1e40af" font-weight="600">$22,000</text>
+      <text x="440" y="80" font-size="10" font-weight="600" fill="#1e40af">M7</text>
+      <text x="240" y="255" font-size="10" fill="#64748b" font-style="italic">interpolation zone (bounded by data)</text>
+      <text x="380" y="255" font-size="10" fill="#1e40af" font-weight="600" font-style="italic">extrapolation zone (beyond data)</text>
+    </g>
+  </svg>
+  <figcaption>Linear extrapolation illustrated: two known data points (M1 = $10,000 and M4 = $16,000) are connected by a straight line. The same slope is then extended beyond the observed range to project a future value at M7 (approximately $22,000). The shaded area on the right marks the extrapolation zone — territory with no observed data, where predictions carry more uncertainty.</figcaption>
+</figure>
+
 Using the formula: **y = 10000 + (7 − 1) × (16000 − 10000) / (4 − 1)**
 
 Step by step: **y = 10000 + 6 × 6000 / 3**
@@ -51,6 +86,38 @@ Polynomial extrapolation fits a curved line to your data rather than a straight 
 ### Exponential Extrapolation
 
 Exponential extrapolation is used when data grows at an ever-increasing rate. This is common in scenarios involving viral content, compound interest, or pandemics, where each new value multiplies rather than adds. If a social media post gains 100 shares on day one, 200 on day two, and 400 on day three, an exponential model will project that rapid growth forward. See our article on [exponential extrapolation](/blog/exponential-growth/) for a deeper dive.
+
+### The Four Types Visualized
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Comparison of four extrapolation types: linear, polynomial, exponential, and logarithmic">
+    <rect width="600" height="320" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="10" fill="#374151">
+      <g transform="translate(30, 30)">
+        <rect x="0" y="0" width="260" height="240" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Linear & Polynomial</text>
+        <line x1="30" y1="210" x2="240" y2="210" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="30" x2="30" y2="210" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 50 180 L 100 150 L 150 120 L 200 90" stroke="#d4af37" stroke-width="2" fill="none"/>
+        <path d="M 50 180 L 100 145 L 150 105 L 200 55" stroke="#1e40af" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+        <text x="50" y="170" font-size="9" fill="#d4af37" font-weight="600">Linear</text>
+        <text x="200" y="50" font-size="9" fill="#1e40af" font-weight="600">Polynomial</text>
+      </g>
+      <g transform="translate(310, 30)">
+        <rect x="0" y="0" width="260" height="240" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Exponential & Logarithmic</text>
+        <line x1="30" y1="210" x2="240" y2="210" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="30" x2="30" y2="210" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 50 195 L 90 175 L 130 150 L 170 110 L 200 60" stroke="#d4af37" stroke-width="2" fill="none"/>
+        <path d="M 50 195 L 100 105 L 150 75 L 200 55" stroke="#1e40af" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+        <text x="50" y="185" font-size="9" fill="#1e40af" font-weight="600">Logarithmic</text>
+        <text x="200" y="50" font-size="9" fill="#d4af37" font-weight="600">Exponential</text>
+      </g>
+      <text x="300" y="295" text-anchor="middle" font-size="10" fill="#64748b" font-style="italic">Gold = baseline, Blue = alternative shape</text>
+    </g>
+  </svg>
+  <figcaption>The four main types of extrapolation compared side by side. Linear and polynomial methods fit straight or curved lines through the data; exponential models capture accelerating multiplicative growth (the curve steepens); logarithmic models capture decelerating growth (the curve flattens). Choosing the right type depends on the underlying mechanism generating your data.</figcaption>
+</figure>
 
 ## Real-Life Examples of Extrapolation
 
