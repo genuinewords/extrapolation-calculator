@@ -1,0 +1,438 @@
+---
+title: "Come Estrapolare Dati in Excel (Guida Passo Passo)"
+description: Impara 4 semplici modi per estrapolare dati in Excel usando TREND, FORECAST.LINEAR, linee di tendenza e fogli di previsione. Esempi passo passo inclusi.
+publishDate: 2026-06-10
+author: Team del Calcolatore di Estrapolazione
+category: Tutorial
+featuredImage: ""
+---
+
+Excel è uno degli strumenti più utilizzati per la previsione dei dati. Che tu stia proiettando entrate trimestrali, stimando le esigenze di inventario del mese prossimo o prevedendo la crescita degli utenti, Excel ha funzioni integrate che rendono l'estrapolazione accessibile a chiunque abbia un foglio di calcolo.
+
+Ma sapere come estrapolare dati in Excel richiede la scelta del metodo giusto per la tua situazione. Questa guida ti presenta quattro approcci — dalle formule semplici ai fogli di previsione con un clic — così puoi scegliere quello più adatto ai tuoi dati e al tuo livello di competenza. Se sei nuovo al concetto, inizia con la nostra guida su [cos'è l'estrapolazione](/blog/what-is-estrapolation/).
+
+### I Quattro Metodi di Estrapolazione in Excel a Colpo d'Occhio
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Panoramica dei quattro metodi di estrapolazione in Excel">
+  <rect width="600" height="200" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <g transform="translate(20, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">1</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">TREND</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">Formula</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">più</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">valori</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">Tutto Excel</text>
+    </g>
+    <g transform="translate(165, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">2</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">FORECAST</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">.LINEAR</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">valore</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">singolo</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">2016+</text>
+    </g>
+    <g transform="translate(310, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">3</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">Linea di</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">tendenza</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">visiva</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">su grafico</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">Tutto Excel</text>
+    </g>
+    <g transform="translate(455, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">4</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">Foglio di</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">previsione</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">un clic</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">dashboard</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">2016+</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Quattro modi per estrapolare dati in Excel: funzione TREND, FORECAST.LINEAR, linee di tendenza nei grafici e foglio di previsione — confrontati per facilità d'uso e compatibilità con le versioni di Excel.</figcaption>
+</figure>
+
+## Metodo 1: Usare la Funzione TREND
+
+### Cosa Fa
+
+La funzione TREND calcola valori previsti lungo una tendenza lineare. Prende i tuoi dati noti, adatta una linea retta usando il metodo dei minimi quadrati e restituisce i valori y per qualsiasi nuovo valore x tu specifichi.
+
+### Sintassi
+
+```
+=TREND(y_noti, x_noti, nuovi_x)
+```
+
+- **y_noti**: L'intervallo dei valori dipendenti noti (es., cifre di vendita)
+- **x_noti**: L'intervallo dei valori indipendenti noti (es., numeri dei mesi)
+- **nuovi_x**: I valori x per cui desideri fare una previsione
+
+### Panoramica Visiva
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Funzione TREND: i dati noti si estendono in valori previsti tramite una linea di tendenza lineare">
+  <defs>
+    <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="280" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">Funzione TREND — Proiezione Lineare</text>
+    <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <path d="M 40 220 L 560 80" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M 130 205 L 175 180 L 220 158 L 265 138 L 310 115 L 355 95 L 400 80 L 445 65 L 490 50 L 535 38" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <path d="M 400 80 L 445 65 L 490 50 L 535 38 L 535 240 L 400 240 Z" fill="url(#trendFill)"/>
+    <line x1="400" y1="40" x2="400" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="425" y="232" font-size="10" fill="#64748b">previsto</text>
+    <g fill="#d4af37">
+      <circle cx="130" cy="205" r="4"/>
+      <circle cx="175" cy="180" r="4"/>
+      <circle cx="220" cy="158" r="4"/>
+      <circle cx="265" cy="138" r="4"/>
+      <circle cx="310" cy="115" r="4"/>
+      <circle cx="355" cy="95" r="4"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="400" cy="80" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="445" cy="65" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="490" cy="50" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="535" cy="38" r="5" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="120" y="258" font-size="10" fill="#64748b">M1</text>
+    <text x="165" y="258" font-size="10" fill="#64748b">M2</text>
+    <text x="210" y="258" font-size="10" fill="#64748b">M3</text>
+    <text x="255" y="258" font-size="10" fill="#64748b">M4</text>
+    <text x="300" y="258" font-size="10" fill="#64748b">M5</text>
+    <text x="345" y="258" font-size="10" fill="#64748b">M6</text>
+    <text x="388" y="258" font-size="10" fill="#1e40af" font-weight="600">M7</text>
+    <text x="433" y="258" font-size="10" fill="#1e40af" font-weight="600">M8</text>
+    <text x="478" y="258" font-size="10" fill="#1e40af" font-weight="600">M9</text>
+    <text x="523" y="258" font-size="10" fill="#1e40af" font-weight="600">M10</text>
+    <g transform="translate(0,0)">
+      <circle cx="155" cy="100" r="4" fill="#d4af37"/>
+      <text x="166" y="104" font-size="10">Dati noti (oro)</text>
+      <circle cx="155" cy="118" r="4" fill="#1e40af"/>
+      <text x="166" y="122" font-size="10">Previsto (blu)</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Illustrazione della funzione TREND di Excel: sei mesi di dati di vendita noti (punti oro, M1–M6) vengono adattati con una linea di tendenza lineare ai minimi quadrati che si estende per prevedere quattro mesi futuri (punti blu, M7–M10). La linea oro tratteggiata mostra il modello lineare sottostante utilizzato per estrapolare i valori oltre l'intervallo osservato.</figcaption>
+</figure>
+
+### Esempio Passo Passo
+
+Supponiamo di avere dati di vendita mensili da gennaio a giugno e di voler prevedere luglio e agosto:
+
+| Mese | Vendite |
+|------|---------|
+| 1 | $10.000 |
+| 2 | $12.000 |
+| 3 | $14.500 |
+| 4 | $16.000 |
+| 5 | $18.500 |
+| 6 | $20.000 |
+
+1. Inserisci i dati nelle colonne A (Mese) e B (Vendite)
+2. Nella cella D2, inserisci: `=TREND(B2:B7, A2:A7, 7)` — questo prevede il mese 7
+3. Nella cella D3, inserisci: `=TREND(B2:B7, A2:A7, 8)` — questo prevede il mese 8
+
+Excel adatta una tendenza lineare attraverso i mesi 1–6 e la proietta in avanti. La funzione TREND restituisce circa $22.143 per il mese 7 e $24.286 per il mese 8.
+
+TREND è particolarmente utile quando devi prevedere più valori contemporaneamente — puoi passare un array di nuovi valori x e ottenere tutte le previsioni in un unico passo.
+
+## Metodo 2: Usare la Funzione FORECAST.LINEAR
+
+### Cosa Fa
+
+FORECAST.LINEAR (disponibile in Excel 2016 e versioni successive) prevede un singolo valore y per un dato valore x basandosi sui dati esistenti. Utilizza lo stesso algoritmo di regressione lineare di TREND ma è progettata per previsioni puntuali.
+
+### Sintassi
+
+```
+=FORECAST.LINEAR(x, y_noti, x_noti)
+```
+
+- **x**: Il punto dati specifico che desideri prevedere
+- **y_noti**: L'intervallo dei valori dipendenti noti
+- **x_noti**: L'intervallo dei valori indipendenti noti
+
+### Panoramica Visiva
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="FORECAST.LINEAR: un singolo input x restituisce un valore y previsto su una linea di tendenza lineare">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e40af"/>
+    </marker>
+  </defs>
+  <rect width="600" height="280" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">FORECAST.LINEAR — Previsione Puntuale</text>
+    <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <path d="M 70 220 L 530 50" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M 90 210 L 150 190 L 210 170 L 270 145 L 330 120 L 390 95 L 450 70 L 510 50" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <g fill="#d4af37">
+      <circle cx="90" cy="210" r="4"/>
+      <circle cx="150" cy="190" r="4"/>
+      <circle cx="210" cy="170" r="4"/>
+      <circle cx="270" cy="145" r="4"/>
+      <circle cx="330" cy="120" r="4"/>
+      <circle cx="390" cy="95" r="4"/>
+      <circle cx="450" cy="70" r="4"/>
+      <circle cx="510" cy="50" r="4"/>
+    </g>
+    <line x1="510" y1="50" x2="510" y2="240" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <line x1="40" y1="50" x2="510" y2="50" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="510" cy="50" r="6" fill="#1e40af" stroke="#fff" stroke-width="2"/>
+    <text x="500" y="258" font-size="10" fill="#1e40af" font-weight="600">x = 12</text>
+    <text x="22" y="54" font-size="10" fill="#1e40af" font-weight="600">y ≈ $32.857</text>
+    <g>
+      <rect x="120" y="100" width="180" height="50" rx="6" fill="#fff" stroke="#1e40af" stroke-width="1.5"/>
+      <text x="130" y="120" font-size="10" font-weight="600" fill="#0a0a0a">Formula cella</text>
+      <text x="130" y="138" font-size="10" font-family="monospace" fill="#1e40af">=FORECAST.LINEAR(12, B2:B7, A2:A7)</text>
+    </g>
+    <line x1="300" y1="125" x2="505" y2="55" stroke="#1e40af" stroke-width="1.2" marker-end="url(#arrow)"/>
+  </g>
+</svg>
+  <figcaption>Esempio di FORECAST.LINEAR in Excel: un singolo valore x target di 12 viene inserito nella formula insieme all'intervallo y noto (B2:B7) e all'intervallo x (A2:A7), restituendo un valore y previsto di circa $32.857. Il punto blu sulla linea di tendenza oro segna dove cade la proiezione.</figcaption>
+</figure>
+
+### Esempio Passo Passo
+
+Usando gli stessi dati di vendita, prevedi le entrate per il mese 12:
+
+1. In qualsiasi cella vuota, inserisci: `=FORECAST.LINEAR(12, B2:B7, A2:A7)`
+2. Excel restituisce le vendite previste per il mese 12 basate sulla tendenza lineare attraverso i mesi 1–6
+
+Il risultato sarà di circa $32.857 — quasi il doppio del valore del mese 1, riflettendo la costante tendenza al rialzo.
+
+FORECAST.LINEAR è il modo più semplice per ottenere una rapida estrapolazione a valore singolo. Per [l'estrapolazione lineare](/blog/linear-extrapolation/) su dati stabili, questa singola formula è spesso tutto ciò di cui hai bisogno.
+
+## Metodo 3: Usare una Linea di Tendenza in un Grafico
+
+### Cosa Fa
+
+Una linea di tendenza aggiunge una proiezione visiva al tuo grafico Excel. Puoi scegliere il tipo di linea di tendenza (lineare, polinomiale, esponenziale) ed estenderla in avanti per vedere dove stanno andando i tuoi dati. Questo è il metodo più intuitivo perché puoi *vedere* la previsione.
+
+### Panoramica Visiva
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Grafico con linea di tendenza: punti dati con una linea di tendenza lineare che si estende nel futuro">
+  <rect width="600" height="300" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">Linea di Tendenza — Previsione Visiva in un Grafico</text>
+    <rect x="40" y="40" width="520" height="220" fill="#fff" stroke="#e5e7eb"/>
+    <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="140" x2="540" y2="140" stroke="#e5e7eb" stroke-dasharray="3 3"/>
+    <line x1="380" y1="60" x2="380" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="200" y="55" font-size="10" fill="#64748b">Dati storici</text>
+    <text x="420" y="55" font-size="10" fill="#64748b">Area di previsione</text>
+    <path d="M 80 220 L 130 200 L 180 180 L 230 160 L 280 140 L 330 115 L 380 100 L 430 80 L 480 60 L 530 40" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <g fill="#d4af37">
+      <circle cx="80" cy="220" r="4"/>
+      <circle cx="130" cy="200" r="4"/>
+      <circle cx="180" cy="180" r="4"/>
+      <circle cx="230" cy="160" r="4"/>
+      <circle cx="280" cy="140" r="4"/>
+      <circle cx="330" cy="115" r="4"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="380" cy="100" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="430" cy="80" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="480" cy="60" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="530" cy="40" r="5" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="455" y="280" font-size="11" font-family="monospace" fill="#d4af37" font-weight="600">y = 2.143x + 7.857</text>
+    <text x="510" y="295" font-size="11" font-family="monospace" fill="#0a0a0a" font-weight="600">R² = 0,998</text>
+  </g>
+</svg>
+  <figcaption>Linea di tendenza in un grafico Excel: una linea di tendenza lineare viene sovrapposta al grafico a dispersione delle vendite ed estesa in avanti per proiettare i successivi quattro periodi (punti blu). Il grafico mostra l'equazione della linea di tendenza (y = 2.143x + 7.857) e un valore R² di 0,998, indicando un eccellente adattamento lineare che supporta un'estrapolazione affidabile.</figcaption>
+</figure>
+
+### Istruzioni Passo Passo
+
+1. Seleziona i tuoi dati (mesi e vendite)
+2. Vai a **Inserisci → Grafico** e scegli un grafico a Linee o Dispersione
+3. Clicca su qualsiasi punto dati nel grafico per selezionare la serie
+4. Fai clic destro e scegli **Aggiungi linea di tendenza**
+5. Nel riquadro delle opzioni della linea di tendenza:
+   - Seleziona **Lineare** (o Polinomiale/Esponenziale se i tuoi dati sono curvi)
+   - Sotto **Previsione**, imposta **In avanti** sul numero di periodi che desideri proiettare (es., 6 mesi)
+   - Spunta **Mostra equazione sul grafico** e **Mostra valore R²** per vedere la qualità dell'adattamento
+
+La linea di tendenza si estende oltre i tuoi dati, mostrando visivamente i valori proiettati. Il valore R² ti dice quanto bene la linea si adatta — consulta la nostra guida ai [punteggi R²](/blog/r-squared-confidence/) per l'interpretazione.
+
+### Quando Usare Questo Metodo
+
+Le linee di tendenza sono migliori quando hai bisogno di una previsione visiva per presentazioni o report. Non ti danno valori di cella precisi, ma rendono la tendenza immediatamente comprensibile a un pubblico non tecnico.
+
+## Metodo 4: Usare il Foglio di Previsione di Excel (Un Clic)
+
+### Cosa Fa
+
+La funzione Foglio di previsione (Excel 2016+) genera una previsione completa con un grafico, intervalli di confidenza e una tabella di valori previsti — tutto in un clic. È il modo più veloce per ottenere una previsione dall'aspetto professionale.
+
+### Panoramica Visiva
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Foglio di previsione: grafico completo con dati storici, linea di previsione e bande di intervallo di confidenza superiore e inferiore, più una tabella di previsione">
+  <defs>
+    <linearGradient id="ciFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.10"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="320" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">Foglio di Previsione — Grafico + Intervallo di Confidenza + Tabella</text>
+    <rect x="40" y="40" width="380" height="220" fill="#fff" stroke="#e5e7eb"/>
+    <line x1="60" y1="240" x2="400" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="260" y1="60" x2="260" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <path d="M 70 220 L 100 205 L 130 190 L 160 175 L 190 160 L 220 145 L 250 125 L 280 110 L 310 90 L 340 75 L 370 60" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <path d="M 260 110 L 280 90 L 310 65 L 340 45 L 370 25 L 370 95 L 340 105 L 310 115 L 280 130 L 260 110 Z" fill="url(#ciFill)" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 2"/>
+    <g fill="#d4af37">
+      <circle cx="70" cy="220" r="3.5"/>
+      <circle cx="100" cy="205" r="3.5"/>
+      <circle cx="130" cy="190" r="3.5"/>
+      <circle cx="160" cy="175" r="3.5"/>
+      <circle cx="190" cy="160" r="3.5"/>
+      <circle cx="220" cy="145" r="3.5"/>
+      <circle cx="250" cy="125" r="3.5"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="280" cy="110" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="310" cy="90" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="340" cy="75" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="370" cy="60" r="4" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="135" y="55" font-size="10" fill="#64748b">Storico</text>
+    <text x="285" y="55" font-size="10" fill="#1e40af" font-weight="600">Previsione</text>
+    <rect x="60" y="265" width="350" height="14" fill="#94a3b8" fill-opacity="0.3"/>
+    <text x="66" y="275" font-size="9" fill="#475569">Intervallo di confidenza 95%</text>
+    <g transform="translate(440, 50)">
+      <rect x="0" y="0" width="140" height="210" fill="#fff" stroke="#e5e7eb" rx="4"/>
+      <text x="10" y="18" font-size="10" font-weight="600" fill="#0a0a0a">Tabella previsione</text>
+      <line x1="10" y1="25" x2="130" y2="25" stroke="#e5e7eb"/>
+      <text x="10" y="42" font-size="9" fill="#64748b">Periodo</text>
+      <text x="80" y="42" font-size="9" fill="#64748b">Valore</text>
+      <line x1="10" y1="48" x2="130" y2="48" stroke="#e5e7eb"/>
+      <text x="10" y="62" font-size="9" fill="#1e40af">M7</text>
+      <text x="80" y="62" font-size="9" fill="#1e40af">$22.143</text>
+      <text x="10" y="78" font-size="9" fill="#1e40af">M8</text>
+      <text x="80" y="78" font-size="9" fill="#1e40af">$24.286</text>
+      <text x="10" y="94" font-size="9" fill="#1e40af">M9</text>
+      <text x="80" y="94" font-size="9" fill="#1e40af">$26.429</text>
+      <text x="10" y="110" font-size="9" fill="#1e40af">M10</text>
+      <text x="80" y="110" font-size="9" fill="#1e40af">$28.571</text>
+      <text x="10" y="126" font-size="9" fill="#1e40af">M11</text>
+      <text x="80" y="126" font-size="9" fill="#1e40af">$30.714</text>
+      <text x="10" y="142" font-size="9" fill="#1e40af">M12</text>
+      <text x="80" y="142" font-size="9" fill="#1e40af">$32.857</text>
+      <line x1="10" y1="152" x2="130" y2="152" stroke="#e5e7eb"/>
+      <text x="10" y="168" font-size="9" fill="#64748b" font-style="italic">IC: ±$2.400</text>
+      <text x="10" y="184" font-size="9" fill="#64748b" font-style="italic">Livello 95%</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Foglio di previsione Excel: un dashboard in un clic che combina un grafico storico (linea oro, M1–M7), una continuazione della previsione (linea blu, M8–M11) con una banda di intervallo di confidenza al 95% (area grigia ombreggiata) e una tabella di previsione che elenca i valori previsti per ciascun periodo futuro. Questa vista è ideale per report in cui i lettori hanno bisogno sia dei numeri che di una visualizzazione rapida dell'incertezza della previsione.</figcaption>
+</figure>
+
+### Istruzioni Passo Passo
+
+1. Seleziona l'intervallo di dati (incluse date e valori)
+2. Vai alla scheda **Dati** e clicca su **Foglio di previsione**
+3. Nella finestra di dialogo Crea foglio di previsione:
+   - Imposta la data di **Fine previsione**
+   - Regola l'intervallo di confidenza se necessario (predefinito 95%)
+   - Scegli se includere il rilevamento della stagionalità
+4. Clicca su **Crea**
+
+Excel genera un nuovo foglio con un grafico che mostra dati storici, valori previsti e limiti di confidenza. Produce anche una tabella con ciascun valore previsto e il suo intervallo di confidenza.
+
+### Quando Usare Questo Metodo
+
+Il foglio di previsione è ideale per report aziendali in cui hai bisogno sia dei numeri che di una visualizzazione curata. Gestisce automaticamente la stagionalità, cosa che i metodi più semplici non fanno. Per dati con modelli stagionali ricorrenti (es., vendite al dettaglio che raggiungono il picco ogni dicembre), questa è la migliore opzione di Excel.
+
+## Tabella Comparativa: Quale Metodo Dovresti Usare?
+
+| Metodo | Migliore per | Versione Excel | Facilità d'Uso |
+|--------|--------------|----------------|----------------|
+| TREND | Punti dati multipli | Tutte le versioni | Media |
+| FORECAST.LINEAR | Valore singolo veloce | 2016+ | Facile |
+| Linea di tendenza | Previsione visiva | Tutte le versioni | Facile |
+| Foglio di previsione | Previsione avanzata con stagionalità | 2016+ | Molto facile |
+
+Ogni metodo presuppone una relazione lineare per impostazione predefinita, sebbene le linee di tendenza e i fogli di previsione supportino altri modelli. Per confrontare approcci lineari e curvi, consulta la nostra guida sull'[estrapolazione polinomiale vs lineare](/blog/polynomial-extrapolation-vs-linear/).
+
+## Suggerimenti e Best Practice
+
+- **Controlla prima i valori anomali** — un singolo punto dati anomalo può allontanare la linea di tendenza dalla realtà
+- **Usa dati storici sufficienti** — almeno 5–6 punti dati per una tendenza significativa; meno è come tirare a indovinare
+- **Valida la tendenza prima di estenderla** — se il tuo R² è inferiore a 0,7, il modello lineare potrebbe non adattarsi abbastanza bene per un'estrapolazione affidabile
+- **Le tendenze lineari funzionano meglio con dati stabili** — se la tua crescita sta accelerando o decelerando, considera metodi di estrapolazione polinomiale o [esponenziale](/blog/exponential-growth/)
+- **Non prevedere troppo in là** — più ti allontani dai tuoi dati, meno affidabile diventa qualsiasi estrapolazione
+
+## Limiti dell'Estrapolazione in Excel
+
+Gli strumenti di previsione di Excel sono convenienti ma hanno vincoli reali:
+
+- **Lineare per impostazione predefinita**: TREND e FORECAST.LINEAR presuppongono una relazione lineare. Se i tuoi dati seguono una curva, queste funzioni ti inganneranno
+- **Nessuna selezione automatica del modello**: Excel non confronta i metodi né ti dice quale tipo di tendenza si adatta meglio. Devi controllare R² da solo
+- **Rischio di eccessiva fiducia**: Gli intervalli di confidenza del foglio di previsione sembrano precisi, ma si basano sul presupposto che il futuro assomiglierà al passato — esattamente il presupposto che crolla durante cambiamenti o perturbazioni del mercato
+
+Per dati chiaramente curvi, il [calcolatore di interpolazione](/interpolation/) e gli strumenti di estrapolazione dedicati forniscono più opzioni di metodo rispetto ai valori predefiniti lineari di Excel.
+
+## Quando Usare un Calcolatore Dedicato
+
+Excel è ottimo per lavorare con fogli di calcolo, ma quando hai bisogno di un'estrapolazione rapida e accurata con più opzioni di metodo, uno strumento dedicato fa risparmiare tempo. Il [calcolatore di estrapolazione](https://www.extrapolationcalculator.com/) offre cinque metodi — lineare, esponenziale, logaritmico, polinomiale e quadratico — così puoi confrontare i risultati fianco a fianco e scegliere il miglior adattamento.
+
+Niente formule da scrivere, nessuna configurazione del grafico, nessun dubbio su quale tipo di linea di tendenza usare. Inserisci i tuoi dati, seleziona un metodo e ottieni la tua proiezione istantaneamente. Per modellare la relazione sottostante tra le variabili, il [calcolatore di regressione](/regression/) fornisce un'analisi di regressione dettagliata.
+
+## Conclusione
+
+Puoi estrapolare dati in Excel usando quattro metodi: la funzione TREND per previsioni multi-punto, FORECAST.LINEAR per valori singoli veloci, linee di tendenza per previsioni visive e il foglio di previsione per report in un clic con stagionalità. Ciascuno ha il suo posto a seconda dei tuoi dati e di ciò di cui hai bisogno dalla previsione.
+
+Per risultati più rapidi con cinque diversi metodi di estrapolazione — e senza debug di formule — prova il [calcolatore di estrapolazione gratuito](https://www.extrapolationcalculator.com/).
+
+## Domande Frequenti
+
+<details class="faq-item">
+<summary>Excel può estrapolare dati?</summary>
+
+Sì. Excel offre diversi strumenti integrati per l'estrapolazione: la funzione TREND, la funzione FORECAST.LINEAR, le linee di tendenza nei grafici e la funzione Foglio di previsione. Tutti utilizzano la regressione lineare per impostazione predefinita, sebbene le linee di tendenza e i fogli di previsione supportino altri modelli.
+
+</details>
+
+<details class="faq-item">
+<summary>Cos'è la funzione TREND in Excel?</summary>
+
+TREND calcola valori y previsti lungo una tendenza lineare basandosi sui tuoi dati noti. La sua sintassi è `=TREND(y_noti, x_noti, nuovi_x)`. Adatta una linea retta attraverso i tuoi dati usando il metodo dei minimi quadrati e restituisce i valori proiettati per i nuovi valori x che specifichi.
+
+</details>
+
+<details class="faq-item">
+<summary>Come si estende una linea di tendenza in Excel?</summary>
+
+Aggiungi una linea di tendenza al tuo grafico cliccando con il destro su un punto dati e selezionando "Aggiungi linea di tendenza". Nelle opzioni della linea di tendenza, imposta il campo di previsione "In avanti" sul numero di periodi che desideri proiettare oltre i tuoi dati. La linea di tendenza si estenderà visivamente nell'intervallo futuro.
+
+</details>
+
+<details class="faq-item">
+<summary>FORECAST.LINEAR è accurata?</summary>
+
+FORECAST.LINEAR è accurata per dati che seguono una genuina tendenza lineare. Come tutti i metodi lineari, diventa inaffidabile quando il modello sottostante è non lineare o quando si proietta troppo oltre l'intervallo di dati osservati. Controlla sempre il valore R² per valutare la qualità dell'adattamento prima di fidarti della previsione.
+
+</details>
