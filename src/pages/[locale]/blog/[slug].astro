@@ -16,19 +16,25 @@ export async function getStaticPaths() {
 }
 
 const { locale, post } = Astro.props;
-const { Content } = await post.render();
 const slug = post.id.replace(/\.mdx$/, '');
+
+// Load locale-specific content if available (e.g., hi- prefix for Hindi)
+const allPosts = await getCollection('blog');
+const localizedId = `${locale}-${slug}.mdx`;
+const localizedPost = allPosts.find(p => p.id === localizedId);
+const contentPost = localizedPost ?? post;
+const { Content } = await contentPost.render();
 ---
 
 <BlogLayout
   locale={locale}
-  title={post.data.title}
-  description={post.data.description}
+  title={contentPost.data.title}
+  description={contentPost.data.description}
   currentPath={`/${locale}/blog/${slug}/`}
-  publishDate={post.data.publishDate}
-  author={post.data.author}
-  category={post.data.category}
-  featuredImage={post.data.featuredImage}
+  publishDate={contentPost.data.publishDate}
+  author={contentPost.data.author}
+  category={contentPost.data.category}
+  featuredImage={contentPost.data.featuredImage}
 >
   <Content />
 </BlogLayout>
