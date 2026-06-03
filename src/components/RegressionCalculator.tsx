@@ -227,15 +227,6 @@ export default function RegressionCalculator({ locale = 'en', showChart = true }
 
   return (
     <div className="calculator-card p-6 md:p-10 max-w-5xl mx-auto" role="application" aria-label={L('title', locale)}>
-      <div className="flex gap-2 mb-8 flex-wrap justify-center">
-        {(['simple', 'multiple'] as RegMethod[]).map((m) => (
-          <button key={m} onClick={() => { setMethod(m); setResult(null); setError(''); }}
-            className={method === m ? 'btn-tab-active' : 'btn-tab-inactive'} aria-pressed={method === m}>
-            {methodLabels[m][locale] ?? methodLabels[m].en}
-          </button>
-        ))}
-      </div>
-
       {method === 'simple' ? (
         <>
           <div className="mb-6">
