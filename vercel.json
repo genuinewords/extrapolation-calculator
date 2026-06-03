@@ -1,12 +1,5 @@
 {
   "framework": "astro",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "redirects": [
-    {
-      "source": "/blog/(hi|es|ru|fr|de|it|pt|bn|ja|ko|ms|pl|id|ar|bg|tr|sv)-:slug*",
-      "destination": "/$1/blog/:slug",
-      "permanent": true
-    }
-  ]
+  "outputDirectory": "dist"
 }
