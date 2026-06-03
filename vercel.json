@@ -5,7 +5,7 @@
   "redirects": [
     {
       "source": "/blog/(hi|es|ru|fr|de|it|pt|bn|ja|ko|ms|pl|id|ar|bg|tr|sv)-:slug*",
-      "destination": "/$1/blog/$2",
+      "destination": "/$1/blog/:slug",
       "permanent": true
     }
   ]
