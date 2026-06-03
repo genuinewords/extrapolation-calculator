@@ -13,7 +13,7 @@ export async function getStaticPaths() {
     .flatMap((locale) =>
       basePosts.map((post) => {
         const slug = post.id.replace(/\.mdx$/, '');
-        const localizedId = `${locale}-${slug}`;
+        const localizedId = `${locale}-${slug}.mdx`;
         const localizedPost = allPosts.find(p => p.id === localizedId);
         return {
           params: { locale, slug },
@@ -24,7 +24,7 @@ export async function getStaticPaths() {
 }
 
 const { locale, post } = Astro.props;
-const slug = post.id.replace(/\.mdx$/, '');
+const slug = Astro.params.slug;
 const { Content } = await post.render();
 ---
 
