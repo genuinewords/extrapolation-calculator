@@ -1,0 +1,218 @@
+---
+title: "Kaedah Interpolasi Dibandingkan: Linear vs Lagrange vs Spline Kubik"
+description: Perbandingan praktikal tiga kaedah interpolasi — linear, polinomial Lagrange, dan spline kubik semula jadi — dengan contoh, kes penggunaan, dan bila setiap satu terbaik.
+publishDate: 2026-05-25
+author: Pasukan Kalkulator Ekstrapolasi
+category: Kaedah
+featuredImage: ""
+---
+
+Anda mempunyai set titik data yang diketahui, dan anda perlu menganggar nilai yang berada di antaranya. Kaedah interpolasi mana yang patut anda gunakan? Linear adalah cepat dan mudah. Polinomial Lagrange memuat setiap titik dengan tepat. Spline kubik memberikan anda lengkung paling licin. Setiap satu mempunyai titik manis — dan setiap satu boleh mengelirukan anda jika digunakan secara cuai.
+
+Panduan ini membandingkan tiga kaedah interpolasi secara bersemuka, dengan contoh kerja, rangka kerja keputusan, dan cadangan praktikal. Jika anda juga meramalkan nilai *di luar* julat data anda, lihat panduan kami tentang [interpolasi vs ekstrapolasi](/blog/interpolation-vs-extrapolation/) untuk perbezaan tersebut.
+
+## Apakah Interpolasi?
+
+Interpolasi menganggarkan nilai tidak diketahui dalam julat titik data yang diketahui. Tidak seperti kaedah [ekstrapolasi](/blog/what-is-extrapolation/) yang menonjolkan di luar data yang diperhatikan, interpolasi adalah terbatas — anggaran anda sentiasa dikelilingi oleh ukuran sebenar di kedua-dua belah.
+
+Kekangan ini menjadikan interpolasi secara semula jadi lebih boleh dipercayai. Nilai yang dianggarkan dikekang oleh data, itulah sebabnya jurutera, saintis, dan penganalisis menggunakan interpolasi setiap kali titik sasaran jatuh dalam set data mereka.
+
+Tiga kaedah yang disokong oleh [kalkulator interpolasi](/interpolation/) kami — linear, polinomial Lagrange, dan spline kubik semula jadi — mengambil pendekatan yang berbeza secara fundamental untuk masalah yang sama. Berikut adalah perbandingannya.
+
+## Interpolasi Linear
+
+### Cara Ia Berfungsi
+
+Interpolasi linear menyambung dua titik data berjiran dengan garis lurus dan membaca nilai pada x sasaran anda. Ia mencari dua titik yang merangkumi sasaran anda, mengira kecerunan di antaranya, dan memanjangkan kecerunan tersebut ke titik sasaran.
+
+Formulanya mudah:
+
+**y = y₁ + (x − x₁) × (y₂ − y₁) / (x₂ − x₁)**
+
+Di mana (x₁, y₁) dan (x₂, y₂) adalah dua titik merangkumi.
+
+### Bila Ia Paling Berkesan
+
+- **Data jarak sama** di mana trend asas adalah lebih kurang linear
+- **Anggaran pantas** di mana kelajuan lebih penting daripada ketepatan
+- **Set data besar** di mana mengira model kompleks akan menjadi mahal
+- **Carian jadual** — jadual kejuruteraan, lengkung hasil kewangan, bacaan sensor
+
+### Di Mana Ia Kurang Berkesan
+
+Interpolasi linear menganggap garis lurus antara setiap pasangan titik bersebelahan. Jika data anda mempunyai kelengkungan — pertumbuhan mempercepat, pulangan berkurangan, atau ayunan — andaian garis lurus memperkenalkan ralat. Nilai anggaran akan selalu terletak pada kord antara dua titik, tidak pernah pada lengkung licin melaluinya.
+
+Ini terutamanya ketara dengan data jarang. Jika anda hanya mempunyai lima titik menjejak parabola, interpolasi linear akan menghasilkan anggaran lurus berceranggah yang memandang rendah puncak dan memandang tinggi lembah.
+
+## Interpolasi Polinomial Lagrange
+
+### Cara Ia Berfungsi
+
+Interpolasi Lagrange membina satu polinomial yang melalui *setiap* titik data dengan tepat. Untuk n titik, ia membina polinomial darjah n−1 menggunakan fungsi asas berwajaran — setiap fungsi asas sama dengan 1 pada titik datanya sendiri dan 0 pada semua yang lain.
+
+Hasilnya adalah padanan yang tepat secara matematik: polinomial menyentuh setiap titik. Tiada baki, tiada ralat pada data yang diketahui.
+
+### Bila Ia Paling Berkesan
+
+- **Set data kecil** (2–5 titik) di mana anda mahu padanan tepat
+- **Trend asas licin** di mana satu polinomial boleh menangkap corak
+- **Analisis teori** di mana keanggunan matematik penting
+- **Tujuan pendidikan** — kaedahnya telus dan instruktif
+
+[Kalkulator interpolasi](/interpolation/) kami mengehadkan Lagrange kepada maksimum 5 titik, di mana kaedah ini berprestasi terbaik.
+
+### Di Mana Ia Kurang Berkesan
+
+Polinomial Lagrange mengalami **fenomena Runge** — ayunan liar antara titik data apabila darjah menjadi tinggi. Polinomial darjah-8 yang memuatkan 9 titik boleh berayun secara dramatik antara pemerhatian berturut-turut, menghasilkan nilai interpolasi yang betul secara matematik tetapi tidak masuk akal secara fizikal.
+
+Inilah sebabnya kami mengehadkannya kepada 5 titik. Melebihi itu, ayunan menjadikan kaedah tidak boleh dipercayai. Jika anda mempunyai lebih daripada 5 titik dan memerlukan lengkung licin, spline kubik adalah pilihan yang lebih baik.
+
+Lagrange juga tidak mengendalikan titik baru dengan baik — menambah satu pemerhatian mengubah keseluruhan polinomial, yang menjadikannya tidak praktikal untuk set data tambahan.
+
+## Interpolasi Spline Kubik Semula Jadi
+
+### Cara Ia Berfungsi
+
+Spline kubik memasangkan polinomial kubik berasingan antara setiap pasangan titik data bersebelahan, kemudian menjahitnya bersama dengan syarat padanan. Pada setiap titik dalaman, kubik bersebelahan berkongsi nilai yang sama, terbitan pertama yang sama (kecerunan), dan terbitan kedua yang sama (kelengkungan). Keadaan "semula jadi" menetapkan terbitan kedua kepada sifar pada kedua-dua hujung.
+
+Hasilnya adalah lengkung paling licin yang mungkin melalui data anda — secara matematik, ia meminimumkan jumlah kelengkungan merentas semua segmen.
+
+### Bila Ia Paling Berkesan
+
+- **Lengkung licin** — bingkai kunci animasi, profil kejuruteraan, data saintifik
+- **Set data sederhana hingga besar** di mana linear terlalu kasar dan Lagrange berayun
+- **Sistem fizikal** di mana proses asas adalah selanjar dan boleh dibezakan
+- **Mana-mana senario di mana kelicinan visual penting** — render carta, CAD, pemprosesan isyarat
+
+### Di Mana Ia Kurang Berkesan
+
+Spline kubik tidak boleh mengekstrapolasi — ia hanya berfungsi dalam julat data. Jika x sasaran anda berada di bawah titik data terkecil atau di atas yang terbesar, kaedah ini membuang ralat. Ini adalah mengikut reka bentuk: mengekstrapolasi dengan spline adalah sangat tidak boleh dipercayai kerana segmen kubik tidak dikekang di luar hujung.
+
+Pengiraan spline juga lebih mahal daripada interpolasi linear. Untuk set data yang sangat besar (ribuan titik), penyelesaian sistem tridiagonal menambah overhed, walaupun ia masih cekap berbanding polinomial darjah tinggi.
+
+Untuk memahami kualiti padanan model merentas kaedah, panduan kami tentang [skor R²](/blog/r-squared-confidence/) menerangkan cara menilai sama ada kaedah pilihan anda benar-benar sepadan dengan corak data anda.
+
+## Perbandingan Bersemuka
+
+| Ciri | Linear | Lagrange | Spline Kubik |
+|---------|--------|----------|--------------|
+| Kualiti padanan | Anggaran | Tepat pada titik data | Tepat pada titik data |
+| Kelicinan | Tiada (lurus secara bahagian) | Boleh berayun | Licin (terbitan selanjar) |
+| Titik maksimum | Tanpa had | 5 (disyorkan) | Tanpa had |
+| Ekstrapolasi | Terhad (gunakan segmen sempadan) | Mungkin tetapi berisiko | Tidak disokong |
+| Kelajuan pengiraan | Paling pantas | Sederhana | Sederhana |
+| Terbaik untuk | Anggaran pantas, trend linear | Set data kecil, padanan tepat | Lengkung licin, data fizikal |
+| Risiko terbesar | Terlepas kelengkungan | Fenomena Runge | Tidak boleh mengekstrapolasi |
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Interpolasi linear vs Lagrange vs spline kubik pada empat titik data yang sama">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="10" fill="#374151">
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Tiga Kaedah pada Data Sama</text>
+      <g fill="#1e40af">
+        <circle cx="100" cy="200" r="4.5"/>
+        <circle cx="200" cy="140" r="4.5"/>
+        <circle cx="300" cy="80" r="4.5"/>
+        <circle cx="400" cy="160" r="4.5"/>
+      </g>
+      <path d="M 100 200 L 200 140 L 300 80 L 400 160" stroke="#d4af37" stroke-width="2" stroke-dasharray="4 2"/>
+      <path d="M 100 200 Q 200 130, 300 80 Q 400 130, 400 160" stroke="#1e40af" stroke-width="2" fill="none"/>
+      <path d="M 100 200 C 200 130, 250 100, 300 80 C 350 90, 380 140, 400 160" stroke="#059669" stroke-width="2.5" fill="none"/>
+      <g transform="translate(420, 50)">
+        <rect x="0" y="0" width="160" height="100" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <line x1="10" y1="22" x2="40" y2="22" stroke="#d4af37" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="48" y="25" font-size="10">Linear (secara bahagian)</text>
+        <line x1="10" y1="44" x2="40" y2="44" stroke="#1e40af" stroke-width="2"/>
+        <text x="48" y="47" font-size="10">Lagrange (melengkung)</text>
+        <line x1="10" y1="66" x2="40" y2="66" stroke="#059669" stroke-width="2.5"/>
+        <text x="48" y="69" font-size="10">Spline kubik (licin)</text>
+        <circle cx="25" cy="86" r="3.5" fill="#1e40af"/>
+        <text x="48" y="89" font-size="10">Titik data</text>
+      </g>
+      <text x="120" y="260" font-size="9" fill="#d4af37" font-weight="600">Linear</text>
+      <text x="220" y="260" font-size="9" fill="#1e40af" font-weight="600">Lagrange</text>
+      <text x="330" y="260" font-size="9" fill="#059669" font-weight="600">Spline</text>
+    </g>
+  </svg>
+  <figcaption>Tiga kaedah interpolasi digunakan pada empat titik data yang sama. Linear (emas putus-putus) menyambung titik bersebelahan dengan segmen lurus — mudah tetapi terlepas kelengkungan. Lagrange (biru) memuatkan polinomial tunggal melalui semua titik — tepat tetapi boleh berayun. Spline kubik (hijau) menjahit segmen kubik dengan terbitan selanjar — licin dan stabil untuk set data sederhana. Pilihan bergantung pada bentuk data, bilangan titik, dan sama ada ekstrapolasi diperlukan.</figcaption>
+</figure>
+
+## Contoh Kerja
+
+Pertimbangkan empat titik data yang menjejaki suhu sepanjang hari ini:
+
+| Jam | Suhu (°C) |
+|-----|-----------|
+| 6 | 12 |
+| 10 | 18 |
+| 14 | 26 |
+| 18 | 20 |
+
+Kami mahu suhu pada jam 12 tengah hari (jam 12).
+
+**Interpolasi linear**: Antara (10, 18) dan (14, 26). Kecerunan = (26−18)/(14−10) = 2. Hasil: 18 + 2×2 = **22°C**.
+
+**Polinomial Lagrange**: Memuatkan polinomial darjah-3 melalui keempat-empat titik. Polinomial condong sedikit di bawah anggaran linear kerana ia mengambil kira penurunan berikutnya pada jam 18. Hasil: kira-kira **23.5°C**.
+
+**Spline kubik semula jadi**: Memuatkan segmen kubik dengan kelengkungan selanjar. Spline menyedari bahawa suhu masih meningkat pada jam 12 tetapi semakin perlahan ke arah puncak. Hasil: kira-kira **23.2°C**.
+
+Perbezaan adalah kecil dalam contoh ini, tetapi ia penting. Linear memandang rendah kerana ia mengabaikan kelengkungan. Lagrange memandang tinggi sedikit kerana polinomial darjah tinggi bergoyang. Spline berada di antaranya — licin, terbatas, dan munasabah secara fizikal.
+
+## Cara Memilih Kaedah yang Tepat
+
+Gunakan rangka kerja keputusan ini:
+
+1. **Adakah data anda lebih kurang linear?** Gunakan interpolasi linear — ia pantas, mudah, dan tidak akan mengelirukan anda
+2. **Adakah anda mempunyai 5 titik atau kurang dan perlukan padanan tepat?** Gunakan polinomial Lagrange
+3. **Adakah anda perlukan lengkung licin melalui banyak titik?** Gunakan spline kubik
+4. **Adakah anda bekerja dengan data fizikal atau kejuruteraan?** Gunakan spline kubik — sistem sebenar adalah licin
+5. **Adakah anda perlu meramal di luar julat data?** Tiada satu pun kaedah ini selamat untuk itu — gunakan [kalkulator ekstrapolasi percuma](https://www.extrapolationcalculator.com/) kami yang menawarkan kaedah ekstrapolasi [linear](/blog/linear-extrapolation/), [eksponen](/blog/exponential-growth/), dan [logaritma](/blog/logarithmic-diminishing-returns/)
+6. **Adakah anda membandingkan jenis model?** Panduan kami tentang [kaedah polinomial vs linear](/blog/polynomial-vs-linear/) merangkumi pertukaran secara terperinci
+
+## Tip Praktikal
+
+- **Sentiasa visualkan data anda dahulu** — jika ia kelihatan seperti garis lurus, gunakan interpolasi linear; jika ia melengkung, gunakan spline
+- **Periksa pencilan** — satu titik buruk memesongkan Lagrange secara dramatik dan menjejaskan kelengkungan spline
+- **Linear tidak pernah salah** — ia hanya kurang tepat untuk data melengkung. Jika anda tidak pasti, linear memberikan garis asas yang boleh dipertahankan
+- **Jangan campur interpolasi dan ekstrapolasi** — interpolasi dalam julat anda, ekstrapolasi dengan kaedah khusus
+- **Lebih banyak titik membantu semua kaedah** — tetapi Lagrange merosot dengan terlalu banyak, manakala linear dan spline bertambah baik
+
+## Kesimpulan
+
+Interpolasi linear adalah pantas dan boleh dipercayai untuk data yang lebih kurang linear. Polinomial Lagrange memberikan padanan tepat untuk set data kecil tetapi berayun dengan lebih banyak titik. Spline kubik semula jadi menghasilkan lengkung paling licin dan mengendalikan set data sederhana hingga besar dengan baik, tetapi tidak boleh mengekstrapolasi.
+
+Pilihan yang tepat bergantung pada bentuk data anda, bilangan titik anda, dan sama ada anda perlukan kelajuan, kelicinan, atau ketepatan. Cuba ketiga-tiga kaedah pada set data yang sama menggunakan [kalkulator interpolasi](/interpolation/) kami dan bandingkan hasilnya — perbezaan memberitahu anda banyak tentang corak asas data anda.
+
+Untuk ramalan berangka di luar julat data anda, [kalkulator ekstrapolasi](https://www.extrapolationcalculator.com/) menyediakan lima kaedah yang sesuai untuk corak trend yang berbeza. Apabila anda perlu memodelkan hubungan antara pembolehubah daripada menginterpolasi antara titik, [kalkulator regresi](/regression/) menawarkan alat analisis regresi.
+
+## Soalan Lazim
+
+<details class="faq-item">
+<summary>Kaedah interpolasi yang manakah paling tepat?</summary>
+
+Tiada satu kaedah yang selalu paling tepat. Linear paling tepat untuk data yang benar-benar linear. Spline kubik paling tepat untuk proses fizikal yang licin dan selanjar. Lagrange paling tepat apabila anda mempunyai sangat sedikit titik dan fungsi asas adalah polinomial. Kaedah terbaik sepadan dengan corak sebenar data anda.
+
+</details>
+
+<details class="faq-item">
+<summary>Bilakah saya harus mengelakkan interpolasi spline kubik?</summary>
+
+Elakkan spline kubik apabila anda perlu mengekstrapolasi di luar julat data anda — ia hanya berfungsi dalam sempadan set data anda. Juga berhati-hati dengan data yang mempunyai sudut tajam atau ketakselanjaran, di mana kekangan kelicinan spline mungkin melicinkan ciri sebenar.
+
+</details>
+
+<details class="faq-item">
+<summary>Adakah interpolasi Lagrange lebih baik daripada linear?</summary>
+
+Tidak semestinya. Lagrange memuatkan setiap titik dengan tepat, tetapi ketepatan itu boleh menghasilkan ayunan liar antara titik (fenomena Runge) apabila anda mempunyai lebih daripada 5–6 pemerhatian. Interpolasi linear lebih stabil dan boleh diramal, terutamanya dengan data bising atau tidak teratur.
+
+</details>
+
+<details class="faq-item">
+<summary>Bolehkah saya menggunakan interpolasi untuk ramalan?</summary>
+
+Tidak. Interpolasi menganggarkan nilai *antara* titik data yang diketahui. Peramalan memerlukan meramal di luar julat yang diperhatikan, iaitu ekstrapolasi. Gunakan [kalkulator ekstrapolasi](https://www.extrapolationcalculator.com/) untuk peramalan — ia menyediakan kaedah yang direka untuk ramalan di luar julat.
+
+</details>

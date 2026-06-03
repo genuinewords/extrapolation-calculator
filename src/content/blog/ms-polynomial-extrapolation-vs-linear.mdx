@@ -1,0 +1,179 @@
+---
+title: "Ekstrapolasi Polinomial vs Linear: Bila Menggunakan Setiap"
+description: Bandingkan ekstrapolasi polinomial dan linear. Pelajari perbezaan, bila menggunakan setiap kaedah, dan lihat contoh praktikal dengan data sebenar.
+publishDate: 2026-05-30
+author: Pasukan Kalkulator Ekstrapolasi
+category: Kaedah
+featuredImage: ""
+---
+
+## Pengenalan
+
+Memilih kaedah ekstrapolasi yang salah boleh mengubah ramalan yang menjanjikan menjadi kesilapan yang mahal. Ekstrapolasi polinomial vs linear adalah salah satu dilema paling biasa yang dihadapi oleh penganalisis apabila mengunjurkan trend melampaui data mereka. Jika anda baru kepada konsep ini, lihat panduan pemula kami tentang [apa itu ekstrapolasi](/blog/what-is-extrapolation/) terlebih dahulu. Kedua-dua kaedah digunakan secara meluas, tetapi setiap satu dibina untuk corak data yang berbeza secara asas. Gunakan yang salah dan anda sama ada akan meratakan pertumbuhan sebenar atau menghantar ramalan di luar kawalan. Artikel ini menguraikan bagaimana setiap kaedah berfungsi, membandingkannya secara bersebelahan, dan menunjukkan dengan tepat bila untuk menggunakan satu daripada yang lain.
+
+## Apa itu Ekstrapolasi Linear?
+
+Ekstrapolasi linear melanjutkan trend garis lurus sedia ada ke masa hadapan. Ia menganggap bahawa kadar perubahan antara titik data anda kekal malar, jadi nilai yang diunjurkan berterusan sepanjang cerun yang sama. Formula teras ialah **y = mx + b**, di mana **m** ialah cerun (kadar perubahan) dan **b** ialah pintasan-y.
+
+Bayangkan perniagaan yang jualannya meningkat kira-kira $1,000 setiap bulan. Jika Januari membawa $5,000 dan Februari membawa $6,000, ekstrapolasi linear meramalkan Mac pada $7,000, April pada $8,000, dan seterusnya. Garis itu hanya terus meningkat pada kadar yang sama.
+
+Ekstrapolasi linear berfungsi paling baik apabila data anda mengikuti trend yang stabil dan tetap tanpa tanda-tanda melengkung ke atas atau ke bawah. Ia adalah kaedah paling mudah yang ada dan, untuk ramalan jangka pendek pada data yang konsisten, ia sering menjadi pilihan yang paling boleh dipercayai. Untuk mendalami mekaniknya, lihat [panduan ekstrapolasi linear](/blog/linear-extrapolation/) kami.
+
+## Apa itu Ekstrapolasi Polinomial?
+
+Ekstrapolasi polinomial melanjutkan trend melengkung dengan memadankan persamaan polinomial kepada data anda. Daripada memaksa garis lurus, ia boleh memodelkan pecutan, nyahpecutan, dan bentuk yang lebih kompleks bergantung pada darjah polinomial. Polinomial darjah kedua (kuadratik) menangkap satu lengkung, darjah ketiga (kubik) boleh menangkap bentuk-S, dan darjah yang lebih tinggi menambah lebih fleksibiliti.
+
+Pertimbangkan permulaan yang pertumbuhan penggunanya bermula perlahan tetapi memecut setiap suku tahun. Garis lurus akan memandang rendah momentum itu, tetapi lengkung polinomial membengkok untuk memadankan kadar perubahan yang semakin meningkat. Ini menjadikan ekstrapolasi polinomial sangat berguna untuk senario ramalan tak linear di mana trend jelas melengkung.
+
+Tolak ansurnya ialah kerumitan. Polinomial darjah lebih tinggi memadankan data sejarah dengan lebih rapat, tetapi boleh bertingkah laku tidak menentu di luar julat data. Namun, apabila data anda jelas melengkung dan kaedah linear tidak mencukupi, ekstrapolasi polinomial memberikan unjuran yang lebih realistik. Ketahui lebih lanjut tentang [kaedah polinomial vs linear](/blog/polynomial-vs-linear/) di blog kami.
+
+## Perbandingan Bersebelahan
+
+| Kriteria | Ekstrapolasi Linear | Ekstrapolasi Polinomial |
+|----------|---------------------|--------------------------|
+| Corak | Garis lurus | Lengkung |
+| Terbaik Untuk | Trend stabil | Trend memecut/nyahpecut |
+| Kerumitan | Mudah | Lebih kompleks |
+| Risiko | Rendah untuk jangka pendek | Lebih tinggi untuk jangka panjang |
+| Contoh | Pertumbuhan jualan linear | Puncak permintaan bermusim |
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Corak ekstrapolasi linear versus polinomial: garis lurus vs lengkung">
+    <rect width="600" height="260" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <g transform="translate(30, 30)">
+        <rect x="0" y="0" width="260" height="200" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Ekstrapolasi Linear</text>
+        <line x1="30" y1="170" x2="240" y2="170" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="30" x2="30" y2="170" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="150" y1="30" x2="150" y2="170" stroke="#94a3b8" stroke-dasharray="3 3"/>
+        <text x="160" y="35" font-size="9" fill="#64748b">ekstrapolasi →</text>
+        <path d="M 50 150 L 100 130 L 150 110" stroke="#d4af37" stroke-width="2" fill="none"/>
+        <path d="M 150 110 L 230 75" stroke="#d4af37" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+        <g fill="#1e40af">
+          <circle cx="50" cy="150" r="3.5"/>
+          <circle cx="100" cy="130" r="3.5"/>
+          <circle cx="150" cy="110" r="4.5" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="200" cy="90" r="4.5" stroke="#fff" stroke-width="1.5"/>
+        </g>
+        <text x="130" y="190" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">cerun malar</text>
+      </g>
+      <g transform="translate(310, 30)">
+        <rect x="0" y="0" width="260" height="200" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Ekstrapolasi Polinomial</text>
+        <line x1="30" y1="170" x2="240" y2="170" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="30" x2="30" y2="170" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="150" y1="30" x2="150" y2="170" stroke="#94a3b8" stroke-dasharray="3 3"/>
+        <text x="160" y="35" font-size="9" fill="#64748b">ekstrapolasi →</text>
+        <path d="M 50 160 Q 100 130, 150 100" stroke="#d4af37" stroke-width="2" fill="none"/>
+        <path d="M 150 100 Q 180 70, 230 35" stroke="#d4af37" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+        <g fill="#1e40af">
+          <circle cx="50" cy="160" r="3.5"/>
+          <circle cx="100" cy="130" r="3.5"/>
+          <circle cx="150" cy="100" r="4.5" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="200" cy="60" r="4.5" stroke="#fff" stroke-width="1.5"/>
+        </g>
+        <text x="130" y="190" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">lengkung, cerun berubah</text>
+      </g>
+    </g>
+  </svg>
+  <figcaption>Ekstrapolasi linear vs polinomial bersebelahan. Unjuran linear (kiri) melanjutkan cerun malar selama-lamanya — boleh diramal dan stabil, tetapi tidak dapat menangkap pecutan atau nyahpecutan. Unjuran polinomial (kanan) melengkung untuk memadankan kadar perubahan yang berubah-ubah, menangkap corak pecutan yang terlepas oleh garis lurus — tetapi dengan risiko ketidakstabilan yang lebih besar jika lengkung terlebih jangkauan di luar julat data.</figcaption>
+</figure>
+
+## Bila Menggunakan Setiap
+
+**Gunakan ekstrapolasi linear apabila:**
+
+- Trend anda stabil dan kadar perubahannya hampir malar
+- Anda mempunyai set data kecil, biasanya kurang daripada lima atau enam titik
+- Anda meramal hanya jarak pendek melampaui data sedia ada
+- Kesederhanaan dan kebolehinterpretasian lebih penting daripada pemadanan lengkung
+
+**Gunakan ekstrapolasi polinomial apabila:**
+
+- Trend anda jelas melengkung — sama ada memecut atau menyahpecut
+- Anda mempunyai data yang mencukupi untuk mewajarkan pemadanan lengkung, idealnya lapan atau lebih titik
+- Proses asas adalah kompleks, seperti kitaran bermusim atau pertumbuhan kompaun
+- Garis lurus meninggalkan baki yang boleh dilihat yang boleh diserap oleh lengkung
+
+**Carta alir keputusan pantas dalam bentuk teks:**
+
+1. Adakah plot data anda kelihatan lebih kurang lurus? → Gunakan linear.
+2. Adakah ia jelas melengkung? → Gunakan polinomial.
+3. Adakah anda mengunjur jauh melampaui data anda? → Kekal dengan linear atau polinomial darjah rendah untuk menghadkan risiko.
+4. Adakah anda mempunyai kurang daripada enam titik? → Gunakan linear tanpa mengira rupa.
+
+Memilih kaedah ekstrapolasi yang betul adalah tentang memadankan matematik dengan bentuk data anda. Untuk asas konsep yang lebih lanjut, lihat siaran kami tentang [interpolasi vs ekstrapolasi](/blog/interpolation-vs-extrapolation/).
+
+## Contoh Praktikal
+
+Mari kita gunakan kedua-dua kaedah pada set data yang sama dan bandingkan hasilnya.
+
+**Data hasil suku tahunan:**
+
+| Suku | Hasil |
+|---------|-------|
+| Q1 | $10K |
+| Q2 | $15K |
+| Q3 | $22K |
+| Q4 | $31K |
+| Q5 | $42K |
+
+Peningkatan suku ke suku ialah $5K, $7K, $9K, dan $11K — setiap lonjakan meningkat sebanyak $2K. Perbezaan kedua yang malar itu menandakan pertumbuhan kuadratik.
+
+**Padanan linear:** Cerun purata ialah kira-kira $8K setiap suku tahun, memberikan kita garis yang meningkat pada kadar malar.
+
+**Padanan kuadratik:** Polinomial darjah kedua menangkap corak pecutan, dengan formula **y = x² + 2x + 7** (di mana x ialah nombor suku).
+
+**Nilai ramalan:**
+
+| Suku | Ramalan Linear | Ramalan Polinomial |
+|---------|-------------------|----------------------|
+| Q6 | $50K | $55K |
+| Q7 | $58K | $70K |
+
+Model linear memandang rendah hasil masa hadapan kerana ia tidak boleh mengambil kira pecutan. Model polinomial mencerminkan momentum yang semakin meningkat dan menghasilkan ramalan yang lebih tinggi — dan kemungkinan lebih tepat. Walau bagaimanapun, ramalan polinomial untuk Q7 melonjak kepada $70K, yang menunjukkan betapa cepatnya model melengkung boleh meningkat. Anda boleh menyemak padanan model menggunakan [skor R²](/blog/r-squared-confidence/) untuk melihat kaedah mana yang lebih menerangkan data anda.
+
+## Risiko dan Had
+
+Tiada kaedah ekstrapolasi yang kalis kesilapan. Ekstrapolasi linear terlepas kelengkungan sepenuhnya, jadi ia akan memandang rendah trend memecut dan memandang lebih trend menyahpecut secara sistematik. Jika data anda walaupun sedikit melengkung, unjuran linear akan semakin jauh dari realiti dengan setiap langkah.
+
+Ekstrapolasi polinomial membawa risiko yang bertentangan. Polinomial darjah lebih tinggi boleh memadankan data sejarah dengan cantik tetapi kemudian meletup ke arah yang tidak dijangka apabila anda melangkah melampaui julat yang diperhatikan. Ketidakstabilan ini, berkaitan dengan fenomena Runge, menjadikan ramalan polinomial jangka panjang tidak boleh dipercayai. Perubahan kecil dalam data input juga boleh menghasilkan lengkung yang sangat berbeza. Cabaran ini mencerminkan masalah yang lebih luas dalam [ekstrapolasi dalam pembelajaran mesin](/blog/extrapolation-machine-learning/), di mana model juga sukar membuat ramalan yang boleh dipercayai di luar julat latihan mereka.
+
+Kedua-dua kaedah sangat bergantung pada kualiti data. Pencilan, ralat pengukuran, dan titik yang hilang boleh memesongkan cerun linear atau membengkokkan polinomial ke arah yang salah. Dalam perdebatan ekstrapolasi polinomial vs linear, pendekatan paling selamat ialah menggunakan kaedah paling mudah yang sesuai dengan data anda dan jangan sekali-kali mengunjur terlalu jauh ke dalam yang tidak diketahui. Untuk data yang berkembang secara eksponen daripada polinomial, lihat panduan kami tentang [ekstrapolasi eksponen](/blog/exponential-growth/).
+
+## Alat untuk Kedua-dua Kaedah
+
+Anda tidak memerlukan perisian khusus untuk bermula. Excel boleh memadankan trend linear dengan fungsi SLOPE dan INTERCEPT, dan trend polinomial dengan fungsi LINEST — panduan [cara ekstrapolasi data dalam Excel](/blog/how-to-extrapolate-data-in-excel/) kami merangkumi kedua-dua pendekatan secara terperinci. Pengguna Python boleh memanfaatkan polyfit dan polyval NumPy untuk kerja polinomial, manakala R menawarkan fungsi lm untuk model linear dan polinomial. Untuk ramalan berangka pantas, [kalkulator ekstrapolasi](https://www.extrapolationcalculator.com/) menyokong kedua-dua kaedah linear dan polinomial. Jika anda perlu mengisi jurang dalam julat data anda terlebih dahulu, cuba [kalkulator interpolasi](/interpolation/). Untuk memodelkan hubungan asas antara pemboleh ubah, [kalkulator regresi](/regression/) menyediakan analisis regresi terperinci.
+
+## Kesimpulan
+
+Ekstrapolasi linear adalah mudah, stabil, dan sesuai untuk ramalan jangka pendek pada data yang stabil. Ekstrapolasi polinomial adalah lebih fleksibel dan menangkap corak melengkung, tetapi membawa risiko yang lebih tinggi semakin jauh anda mengunjur. Pilihan yang tepat bergantung sepenuhnya pada bentuk data anda — bukan pada kaedah mana yang lebih canggih. Padankan model anda dengan corak anda, pastikan unjuran konservatif, dan sentiasa sahkan dengan ukuran kebaikan-padanan. Cuba kedua-dua kaedah pada data anda dengan [kalkulator ekstrapolasi percuma](https://www.extrapolationcalculator.com/).
+
+<details class="faq-item">
+<summary>Apakah perbezaan antara ekstrapolasi linear dan polinomial?</summary>
+
+Ekstrapolasi linear mengunjur data sepanjang garis lurus dengan menganggap kadar perubahan yang malar. Ekstrapolasi polinomial memadankan persamaan melengkung kepada data, membolehkan kadar perubahan itu sendiri meningkat atau menurun. Linear lebih mudah dan stabil; polinomial lebih fleksibel tetapi kurang boleh diramal melampaui julat data.
+
+</details>
+
+<details class="faq-item">
+<summary>Bilakah saya harus menggunakan ekstrapolasi polinomial?</summary>
+
+Gunakan ekstrapolasi polinomial apabila data anda jelas melengkung — seperti pertumbuhan memecut atau corak bermusim — dan anda mempunyai titik yang mencukupi (biasanya lapan atau lebih) untuk menyokong padanan lengkung yang boleh dipercayai. Elakkan untuk set data kecil atau ramalan jarak jauh di mana lengkung boleh menjadi tidak stabil.
+
+</details>
+
+<details class="faq-item">
+<summary>Adakah ekstrapolasi polinomial lebih tepat?</summary>
+
+Ia boleh menjadi lebih tepat untuk data dengan kelengkungan tulen, kerana ia menangkap corak yang terlepas oleh garis lurus. Walau bagaimanapun, ketepatan menurun dengan cepat apabila anda bergerak lebih jauh dari data yang diperhatikan, dan polinomial darjah tinggi boleh menghasilkan hasil yang liar. Sentiasa bandingkan kedua-dua kaedah dan periksa statistik padanan.
+
+</details>
+
+<details class="faq-item">
+<summary>Bolehkah saya menggunakan ekstrapolasi polinomial dalam Excel?</summary>
+
+Ya. Fungsi LINEST Excel boleh memadankan lengkung polinomial dengan membekalkan kuasa tinggi x sebagai input tambahan. Anda juga boleh menambah garis trend polinomial pada carta dan memaparkan persamaan pada graf. Untuk panduan langkah demi langkah, [panduan ekstrapolasi linear](/blog/linear-extrapolation/) kami merangkumi aliran kerja Excel secara terperinci.
+
+</details>

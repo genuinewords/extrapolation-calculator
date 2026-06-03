@@ -1,0 +1,133 @@
+---
+title: "Azalan Getiriler için Logaritmik Ekstrapolasyon"
+description: Büyüme zamanla yavaşladığında, logaritmik ekstrapolasyon doğrusal ve üstel yöntemlerin kaçırdığı deseni yakalar.
+publishDate: 2026-05-22
+author: Extrapolation Calculator Team
+category: Temeller
+featuredImage: ""
+---
+
+Tüm büyümeler hızlanmaz. Birçok gerçek dünya senaryosunda, kazançlar zamanla azalır — her ek çaba birimi giderek daha az getiri sağlar. Logaritmik ekstrapolasyon tam bu noktada vazgeçilmez hale gelir ve sayısız doğal ve insan sisteminin nasıl davrandığını yansıtan matematiksel bir çerçeve sunar.
+
+## Logaritmik Ekstrapolasyon Nedir?
+
+Logaritmik ekstrapolasyon, bağımlı değişkenin bağımsız değişkenle birlikte arttığı ancak azalan bir hızda olduğu verileri modelleyen bir eğri uydurma yöntemidir. Düz çizgi büyümesi veya patlayıcı hızlanma öngörmek yerine, ilerlemenin kademeli olarak düzleştiği doygunlaşan sistemlerin gerçekliğini yakalar.
+
+Daha önce [ekstrapolasyon hesaplayıcımızı](/) kullandıysanız, logaritmik modelin doğrusal, üstel ve polinomun yanında mevcut model türlerinden biri olduğunu fark etmişsinizdir. Bunu dahil etmemizin nedeni basit: çok sayıda gerçek dünya veri seti bu deseni takip eder ve logaritmik verilere doğrusal veya üstel bir uyum zorlamak yanıltıcı tahminler üretir.
+
+## Matematiksel Model
+
+Logaritmik fonksiyon şu şekilde ifade edilir:
+
+**y = a + b · ln(x)**
+
+Burada:
+- **y** tahmin edilen değerdir
+- **x** bağımsız değişkendir (sıfırdan büyük olmalıdır)
+- **a** dikey kesişim noktasıdır, ln(x) sıfıra yaklaştığında başlangıç değerini temsil eder
+- **b** eğim katsayısıdır, ln(x) arttıkça y'nin ne kadar dik yükseldiğini belirler
+- **ln(x)** x'in doğal logaritmasıdır
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Logaritmik eğri: x arttıkça yavaşlayan ve düzleşen hızlı başlangıç büyümesi">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Logaritmik Eğri: y = a + b·ln(x)</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <path d="M 80 220 Q 130 165, 180 130 Q 240 100, 300 80 Q 380 60, 480 45" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+      <g fill="#1e40af">
+        <circle cx="80" cy="220" r="4"/>
+        <circle cx="130" cy="165" r="4"/>
+        <circle cx="180" cy="130" r="4"/>
+        <circle cx="240" cy="100" r="4"/>
+        <circle cx="300" cy="80" r="4"/>
+        <circle cx="380" cy="62" r="4"/>
+        <circle cx="480" cy="48" r="4"/>
+      </g>
+      <text x="80" y="260" font-size="9" fill="#64748b">x=1</text>
+      <text x="125" y="260" font-size="9" fill="#64748b">x=3</text>
+      <text x="175" y="260" font-size="9" fill="#64748b">x=6</text>
+      <text x="235" y="260" font-size="9" fill="#64748b">x=12</text>
+      <text x="295" y="260" font-size="9" fill="#64748b">x=24</text>
+      <text x="375" y="260" font-size="9" fill="#64748b">x=48</text>
+      <text x="475" y="260" font-size="9" fill="#64748b">x=96</text>
+      <text x="380" y="35" font-size="10" font-weight="600" fill="#d4af37">Önce hızlı, sonra düzleşir</text>
+      <text x="80" y="195" font-size="9" fill="#1e40af" font-weight="600">yüksek marjinal kazanç</text>
+      <text x="430" y="80" font-size="9" fill="#1e40af" font-weight="600">düşük marjinal kazanç</text>
+    </g>
+  </svg>
+  <figcaption>Logaritmik model y = a + b·ln(x) görselleştirilmiş. Eğri küçük x değerlerinde dik yükselir, ardından x arttıkça giderek düzleşir — azalan getirilerin matematiksel imzası.</figcaption>
+</figure>
+
+## Azalan Getiriler Neden Gerçek Sistemlerde Oluşur?
+
+**Kaynak doygunluğu.** Bir pazar doygunluğa yaklaştıkça, her ek müşteriyi elde etmek zorlaşır. Aynı dinamik balıkçılık verimleri, maden çıkarma ve reklam erişimi için de geçerlidir.
+
+**Bilişsel ve beceri sınırları.** İnsan beyni doğrusal öğrenmez. Yeni bir beceri edinmenin ilk aşamaları dramatik ilerleme sağlar, ancak yetkinlik arttıkça daha fazla iyileşme üssel olarak daha fazla pratik gerektirir.
+
+**Fiziksel kısıtlamalar.** Birçok fiziksel süreç logaritmik desenleri takip eder — Richter ölçeği, desibel cinsinden ses yoğunluğu, radyasyon emilimi.
+
+**Ekonomik verimlilik.** Diğerleri sabit tutulurken tek bir girdiden daha fazla eklemek kaçınılmaz olarak azalan marjinal getiriler üretir.
+
+## Çalışılmış Örnek: Kullanıcı Büyümesi Doygunluğu
+
+| Ay | Aktif Kullanıcılar |
+|----|-------------------|
+| 1  | 1.000             |
+| 3  | 2.400             |
+| 6  | 3.500             |
+| 9  | 4.200             |
+| 12 | 4.800             |
+| 18 | 5.500             |
+| 24 | 5.900             |
+
+**y = 1000 + 1.400 · ln(x)** modeliyle 36. aya ekstrapolasyon: ≈ 6.012
+
+[Doğrusal ekstrapolasyon](/blog/linear-extrapolation/) 6.500–7.000, [üssel ekstrapolasyon](/blog/exponential-growth/) ise 8.000 veya daha fazlasını öngörürdü.
+
+## Gerçek Dünya Uygulamaları
+
+- **Öğrenme eğrileri** — hızlı başlangıç, yavaş ustalaşma
+- **Pazar doygunluğu** — sosyal medya, akıllı telefon, yayın hizmetleri
+- **Fiziksel süreçler** — Richter ölçeği, desibel, radyasyon
+- **Çaba-çıktı ilişkileri** — çalışma saati vs sınav puanı, reklam vs gelir
+
+## Üstel vs Logaritmik
+
+| Özellik | Üstel | Logaritmik |
+|---------|-------|------------|
+| Büyüme yönü | Hızlanan | Yavaşlayan |
+| Eğri şekli | Yukarı içbükey | Aşağı içbükey |
+| Birinci türev | x ile artar | x ile azalır |
+| Uzun vadeli | Sınırsız, giderek hızlı | Sınırsız, giderek yavaş |
+
+## SSS
+
+<details class="faq-item">
+<summary>Logaritmik ekstrapolasyonu ne zaman kullanmalıyım?</summary>
+
+Verileriniz açıkça yavaşlayan büyüme gösterdiğinde. Büyüme hızlanıyorsa [üssel ekstrapolasyon](/blog/exponential-growth/) kullanın.
+
+</details>
+
+<details class="faq-item">
+<summary>Negatif x değerlerini işleyebilir mi?</summary>
+
+Hayır. Doğal logaritma x ≤ 0 için tanımsızdır.
+
+</details>
+
+<details class="faq-item">
+<summary>Logaritmik ekstrapolasyon muhafazakar mıdır?</summary>
+
+Evet, bu onun güçlü yanlarından biridir. Üstel veya polinom yöntemlerden daha muhafazakar tahminler üretir.
+
+</details>
+
+<details class="faq-item">
+<summary>Verilerimin logaritmik deseni takip edip etmediğini nasıl anlarım?</summary>
+
+Verilerinizi çizin. Eğri önce hızlı yükselip sonra düzleşiyorsa, logaritmik iyi bir adaydır.
+
+</details>

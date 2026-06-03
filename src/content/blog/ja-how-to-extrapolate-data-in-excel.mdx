@@ -1,0 +1,438 @@
+---
+title: "Excelでデータを外挿する方法（ステップバイステップ）"
+description: TREND、FORECAST.LINEAR、トレンドライン、予測シートを使用してExcelでデータを外挿する4つの簡単な方法を学びます。ステップバイステップの例を含みます。
+publishDate: 2026-06-10
+author: 外挿計算機チーム
+category: チュートリアル
+featuredImage: ""
+---
+
+Excelはデータ予測に最も広く使われているツールの1つです。四半期収益の予測、来月の在庫需要の見積もり、ユーザー成長の予測など、Excelにはスプレッドシートを持つ誰でも外挿を利用できる組み込み関数があります。
+
+しかし、Excelでデータを外挿する方法を知るには、状況に合った適切な方法を選ぶ必要があります。このガイドでは、シンプルな数式からワンクリック予測シートまでの4つのアプローチを説明します。データとスキルレベルに合った方法を選べます。概念自体が新しい場合は、[外挿とは何か](/blog/what-is-extrapolation/)のガイドから始めてください。
+
+### 4つのExcel外挿方法の概要
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="4つのExcel外挿方法の概要">
+  <rect width="600" height="200" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <g transform="translate(20, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">1</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">TREND</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">数式</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">複数</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">値</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">全Excel</text>
+    </g>
+    <g transform="translate(165, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">2</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">FORECAST</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">.LINEAR</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">単一</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">値</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">2016+</text>
+    </g>
+    <g transform="translate(310, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">3</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">トレンドライン</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">ビジュアル</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">チャート</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">オーバーレイ</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">全Excel</text>
+    </g>
+    <g transform="translate(455, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">4</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">予測</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">シート</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">ワンクリック</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">ダッシュボード</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">2016+</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Excelでデータを外挿する4つの方法：TREND関数、FORECAST.LINEAR、チャートのトレンドライン、予測シート — 使いやすさとExcelバージョンの互換性で比較しました。</figcaption>
+</figure>
+
+## 方法1：TREND関数を使用する
+
+### 機能
+
+TREND関数は、線形トレンドに沿った予測値を計算します。既知のデータを取得し、最小二乗法を使用して直線を適合させ、指定した新しいx値に対するy値を返します。
+
+### 構文
+
+```
+=TREND(known_y's, known_x's, new_x's)
+```
+
+- **known_y's**: 既知の従属値の範囲（例：売上高）
+- **known_x's**: 既知の独立値の範囲（例：月番号）
+- **new_x's**: 予測したいx値
+
+### 視覚的な概要
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="TREND関数：既知のデータが線形トレンドラインを介して予測値に拡張される">
+  <defs>
+    <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="280" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">TREND関数 — 線形予測</text>
+    <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <path d="M 40 220 L 560 80" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M 130 205 L 175 180 L 220 158 L 265 138 L 310 115 L 355 95 L 400 80 L 445 65 L 490 50 L 535 38" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <path d="M 400 80 L 445 65 L 490 50 L 535 38 L 535 240 L 400 240 Z" fill="url(#trendFill)"/>
+    <line x1="400" y1="40" x2="400" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="425" y="232" font-size="10" fill="#64748b">予測値</text>
+    <g fill="#d4af37">
+      <circle cx="130" cy="205" r="4"/>
+      <circle cx="175" cy="180" r="4"/>
+      <circle cx="220" cy="158" r="4"/>
+      <circle cx="265" cy="138" r="4"/>
+      <circle cx="310" cy="115" r="4"/>
+      <circle cx="355" cy="95" r="4"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="400" cy="80" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="445" cy="65" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="490" cy="50" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="535" cy="38" r="5" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="120" y="258" font-size="10" fill="#64748b">M1</text>
+    <text x="165" y="258" font-size="10" fill="#64748b">M2</text>
+    <text x="210" y="258" font-size="10" fill="#64748b">M3</text>
+    <text x="255" y="258" font-size="10" fill="#64748b">M4</text>
+    <text x="300" y="258" font-size="10" fill="#64748b">M5</text>
+    <text x="345" y="258" font-size="10" fill="#64748b">M6</text>
+    <text x="388" y="258" font-size="10" fill="#1e40af" font-weight="600">M7</text>
+    <text x="433" y="258" font-size="10" fill="#1e40af" font-weight="600">M8</text>
+    <text x="478" y="258" font-size="10" fill="#1e40af" font-weight="600">M9</text>
+    <text x="523" y="258" font-size="10" fill="#1e40af" font-weight="600">M10</text>
+    <g transform="translate(0,0)">
+      <circle cx="155" cy="100" r="4" fill="#d4af37"/>
+      <text x="166" y="104" font-size="10">既知データ（ゴールド）</text>
+      <circle cx="155" cy="118" r="4" fill="#1e40af"/>
+      <text x="166" y="122" font-size="10">予測値（青）</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Excel TREND関数の図：6ヶ月分の既知の売上データ（ゴールドポイント、M1–M6）に最小二乗線形トレンドラインを適合させ、将来の4ヶ月分（青いポイント、M7–M10）を予測するために前方に延長しています。点線のゴールドラインは、観測範囲を超えて値を外挿するために使用される基礎となる線形モデルを示しています。</figcaption>
+</figure>
+
+### ステップバイステップの例
+
+1月から6月までの月次売上データがあり、7月と8月を予測したいとします：
+
+| 月 | 売上 |
+|-------|-------|
+| 1 | $10,000 |
+| 2 | $12,000 |
+| 3 | $14,500 |
+| 4 | $16,000 |
+| 5 | $18,500 |
+| 6 | $20,000 |
+
+1. 列A（月）と列B（売上）にデータを入力します
+2. セルD2に「`=TREND(B2:B7, A2:A7, 7)`」と入力します — これで月7を予測します
+3. セルD3に「`=TREND(B2:B7, A2:A7, 8)`」と入力します — これで月8を予測します
+
+Excelは月1〜6を通じて線形トレンドを適合させ、前方に投影します。TREND関数は月7で約$22,143、月8で約$24,286を返します。
+
+TRENDは、複数の値を一度に予測する必要がある場合に特に便利です。新しいx値の配列を渡すと、すべての予測を1ステップで取得できます。
+
+## 方法2：FORECAST.LINEAR関数を使用する
+
+### 機能
+
+FORECAST.LINEAR（Excel 2016以降で利用可能）は、既存のデータに基づいて指定されたx値に対する単一のy値を予測します。TRENDと同じ線形回帰アルゴリズムを使用しますが、単一点予測用に設計されています。
+
+### 構文
+
+```
+=FORECAST.LINEAR(x, known_y's, known_x's)
+```
+
+- **x**: 予測したい特定のデータポイント
+- **known_y's**: 既知の従属値の範囲
+- **known_x's**: 既知の独立値の範囲
+
+### 視覚的な概要
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="FORECAST.LINEAR：単一のx入力が線形トレンドライン上の1つの予測y値を返す">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e40af"/>
+    </marker>
+  </defs>
+  <rect width="600" height="280" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">FORECAST.LINEAR — 単一点予測</text>
+    <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <path d="M 70 220 L 530 50" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M 90 210 L 150 190 L 210 170 L 270 145 L 330 120 L 390 95 L 450 70 L 510 50" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <g fill="#d4af37">
+      <circle cx="90" cy="210" r="4"/>
+      <circle cx="150" cy="190" r="4"/>
+      <circle cx="210" cy="170" r="4"/>
+      <circle cx="270" cy="145" r="4"/>
+      <circle cx="330" cy="120" r="4"/>
+      <circle cx="390" cy="95" r="4"/>
+      <circle cx="450" cy="70" r="4"/>
+      <circle cx="510" cy="50" r="4"/>
+    </g>
+    <line x1="510" y1="50" x2="510" y2="240" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <line x1="40" y1="50" x2="510" y2="50" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="510" cy="50" r="6" fill="#1e40af" stroke="#fff" stroke-width="2"/>
+    <text x="500" y="258" font-size="10" fill="#1e40af" font-weight="600">x = 12</text>
+    <text x="22" y="54" font-size="10" fill="#1e40af" font-weight="600">y ≈ $32,857</text>
+    <g>
+      <rect x="120" y="100" width="180" height="50" rx="6" fill="#fff" stroke="#1e40af" stroke-width="1.5"/>
+      <text x="130" y="120" font-size="10" font-weight="600" fill="#0a0a0a">セル数式</text>
+      <text x="130" y="138" font-size="10" font-family="monospace" fill="#1e40af">=FORECAST.LINEAR(12, B2:B7, A2:A7)</text>
+    </g>
+    <line x1="300" y1="125" x2="505" y2="55" stroke="#1e40af" stroke-width="1.2" marker-end="url(#arrow)"/>
+  </g>
+</svg>
+  <figcaption>Excel FORECAST.LINEARの例：単一のターゲットx値12が、既知のy範囲（B2:B7）とx範囲（A2:A7）とともに数式に入力され、約$32,857の1つの予測y値を返します。ゴールドのトレンドライン上の青い点は、予測が到達する位置を示しています。</figcaption>
+</figure>
+
+### ステップバイステップの例
+
+同じ売上データを使用して、月12の収益を予測します：
+
+1. 空のセルに「`=FORECAST.LINEAR(12, B2:B7, A2:A7)`」と入力します
+2. Excelは月1〜6の線形トレンドに基づいて月12の予想売上を返します
+
+結果は約$32,857になり、月1の値のほぼ2倍で、着実な上昇トレンドを反映しています。
+
+FORECAST.LINEARは、迅速な単一値の外挿を得るための最も簡単な方法です。安定したデータに対する[線形外挿](/blog/linear-extrapolation/)には、この1つの数式で十分なことがよくあります。
+
+## 方法3：チャートのトレンドラインを使用する
+
+### 機能
+
+トレンドラインは、Excelチャートに視覚的な予測を追加します。トレンドラインのタイプ（線形、多項式、指数）を選択し、データの方向性を確認するために前方に延長できます。予測を*見る*ことができるため、これが最も直感的な方法です。
+
+### 視覚的な概要
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="トレンドラインチャート：データポイントと将来に向かって延びる線形トレンドライン">
+  <rect width="600" height="300" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">トレンドライン — チャートの視覚的予測</text>
+    <rect x="40" y="40" width="520" height="220" fill="#fff" stroke="#e5e7eb"/>
+    <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="140" x2="540" y2="140" stroke="#e5e7eb" stroke-dasharray="3 3"/>
+    <line x1="380" y1="60" x2="380" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="200" y="55" font-size="10" fill="#64748b">履歴データ</text>
+    <text x="420" y="55" font-size="10" fill="#64748b">予測領域</text>
+    <path d="M 80 220 L 130 200 L 180 180 L 230 160 L 280 140 L 330 115 L 380 100 L 430 80 L 480 60 L 530 40" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <g fill="#d4af37">
+      <circle cx="80" cy="220" r="4"/>
+      <circle cx="130" cy="200" r="4"/>
+      <circle cx="180" cy="180" r="4"/>
+      <circle cx="230" cy="160" r="4"/>
+      <circle cx="280" cy="140" r="4"/>
+      <circle cx="330" cy="115" r="4"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="380" cy="100" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="430" cy="80" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="480" cy="60" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="530" cy="40" r="5" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="455" y="280" font-size="11" font-family="monospace" fill="#d4af37" font-weight="600">y = 2,143x + 7,857</text>
+    <text x="510" y="295" font-size="11" font-family="monospace" fill="#0a0a0a" font-weight="600">R² = 0.998</text>
+  </g>
+</svg>
+  <figcaption>Excelチャートのトレンドライン：売上散布図に線形トレンドラインが重ねられ、次の4期間（青い点）を予測するために前方に延長されています。チャートにはトレンドラインの式（y = 2,143x + 7,857）とR²値0.998が表示され、優れた線形適合を示しており、自信を持って外挿できます。</figcaption>
+</figure>
+
+### ステップバイステップの手順
+
+1. データ（月と売上）を選択します
+2. **挿入 → グラフ**に移動し、折れ線グラフまたは散布図を選択します
+3. グラフ内の任意のデータポイントをクリックして系列を選択します
+4. 右クリックして**近似曲線の追加**を選択します
+5. 近似曲線のオプションウィンドウで：
+   - **線形**を選択します（データが曲線の場合は多項式または指数）
+   - **前方**の予測を、投影する期間数に設定します（例：6ヶ月）
+   - 適合品質を確認するには、**グラフに数式を表示する**と**R-2乗値を表示する**をチェックします
+
+トレンドラインはデータを超えて延長され、予測値を視覚的に表示します。R²値は、線がどの程度適合しているかを示します。解釈については、[R²スコア](/blog/r-squared-confidence/)のガイドを参照してください。
+
+### この方法を使用するタイミング
+
+トレンドラインは、プレゼンテーションやレポートのための視覚的な予測が必要な場合に最適です。正確なセル値は得られませんが、非技術的なユーザーにもトレンドをすぐに理解できるようにします。
+
+## 方法4：Excelの予測シートを使用する（ワンクリック）
+
+### 機能
+
+予測シート機能（Excel 2016+）は、グラフ、信頼区間、予測値のテーブルを含む完全な予測をワンクリックで生成します。プロフェッショナルな外観の予測を得るための最速の方法です。
+
+### 視覚的な概要
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="予測シート：履歴データ、予測線、上下信頼区間バンド、および予測テーブルを含む完全なチャート">
+  <defs>
+    <linearGradient id="ciFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.10"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="320" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">予測シート — チャート + 信頼区間 + テーブル</text>
+    <rect x="40" y="40" width="380" height="220" fill="#fff" stroke="#e5e7eb"/>
+    <line x1="60" y1="240" x2="400" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="260" y1="60" x2="260" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <path d="M 70 220 L 100 205 L 130 190 L 160 175 L 190 160 L 220 145 L 250 125 L 280 110 L 310 90 L 340 75 L 370 60" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <path d="M 260 110 L 280 90 L 310 65 L 340 45 L 370 25 L 370 95 L 340 105 L 310 115 L 280 130 L 260 110 Z" fill="url(#ciFill)" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 2"/>
+    <g fill="#d4af37">
+      <circle cx="70" cy="220" r="3.5"/>
+      <circle cx="100" cy="205" r="3.5"/>
+      <circle cx="130" cy="190" r="3.5"/>
+      <circle cx="160" cy="175" r="3.5"/>
+      <circle cx="190" cy="160" r="3.5"/>
+      <circle cx="220" cy="145" r="3.5"/>
+      <circle cx="250" cy="125" r="3.5"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="280" cy="110" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="310" cy="90" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="340" cy="75" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="370" cy="60" r="4" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="135" y="55" font-size="10" fill="#64748b">履歴</text>
+    <text x="285" y="55" font-size="10" fill="#1e40af" font-weight="600">予測</text>
+    <rect x="60" y="265" width="350" height="14" fill="#94a3b8" fill-opacity="0.3"/>
+    <text x="66" y="275" font-size="9" fill="#475569">95%信頼区間</text>
+    <g transform="translate(440, 50)">
+      <rect x="0" y="0" width="140" height="210" fill="#fff" stroke="#e5e7eb" rx="4"/>
+      <text x="10" y="18" font-size="10" font-weight="600" fill="#0a0a0a">予測テーブル</text>
+      <line x1="10" y1="25" x2="130" y2="25" stroke="#e5e7eb"/>
+      <text x="10" y="42" font-size="9" fill="#64748b">期間</text>
+      <text x="80" y="42" font-size="9" fill="#64748b">値</text>
+      <line x1="10" y1="48" x2="130" y2="48" stroke="#e5e7eb"/>
+      <text x="10" y="62" font-size="9" fill="#1e40af">M7</text>
+      <text x="80" y="62" font-size="9" fill="#1e40af">$22,143</text>
+      <text x="10" y="78" font-size="9" fill="#1e40af">M8</text>
+      <text x="80" y="78" font-size="9" fill="#1e40af">$24,286</text>
+      <text x="10" y="94" font-size="9" fill="#1e40af">M9</text>
+      <text x="80" y="94" font-size="9" fill="#1e40af">$26,429</text>
+      <text x="10" y="110" font-size="9" fill="#1e40af">M10</text>
+      <text x="80" y="110" font-size="9" fill="#1e40af">$28,571</text>
+      <text x="10" y="126" font-size="9" fill="#1e40af">M11</text>
+      <text x="80" y="126" font-size="9" fill="#1e40af">$30,714</text>
+      <text x="10" y="142" font-size="9" fill="#1e40af">M12</text>
+      <text x="80" y="142" font-size="9" fill="#1e40af">$32,857</text>
+      <line x1="10" y1="152" x2="130" y2="152" stroke="#e5e7eb"/>
+      <text x="10" y="168" font-size="9" fill="#64748b" font-style="italic">CI: ±$2,400</text>
+      <text x="10" y="184" font-size="9" fill="#64748b" font-style="italic">95%水準</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Excel予測シート：履歴チャート（ゴールドライン、M1–M7）、95%信頼区間バンド（灰色の網掛け領域）を伴う予測の継続（青いライン、M8–M11）、および将来の各期間の予測値をリストした予測テーブルを組み合わせたワンクリックダッシュボード。このビューは、数値と予測の不確実性の一目でわかる可視化の両方を読者が必要とするレポートに最適です。</figcaption>
+</figure>
+
+### ステップバイステップの手順
+
+1. データ範囲（日付と値を含む）を選択します
+2. **データ**タブに移動し、**予測シート**をクリックします
+3. 予測ワークシートの作成ダイアログで：
+   - **予測終了**日を設定します
+   - 必要に応じて信頼区間を調整します（デフォルトは95%）
+   - 季節性の検出を含めるかどうかを選択します
+4. **作成**をクリックします
+
+Excelは、履歴データ、予測値、信頼範囲を示すグラフを含む新しいシートを生成します。また、予測値とその信頼範囲を含むテーブルも作成します。
+
+### この方法を使用するタイミング
+
+予測シートは、数値と洗練された可視化の両方が必要なビジネスレポートに最適です。より単純な方法では対応できない季節性を自動的に処理します。繰り返し季節パターンを持つデータ（毎年12月にピークを迎える小売売上など）には、これが最適なExcelオプションです。
+
+## 比較表：どの方法を使用すべきか？
+
+| 方法 | 最適な用途 | Excelバージョン | 使いやすさ |
+|--------|----------|---------------|-------------|
+| TREND | 複数のデータポイント | 全バージョン | 中程度 |
+| FORECAST.LINEAR | 迅速な単一値 | 2016+ | 簡単 |
+| トレンドライン | 視覚的予測 | 全バージョン | 簡単 |
+| 予測シート | 季節性を伴う高度な予測 | 2016+ | 最も簡単 |
+
+各メソッドはデフォルトで線形関係を想定していますが、トレンドラインと予測シートは他のパターンをサポートしています。線形アプローチと曲線アプローチの比較については、[多項式 vs 線形外挿](/blog/polynomial-extrapolation-vs-linear/)のガイドを参照してください。
+
+## ヒントとベストプラクティス
+
+- **まず外れ値をチェックする** — 1つの異常なデータポイントがトレンドラインを現実から大きく引き離す可能性があります
+- **十分な履歴データを使用する** — 意味のあるトレンドには少なくとも5〜6のデータポイントが必要です。それ以下では推測に過ぎません
+- **延長する前にトレンドを検証する** — R²が0.7未満の場合、線形モデルは信頼できる外挿に十分適合していない可能性があります
+- **線形トレンドは安定したデータに最適** — 成長が加速または減速している場合は、多項式または[指数外挿](/blog/exponential-growth/)法を検討してください
+- **あまり先の予測をしない** — データから遠く離れるほど、外挿の信頼性は低下します
+
+## Excel外挿の制限事項
+
+Excelの予測ツールは便利ですが、実際の制約があります：
+
+- **デフォルトで線形**：TRENDとFORECAST.LINEARは直線関係を想定しています。データが曲線に従う場合、これらの関数は誤った結果をもたらします
+- **自動モデル選択なし**：Excelはメソッドを比較したり、どのトレンドタイプが最適かを教えたりしません。自分でR²を確認する必要があります
+- **過信のリスク**：予測シートの信頼区間は正確に見えますが、未来が過去と同様であるという前提に基づいています — これは市場の変化や混乱の際に崩れる前提です
+
+明確に曲線を描くデータについては、[補間計算機](/interpolation/)と専用の外挿ツールが、Excelの組み込みの線形デフォルトよりも多くのメソッドオプションを提供します。
+
+## 専用計算機を使用するタイミング
+
+Excelはスプレッドシートでの作業に優れていますが、複数のメソッドオプションで迅速かつ正確な外挿が必要な場合、専用ツールは時間を節約します。[外挿計算機](https://www.extrapolationcalculator.com/)は、線形、指数、対数、多項式、二次の5つのメソッドを提供しており、結果を並べて比較して最適なものを選べます。
+
+数式を書く必要も、チャートの設定も、どのトレンドラインタイプを使用するかの推測もありません。データを入力し、メソッドを選択し、即座に予測を取得します。変数間の基礎関係をモデル化するには、[回帰計算機](/regression/)が詳細な回帰分析を提供します。
+
+## 結論
+
+Excelでは4つのメソッドを使用してデータを外挿できます：多点予測にはTREND関数、迅速な単一値にはFORECAST.LINEAR、視覚的予測にはトレンドライン、季節性を伴うワンクリックレポートには予測シートです。データと予測に必要なものに応じて、それぞれに適した場面があります。
+
+5つの異なる外挿メソッドでより速い結果を得るには — 数式のデバッグも不要 — [無料の外挿計算機](https://www.extrapolationcalculator.com/)をお試しください。
+
+## よくある質問
+
+<details class="faq-item">
+<summary>Excelはデータを外挿できますか？</summary>
+
+はい。Excelには外挿のためのいくつかの組み込みツールがあります：TREND関数、FORECAST.LINEAR関数、チャートのトレンドライン、予測シート機能。すべてデフォルトで線形回帰を使用しますが、トレンドラインと予測シートは他のパターンをサポートしています。
+
+</details>
+
+<details class="faq-item">
+<summary>ExcelのTREND関数とは何ですか？</summary>
+
+TRENDは、既知のデータに基づいて線形トレンドに沿った予測y値を計算します。構文は`=TREND(known_y's, known_x's, new_x's)`です。最小二乗法を使用してデータに直線を適合させ、指定した新しいx値に対する予測値を返します。
+
+</details>
+
+<details class="faq-item">
+<summary>Excelでトレンドラインを延長するにはどうすればよいですか？</summary>
+
+データポイントを右クリックして「近似曲線の追加」を選択し、チャートにトレンドラインを追加します。近似曲線のオプションで、「前方」予測フィールドをデータを超えて投影したい期間数に設定します。トレンドラインは視覚的に将来の範囲に延長されます。
+
+</details>
+
+<details class="faq-item">
+<summary>FORECAST.LINEARは正確ですか？</summary>
+
+FORECAST.LINEARは、真の線形トレンドに従うデータに対して正確です。すべての線形メソッドと同様に、基礎パターンが非線形である場合や、観測データ範囲を超えて遠くに投影する場合に信頼性が低下します。予測を信頼する前に、常にR²値をチェックして適合品質を評価してください。
+
+</details>

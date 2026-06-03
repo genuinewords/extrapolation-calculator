@@ -1,0 +1,116 @@
+---
+title: "Polinom vs. Doğrusal: Doğru Yöntemi Seçmek"
+description: Verileriniz için en iyi yaklaşımı seçmenize yardımcı olacak polinom ve doğrusal ekstrapolasyon yöntemlerinin pratik bir karşılaştırması.
+publishDate: 2026-05-16
+author: Extrapolation Calculator Team
+category: Temeller
+featuredImage: ""
+---
+
+Gözlemlenen verilerinizin aralığının ötesindeki değerleri tahmin etmeniz gerektiğinde, [ekstrapolasyon](/blog/what-is-extrapolation/) yöntemi seçimi vereceğiniz en önemli kararlardan biridir. Çok basit bir model seçin, verilerinizdeki gerçek yapıyı kaçırırsınız. Çok esnek bir model seçin, tahminleriniz anlamsızlaşır. En yaygın iki yaklaşım — doğrusal ve polinom — bu basitlik-esneklik spektrumunun zıt uçlarında yer alır.
+
+## Polinom Ekstrapolasyon Nedir?
+
+Polinom ekstrapolasyonu, veri noktalarınıza bir polinom denklemi uydurur ve ardından bu denklemi gözlemlenen aralığın ötesine projeksiyon yapmak için kullanır. *n* dereceli bir polinom genel formu alır:
+
+**y = a₀ + a₁x + a₂x² + a₃x³ + ... + aₙxⁿ**
+
+Derece *n*, eğrinin sahip olabileceği bükülme veya "dönüş noktası" sayısını belirler. *n* dereceli bir polinom, *n − 1* adede kadar yerel maksimum ve minimuma sahip olabilir.
+
+## Doğrusal Ekstrapolasyon: En Basit Polinom (Derece 1)
+
+**y = a₀ + a₁x**
+
+Bu model sabit bir değişim oranı varsayar — eğim a₁, çizgi boyunca her yerde aynıdır.
+
+### Doğrusal Ne Zaman Üstündür
+
+- Verileriniz istikrarlı bir eğilime sahipse
+- Yorumlanabilirliğe ihtiyacınız varsa
+- Verilerinizin çok ötesine ekstrapolasyon yapıyorsanız
+- Sınırlı veri noktanız varsa
+
+### Doğrusalın Sınırlamaları
+
+Gerçek dünya nadiren mükemmel doğrusaldır. Verileriniz gerçek eğrilik içeriyorsa, doğrusal bir model sistematik olarak yanlış tahmin edecektir.
+
+## İkinci Derece Ekstrapolasyon (Derece 2): Eğri Gerektiğinde
+
+**y = a₀ + a₁x + a₂x²**
+
+Eğimin sürekli olarak değişmesine izin verir. Hızlanan veya yavaşlayan süreçler için idealdir.
+
+### Doğal Kullanım Alanları
+
+- Mermi hareketi
+- Ölçek ekonomileri
+- Doygunluk etkileri
+- Gelir veya kâr eğrileri
+
+## Daha Yüksek Dereceler: Esneklik vs Risk
+
+| Derece | Maks. Dönüş Noktası | Davranış |
+|--------|--------------------|----------|
+| 1 (Doğrusal) | 0 | Sabit eğim |
+| 2 (İkinci) | 1 | Bir hızlanma/yavaşlama |
+| 3 (Kübik) | 2 | S-eğrileri |
+| 4 (Kuartik) | 3 | Karmaşık desenler |
+| 5+ | 4+ | Kararsızlık |
+
+## Polinom ve Doğrusal Arasında Karar Verme
+
+1. **Verilerinizi çizin** — görsel inceleme etkilidir
+2. **R² karşılaştırın** — modeller arasında
+3. **Artıkları inceleyin** — sistematik desenler arayın
+4. **Mekanizmayı düşünün** — fiziksel, ekonomik
+5. **Örnek dışı tahminleri test edin**
+
+## Aşırı Uydurma Uyarı İşaretleri
+
+- R² her dereceyle dramatik şekilde artar
+- Tahminler verilerinizi çok aşar
+- Çok büyük katsayılar
+- Veri noktaları arasında salınımlar
+
+## Polinom Ne Zaman Kazanır
+
+- Verilerde net eğrilik varsa
+- Sürecin doğrusal olmadığı biliniyorsa
+- Enterpolasyon yapıyorsanız
+
+## Doğrusal Ne Zaman Kazanır
+
+- Veriler yaklaşık olarak düzse
+- Uzağa ekstrapolasyon yapıyorsanız
+- Veri seti küçükse
+- Yorumlanabilirlik önemliyse
+
+## Sıkça Sorulan Sorular
+
+<details class="faq-item">
+<summary>Hangi polinom derecesini kullanmalıyım?</summary>
+
+Kabul edilebilir R² veren en düşük dereceyle başlayın. Derece 1 (doğrusal) en güvenlisidir. Nadiren derece 3'ün üzerine çıkın.
+
+</details>
+
+<details class="faq-item">
+<summary>Polinom ekstrapolasyon neden bazen çılgın sonuçlar verir?</summary>
+
+Yüksek dereceler şiddetli salınabilir — Runge fenomeni.
+
+</details>
+
+<details class="faq-item">
+<summary>Daha yüksek R² her zaman daha iyi midir?</summary>
+
+Hayır. Yüksek dereceyle çok yüksek R² aşırı uydurma anlamına gelebilir.
+
+</details>
+
+<details class="faq-item">
+<summary>Uzun vadeli tahminler için polinom kullanabilir miyim?</summary>
+
+Dikkatle. [Doğrusal](/blog/linear-extrapolation/) veya [logaritmik](/blog/logarithmic-diminishing-returns/) yöntemler genellikle daha güvenlidir.
+
+</details>

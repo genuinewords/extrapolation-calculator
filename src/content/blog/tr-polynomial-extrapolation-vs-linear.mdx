@@ -1,0 +1,179 @@
+---
+title: "Polinom Ekstrapolasyonu vs Lineer: Hangisini Ne Zaman Kullanmalı"
+description: Polinom ve lineer ekstrapolasyonu karşılaştırın. Farkları, her yöntemin ne zaman kullanılacağını ve gerçek verilerle pratik örnekleri öğrenin.
+publishDate: 2026-05-30
+author: Ekstrapolasyon Hesaplayıcı Ekibi
+category: Yöntemler
+featuredImage: ""
+---
+
+## Giriş
+
+Yanlış ekstrapolasyon yöntemini seçmek, umut verici bir tahmini pahalı bir hataya dönüştürebilir. Polinom ekstrapolasyonu vs lineer, analistlerin verilerinin ötesinde trendler projekte ederken karşılaştıkları en yaygın ikilemlerden biridir. Kavramı yeni öğreniyorsanız, önce [ekstrapolasyon nedir](/blog/what-is-extrapolation/) başlangıç rehberimize bakın. Her iki yöntem de yaygın olarak kullanılır, ancak her biri temelde farklı bir veri deseni türü için inşa edilmiştir. Yanlış olanı kullanın ve ya gerçek büyümeyi düzleştirir ya da tahminleri kontrolden çıkarırsınız. Bu makale, her yöntemin nasıl çalıştığını açıklar, yan yana karşılaştırır ve tam olarak hangisini ne zaman kullanacağınızı gösterir.
+
+## Lineer Ekstrapolasyon Nedir?
+
+Lineer ekstrapolasyon, mevcut bir düz çizgi trendini geleceğe uzatır. Veri noktalarınız arasındaki değişim oranının sabit kaldığını varsayar, bu nedenle projekte edilen değerler aynı eğim boyunca devam eder. Temel formül **y = mx + b**'dir, burada **m** eğim (değişim oranı) ve **b** y-kesişim noktasıdır.
+
+Satışları her ay yaklaşık $1.000 artan bir işletme hayal edin. Ocak $5.000 ve Şubat $6.000 getirdiyse, lineer ekstrapolasyon Mart'ı $7.000, Nisan'ı $8.000 vb. olarak tahmin eder. Çizgi aynı sabit hızla yükselmeye devam eder.
+
+Lineer ekstrapolasyon, verileriniz yukarı veya aşağı eğrilme belirtisi olmadan istikrarlı, sabit bir trend izlediğinde en iyi şekilde çalışır. Mevcut en basit yöntemdir ve tutarlı veriler üzerinde kısa vadeli tahminler için genellikle en güvenilir seçimdir. Mekanik hakkında daha derinlemesine bilgi için [lineer ekstrapolasyon rehberimize](/blog/linear-extrapolation/) göz atın.
+
+## Polinom Ekstrapolasyonu Nedir?
+
+Polinom ekstrapolasyonu, verilerinize bir polinom denklemi uydurarak eğri bir trendi uzatır. Düz bir çizgiyi zorlamak yerine, polinomun derecesine bağlı olarak hızlanma, yavaşlama ve daha karmaşık şekilleri modelleyebilir. İkinci derece (kuadratik) bir polinom bir eğriyi yakalar, üçüncü derece (kübik) bir S-şeklini yakalayabilir ve daha yüksek dereceler daha fazla esneklik ekler.
+
+Kullanıcı büyümesi yavaş başlayan ancak her çeyrekte hızlanan bir startup düşünün. Düz bir çizgi bu ivmeyi hafife alır, ancak bir polinom eğrisi artan değişim oranına uymak için bükülür. Bu, polinom ekstrapolasyonunu trendlerin açıkça eğrildiği doğrusal olmayan tahmin senaryoları için özellikle yararlı kılar.
+
+Ödünleşim karmaşıklıktır. Daha yüksek dereceli polinomlar tarihsel verileri daha yakından uydurur, ancak veri aralığının ötesinde düzensiz davranabilir. Yine de, verileriniz açıkça eğrildiğinde ve lineer yöntemler yetersiz kaldığında, polinom ekstrapolasyonu daha gerçekçi bir projeksiyon sağlar. Blogumuzda [polinom vs lineer yöntemler](/blog/polynomial-vs-linear/) hakkında daha fazla bilgi edinin.
+
+## Yan Yana Karşılaştırma
+
+| Kriter | Lineer Ekstrapolasyon | Polinom Ekstrapolasyonu |
+|----------|---------------------|--------------------------|
+| Desen | Düz çizgi | Eğri |
+| En uygun | İstikrarlı trendler | Hızlanan/yavaşlayan trendler |
+| Karmaşıklık | Basit | Daha karmaşık |
+| Risk | Kısa vadede düşük | Uzun vadede daha yüksek |
+| Örnek | Lineer satış büyümesi | Mevsimsel talep dalgalanmaları |
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Lineer versus polinom ekstrapolasyon desenleri: düz çizgi vs eğri">
+    <rect width="600" height="260" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <g transform="translate(30, 30)">
+        <rect x="0" y="0" width="260" height="200" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Lineer Ekstrapolasyon</text>
+        <line x1="30" y1="170" x2="240" y2="170" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="30" x2="30" y2="170" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="150" y1="30" x2="150" y2="170" stroke="#94a3b8" stroke-dasharray="3 3"/>
+        <text x="160" y="35" font-size="9" fill="#64748b">ekstrapolasyon →</text>
+        <path d="M 50 150 L 100 130 L 150 110" stroke="#d4af37" stroke-width="2" fill="none"/>
+        <path d="M 150 110 L 230 75" stroke="#d4af37" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+        <g fill="#1e40af">
+          <circle cx="50" cy="150" r="3.5"/>
+          <circle cx="100" cy="130" r="3.5"/>
+          <circle cx="150" cy="110" r="4.5" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="200" cy="90" r="4.5" stroke="#fff" stroke-width="1.5"/>
+        </g>
+        <text x="130" y="190" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">sabit eğim</text>
+      </g>
+      <g transform="translate(310, 30)">
+        <rect x="0" y="0" width="260" height="200" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Polinom Ekstrapolasyonu</text>
+        <line x1="30" y1="170" x2="240" y2="170" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="30" x2="30" y2="170" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="150" y1="30" x2="150" y2="170" stroke="#94a3b8" stroke-dasharray="3 3"/>
+        <text x="160" y="35" font-size="9" fill="#64748b">ekstrapolasyon →</text>
+        <path d="M 50 160 Q 100 130, 150 100" stroke="#d4af37" stroke-width="2" fill="none"/>
+        <path d="M 150 100 Q 180 70, 230 35" stroke="#d4af37" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+        <g fill="#1e40af">
+          <circle cx="50" cy="160" r="3.5"/>
+          <circle cx="100" cy="130" r="3.5"/>
+          <circle cx="150" cy="100" r="4.5" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="200" cy="60" r="4.5" stroke="#fff" stroke-width="1.5"/>
+        </g>
+        <text x="130" y="190" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">eğri, eğim değişir</text>
+      </g>
+    </g>
+  </svg>
+  <figcaption>Lineer vs polinom ekstrapolasyonu yan yana. Lineer projeksiyon (sol) sabit bir eğimi süresiz olarak uzatır — tahmin edilebilir ve istikrarlı, ancak hızlanma veya yavaşlamayı yakalayamaz. Polinom projeksiyonu (sağ) değişen değişim oranına uymak için eğrilir, düz bir çizginin kaçırdığı hızlanma desenlerini yakalar — ancak eğrinin veri aralığının ötesine geçmesi durumunda daha büyük istikrarsızlık riski taşır.</figcaption>
+</figure>
+
+## Hangisini Ne Zaman Kullanmalı
+
+**Lineer ekstrapolasyonu kullanın:**
+
+- Trendiniz istikrarlı ve değişim oranı yaklaşık olarak sabit olduğunda
+- Küçük bir veri setiniz olduğunda, tipik olarak beş veya altı noktadan az
+- Mevcut verilerinizin yalnızca kısa bir mesafe ötesini tahmin ettiğinizde
+- Basitlik ve yorumlanabilirlik eğri uydurmadan daha önemli olduğunda
+
+**Polinom ekstrapolasyonunu kullanın:**
+
+- Trendiniz açıkça eğrildiğinde — hızlanıyor veya yavaşlıyor
+- Bir eğri uydurmayı haklı çıkarmak için yeterli veriniz olduğunda, ideal olarak sekiz veya daha fazla nokta
+- Altta yatan süreç karmaşık olduğunda, mevsimsel döngüler veya bileşik büyüme gibi
+- Düz bir çizgi, bir eğrinin emebileceği görünür kalıntılar bıraktığında
+
+**Metin biçiminde hızlı karar akışı:**
+
+1. Veri grafiğiniz kabaca düz görünüyor mu? → Lineer kullanın.
+2. Açıkça eğriliyor mu? → Polinom kullanın.
+3. Verilerinizin çok ötesine mi projekte ediyorsunuz? → Riski sınırlamak için lineer veya düşük dereceli polinom kullanın.
+4. Altı noktadan azınız mı var? → Görünümden bağımsız olarak lineer kullanın.
+
+Doğru ekstrapolasyon yöntemini seçmek, matematiği verilerinizin şekliyle eşleştirmeye dayanır. Kavramsal temeller için [interpolasyon vs ekstrapolasyon](/blog/interpolation-vs-extrapolation/) yazımıza bakın.
+
+## Pratik Bir Örnek
+
+Her iki yöntemi de aynı veri setine uygulayalım ve sonuçları karşılaştıralım.
+
+**Üç aylık gelir verileri:**
+
+| Çeyrek | Gelir |
+|---------|-------|
+| Q1 | $10K |
+| Q2 | $15K |
+| Q3 | $22K |
+| Q4 | $31K |
+| Q5 | $42K |
+
+Çeyrekten çeyreğe artışlar $5K, $7K, $9K ve $11K'dir — her sıçrama $2K büyür. Bu sabit ikinci fark, ikinci dereceden büyümeyi işaret eder.
+
+**Lineer uyum:** Ortalama eğim çeyrek başına yaklaşık $8K'dir ve bize sabit bir oranda yükselen bir çizgi verir.
+
+**Kuadratik uyum:** İkinci derece bir polinom, **y = x² + 2x + 7** (x çeyrek numarası) formülüyle hızlanma desenini yakalar.
+
+**Tahmin edilen değerler:**
+
+| Çeyrek | Lineer Tahmin | Polinom Tahmini |
+|---------|-------------------|----------------------|
+| Q6 | $50K | $55K |
+| Q7 | $58K | $70K |
+
+Lineer model, ivmeyi hesaba katamadığı için gelecekteki geliri hafife alır. Polinom modeli, artan momentumu yansıtır ve daha yüksek — ve muhtemelen daha doğru — tahminler üretir. Bununla birlikte, Q7 için polinom tahmini keskin bir şekilde $70K'ya sıçrar, bu da eğri modellerin ne kadar hızlı yükselebileceğini gösterir. [R² skoru](/blog/r-squared-confidence/) kullanarak model uyumunu kontrol edebilir ve hangi yöntemin verilerinizi daha iyi açıkladığını görebilirsiniz.
+
+## Riskler ve Sınırlamalar
+
+Hiçbir ekstrapolasyon yöntemi kusursuz değildir. Lineer ekstrapolasyon eğriliği tamamen kaçırır, bu nedenle hızlanan trendleri sistematik olarak hafife alır ve yavaşlayan trendleri olduğundan fazla tahmin eder. Verileriniz hafifçe eğrilse bile, lineer bir projeksiyon her adımda gerçeklikten daha da uzaklaşacaktır.
+
+Polinom ekstrapolasyonu ters riski taşır. Daha yüksek dereceli polinomlar tarihsel verilere güzelce uyabilir, ancak gözlemlenen aralığın ötesine geçtiğinizde beklenmedik yönlerde patlayabilir. Runge fenomeniyle ilgili bu istikrarsızlık, uzun vadeli polinom tahminlerini güvenilmez kılar. Giriş verilerindeki küçük değişiklikler de dramatik olarak farklı eğriler üretebilir. Bu zorluklar, modellerin eğitim aralıklarının dışında güvenilir tahminler yapmakta zorlandığı [makine öğreniminde ekstrapolasyonun](/blog/extrapolation-machine-learning/) daha geniş sorununu yansıtır.
+
+Her iki yöntem de veri kalitesine büyük ölçüde bağlıdır. Aykırı değerler, ölçüm hataları ve eksik noktalar, lineer bir eğimi bozabilir veya bir polinomu yanlış yönde bükebilir. Polinom vs lineer ekstrapolasyon tartışmasında, en güvenli yaklaşım, verilerinize iyi uyan en basit yöntemi kullanmak ve asla bilinmeyene çok fazla projekte etmemektir. Polinom yerine üstel olarak büyüyen veriler için [üstel ekstrapolasyon](/blog/exponential-growth/) rehberimize bakın.
+
+## Her İki Yöntem İçin Araçlar
+
+Başlamak için özel bir yazılıma ihtiyacınız yoktur. Excel, SLOPE ve INTERCEPT işlevleriyle lineer trendleri ve LINEST işleviyle polinom trendlerini uydurabilir — [Excel'de veriler nasıl ekstrapole edilir](/blog/how-to-extrapolate-data-in-excel/) rehberimiz her iki yaklaşımı da ayrıntılı olarak kapsar. Python kullanıcıları, polinom çalışmaları için NumPy'in polyfit ve polyval'ını kullanabilirken, R hem lineer hem de polinom modeller için lm işlevini sunar. Hızlı sayısal tahmin için [ekstrapolasyon hesaplayıcı](https://www.extrapolationcalculator.com/) hem lineer hem de polinom yöntemlerini destekler. Önce veri aralığınızdaki boşlukları doldurmanız gerekiyorsa, [interpolasyon hesaplayıcıyı](/interpolation/) deneyin. Değişkenler arasındaki temel ilişkiyi modellemek için [regresyon hesaplayıcı](/regression/) ayrıntılı regresyon analizi sağlar.
+
+## Sonuç
+
+Lineer ekstrapolasyon basit, istikrarlı ve istikrarlı veriler üzerinde kısa vadeli tahminler için uygundur. Polinom ekstrapolasyonu daha esnektir ve eğri desenleri yakalar, ancak projekte ettikçe daha yüksek risk taşır. Doğru seçim tamamen verilerinizin şekline bağlıdır — hangi yöntemin daha sofistike olduğuna değil. Modelinizi deseninize uydurun, projeksiyonları muhafazakar tutun ve her zaman bir uyum iyiliği ölçüsüyle doğrulayın. [Ücretsiz ekstrapolasyon hesaplayıcı](https://www.extrapolationcalculator.com/) ile verilerinizde her iki yöntemi de deneyin.
+
+<details class="faq-item">
+<summary>Lineer ve polinom ekstrapolasyon arasındaki fark nedir?</summary>
+
+Lineer ekstrapolasyon, sabit bir değişim oranı varsayarak verileri düz bir çizgi boyunca projekte eder. Polinom ekstrapolasyonu, verilere eğri bir denklem uydurarak değişim oranının kendisinin artmasına veya azalmasına izin verir. Lineer daha basit ve istikrarlıdır; polinom daha esnektir ancak veri aralığının ötesinde daha az tahmin edilebilirdir.
+
+</details>
+
+<details class="faq-item">
+<summary>Polinom ekstrapolasyonunu ne zaman kullanmalıyım?</summary>
+
+Verileriniz açıkça eğrildiğinde — hızlanan büyüme veya mevsimsel desenler gibi — ve güvenilir bir eğri uydurmayı destekleyecek yeterli noktanız (tipik olarak sekiz veya daha fazla) olduğunda polinom ekstrapolasyonu kullanın. Küçük veri setleri veya eğrinin istikrarsız hale gelebileceği uzun menzilli tahminler için bundan kaçının.
+
+</details>
+
+<details class="faq-item">
+<summary>Polinom ekstrapolasyonu daha doğru mudur?</summary>
+
+Gerçek eğriliğe sahip veriler için daha doğru olabilir, çünkü düz bir çizginin kaçırdığı desenleri yakalar. Ancak, gözlemlenen verilerden uzaklaştıkça doğruluk hızla düşer ve yüksek dereceli polinomlar beklenmedik sonuçlar üretebilir. Her zaman her iki yöntemi karşılaştırın ve uyum istatistiklerini kontrol edin.
+
+</details>
+
+<details class="faq-item">
+<summary>Excel'de polinom ekstrapolasyonu kullanabilir miyim?</summary>
+
+Evet. Excel'in LINEST işlevi, x'in yükseltilmiş kuvvetlerini ek girdi olarak sağlayarak polinom eğrileri uydurabilir. Ayrıca bir grafiğe polinom trend çizgisi ekleyebilir ve denklemi grafikte görüntüleyebilirsiniz. Adım adım rehberlik için [lineer ekstrapolasyon rehberimiz](/blog/linear-extrapolation/) Excel iş akışını ayrıntılı olarak kapsar.
+
+</details>

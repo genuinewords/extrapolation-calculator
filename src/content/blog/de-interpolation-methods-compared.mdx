@@ -1,0 +1,218 @@
+---
+title: "Interpolationsmethoden im Vergleich: Linear vs. Lagrange vs. Kubischer Spline"
+description: Ein praktischer Vergleich von drei Interpolationsmethoden — linear, Lagrange-Polynom und natürlicher kubischer Spline — mit Beispielen, Anwendungsfällen und wann welche am besten geeignet ist.
+publishDate: 2026-05-25
+author: Extrapolationsrechner-Team
+category: Methoden
+featuredImage: ""
+---
+
+Sie haben eine Reihe bekannter Datenpunkte und müssen einen Wert schätzen, der zwischen ihnen liegt. Welche Interpolationsmethode sollten Sie verwenden? Linear ist schnell und einfach. Das Lagrange-Polynom passt jeden Punkt exakt an. Der kubische Spline liefert die glatteste Kurve. Jede hat ihre Stärken — und jede kann Sie in die Irre führen, wenn sie unbedacht angewendet wird.
+
+Dieser Leitfaden vergleicht drei Interpolationsmethoden direkt miteinander, mit durchgerechneten Beispielen, einem Entscheidungsrahmen und praktischen Empfehlungen. Wenn Sie auch Werte *jenseits* Ihres Datenbereichs vorhersagen, lesen Sie unseren Leitfaden zu [Interpolation vs. Extrapolation](/blog/interpolation-vs-extrapolation/) für diese Unterscheidung.
+
+## Was ist Interpolation?
+
+Interpolation schätzt unbekannte Werte innerhalb des Bereichs bekannter Datenpunkte. Im Gegensatz zu [Extrapolationsmethoden](/blog/what-is-extrapolation/), die über beobachtete Daten hinaus projizieren, ist Interpolation begrenzt — Ihre Schätzung ist immer auf beiden Seiten von echten Messungen umgeben.
+
+Diese Einschränkung macht Interpolation inhärent zuverlässiger. Der geschätzte Wert wird durch die Daten begrenzt, weshalb Ingenieure, Wissenschaftler und Analysten immer dann zur Interpolation greifen, wenn der Zielpunkt innerhalb ihres Datensatzes liegt.
+
+Die drei Methoden, die unser [Interpolationsrechner](/interpolation/) unterstützt — linear, Lagrange-Polynom und natürlicher kubischer Spline — verfolgen grundlegend unterschiedliche Ansätze für dasselbe Problem. Hier ist ihr Vergleich.
+
+## Lineare Interpolation
+
+### Wie sie funktioniert
+
+Lineare Interpolation verbindet zwei benachbarte Datenpunkte mit einer geraden Linie und liest den Wert an Ihrem Ziel-x ab. Sie findet die beiden Punkte, die Ihr Ziel einklammern, berechnet die Steigung zwischen ihnen und verlängert diese Steigung bis zum Zielpunkt.
+
+Die Formel ist einfach:
+
+**y = y₁ + (x − x₁) × (y₂ − y₁) / (x₂ − x₁)**
+
+Wobei (x₁, y₁) und (x₂, y₂) die beiden einklammernden Punkte sind.
+
+### Wann sie am besten funktioniert
+
+- **Gleichmäßig verteilte Daten** mit annähernd linearem Trend
+- **Schnelle Schätzungen**, bei denen Geschwindigkeit wichtiger ist als Präzision
+- **Große Datensätze**, bei denen die Berechnung eines komplexen Modells aufwändig wäre
+- **Tabellarische Nachschlagewerte** — technische Tabellen, Finanz-Renditekurven, Sensorwerte
+
+### Wo sie an ihre Grenzen stößt
+
+Lineare Interpolation nimmt eine gerade Linie zwischen jedem Paar benachbarter Punkte an. Wenn Ihre Daten eine Krümmung aufweisen — beschleunigtes Wachstum, abnehmende Renditen oder Oszillation — führt die Gerade-Linie-Annahme zu Fehlern. Der geschätzte Wert liegt immer auf der Sehne zwischen zwei Punkten, nie auf einer glatten Kurve durch sie hindurch.
+
+Dies ist besonders bei spärlichen Daten sichtbar. Wenn Sie nur fünf Punkte haben, die eine Parabel nachzeichnen, erzeugt die lineare Interpolation eine gezackte, stückweise gerade Schätzung, die Spitzen unterschätzt und Täler überschätzt.
+
+## Lagrange-Polynom-Interpolation
+
+### Wie sie funktioniert
+
+Die Lagrange-Interpolation konstruiert ein einzelnes Polynom, das *jeden* Datenpunkt exakt durchläuft. Für n Punkte wird ein Polynom vom Grad n−1 unter Verwendung gewichteter Basisfunktionen erstellt — jede Basisfunktion ist an ihrem eigenen Datenpunkt gleich 1 und an allen anderen gleich 0.
+
+Das Ergebnis ist eine mathematisch exakte Anpassung: Das Polynom berührt jeden Punkt. Kein Residuum, kein Fehler an den bekannten Daten.
+
+### Wann sie am besten funktioniert
+
+- **Kleine Datensätze** (2–5 Punkte), bei denen Sie eine exakte Anpassung wünschen
+- **Glatte zugrundeliegende Trends**, bei denen ein einzelnes Polynom das Muster erfassen kann
+- **Theoretische Analyse**, bei der mathematische Eleganz zählt
+- **Bildungszwecke** — die Methode ist transparent und lehrreich
+
+Unser [Interpolationsrechner](/interpolation/) begrenzt Lagrange auf maximal 5 Punkte, wo die Methode am besten funktioniert.
+
+### Wo sie an ihre Grenzen stößt
+
+Lagrange-Polynome leiden unter dem **Runge-Phänomen** — wilden Oszillationen zwischen Datenpunkten bei hohem Grad. Ein Polynom 8. Grades, das 9 Punkte anpasst, kann zwischen aufeinanderfolgenden Beobachtungen dramatisch schwanken und interpolierte Werte erzeugen, die mathematisch korrekt, aber physikalisch absurd sind.
+
+Deshalb begrenzen wir es auf 5 Punkte. Darüber hinaus machen die Oszillationen die Methode unzuverlässig. Wenn Sie mehr als 5 Punkte und eine glatte Kurve benötigen, ist der kubische Spline die bessere Wahl.
+
+Lagrange behandelt neue Punkte auch nicht elegant — das Hinzufügen einer einzigen Beobachtung ändert das gesamte Polynom, was es für inkrementelle Datensätze unpraktisch macht.
+
+## Natürliche Kubische Spline-Interpolation
+
+### Wie sie funktioniert
+
+Ein kubischer Spline passt ein separates kubisches Polynom zwischen jedes Paar benachbarter Datenpunkte an und verbindet sie dann mit Übereinstimmungsbedingungen. An jedem inneren Punkt teilen sich die benachbarten kubischen Polynome denselben Wert, dieselbe erste Ableitung (Steigung) und dieselbe zweite Ableitung (Krümmung). Die „natürliche" Bedingung setzt die zweite Ableitung an beiden Endpunkten auf Null.
+
+Das Ergebnis ist die glattestmögliche Kurve durch Ihre Daten — mathematisch minimiert sie die Gesamtkrümmung über alle Segmente.
+
+### Wann sie am besten funktioniert
+
+- **Glatte Kurven** — Animations-Keyframes, technische Profile, wissenschaftliche Daten
+- **Mäßige bis große Datensätze**, bei denen linear zu grob und Lagrange oszilliert
+- **Physikalische Systeme**, bei denen der zugrundeliegende Prozess kontinuierlich und differenzierbar ist
+- **Jedes Szenario, bei dem visuelle Glätte wichtig ist** — Diagrammdarstellung, CAD, Signalverarbeitung
+
+### Wo sie an ihre Grenzen stößt
+
+Der kubische Spline kann nicht extrapolieren — er funktioniert nur innerhalb des Datenbereichs. Wenn Ihr Ziel-x unter dem kleinsten oder über dem größten Datenpunkt liegt, gibt die Methode einen Fehler aus. Das ist beabsichtigt: Die Extrapolation mit einem Spline ist gefährlich unzuverlässig, da die kubischen Segmente jenseits der Endpunkte uneingeschränkt sind.
+
+Die Spline-Berechnung ist auch aufwändiger als lineare Interpolation. Bei sehr großen Datensätzen (Tausende von Punkten) fügt die Lösung des tridiagonalen Systems zusätzlichen Aufwand hinzu, obwohl sie im Vergleich zu Polynomen hohen Grades immer noch effizient ist.
+
+Zum Verständnis der Modellanpassungsqualität über Methoden hinweg erklärt unser Leitfaden zu [R²-Werten](/blog/r-squared-confidence/), wie Sie bewerten können, ob Ihre gewählte Methode tatsächlich zum Muster Ihrer Daten passt.
+
+## Direkter Vergleich
+
+| Merkmal | Linear | Lagrange | Kubischer Spline |
+|---------|--------|----------|-----------------|
+| Anpassungsqualität | Näherungsweise | Exakt an Datenpunkten | Exakt an Datenpunkten |
+| Glätte | Keine (stückweise gerade) | Kann oszillieren | Glatt (stetige Ableitungen) |
+| Max. Punkte | Unbegrenzt | 5 (empfohlen) | Unbegrenzt |
+| Extrapolation | Begrenzt (verwendet Randsegment) | Möglich aber riskant | Nicht unterstützt |
+| Berechnungsgeschwindigkeit | Schnellste | Mäßig | Mäßig |
+| Am besten für | Schnelle Schätzungen, lineare Trends | Kleine Datensätze, exakte Anpassungen | Glatte Kurven, physikalische Daten |
+| Größtes Risiko | Übersieht Krümmung | Runge-Phänomen | Kann nicht extrapolieren |
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Linear vs. Lagrange vs. kubischer Spline auf denselben vier Datenpunkten">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="10" fill="#374151">
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Drei Methoden auf denselben Daten</text>
+      <g fill="#1e40af">
+        <circle cx="100" cy="200" r="4.5"/>
+        <circle cx="200" cy="140" r="4.5"/>
+        <circle cx="300" cy="80" r="4.5"/>
+        <circle cx="400" cy="160" r="4.5"/>
+      </g>
+      <path d="M 100 200 L 200 140 L 300 80 L 400 160" stroke="#d4af37" stroke-width="2" stroke-dasharray="4 2"/>
+      <path d="M 100 200 Q 200 130, 300 80 Q 400 130, 400 160" stroke="#1e40af" stroke-width="2" fill="none"/>
+      <path d="M 100 200 C 200 130, 250 100, 300 80 C 350 90, 380 140, 400 160" stroke="#059669" stroke-width="2.5" fill="none"/>
+      <g transform="translate(420, 50)">
+        <rect x="0" y="0" width="160" height="100" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <line x1="10" y1="22" x2="40" y2="22" stroke="#d4af37" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="48" y="25" font-size="10">Linear (stückweise)</text>
+        <line x1="10" y1="44" x2="40" y2="44" stroke="#1e40af" stroke-width="2"/>
+        <text x="48" y="47" font-size="10">Lagrange (gekrümmt)</text>
+        <line x1="10" y1="66" x2="40" y2="66" stroke="#059669" stroke-width="2.5"/>
+        <text x="48" y="69" font-size="10">Kubischer Spline (glatt)</text>
+        <circle cx="25" cy="86" r="3.5" fill="#1e40af"/>
+        <text x="48" y="89" font-size="10">Datenpunkte</text>
+      </g>
+      <text x="120" y="260" font-size="9" fill="#d4af37" font-weight="600">Linear</text>
+      <text x="220" y="260" font-size="9" fill="#1e40af" font-weight="600">Lagrange</text>
+      <text x="330" y="260" font-size="9" fill="#059669" font-weight="600">Spline</text>
+    </g>
+  </svg>
+  <figcaption>Drei Interpolationsmethoden auf dieselben vier Datenpunkte angewendet. Linear (gold gestrichelt) verbindet benachbarte Punkte mit geraden Segmenten — einfach, aber übersieht Krümmung. Lagrange (blau) passt ein einzelnes Polynom durch alle Punkte — exakt, kann aber oszillieren. Kubischer Spline (grün) verbindet kubische Segmente mit stetigen Ableitungen — glatt und stabil für mittlere Datensätze. Die Wahl hängt von Datenform, Punktanzahl und der Notwendigkeit von Extrapolation ab.</figcaption>
+</figure>
+
+## Ein Durchgerechnetes Beispiel
+
+Betrachten Sie diese vier Datenpunkte, die die Temperatur über einen Tag verfolgen:
+
+| Stunde | Temperatur (°C) |
+|--------|------------------|
+| 6 | 12 |
+| 10 | 18 |
+| 14 | 26 |
+| 18 | 20 |
+
+Wir möchten die Temperatur um 12:00 Uhr (Stunde 12).
+
+**Lineare Interpolation**: Zwischen (10, 18) und (14, 26). Steigung = (26−18)/(14−10) = 2. Ergebnis: 18 + 2×2 = **22°C**.
+
+**Lagrange-Polynom**: Passt ein Polynom 3. Grades durch alle vier Punkte. Das Polynom liegt leicht unter der linearen Schätzung, da es den späteren Abfall um Stunde 18 berücksichtigt. Ergebnis: etwa **23,5°C**.
+
+**Natürlicher kubischer Spline**: Passt kubische Segmente mit stetiger Krümmung an. Der Spline erkennt, dass die Temperatur um Stunde 12 noch steigt, sich aber zum Gipfel hin verlangsamt. Ergebnis: etwa **23,2°C**.
+
+Die Unterschiede sind in diesem Beispiel gering, aber sie sind wichtig. Linear unterschätzt, weil es die Krümmung ignoriert. Lagrange überschätzt leicht, weil das Polynom hohen Grades schwankt. Der Spline liegt dazwischen — glatt, begrenzt und physikalisch vernünftig.
+
+## So Wählen Sie die Richtige Methode
+
+Verwenden Sie diesen Entscheidungsrahmen:
+
+1. **Sind Ihre Daten annähernd linear?** Verwenden Sie lineare Interpolation — sie ist schnell, einfach und führt Sie nicht in die Irre
+2. **Haben Sie 5 oder weniger Punkte und benötigen eine exakte Anpassung?** Verwenden Sie das Lagrange-Polynom
+3. **Benötigen Sie eine glatte Kurve durch viele Punkte?** Verwenden Sie den kubischen Spline
+4. **Arbeiten Sie mit physikalischen oder technischen Daten?** Verwenden Sie den kubischen Spline — reale Systeme sind glatt
+5. **Müssen Sie über den Datenbereich hinaus vorhersagen?** Keine dieser Methoden ist dafür sicher — verwenden Sie stattdessen unseren [kostenlosen Extrapolationsrechner](https://www.extrapolationcalculator.com/), der [lineare](/blog/linear-extrapolation/), [exponentielle](/blog/exponential-growth/) und [logarithmische](/blog/logarithmic-diminishing-returns/) Extrapolationsmethoden bietet
+6. **Vergleichen Sie Modelltypen?** Unser Leitfaden zu [polynomialen vs. linearen Methoden](/blog/polynomial-vs-linear/) behandelt die Vor- und Nachteile im Detail
+
+## Praktische Tipps
+
+- **Visualisieren Sie Ihre Daten immer zuerst** — wenn es wie eine gerade Linie aussieht, verwenden Sie lineare Interpolation; wenn es gekrümmt ist, verwenden Sie Spline
+- **Prüfen Sie auf Ausreißer** — ein einziger schlechter Punkt verzerrt Lagrange dramatisch und beeinflusst die Spline-Krümmung
+- **Linear ist nie falsch** — es ist nur weniger präzise für gekrümmte Daten. Bei Unsicherheit liefert Linear eine verteidigungsfähige Basislinie
+- **Mischen Sie Interpolation und Extrapolation nicht** — interpolieren Sie innerhalb Ihres Bereichs, extrapolieren Sie mit dedizierten Methoden
+- **Mehr Punkte helfen allen Methoden** — aber Lagrange verschlechtert sich bei zu vielen, während Linear und Spline sich verbessern
+
+## Fazit
+
+Lineare Interpolation ist schnell und zuverlässig für annähernd lineare Daten. Das Lagrange-Polynom liefert exakte Anpassungen für kleine Datensätze, oszilliert aber bei mehr Punkten. Der natürliche kubische Spline erzeugt die glattesten Kurven und verarbeitet mittlere bis große Datensätze gut, kann aber nicht extrapolieren.
+
+Die richtige Wahl hängt von der Form Ihrer Daten, Ihrer Punktanzahl und davon ab, ob Sie Geschwindigkeit, Glätte oder Exaktheit benötigen. Probieren Sie alle drei Methoden auf demselben Datensatz mit unserem [Interpolationsrechner](/interpolation/) aus und vergleichen Sie die Ergebnisse — die Unterschiede verraten Ihnen viel über das zugrundeliegende Muster Ihrer Daten.
+
+Für numerische Vorhersagen jenseits Ihres Datenbereichs bietet der [Extrapolationsrechner](https://www.extrapolationcalculator.com/) fünf Methoden, die auf verschiedene Trendmuster zugeschnitten sind. Wenn Sie die Beziehung zwischen Variablen modellieren müssen, anstatt zwischen Punkten zu interpolieren, bietet der [Regressionsrechner](/regression/) Regressionsanalysewerkzeuge.
+
+## Häufig Gestellte Fragen
+
+<details class="faq-item">
+<summary>Welche Interpolationsmethode ist am genauesten?</summary>
+
+Keine einzelne Methode ist immer am genauesten. Linear ist am genauesten für wirklich lineare Daten. Der kubische Spline ist am genauesten für glatte, kontinuierliche physikalische Prozesse. Lagrange ist am genauesten, wenn Sie sehr wenige Punkte haben und die zugrundeliegende Funktion polynomial ist. Die beste Methode passt zum tatsächlichen Muster Ihrer Daten.
+
+</details>
+
+<details class="faq-item">
+<summary>Wann sollte ich den kubischen Spline vermeiden?</summary>
+
+Vermeiden Sie den kubischen Spline, wenn Sie über Ihren Datenbereich hinaus extrapolieren müssen — er funktioniert nur innerhalb der Grenzen Ihres Datensatzes. Seien Sie auch vorsichtig bei Daten mit scharfen Ecken oder Unstetigkeiten, wo die Glättebedingung des Splines reale Merkmale glätten könnte.
+
+</details>
+
+<details class="faq-item">
+<summary>Ist die Lagrange-Interpolation besser als die lineare?</summary>
+
+Nicht unbedingt. Lagrange passt jeden Punkt exakt an, aber diese Exaktheit kann wilde Oszillationen zwischen Punkten (Runge-Phänomen) erzeugen, wenn Sie mehr als 5–6 Beobachtungen haben. Die lineare Interpolation ist stabiler und vorhersagbarer, besonders bei verrauschten oder unregelmäßigen Daten.
+
+</details>
+
+<details class="faq-item">
+<summary>Kann ich Interpolation für Prognosen verwenden?</summary>
+
+Nein. Interpolation schätzt Werte *zwischen* bekannten Datenpunkten. Prognosen erfordern Vorhersagen jenseits des beobachteten Bereichs, was Extrapolation ist. Verwenden Sie einen [Extrapolationsrechner](https://www.extrapolationcalculator.com/) für Prognosen — er bietet Methoden, die für Bereichsüberschreitungen entwickelt wurden.
+
+</details>

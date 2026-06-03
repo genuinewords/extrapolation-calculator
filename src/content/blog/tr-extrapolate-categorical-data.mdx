@@ -1,0 +1,192 @@
+﻿---
+title: "Kategorik Verileri Ekstrapole Edebilir misiniz? Açık Bir Rehber"
+description: Kategorik verileri ekstrapole edip edemeyeceğinizi, hangi yöntemlerin işe yaradığını ve geleneksel ekstrapolasyon formüllerinin neden sayısal olmayan veri kümelerine uygulanmadığını öğrenin.
+publishDate: 2026-05-20
+author: Extrapolation Calculator Ekibi
+category: Temel Bilgiler
+featuredImage: ""
+---
+
+Bir pazarlama analisti olarak bir müşterinin bir sonraki satın alma kategorisini tahmin ettiğinizi hayal edin — Elektronik mi yoksa Giyim mi olacak? Veya bir anket araştırmacısı olarak katılımcıların gelecekteki bir ankete "Evet" mi yoksa "Hayır" mı cevap vereceğini tahmin ettiğinizi. Kategorik verileri, gelir veya sıcaklık tahmin ederken yaptığınız gibi ekstrapole edebilir misiniz?
+
+Kısa cevap: kategorik verileri geleneksel sayısal yöntemlerle ekstrapole edemezsiniz, ancak sınıflandırma ve olasılıksal teknikler kullanarak gelecekteki kategorileri *tahmin edebilirsiniz*. Kategorik veri ekstrapolasyonu temelde farklı bir yaklaşım gerektirir ve bu makale nasıl, ne zaman ve hangi araçların kullanılacağını açıklar.
+
+## Kategorik Veri Nedir?
+
+Kategorik veri, grupları, etiketleri veya nitelikleri temsil eder — ölçülebilir miktarları değil. Her değer, sayısal bir ölçekte yer almak yerine ayrı bir kategoriye aittir.
+
+Yaygın örnekler şunları içerir:
+
+- **Cinsiyet** (Erkek, Kadın, İkili Olmayan)
+- **Şehir** (New York, Londra, Tokyo)
+- **Ürün türü** (Elektronik, Giyim, Ev, Spor)
+- **Evet/Hayır yanıtları** (anket cevapları, abonelik durumu)
+- **Kan grubu** (A, B, AB, O)
+
+Sayısal verilerin aksine, kategorik değerlerin doğal bir sıralaması veya mesafesi yoktur. "Elektronik", 50'nin 30'dan büyük olduğu gibi "Giyim"den daha büyük değildir. Bu ayrım, kategorik değişkenler için ekstrapolasyonu sayılar üzerindeki [lineer ekstrapolasyondan](/blog/linear-extrapolation/) çok farklı kılar.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Sayısal ve kategorik veri: sürekli bir sayı doğrusu ve ayrık kategori etiketleri">
+    <rect width="600" height="240" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Sayısal vs Kategorik Veri</text>
+      <g transform="translate(40, 50)">
+        <text x="240" y="0" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">Sayısal: sürekli, sıralı</text>
+        <line x1="0" y1="40" x2="480" y2="40" stroke="#9ca3af" stroke-width="2"/>
+        <line x1="0" y1="30" x2="0" y2="50" stroke="#9ca3af"/>
+        <line x1="120" y1="30" x2="120" y2="50" stroke="#9ca3af"/>
+        <line x1="240" y1="30" x2="240" y2="50" stroke="#9ca3af"/>
+        <line x1="360" y1="30" x2="360" y2="50" stroke="#9ca3af"/>
+        <line x1="480" y1="30" x2="480" y2="50" stroke="#9ca3af"/>
+        <text x="0" y="68" text-anchor="middle" font-size="10">0</text>
+        <text x="120" y="68" text-anchor="middle" font-size="10">25</text>
+        <text x="240" y="68" text-anchor="middle" font-size="10">50</text>
+        <text x="360" y="68" text-anchor="middle" font-size="10">75</text>
+        <text x="480" y="68" text-anchor="middle" font-size="10">100</text>
+        <g fill="#1e40af">
+          <circle cx="80" cy="40" r="4"/>
+          <circle cx="180" cy="40" r="4"/>
+          <circle cx="320" cy="40" r="4"/>
+          <circle cx="420" cy="40" r="4"/>
+        </g>
+        <text x="240" y="100" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">"50, 25 ile 75 arasındadır"</text>
+      </g>
+      <g transform="translate(40, 170)">
+        <text x="240" y="0" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">Kategorik: ayrık, sırasız</text>
+        <g transform="translate(0, 20)">
+          <rect x="20" y="0" width="100" height="30" rx="4" fill="#dbeafe" stroke="#1e40af"/>
+          <text x="70" y="20" text-anchor="middle" font-size="10" fill="#0a0a0a">Elektronik</text>
+          <rect x="140" y="0" width="100" height="30" rx="4" fill="#fef3c7" stroke="#d97706"/>
+          <text x="190" y="20" text-anchor="middle" font-size="10" fill="#0a0a0a">Giyim</text>
+          <rect x="260" y="0" width="100" height="30" rx="4" fill="#d1fae5" stroke="#059669"/>
+          <text x="310" y="20" text-anchor="middle" font-size="10" fill="#0a0a0a">Ev</text>
+          <rect x="380" y="0" width="100" height="30" rx="4" fill="#fce7f3" stroke="#be185d"/>
+          <text x="430" y="20" text-anchor="middle" font-size="10" fill="#0a0a0a">Spor</text>
+        </g>
+        <text x="240" y="65" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">"Elektronik" hiçbir şeyin "arasında" değildir</text>
+      </g>
+    </g>
+  </svg>
+  <figcaption>Sayısal ve kategorik veri gösterimi. Sayısal veri sürekli, sıralı bir sayı doğrusunda yaşar (üst) — "50", "25" ile "75" arasında tam olarak yer alır, bu da lineer ve polinom ekstrapolasyonunu mümkün kılar. Kategorik veri, ayrık, sırasız etiketlerden oluşur (alt) — "Elektronik", diğer kategorilerden daha büyük, daha küçük veya arasında değildir. Bu temel fark, kategorik veri ekstrapolasyonunun trend çizgisi yöntemleri yerine sınıflandırma modelleri gerektirmesinin nedenidir.</figcaption>
+</figure>
+
+## Kategorik Veri İçin Ekstrapolasyon Ne Anlama Gelir?
+
+Geleneksel ekstrapolasyon sayısal desenler üzerinde çalışır — bilinen veri noktalarından bir çizgi veya eğri uydurur ve gözlemlenen aralığın ötesine uzatırsınız. Kategorik veriler için, bir sayı doğrusunda bir değer yansıtmazsınız. Gelecekteki bir gözlemin hangi kategoriye ait olacağını tahmin edersiniz.
+
+Örneğin, gelecek ayın en çok satan ürününün "Elektronik" mi yoksa "Giyim" mi olacağını tahmin etmek, kategorik sonuçları tahmin etmektir. Bir trend çizgisi üzerinde bir nokta hesaplamak yerine bir sınıflandırma sorusunu yanıtlıyorsunuzdur.
+
+Bu ayrım önemlidir çünkü sayısal ekstrapolasyonun arkasındaki matematik — eğimler, kesişimler, [R² skorları](/blog/r-squared-confidence/) — doğrudan uygulanmaz. Bunun yerine, kategorik veri ekstrapolasyonu, gelecekteki bir noktada her olası kategorinin olasılığını tahmin eden olasılık modellerine ve sınıflandırma algoritmalarına dayanır.
+
+## Kategorik Verileri Ekstrapole Etme Yöntemleri
+
+Gelecekteki kategorileri tahmin etmek, sayısal ekstrapolasyondan farklı bir araç seti gerektirir. İşte temel yaklaşımlar:
+
+### Lojistik Regresyon
+
+**İkili kategoriler** için en iyisidir — Evet/Hayır, Spam/Spam Değil, Kaybet/Koru gibi tam olarak iki olası değeri olan sonuçlar. Lojistik regresyon, bir kategorinin diğerine karşı olasılığını girdi değişkenlerinin bir fonksiyonu olarak modeller.
+
+0 ile 1 arasında bir olasılık çıktısı verir ve bunu bir eşik (genellikle 0,5) kullanarak bir kategori tahminine dönüştürürsünüz. Bu, ikili kategorik veri tahmini için en yorumlanabilir yöntemlerden biridir.
+
+### Multinominal Lojistik Regresyon
+
+**Doğal sırası olmayan üç veya daha fazla kategoriye** sahip olduğunuzda (örneğin, ürün türü: Elektronik, Giyim, Ev, Spor), multinominal lojistik regresyon ikili yaklaşımı genişletir. Her kategorinin olasılığını aynı anda tahmin eder ve gözlemi en olası olana atar.
+
+Bu, sonucunuzun birden fazla sırasız kategorisi olduğunda sayısal olmayan veri ekstrapolasyonu için başvurulacak yöntemdir.
+
+### Sınıflandırma Modelleri (Random Forest, XGBoost, k-NN)
+
+Random Forest, XGBoost ve k-En Yakın Komşu dahil makine öğrenimi sınıflandırıcıları, karmaşık, yüksek boyutlu verilerden kategorileri tahmin edebilir. Lojistik regresyonun kaçırabileceği doğrusal olmayan desenleri yakalarlar.
+
+| Yöntem | En İyi | Doğrusal Olmayanı İşler |
+|--------|----------|-----------------------|
+| Lojistik Regresyon | İkili sonuçlar | Hayır |
+| Multinominal Lojistik | Çok sınıflı sırasız | Hayır |
+| Random Forest | Karmaşık özellik etkileşimleri | Evet |
+| XGBoost | Yüksek doğruluk ihtiyacı | Evet |
+| k-NN | Net kümeleri olan küçük veri kümeleri | Evet |
+
+Bu modeller klasik anlamda "ekstrapolasyon" değildir, ancak aynı amaca hizmet ederler: daha önce gözlemlediğiniz verilerin ötesini tahmin etmek. Gözlemlenen verinin ötesini tahmin etmenin neden doğası gereği zor olduğu hakkında daha fazla bilgi için [makine öğreniminde ekstrapolasyon](/blog/extrapolation-machine-learning/) rehberimize bakın.
+
+### Markov Zincirleri
+
+**Sıralı kategorik veriler** için Markov zincirleri, bir kategoriden diğerine geçiş olasılığını modeller. Bir kullanıcının mevcut ürün seçimini biliyorsanız, bir Markov zinciri gözlemlenen geçiş desenlerine dayanarak bir sonraki seçimini tahmin edebilir.
+
+Bu yaklaşım, müşteri yolculuğu tahmini ve sistemlerdeki durum değişiklikleri için iyi çalışır. [İnterpolasyon vs ekstrapolasyon](/blog/interpolation-vs-extrapolation/) ayrımı hala geçerlidir — Markov zincirleri, gözlemlenen geçişlerin ötesinde birden fazla adım yansıttığınızda ekstrapolasyon yapar.
+
+### Naive Bayes
+
+Özellik bağımsızlığı varsayımıyla Bayes teoremini uygulayan basit bir olasılıksal sınıflandırıcı. Hızlıdır, az eğitim verisi gerektirir ve metin sınıflandırma ile spam filtreleme için şaşırtıcı derecede iyi çalışır.
+
+Naive Bayes, hızlı kategorik tahminlere ihtiyacınız olduğunda ve özellikleriniz kabaca bağımsız olduğunda en iyisidir. Daha karmaşık modellerden daha az doğrudur ancak uygulaması çok daha kolaydır.
+
+## Basit Bir Örnek
+
+Üç abonelik planı olan bir SaaS şirketi işlettiğinizi varsayalım: Temel, Profesyonel ve Kurumsal. Son 12 ayda müşteri plan seçimlerini ve şirket büyüklüğü, sektör ve aylık aktif kullanıcılar gibi özellikleri gösteren geçmiş verileriniz var.
+
+**Girdi**: Şirket büyüklüğü = 50 çalışan, Sektör = Teknoloji, Aylık aktif kullanıcılar = 200
+
+**Multinominal lojistik regresyondan çıktı**: Temel = %15, Profesyonel = %70, Kurumsal = %15
+
+Model, en olası plan olarak "Profesyonel"i tahmin eder. Bu, çalışan kategorik veri ekstrapolasyonudur — mevcut verilerdeki desenlere dayanarak yeni bir müşteri için bir kategori tahmin ediyorsunuz. Tahmin edicileriniz kategorik olduğunda ancak sonuç sayısal olduğunda (plan türü ve sektörden gelir tahmin etmek gibi) bir [regresyon hesaplayıcısı](/regression/) da kullanabilirsiniz.
+
+## Sınırlamalar ve Riskler
+
+Kategorik veri ekstrapolasyonu, sayısal yöntemlerin karşılaşmadığı önemli kısıtlamalarla birlikte gelir:
+
+- **Geleneksel trend yok**: Kategorilerin eğimleri veya büyüme oranları yoktur, bu nedenle sayılarla yapabildiğiniz gibi ne kadar "uzağa" yansıttığınızı ölçemezsiniz
+- **Küçük kategori dengesizlikleri tahminleri çarpıtır**: Verilerinizin %90'ı bir kategorideyse, modeller baskın sınıfı aşırı tahmin eder
+- **Modeller geçmiş kategorilere aşırı uyar**: Bugünün ürün türleriyle eğitilmiş bir sınıflandırıcı, hiç görmediği bir kategoriyi tahmin edemez — yeni bir ürün hattı model için görünmezdir
+- **Güven aralığı eşdeğeri yok**: Sayısal ekstrapolasyonda tahmin bantlarını tahmin edebilirken, kategorik tahminler daha az nüanslı belirsizlik nicelemesi sunar
+
+Bu ekstrapolasyon sınırlamaları, kategorik tahminleri her zaman ayrılmış verilere karşı doğrulamanız ve uzun menzilli kategori tahminlerine şüpheyle yaklaşmanız gerektiği anlamına gelir.
+
+## Ekstrapolasyon vs Sınıflandırma: Temel Ayrım
+
+Terminoloji burada kafa karıştırıcı hale gelir. Kategorileri tahmin etmek teknik olarak **sınıflandırmadır**, ekstrapolasyon değil. Ekstrapolasyon, sayısal bir trendi gözlemlenen verinin ötesine genişletmek anlamına gelir. Sınıflandırma, öğrenilen desenlere dayanarak bir etiket atamak anlamına gelir.
+
+Ancak *amaç* aynıdır: daha önce gördüklerinizin ötesini tahmin etmek. Birisi "sayısal olmayan verileri ekstrapole edebilir misiniz?" diye sorduğunda, gerçekten "gelecekteki kategorileri tahmin edebilir misiniz?" diye soruyordur — ve cevap evet, trend çizgisi yöntemleri yerine sınıflandırma modelleri kullanarak.
+
+Ayrım, araç seçimi için önemlidir. Sayısal ekstrapolasyon eğri uydurma ve trend projeksiyonu kullanır. Kategorik tahmin, olasılık modelleri ve sınıflandırıcılar kullanır. Bu farkı anlamak, yanlış tekniği uygulamanızı önler, [polinom vs lineer yöntemler](/blog/polynomial-vs-linear/) rehberimizde tartıştığımız gibi.
+
+## Hesap Makinesi Ne Zaman Kullanılmalı?
+
+Geleneksel ekstrapolasyon hesaplayıcıları, [ekstrapolasyon hesaplayıcısı](https://www.extrapolationcalculator.com/) gibi, sayısal veriler için tasarlanmıştır. Sayısal noktalardan eğriler uydurur ve ileriye yansıtırlar. Verileriniz net bir trende sahip sayılarsa, bu hesaplayıcılar size hızlı, güvenilir sonuçlar verir. Mevcut veri aralığınız içindeki değerleri tahmin etmek için, [interpolasyon hesaplayıcısı](/interpolation/), sayısal veri kümelerinde lineer, Lagrange ve kübik spline yöntemlerini destekler.
+
+Kategorik veri tahmini için, tipik olarak istatistiksel yazılıma ihtiyacınız olacaktır: Python (scikit-learn), R veya lojistik regresyon ve sınıflandırmayı destekleyen Excel eklentileri. Bir e-tabloda sayısal ekstrapolasyon için, [Excel'de veri nasıl ekstrapole edilir](/blog/how-to-extrapolate-data-in-excel/) rehberimiz iş akışını ayrıntılı olarak ele alır. Kategorik sonuçları işleyen yöntemler, basit bir eğri uydurmadan daha karmaşıktır.
+
+## Sonuç
+
+Kategorik verileri sayıları ekstrapole ettiğiniz gibi ekstrapole edemezsiniz — değerleriniz "Elektronik" veya "Evet" gibi etiketler olduğunda uzatılacak bir trend çizgisi yoktur. Ancak lojistik regresyon, multinominal modeller, sınıflandırma algoritmaları ve Markov zincirlerini kullanarak gelecekteki kategorileri *tahmin edebilirsiniz*.
+
+Anahtar, yönteminizi veri türünüze eşleştirmektir. Kategoriler için sınıflandırma, sayılar için sayısal ekstrapolasyon kullanın. Ve verileriniz sayısal olduğunda, [ücretsiz ekstrapolasyon hesaplayıcısı](https://www.extrapolationcalculator.com/) trendinizi güvenle ileriye yansıtmak için size beş yöntem sunar — lineer, üstel, logaritmik, polinom ve ikinci dereceden.
+
+## Sıkça Sorulan Sorular
+
+<details class="faq-item">
+<summary>Sayısal olmayan verileri ekstrapole edebilir misiniz?</summary>
+
+Sayısal girdi gerektiren geleneksel ekstrapolasyon yöntemlerini kullanarak hayır. Gelecekteki kategorileri lojistik regresyon, Random Forest veya Markov zincirleri gibi sınıflandırma modelleri kullanarak tahmin edebilirsiniz. Bu yöntemler, sayısal bir trendi genişletmek yerine her kategorinin olasılığını tahmin eder.
+
+</details>
+
+<details class="faq-item">
+<summary>Kategorik verileri tahmin etmek için en iyi yöntem nedir?</summary>
+
+Durumunuza bağlıdır. Lojistik regresyon ikili sonuçlar için en iyisidir. Multinominal lojistik regresyon birden fazla sırasız kategoriyi işler. Random Forest ve XGBoost karmaşık desenleri yakalar ancak daha fazla veri gerektirir. Markov zincirleri sıralı kategori geçişleri için iyi çalışır.
+
+</details>
+
+<details class="faq-item">
+<summary>Lojistik regresyon ekstrapolasyon mudur?</summary>
+
+Katı matematiksel anlamda değil. Lojistik regresyon, bir kategorinin olasılığını tahmin eden bir sınıflandırma yöntemidir. Eğitim aralığınızın dışındaki yeni verilere uyguladığınızda bir kategorik veri ekstrapolasyonu biçimi haline gelir — ancak altında yatan mekanizma sınıflandırmadır, eğri ekstrapolasyonu değil.
+
+</details>
+
+<details class="faq-item">
+<summary>Excel'de kategorileri tahmin edebilir misiniz?</summary>
+
+Evet, sınırlamalarla. Excel'in yerleşik lojistik regresyon araçları minimaldir, ancak temel sınıflandırma için Analysis ToolPak gibi eklentiler kullanabilirsiniz. Daha gelişmiş kategorik tahmin için — multinominal modeller, Random Forest, Markov zincirleri — Python veya R çok daha yeteneklidir.
+
+</details>

@@ -1,0 +1,356 @@
+---
+title: Doğrusal Ekstrapolasyonu Anlamak
+description: Doğrusal ekstrapolasyon hakkında kapsamlı bir rehber — ne zaman kullanılacağı, nasıl çalıştığı ve sınırlamaları.
+publishDate: 2026-05-10
+author: Ekstrapolasyon Hesaplayıcı Ekibi
+category: Yöntemler
+featuredImage: ""
+---
+
+Doğrusal ekstrapolasyon, gelecekteki değerleri tahmin etmek için en basit ve en yaygın kullanılan yöntemlerden biridir. Mevcut veri noktalarından geçen bir doğru çizgi uydurarak ve bu çizgiyi gözlemlenen aralığın ötesine uzatarak çalışır. Üç aylık geliri tahmin ediyor, test edilen sınırların ötesinde malzeme stresini değerlendiriyor veya nüfus rakamlarını projekte ediyor olun, doğrusal ekstrapolasyon hızlı ve yorumlanabilir bir başlangıç noktası sağlar. [Ekstrapolasyon hesaplayıcımız](/) bu yöntemi kendi veri kümelerinize saniyeler içinde uygulamayı kolaylaştırır ve yalnızca veri noktalarınız ile bir hedef x-değeri gerektirir.
+
+## Doğrusal Ekstrapolasyon Nedir?
+
+Özünde, doğrusal ekstrapolasyon, iki değişken arasındaki ilişkinin daha önce gözlemlediğiniz verilerin ötesinde aynı sabit hızda devam ettiğini varsayar. Bir miktar her zaman adımında yaklaşık beş birim artıyorsa, doğrusal ekstrapolasyon, gelecekte her zaman adımında beş birim artmaya devam edeceğini tahmin eder. Bu, değişim hızının kendisinin değişmesine izin veren daha esnek yöntemlerin aksine — örneğin, hızlanan büyüme veya azalan getiriler — doğrusal ekstrapolasyonun kasıtlı olarak göz ardı ettiği bir durumdur.
+
+Bu, doğrusal ekstrapolasyonu, hedefin bilinen veri noktalarının *arasındaki* değerleri doldurmak olduğu [enterpolasyon vs ekstrapolasyondan](/blog/interpolation-vs-extrapolation/) temelde farklı kılar. Enterpolasyon, gözlemlenen sınırların güvenliği içinde çalışırken, [ekstrapolasyon](/blog/what-is-extrapolation/) gözlemlenen verilerin sınırının dışına çıkar ve bu doğası gereği daha fazla belirsizlik taşır ve yorumlamada daha fazla dikkat gerektirir. Aradaki fark önemlidir: enterpole edilmiş bir değer her iki taraftaki verilerle desteklenirken, ekstrapole edilmiş bir değerin yalnızca bir tarafında veri bulunur ve bu da onu temeldeki trendin değişmiş olma riskine maruz bırakır.
+
+Doğrusal varyant, özellikle bir eğri yerine düz bir çizgi projeksiyonunda ısrar eder ve bu da onu mevcut en muhafazakar ve en kolay anlaşılır ekstrapolasyon biçimi yapar. Daha karmaşık yöntemler mevcut olsa da — ve bunları daha sonra tartışacağız — doğrusal yaklaşım size şeffaflık ve teknik olmayan paydaşlarla iletişim kolaylığı açısından yenilmesi zor bir temel çizgi verir. Bir müşteriye gelirin yılda yaklaşık 25.000 $ arttığını ve bunun devam etmesini beklediğinizi söylediğinizde, mantık hemen açıktır. Projeksiyonu kavramak için kimsenin üstel fonksiyonları veya polinom katsayılarını anlaması gerekmez.
+
+### Doğrusal Ekstrapolasyon Ne Zaman Uygundur
+
+Doğrusal ekstrapolasyon, disiplinler arasında sıkça ortaya çıkan birkaç belirli senaryoda parlar:
+
+- **Sabit değişim hızı**: Temeldeki süreç gerçekten istikrarlı bir artış veya azalış ürettiğinde — örneğin, her dönem aynı miktarda azalan sabit faizli bir kredi bakiyesi veya sabit hızda hareket eden bir aracın eşit zaman aralıklarında eşit mesafeler kat etmesi.
+- **Kısa menzilli projeksiyonlar**: Gerçek ilişki hafifçe eğri olsa bile, düz bir çizgi verilerin ötesinde dar bir pencerede iyi bir yaklaşım olabilir. Doğrusallık varsayımıyla ortaya çıkan hata mesafeyle birlikte büyür, bu nedenle kısa sıçramalar makul ölçüde doğru kalır.
+- **Hızlı tahminler**: Hemen kabaca bir cevaba ihtiyacınız olduğunda ve daha karmaşık bir model uydurmak için zamanınız veya veri hacminiz olmadığında, doğrusal bir projeksiyon size saniyeler içinde savunulabilir bir sayı verir.
+- **Temel karşılaştırma**: Doğrusal ekstrapolasyon, daha sofistike yaklaşımları ölçmek için yararlı bir kıyaslama görevi görür. Daha karmaşık bir model doğrusal temel çizgiyi zar zor iyileştiriyorsa, eklenen karmaşıklık veriler tarafından haklı çıkarılmayabilir.
+
+Modellediğiniz fenomen tanım gereği temelde doğrusal olduğunda da doğru seçimdir. Elektronikte Ohm Yasası (voltaj eşittir akım çarpı direnç), esneklikte Hooke Yasası (kuvvet eşittir yay sabiti çarpı yer değiştirme) ve klasik mekanikte sabit hızlı hareketin tümü, çalışma rejimleri içinde geçerli olan doğrusal ilişkiler üretir. Bu durumlarda, doğrusal ekstrapolasyon yalnızca bir yaklaşım değildir — doğru fiziksel modeldir.
+
+### Doğrusal Ekstrapolasyon Ne Zaman Başarısız Olur
+
+Doğrusal ekstrapolasyon, temeldeki süreç hızlandığında, yavaşladığında veya yön değiştirdiğinde çöker. Bileşik faizi düz bir çizgiyle tahmin etmek, uzun dönemlerde büyümeyi önemli ölçüde eksik tahmin edecektir. Bakteri kolonisi boyutunu doğrusal bir modelle tahmin etmek, büyümenin log fazı sırasında meydana gelen üstel patlamayı göz ardı eder. Bu durumlarda, [üstel ekstrapolasyon](/blog/exponential-growth/) veya [logaritmik ekstrapolasyon](/blog/logarithmic-diminishing-returns/) eğilimi düz bir çizgiden çok daha etkili bir şekilde yakalayacaktır.
+
+Benzer şekilde, verileriniz U şeklinde veya salınımlı bir desen izliyorsa — mevsimsel satış döngülerini, günlük sıcaklık değişimlerini veya ekonomik iş döngülerini düşünün — düz bir çizgi yapıyı tamamen kaçıracaktır. [Polinom ekstrapolasyonu](/blog/polynomial-vs-linear/), doğrusal modellerin yapamadığı eğrileri uydurabilir, ancak ekstrapolasyon sınırında kendi risklerini de beraberinde getirir.
+
+En kötü sonuçlar, analistlerin doğrusal bir projeksiyonu koşullu bir tahmin yerine garantili bir tahmin olarak ele almasıyla ortaya çıkar. Hiçbir ekstrapolasyon yöntemi yapısal kırılmaları — temeldeki sürecin temelden değiştiği anlar, örneğin bir piyasa aksaklığı, bir politika değişikliği veya teknolojik bir sıçrama — tahmin edemez. Doğrusal ekstrapolasyon, bu kırılmaları tespit etmek veya bunlara uyum sağlamak için hiçbir mekanizma sunmadığından, bunlara karşı özellikle savunmasızdır.
+
+## Doğrusal Ekstrapolasyonun Arkasındaki Matematik
+
+### Doğrusal Model
+
+Doğrusal model şu şekilde ifade edilir:
+
+**y = mx + b**
+
+Burada:
+- **y** tahmin edilen değerdir (bağımlı değişken)
+- **x** girdi değeridir (bağımsız değişken)
+- **m** eğimdir, değişim hızını temsil eder
+- **b** y-kesişim noktasıdır, x sıfıra eşit olduğunda y'nin değeri
+
+**m** eğimi size x'teki her bir birimlik artış için y'nin ne kadar değiştiğini söyler. m = 3 ise, tahmin edilen değeriniz x'teki her ileri adımda 3 birim artar. **b** kesişim noktası, çizgiyi y-eksenine sabitler ve tüm tahmini yukarı veya aşağı kaydırır. Birlikte, bu iki parametre çizgiyi tamamen tanımlar — ve dolayısıyla modelin yapacağı her ekstrapole edilmiş tahmini tamamen tanımlar.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Doğrusal model y eşittir mx artı b: eğim ve kesişim görselleştirmesi">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Doğrusal Model: y = mx + b</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="140" x2="540" y2="140" stroke="#e5e7eb" stroke-dasharray="3 3"/>
+      <text x="20" y="144" font-size="9" fill="#64748b">x-ekseni</text>
+      <text x="62" y="36" font-size="9" fill="#64748b">y-ekseni</text>
+      <line x1="60" y1="100" x2="540" y2="50" stroke="#d4af37" stroke-width="2.5"/>
+      <circle cx="60" cy="100" r="4" fill="#1e40af" stroke="#fff" stroke-width="1.5"/>
+      <text x="35" y="98" font-size="10" font-weight="600" fill="#1e40af">b</text>
+      <text x="50" y="115" font-size="9" fill="#64748b">kesişim</text>
+      <line x1="180" y1="78" x2="180" y2="240" stroke="#94a3b8" stroke-dasharray="2 2"/>
+      <line x1="180" y1="78" x2="280" y2="78" stroke="#94a3b8" stroke-dasharray="2 2"/>
+      <text x="220" y="74" font-size="9" fill="#64748b">Δx = 1</text>
+      <text x="195" y="200" font-size="9" fill="#d4af37" font-weight="600">Δy = m</text>
+      <text x="220" y="255" font-size="10" fill="#0a0a0a" font-weight="600">y = mx + b</text>
+      <text x="430" y="65" font-size="9" fill="#d4af37" font-weight="600">m = eğim</text>
+    </g>
+  </svg>
+  <figcaption>Doğrusal model y = mx + b görselleştirmesi. Kesişim b, x = 0'daki y-değeridir ve eğim m, x'teki her birim artış için y'deki sabit değişim hızını temsil eder. Her iki parametre belirlendikten sonra, çizgi gelecekteki veya geçmişteki değerleri ekstrapole etmek için her iki yönde de süresiz olarak uzatılabilir.</figcaption>
+</figure>
+
+### En Küçük Kareler Yöntemi
+
+İkiden fazla veri noktanız olduğunda, nadiren hepsi mükemmel bir şekilde tek bir düz çizgi üzerine düşer. Gerçek veriler gürültülüdür ve zorluk, genel eğilimi en iyi temsil eden çizgiyi bulmaktır. En küçük kareler yöntemi, gözlemlenen değerler ile çizginin tahminleri arasındaki toplam karesel hatayı en aza indiren çizgiyi bularak bunu çözer. Bu standart yaklaşımdır çünkü Gauss-Markov varsayımları altında en iyi doğrusal yansız tahmin ediciyi (BLUE) üretir — birçok pratik durumda karşılanan koşullar.
+
+Verilen n veri noktası (x1, y1), (x2, y2), ..., (xn, yn) için formüller şunlardır:
+
+**m = [n.S(xiyi) - Sxi.Syi] / [n.S(xi2) - (Sxi)2]**
+
+**b = [Syi - m.Sxi] / n**
+
+Bu formüller, karesel artıkların toplamını olabildiğince küçük yapan tek çizgiyi bulur. Bir artık, gözlemlenen bir nokta ile uydurulan çizgi arasındaki dikey mesafedir — modelin tahmin ettiği ile gerçekte gözlemlenen arasındaki fark. Artıkları toplamadan önce kareleyerek yöntem, büyük hataları orantısız bir şekilde cezalandırır; bu arzu edilir bir durumdur çünkü tek bir büyük ıska genellikle birkaç küçük ıskadan daha kötüdür.
+
+En küçük kareler yaklaşımının ayrıca zarif bir geometrik yorumu vardır: gözlemlenen y-değerlerinin vektörünü tasarım matrisinin sütun uzayına yansıtarak Öklid anlamında mümkün olan en yakın uyumu bulur. Lineer cebirle olan bu bağlantı, daha geniş regresyon analizi teorisini destekler ve en küçük karelerin neden bu kadar yaygın olarak benimsendiğini açıklar — bu yalnızca bir buluşsal yöntem değil, derin matematiksel temellere sahiptir.
+
+En küçük kareler çizgisinin önemli bir özelliği, her zaman (x bar, y bar) noktasından geçmesidir; burada x bar ve y bar sırasıyla x ve y değerlerinin ortalamalarıdır. Bu, çizginin verilerin kütle merkezine sabitlendiği anlamına gelir ve elle hesaplama yaparken kullanışlı bir mantık kontrolü sağlar: uydurulan çizginiz ortalama noktadan geçmiyorsa, hesaplamada bir şeyler yanlış gitmiştir.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="En küçük kareler regresyonu: karesel artıkları en aza indiren en iyi uyum çizgisi etrafında dağılmış veri noktaları">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">En Küçük Kareler: Karesel Artıkları En Aza İndirme</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="120" x2="540" y2="80" stroke="#d4af37" stroke-width="2.5"/>
+      <g fill="#1e40af">
+        <circle cx="100" cy="180" r="4"/>
+        <circle cx="160" cy="155" r="4"/>
+        <circle cx="220" cy="135" r="4"/>
+        <circle cx="280" cy="125" r="4"/>
+        <circle cx="340" cy="105" r="4"/>
+        <circle cx="400" cy="90" r="4"/>
+        <circle cx="460" cy="75" r="4"/>
+      </g>
+      <line x1="100" y1="180" x2="100" y2="167" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="160" y1="155" x2="160" y2="148" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="220" y1="135" x2="220" y2="128" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="280" y1="125" x2="280" y2="108" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="340" y1="105" x2="340" y2="95" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="400" y1="90" x2="400" y2="78" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+      <line x1="460" y1="75" x2="460" y2="65" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"/>
+      <text x="470" y="50" font-size="9" fill="#ef4444">artık (ei)</text>
+      <circle cx="280" cy="115" r="5" fill="#d4af37" stroke="#fff" stroke-width="1.5"/>
+      <text x="288" y="118" font-size="9" fill="#0a0a0a" font-weight="600">(x bar, y bar)</text>
+    </g>
+  </svg>
+  <figcaption>En küçük kareler regresyonu: altın çizgi, gözlemlenen veri noktaları (mavi daireler) ile çizgi üzerindeki tahmin edilen değerler arasındaki karesel dikey mesafelerin (kırmızı kesikli çizgiler olarak gösterilen artıklar) toplamını en aza indiren en iyi uyum çizgisini temsil eder. Çizgi her zaman ağırlık merkezinden (x bar, y bar) geçer — uyumu elle hesaplarken kullanışlı bir mantık kontrolü.</figcaption>
+</figure>
+
+### İki Noktadan Eğim Hesaplama
+
+Yalnızca iki veri noktanız varsa, eğim hesaplaması bilinen yükselme bölü koşma formülüne indirgenir:
+
+**m = (y2 - y1) / (x2 - x1)**
+
+Ve kesişim noktası, doğrusal denklemin bilinen noktalardan biriyle yeniden düzenlenmesinden gelir:
+
+**b = y1 - m.x1**
+
+Bu iki nokta yöntemi, doğrusal ekstrapolasyonun en basit şeklidir. Hesaplaması kolay olsa da, gürültüye karşı hiçbir direnç sunmaz — herhangi bir noktadaki herhangi bir hata doğrudan eğime ve kesişim noktasına yayılır. Çok sayıda noktayla en küçük kareler yöntemi rastgele dalgalanmaları ortalamaya alır, bu nedenle yeterli veriniz olduğunda güçlü bir şekilde tercih edilir.
+
+## Adım Adım Çalışılmış Örnek
+
+Gerçek sayılarla somut bir örnek üzerinden gidelim. Diyelim ki beş yıllık yıllık gelir veriniz (bin dolar cinsinden) var ve 7. yıl için geliri projekte etmek istiyorsunuz.
+
+| Yıl (x) | Gelir (y) |
+|----------|------------|
+| 1 | 120 |
+| 2 | 145 |
+| 3 | 168 |
+| 4 | 195 |
+| 5 | 218 |
+
+**Adım 1: Toplamları hesaplayın**
+
+- Sx = 1 + 2 + 3 + 4 + 5 = 15
+- Sy = 120 + 145 + 168 + 195 + 218 = 846
+- Sxy = (1x120) + (2x145) + (3x168) + (4x195) + (5x218) = 120 + 290 + 504 + 780 + 1090 = 2784
+- Sx2 = 1 + 4 + 9 + 16 + 25 = 55
+- n = 5
+
+**Adım 2: Eğimi hesaplayın**
+
+m = [5 x 2784 - 15 x 846] / [5 x 55 - 15 x 15]
+m = [13920 - 12690] / [275 - 225]
+m = 1230 / 50
+**m = 24,6**
+
+Eğim bize gelirin ortalama olarak yılda yaklaşık 24.600 $ arttığını söyler.
+
+**Adım 3: Kesişim noktasını hesaplayın**
+
+b = [846 - 24,6 x 15] / 5
+b = [846 - 369] / 5
+b = 477 / 5
+**b = 95,4**
+
+Kesişim noktası, "sıfırıncı yıldaki" varsayımsal geliri temsil eder — verilerimizin başlamasından önceki bir nokta. Bu değerin doğrudan bir iş anlamı olmayabilir (sıfırıncı yıl herhangi bir gerçek döneme karşılık gelmeyebilir), ancak çizgiyi doğru bir şekilde konumlandırmak için matematiksel olarak gereklidir.
+
+**Adım 4: Denklemi oluşturun**
+
+**y = 24,6x + 95,4**
+
+Bu denklem artık gözlemlenen aralığımızın ötesindeki yıllar da dahil olmak üzere herhangi bir x yılı için geliri tahmin etmemizi sağlar.
+
+**Adım 5: 7. yıla ekstrapole edin**
+
+y = 24,6 x 7 + 95,4 = 172,2 + 95,4 = **267,6**
+
+Model, 7. yıl için yaklaşık 267.600 $ gelir tahmin ediyor. Bu, son gözlemimizden (5. yıl) iki yıl sonrasıdır ve nispeten mütevazı bir ekstrapolasyon aralığıdır — doğrusal ekstrapolasyonun en güvenilir olduğu türden kısa menzilli projeksiyon.
+
+Bir mantık kontrolü olarak, verilerin yalnızca bir adım ötesi olan 6. yıl için de tahmini hesaplayabiliriz: y = 24,6 x 6 + 95,4 = 147,6 + 95,4 = 243,0 veya 243.000 $. Bu bir adım ileri tahmin, 7. yıl için iki adım ileri tahminden daha güvenilirdir ve gelecek yılın gerçek geliri rapor edilir edilmez doğrulanabilir.
+
+Aynı hesaplamayı [ekstrapolasyon hesaplayıcımızı](/) kullanarak anında doğrulayabilirsiniz — sadece veri noktalarınızı girin ve tahmin etmek istediğiniz x-değerini belirtin. Hesaplayıcı aritmetiği halleder ve ayrıca R2 ve diğer tanısal istatistikleri otomatik olarak sağlayarak sizi manuel hesaplamadan ve olası aritmetik hatalardan kurtarır.
+
+**Adım 6: Uyumu değerlendirin**
+
+Bu veriler için R2 değeri yaklaşık 0,998'dir ve bu mükemmel bir doğrusal uyumu gösterir. Veri noktaları uydurulan çizgiye çok yakındır ve bu da bize kısa menzilli projeksiyonlarda güven verir. R2 yorumunu aşağıda daha ayrıntılı olarak tartışacağız.
+
+## Doğrusal Ekstrapolasyonu Diğer Yöntemlerle Karşılaştırma
+
+Doğrusal ekstrapolasyon mevcut tek seçenek değildir. Alternatiflerden ne zaman daha iyi performans gösterdiğini — ve ne zaman göstermediğini — anlamak, güvenilir tahminler yapmak için kritiktir. Yöntem seçimi, alışkanlık veya kolaylıkla değil, verilerin davranışı ve alan bilgisi tarafından yönlendirilmelidir.
+
+### Doğrusal vs. Üstel Ekstrapolasyon
+
+[Üstel ekstrapolasyon](/blog/exponential-growth/), büyümenin zamanla hızlandığı durumları yakalayan y = a.ekx biçiminde bir eğri uydurur. Örneğimizdeki gelir sabit bir dolar tutarı yerine sabit bir yüzdeyle büyüyor olsaydı — diyelim ki yıldan yıla %15 — o zaman üstel ekstrapolasyon daha doğru uzun menzilli tahminler üretirdi çünkü her yıllık artış daha büyük bir taban üzerine inşa edilir.
+
+Bununla birlikte, değişim hızı mutlak anlamda gerçekten sabit olduğunda, üstel ekstrapolasyon verileri aşırı uydurur ve sınırsız büyüyen, giderek gerçekçi olmayan projeksiyonlar üretir. Bu senaryoda doğrusal bir model, verilerin gerçekte neyi desteklediği konusunda daha dürüsttür. Anahtar soru, büyümenin toplamsal (doğrusal) mı yoksa çarpımsal (üstel) mi olduğudur ve bu, verileri üreten temel mekanizmaya bağlıdır.
+
+### Doğrusal vs. Logaritmik Ekstrapolasyon
+
+[Logaritmik ekstrapolasyon](/blog/logarithmic-diminishing-returns/) azalan getirileri modeller — her ek girdi biriminin çıktıda daha küçük bir artış ürettiği durumlar. Reklam harcamalarının dönüşümler üzerindeki etkisini inceliyorsanız, logaritmik bir model genellikle doğrusal olandan daha iyi gerçekliği yansıtır çünkü her ek doların marjinal etkisi, harcama arttıkça küçülme eğilimindedir.
+
+Doğrusal ekstrapolasyon burada başarısız olur çünkü birim başına aynı getiriyi sonsuza kadar varsayar; bu, pazarlama, eğitim, farmakoloji veya doygunluk etkilerine tabi herhangi bir alanda nadiren geçerlidir. Reklam harcamasının ilk doları on yeni müşteri getirebilir, ancak bininci dolar yalnızca bir tane getirebilir. Düz bir çizgi bu yavaşlamayı yakalayamaz.
+
+### Doğrusal vs. Polinom Ekstrapolasyonu
+
+[Polinom ekstrapolasyonu](/blog/polynomial-vs-linear/), polinom derecesini artırarak keyfi esneklikte eğriler uydurabilir. İkinci dereceden bir model tek bir bükülmeyi, kübik bir model iki bükülmeyi yakalar ve bu böyle devam eder. Tehlike aşırı uydurmadır: yüksek dereceli bir polinom her veri noktasından mükemmel bir şekilde geçebilir, ancak gözlemlenen aralığın dışında çılgın, salınımlı tahminler üretebilir. Bu, Runge fenomeni olarak bilinir ve sayısal analizde iyi çalışılmış bir problemdir.
+
+Doğrusal ekstrapolasyon, eğrilemediği için veri sınırının ötesinde kontrolden çıkmış davranışa karşı en dayanıklı olanıdır. Bu muhafazakarlık hem en büyük gücü hem de en büyük sınırlamasıdır. Polinom katsayıları yükseldiği için asla saçma sapan yüksek bir projeksiyon üretmez, ancak verilerdeki gerçek bir eğriyi de asla yakalayamaz. Çalışılmış örneklerle pratik bir karşılaştırma için bkz. [polinom ekstrapolasyonu vs doğrusal](/blog/polynomial-extrapolation-vs-linear/).
+
+### Sağlamlık için Regresyon Kullanma
+
+Daha titiz bir istatistiksel çerçeve istediğinizde — güven aralıkları, hipotez testleri, artık teşhisi ve varyans analizi — [regresyon hesaplayıcısı](/regression/) bu araçları temel ekstrapolasyonla birlikte sağlar. Regresyon analizi, doğrusal uyumu saf bir eğri uydurma alıştırması olmaktan ziyade istatistiksel bir model olarak ele alır ve size belirsizlik, istatistiksel anlamlılık ve tahminlerinizin güvenilirliği hakkında daha zengin bir anlayış kazandırır. Bu ek titizlik, gerçek sonuçları olan kararlar tahmine bağlı olduğunda özellikle önemlidir.
+
+## Gerçek Dünya Uygulamaları
+
+### Finans ve Ekonomi
+
+Finansal analistler, tarihsel büyüme oranları istikrarlı göründüğünde kısa vadeli gelir ve gider tahminleri için doğrusal ekstrapolasyon kullanır. Her dönemde yaklaşık olarak aynı miktarda artan üç aylık satışları takip eden bir şirket, bir sonraki çeyreği düz bir çizgi kullanarak makul bir şekilde projekte edebilir. Merkez bankaları bazen kısa vadeli GSYİH projeksiyonları için doğrusal trend ekstrapolasyonu kullanır, ancak bunu genellikle para politikasını, enflasyon beklentilerini ve işgücü piyasası dinamiklerini hesaba katan yapısal modellerle tamamlarlar.
+
+Bütçelemede, doğrusal ekstrapolasyon tarihsel olarak istikrarlı bir oranda büyüyen maliyet kalemlerini — kira artışları, abonelik ücretleri, personel maliyetleri — projekte etmek için varsayılan yaklaşımdır. Yöntemin basitliği, bütçelerin hızlı bir şekilde hazırlanabileceği ve gerçekleşenler geldiğinde bir kantitatif analist ekibine ihtiyaç duymadan kolayca revize edilebileceği anlamına gelir.
+
+Bununla birlikte, finansta çalışan herkes, piyasaların hiçbir doğrusal modelin tahmin edemeyeceği rejim değişikliklerine, iş döngülerine ve dışsal şoklara tabi olduğunu hatırlamalıdır. 2008 finansal krizi, COVID-19 salgını ve ani düzenleyici değişikliklerin tümü, önceki doğrusal trendleri bir gecede geçersiz kılan yapısal kırılmaları temsil eder. Doğrusal ekstrapolasyon finansal tahmin için bir başlangıç noktasıdır, nihai bir cevap değil. En iyi, bir ila üç dönem ilerideki ufuklar için çalışır ve bunun ötesinde daha yapısal modeller gerekli hale gelir.
+
+### Mühendislik
+
+Yapı mühendisliğinde, termal genleşme gibi malzeme özellikleri normal çalışma aralıklarında doğrusaldır. Bir çelik kirişin sıcaklıkla uzunluk değişimi, malzeme davranışının temelden değiştiği faz geçiş sıcaklıklarına yaklaşana kadar düz bir çizgi izler. Bu doğrusal rejim içinde ekstrapolasyon yapmak standart uygulamadır ve fizik tarafından iyi desteklenir. Anahtar, doğrusal rejimin nerede bittiğini bilmektir — malzeme el kitaplarında iyi belgelenmiş bir sıcaklık sınırı.
+
+Elektronikte, dirençler üzerindeki voltaj-akım ilişkileri, sabit sıcaklıkta tanım gereği doğrusal bir ilişki olan Ohm Yasasına (V = IR) uyar. Mühendisler, fiziksel olarak gerekçelendirildiği için doğrusallığa güvenerek sensörler ve dönüştürücüler için rutin olarak doğrusal kalibrasyon eğrilerini ekstrapole ederler. Bununla birlikte, aşırı voltajlarda ısınma ve bozulma gibi doğrusal olmayan etkilerin meydana geldiğini ve geçerli ekstrapolasyon aralığını sınırladığını da bilirler.
+
+İnşaat mühendisliğinde, trafik hacmi projeksiyonları genellikle kısa vadeli planlama için doğrusal ekstrapolasyon kullanır. Bir otoyol son on yılda yılda yaklaşık 2.000 araçlık bir trafik artışı gördüyse, doğrusal bir projeksiyon kapasite planlamasının önümüzdeki birkaç yılı için makul bir tahmin sağlar. Bu ufkun ötesinde, demografik değişimler, yeni toplu taşıma seçenekleri veya uzaktan çalışma trendleri yörüngeyi önemli ölçüde değiştirebilir.
+
+### Bilim ve Araştırma
+
+İklim bilimciler, kısa vadeli sıcaklık projeksiyonları için çok modelli toplulukların bir bileşeni olarak doğrusal ekstrapolasyonu kullanır ve bunu geri bildirim döngülerini ve doğrusal olmayan dinamikleri yakalayan fizik temelli modellerle birleştirir. Doğrusal bileşen basit bir referans sağlar: mevcut ısınma trendleri değişmeden devam ederse, sıcaklıklar beş yıl içinde nasıl olurdu? Bu referans senaryosu daha sonra karbon döngüsü geri bildirimlerini, okyanus ısı alımını ve aerosol dinamiklerini içeren modellerle karşılaştırılarak daha karmaşık modellerin basit doğrusal temel çizgiden ne kadar saptığı ölçülür.
+
+Epidemiyologlar, enfeksiyon oranları kabaca sabit göründüğünde salgının erken evre verilerine doğrusal ekstrapolasyon uygular, ancak veriler hızlanan yayılma gösteriyorsa hızla üstel modellere geçerler. Doğrusal model bir erken uyarı sistemi olarak hizmet eder — gözlemlenen vakalar doğrusal projeksiyonu aşarsa, bu bulaşmanın hızlandığını ve önlemlerin yetersiz olabileceğini sinyal eder.
+
+Farmakolojide, doz-yanıt ilişkileri genellikle bir ilacın etkisinin terapötik aralığında doğrusaldır, ancak aşırı dozlarda doğrusal olmayan eşikler ve doygunluk sergiler. Araştırmacılar, eğrinin doğrusal kısmını tanımlamalı ve ekstrapolasyonlarını bununla sınırlamalı, model varsayımlarının artık geçerli olmadığı doğrusal olmayan rejimlere projeksiyon yapma cazibesine direnmelidir.
+
+Çevre biliminde, kirletici konsantrasyon trendleri, özellikle düzenleyici müdahaleler tutarlı bir azalma oranı oluşturduğunda, kısa zaman ufuklarında bazen yaklaşık olarak doğrusaldır. Doğrusal ekstrapolasyon, düzenleyicilere konsantrasyonların ne zaman yasal bir eşiğin altına düşeceğini tahmin etmek için basit bir yol sağlar, ancak mevsimsel değişim ve hava etkileri, projeksiyonları doğrulamak için gerçek izleme verilerinin her zaman kullanılması gerektiği anlamına gelir.
+
+## Yaygın Hatalar ve Bunlardan Nasıl Kaçınılır
+
+### Verilerin Çok Ötesine Ekstrapolasyon Yapmak
+
+En sık ve en sonuçsal hata, gözlemlenen verilerin çok ötesine projeksiyon yapmaktır. Beş yıllık veri boyunca doğrusal bir uyum, on veya yirmi yıl ilerisi için bir tahmini haklı çıkarmaz. Ne kadar uzağa giderseniz, temeldeki sürecin yön veya hız değiştirme olasılığı o kadar artar. İyi bir kural: güçlü bir alan gerekçesi olmadan gözlemlenen verilerinizin aralığının %20-30'undan fazlasını ekstrapole etmekten kaçının. Verileriniz x = 1'den x = 10'a kadar uzanıyorsa, x = 12 veya 13'e kadar olan tahminler savunulabilir; x = 20'deki tahminler en iyi ihtimalle spekülatiftir.
+
+### Verilerdeki Doğrusal Olmamayı Göz Ardı Etmek
+
+Herhangi bir modeli uydurmadan önce verilerinizi her zaman çizin. Serpilme grafiği görünür bir eğrilik gösteriyorsa — ince bir eğrilik bile olsa — doğrusal bir model sistematik olarak yanlış tahmin edecek, aralığın bir tarafında olduğundan fazla, diğer tarafında olduğundan az tahmin edecektir. Farklı bir işlevsel formun trendi daha iyi yakalayıp yakalamadığını keşfetmek için [polinom ekstrapolasyonu](/blog/polynomial-vs-linear/) veya [enterpolasyon hesaplayıcısını](/interpolation/) kullanmayı düşünün. Kontrol etmenin maliyeti minimumdur; doğrusal olmamayı göz ardı etmenin maliyeti önemli olabilir.
+
+### Kesinliği Doğrulukla Karıştırmak
+
+Bir model, trendin yönü veya büyüklüğü hakkında temelden yanlış olurken birçok ondalık basamağa kadar tahminler üretebilir. Kötü seçilmiş bir modelden gelen yüksek kesinlikli çıktı, yanlış güven verir. Hesaplayıcının 247.382,51 $ rapor etmesi, cevabı güvenilir yapmaz — sadece kesin yapar. Modelin yalnızca kesin değil aynı zamanda doğru olup olmadığını değerlendirmek için ekstrapolasyonunuzu her zaman bir R2 değerlendirmesi ve artık analizi ile eşleştirin.
+
+### Aykırı Değerleri ve Etkili Noktaları Gözden Kaçırmak
+
+Tek bir aşırı veri noktası, özellikle küçük veri kümelerinde en küçük kareler çizgisini önemli ölçüde çekebilir. Uydurmadan önce, aykırı değerleri kontrol edin ve bunların gerçek sinyali mi yoksa ölçüm hatasını mı temsil ettiğini araştırın. Bir gözleme sıfır ekleyen bir veri giriş hatası, tüm çizgiyi kaydırabilir, eğimi ve kesişim noktasını her ekstrapole edilmiş değere yayılan şekillerde değiştirebilir. Benzer şekilde, gerçekten anormal bir olay — tek bir çeyreğin gelirini şişiren bir kerelik yasal anlaşma — veri kümesinde bırakılırsa trend çizgisini bozabilir.
+
+Kaldıraç başka bir endişe kaynağıdır. x-ekseninin uç noktalarındaki veri noktaları, kütle merkezinden uzak oldukları için eğim üzerinde orantısız bir etkiye sahiptir. Yüksek kaldıraca ve büyük bir artığa sahip tek bir nokta, ekstrapolasyonun yönünü tek başına belirleyebilir. Cook mesafesi ve kaldıraç değerleri gibi tanısal önlemler bu etkili noktaları belirleyebilir ve [regresyon hesaplayıcısı](/regression/), uyumunuzun küçük bir dizi gözlem tarafından haksız yere yönlendirilip yönlendirilmediğini değerlendirmenize yardımcı olabilir. Sağlam regresyon yöntemleri veya basit aykırı değer kaldırma haklı olabilir, ancak başkalarının mantığınızı değerlendirebilmesi için tüm hariç tutmaları şeffaf bir şekilde belgeleyin.
+
+### Alan Bilgisini Göz Ardı Etmek
+
+İstatistikler tek başına size doğrusal bir trendin devam edip etmeyeceğini söyleyemez. Alan uzmanlığı — verileri üreten mekanizmayı anlamak — çok önemlidir. Web sitesi trafiğindeki doğrusal bir artış aylarca devam edebilir, ancak hedef kitle doygunluğa ulaştığında sonunda platoya ulaşabilir. Pil kapasitesindeki doğrusal bir düşüş, hücre bozuldukça hızlanabilir. Hiçbir istatistiksel test bu kaçınılmazlıkları yakalamaz; bunu yalnızca konu anlayışı yapacaktır. Her zaman şunu sorun: "Bu trendin doğrusal olarak devam etmesi için fiziksel veya mantıksal bir neden var mı?" Cevap hayırsa, doğrusal projeksiyonu en iyi durum senaryosu olarak ele alın ve temeldeki süreci daha iyi yansıtan alternatif modelleri düşünün.
+
+## R2 ile Uyum Kalitesini Değerlendirme
+
+Belirleme katsayısı R2, bağımlı değişkeninizdeki varyansın ne kadarının doğrusal model tarafından açıklandığını ölçer. 0 ile 1 arasında değişir:
+
+- **R2 = 1**: Model tüm varyansı açıklar; veri noktaları tam olarak çizgi üzerine düşer.
+- **R2 = 0**: Model varyansın hiçbirini açıklamaz; çizgi, her x için tahmininiz olarak y'nin ortalamasını kullanmaktan daha iyi değildir.
+- **R2 0 ile 1 arasında**: Model, değişkenliğin bir kısmını yakalar. Daha yüksek değerler daha iyi bir uyumu gösterir.
+
+Doğrusal ekstrapolasyon için, 0,7'nin altındaki bir R2, verilerin projeksiyona güvenmek için yeterince yakın bir doğrusal desen izlemediğine dair güçlü bir uyarı işaretidir. 0,9'un üzerindeki bir R2 genellikle kısa menzilli ekstrapolasyon için uygun güçlü bir doğrusal ilişkiyi gösterir. 0,7 ile 0,9 arasındaki değerler, yargı ve alan bilgisinin istatistikleri tamamlaması gereken gri bir bölgeyi temsil eder.
+
+Bununla birlikte, R2 tek başına doğrusal bir modeli doğrulamak için yeterli değildir. Hafif bir eğriye sahip bir veri kümesi yine de 0,95'lik bir R2 üretebilir, ancak doğrusal ekstrapolasyon uç noktalarda sistematik olarak sapacaktır. Bu nedenle deneyimli analistler asla yalnızca R2'ye güvenmezler. Her zaman desenler için artık grafiklerini inceleyin — artıklar rastgele saçılma yerine sistematik bir eğri gösteriyorsa, doğrusal model tahmin için önemli olan yapıyı kaçırıyor demektir. Artık grafiği, sıfır etrafında ortalanmış rastgele bir nokta bulutu gibi görünmelidir; herhangi bir huni şekli, eğri veya kümelenme, doğrusal varsayımın ihlal edildiğini gösterir.
+
+R2'nin, anlamsız olsalar bile bir modele daha fazla parametre eklediğinizde her zaman arttığını da belirtmekte fayda var. Bu nedenle, düzeltilmiş R2 — tahmin edicilerin sayısını cezalandıran — farklı karmaşıklıktaki modelleri karşılaştırırken sıklıkla tercih edilir. Doğrusal ekstrapolasyon yalnızca bir tahmin edici (x) kullandığından, ham R2 ve düzeltilmiş R2 çok yakın olacaktır, ancak hiç ek değişken eklerseniz ayrım önemli hale gelir. Bu metriklerin ve bunların güven aralıkları ve standart hatalarla birlikte nasıl yorumlanacağının daha derinlemesine ele alınması için [R2 ve güven metrikleri](/blog/r-squared-confidence/) kılavuzumuza bakın.
+
+## Güvenilir Sonuçlar için Pratik İpuçları
+
+1. **Önce görselleştirin.** Herhangi bir modeli uydurmadan önce verilerinizi her zaman çizin. İnsan gözü, özet istatistiklerin kaçırdığı desenleri, aykırı değerleri ve doğrusal olmamayı tespit edebilir. Bir serpilme grafiği oluşturulması saniyeler alır ve sizi saatlerce süren yanlış yönlendirilmiş analizden kurtarabilir.
+
+2. **R2'yi eleştirel olarak kontrol edin.** Yüksek bir R2, güvenilir ekstrapolasyon için gerekli ancak yeterli değildir. Desenler için artıkları inceleyin ve veri üretme süreci hakkında bildikleriniz ışığında doğrusal varsayımın fiziksel veya iş açısından mantıklı olup olmadığını değerlendirin.
+
+3. **Ekstrapolasyon aralığınızı sınırlayın.** En güvenli ekstrapolasyonlar, gözlemlenen verilere yakın kalır. Uzak bir geleceğe projeksiyon yapmanız gerekiyorsa, varsayımlarınızı açıkça belirtin ve tek bir nokta tahmini yerine bir dizi senaryo sunun.
+
+4. **Birden çok yöntemi karşılaştırın.** [Ekstrapolasyon hesaplayıcısını](/kullanarak) doğrusal, üstel ve polinom uyumlarını yan yana çalıştırın. Çok farklı cevaplar veriyorlarsa, veriler herhangi bir tek işlevsel formu güçlü bir şekilde desteklemiyor olabilir ve bir tahmine bağlanmadan önce daha fazla araştırma yapmalısınız.
+
+5. **Çapraz doğrulama kullanın.** Son veri noktasını ayırın, modeli kalan noktalara uydurun ve ayrılan değeri ne kadar iyi tahmin ettiğini görün. Bu, ayrı bir test veri kümesine ihtiyaç duymadan örnek dışı doğruluk hakkında gerçekçi bir tahmin sağlar.
+
+6. **Belirsizliği bildirin.** Güven aralığı olmayan bir nokta tahmini eksik ve potansiyel olarak yanıltıcıdır. Standart hatalar elde etmek ve olası sonuçların aralığını ileten tahmin aralıkları oluşturmak için [regresyon hesaplayıcısını](/regression/) kullanın.
+
+7. **Düzenli olarak güncelleyin.** Ekstrapolasyon tek seferlik bir alıştırma değildir. Yeni veriler geldikçe modelinizi yeniden uydurun ve projeksiyonlarınızı ayarlayın. Geçen yıl geçerli olan doğrusal bir trend bu yıl geçerli olmayabilir ve değişikliği yalnızca düzenli yeniden değerlendirme yakalayacaktır.
+
+8. **Varsayımlarınızı belgeleyin.** Neden doğrusal ekstrapolasyonu seçtiğinizi, R2'nin ne olduğunu, verilerin ne kadar ötesine projeksiyon yaptığınızı ve trendin kırılmasına neyin neden olabileceğini kaydedin. Bu belgeleme, tahminler metodolojiyi anlamayan karar vericilerle paylaşıldığında yanlış yorumlamaya karşı koruma sağlar.
+
+## Ne Zaman Doğrusal Olmayan Bir Yönteme Geçilmeli
+
+Aşağıdaki koşullardan herhangi biri ortaya çıktığında doğrusal ekstrapolasyonun ötesine geçmeyi düşünün:
+
+- **R2 0,7'nin altına düşer**: Doğrusal model, varyansın %70'inden azını yakalıyor ve bu da değişkenler arasında temelde farklı bir ilişki olduğunu gösteriyor.
+- **Artıklar sistematik bir desen gösterir**: Artıklar (tahmin hataları) sıfır etrafında rastgele saçılma yerine bir eğri oluşturuyorsa, doğrusal olmayan bir model daha iyi uyacak ve daha güvenilir ekstrapolasyonlar üretecektir.
+- **Alan bilgisi doğrusal olmamayı önerir**: Bileşik büyüme, doygunluk, eşik etkileri veya geri bildirim döngüleri gibi fenomenleri modelliyorsanız, bunun yerine [üstel ekstrapolasyon](/blog/exponential-growth/), [logaritmik ekstrapolasyon](/blog/logarithmic-diminishing-returns/) veya [polinom ekstrapolasyonuna](/blog/polynomial-vs-linear/) yönelin.
+- **Ekstrapolasyon aralığı büyüktür**: Gözlemlenen verilerin çok ötesine projeksiyon yapmanız gerektiğinde, daha esnek bir model — daha güçlü alan gerekçesiyle birleştirilmiş — düz bir çizginin temsil edemeyeceği davranışı yakalamak için çok önemlidir.
+- **Birden çok yöntem keskin bir şekilde farklılaşır**: Aynı hedef nokta için doğrusal ve üstel projeksiyonlar önemli ölçüde farklılaşıyorsa, bu verilerin her iki modeli de açıkça desteklemediğini işaret eder ve herhangi bir sonuca güvenmeden önce temel mekanizmayı araştırmalısınız.
+
+Doğrusaldan doğrusal olmayana geçiş, karmaşıklığın kendisi için karmaşıklıkla ilgili değildir. Modeli, veri üretme sürecinin gerçekliğiyle eşleştirmekle ilgilidir. Gerçek mekanizmayı yansıtan iyi seçilmiş bir doğrusal olmayan model, eğri verilere uygulanan doğrusal bir modeli her zaman geride bırakacaktır — ve aynı zamanda gerçekten doğrusal verilere uygulanan aşırı karmaşık bir modeli de geride bırakacaktır, çünkü gereksiz parametreler, yanlılık-varyans ödünleşimi ilkesini izleyerek yanlılığı azaltmadan varyans ekler.
+
+Pratik bir iş akışı, her zaman doğrusal ekstrapolasyonla başlamak, R2 ve artık teşhisini kullanarak uyumunu değerlendirmek ve ancak o zaman kanıtlar haklı çıkarıyorsa doğrusal olmayan yöntemlere geçmektir. Bu disiplinli yaklaşım, hem doğrusal olmamayı göz ardı etme hatasını hem de gereksiz karmaşıklıkla aşırı uydurma hatasını önler. [Ekstrapolasyon hesaplayıcısı](/) bu iş akışını, aynı veri kümesinde birden çok yöntemi yan yana karşılaştırmanıza izin vererek destekler ve doğrusal olmayan bir modelin eklenen karmaşıklığının uyum kalitesinde anlamlı bir iyileşme ile haklı çıkarılıp çıkarılmadığını görmeyi kolaylaştırır.
+
+## Sonuç
+
+Doğrusal ekstrapolasyon, herhangi bir analistin araç setinde temel bir araç olmaya devam etmektedir. Güçlü yönleri — basitlik, yorumlanabilirlik ve muhafazakarlık — onu gelecekteki trendleri projekte ederken başvurulacak ilk yöntem yapar. Zayıf yönleri — eğriliği yakalayamama ve gözlemlenen verilerden uzaklaştıkça azalan doğruluk — dikkatli bir şekilde uygulanmasını ve [R2 ve güven metrikleri](/blog/r-squared-confidence/) gibi uyum kalitesi metrikleriyle desteklenmesini gerektirir.
+
+Anahtar içgörü, doğrusal ekstrapolasyonun ne zaman doğru araç olduğunu ve ne zaman daha esnek bir şeye geçme zamanı geldiğini bilmektir. Verilerinizi görselleştirerek, R2'yi değerlendirerek, yöntemleri karşılaştırarak, artıkları kontrol ederek ve gözlemlenen aralığınızın sınırlarına saygı göstererek, en yaygın ve maliyetli tuzaklarından kaçınırken doğrusal ekstrapolasyondan güvenilir içgörüler çıkarabilirsiniz. [Ekstrapolasyon hesaplayıcımızla](//) kendiniz deneyin ve güven aralıkları ve hipotez testi dahil olmak üzere daha fazla istatistiksel titizliğe ihtiyaç duyduğunuzda, [regresyon hesaplayıcısı](/regression/) sağlam, savunulabilir analiz için tam çerçeveyi sağlar.
+
+## Sıkça Sorulan Sorular
+
+<details class="faq-item">
+<summary>Doğrusal ekstrapolasyon en güvenilir ne zaman kullanılır?</summary>
+
+Doğrusal ekstrapolasyon, verileriniz kabaca sabit bir değişim oranını takip ettiğinde, doğrusal deseni doğrulamak için yeterli noktanız olduğunda (ideal olarak 5+), ve gözlemlenen aralığın yalnızca kısa bir mesafe ötesine projeksiyon yaptığınızda en güvenilirdir. R2 skorunu kontrol edin — 0,9'un üzerindeki değerler güçlü bir doğrusal ilişkiyi gösterir.
+
+</details>
+
+<details class="faq-item">
+<summary>Ya verilerim eğriyse — yine de doğrusal kullanmalı mıyım?</summary>
+
+Verileriniz açıkça eğriyse, doğrusal ekstrapolasyon eğrinin yönüne bağlı olarak eksik veya fazla tahmin edecektir. Bunun yerine [polinom ekstrapolasyonunu](/blog/polynomial-extrapolation-vs-linear/) veya [üstel ekstrapolasyonu](/blog/exponential-growth/) deneyin. Yöntemler arasında R2 skorlarını karşılaştırın — en yüksek R2 genellikle en iyi uyumu gösterir.
+
+</details>
+
+<details class="faq-item">
+<summary>Doğrusal ekstrapolasyon için kaç veri noktasına ihtiyacım var?</summary>
+
+Teknik olarak iki nokta bir çizgiyi belirler. Ancak güvenilir sonuçlar için, doğrusal trendi doğrulamak ve aykırı değerlerin etkisini azaltmak için en az 5-6 nokta kullanın. Daha fazla nokta size daha iyi bir [R2 skoru](/blog/r-squared-confidence/) ve projeksiyonda daha fazla güven verir.
+
+</details>
+
+<details class="faq-item">
+<summary>Doğrusal ekstrapolasyon negatif trendleri işleyebilir mi?</summary>
+
+Evet. Doğrusal ekstrapolasyon, pozitif veya negatif olsun, herhangi bir sabit değişim hızı için çalışır. Negatif bir eğim, basitçe tahmin edilen değerin x arttıkça azaldığı anlamına gelir. Aynı formül ve güvenilirlik ilkeleri, yön ne olursa olsun geçerlidir.
+
+</details>

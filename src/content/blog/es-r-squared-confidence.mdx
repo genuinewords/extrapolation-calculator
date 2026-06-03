@@ -1,0 +1,326 @@
+---
+title: "Interpretación de R² y Confianza en la Extrapolación"
+description: Aprende cómo interpretar la puntuación R² y las métricas de confianza para evaluar la fiabilidad de tus resultados de extrapolación.
+publishDate: 2026-05-14
+author: Equipo de la Calculadora de Extrapolación
+category: Estadística
+featuredImage: ""
+---
+
+Cuando usas la [calculadora de extrapolación](/), cada resultado incluye dos métricas importantes: la puntuación R² y el porcentaje de confianza. Entender estos valores es crucial para tomar decisiones informadas basadas en tus extrapolaciones. Con demasiada frecuencia, la gente echa un vistazo a un valor alto de R² y asume que su proyección es confiable, solo para descubrir más tarde que el modelo era engañoso. Este artículo profundiza en lo que realmente mide R², cómo se relaciona con la confianza y por qué nunca debería ser la única métrica en la que confíes al proyectar más allá de tus datos.
+
+## ¿Qué es R²?
+
+R², formalmente conocido como el coeficiente de determinación, mide la proporción de varianza en la variable dependiente que es explicada por la variable independiente a través del modelo de regresión. En términos más simples, te dice cuánto del "movimiento" en tus datos es capturado por la línea de tendencia que has ajustado.
+
+### La Fórmula
+
+La fórmula para R² se construye a partir de dos cantidades fundamentales:
+
+**SS_total** (Suma Total de Cuadrados): Representa la varianza total en los datos observados, calculada como la suma de las diferencias al cuadrado entre cada valor observado y la media de los valores observados:
+
+**SS_total = Σ(yᵢ − ȳ)²**
+
+**SS_residual** (Suma de Cuadrados Residual): Representa la varianza que el modelo no logra capturar, calculada como la suma de las diferencias al cuadrado entre cada valor observado y el valor predicho por el modelo:
+
+**SS_residual = Σ(yᵢ − ŷᵢ)²**
+
+Juntando estas, R² se define como:
+
+**R² = 1 − (SS_residual / SS_total)**
+
+Cuando el modelo se ajusta perfectamente a los datos, cada residual es cero, por lo que SS_residual es igual a cero y R² es igual a 1. Cuando el modelo no es mejor que usar la media de y como predicción para cada punto, SS_residual es igual a SS_total y R² es igual a 0.
+
+### Entendiendo la Intuición del Cálculo
+
+Piensa en SS_total como el "problema" — la cantidad total de variación que tu modelo necesita explicar — y SS_residual como el "residuo" — lo que tu modelo no logró capturar. La relación SS_residual / SS_total te indica la fracción de variación aún no explicada. Restar eso de 1 te da la fracción que **sí** está explicada. Por eso R² a veces se describe como la "fracción de varianza explicada."
+
+Vale la pena señalar que para modelos no lineales, la fórmula estándar de R² anterior puede producir valores negativos. Esto sucede cuando el modelo ajusta los datos peor que una línea horizontal en la media. En tales casos, el modelo es activamente engañoso, y un R² negativo es una señal de advertencia fuerte de que el método elegido es inapropiado para los datos.
+
+## Rangos de Interpretación
+
+Si bien no existe una regla universal que se aplique a todas las disciplinas, las pautas generales para interpretar R² en el contexto de la extrapolación y el análisis de regresión son:
+
+| Rango de R² | Interpretación | Significado Práctico |
+|----------|---------------|-------------------|
+| 0.0 – 0.3 | Ajuste pobre | El modelo explica muy poca varianza; las proyecciones no son confiables |
+| 0.3 – 0.7 | Ajuste moderado | El modelo captura algo de tendencia pero hay dispersión considerable; usar con precaución |
+| 0.7 – 1.0 | Ajuste bueno | El modelo explica la mayor parte de la varianza; las proyecciones pueden ser razonables |
+
+Estos umbrales no son límites rígidos. En algunos campos como las ciencias sociales, un R² de 0.3 podría considerarse respetable porque el comportamiento humano es inherentemente ruidoso. En física o ingeniería, cualquier valor por debajo de 0.9 podría considerarse inaceptable. Cuando trabajes con la [calculadora de regresión](/regression/), considera siempre el dominio en el que trabajas y qué nivel de ajuste se espera para ese tipo de datos.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Escala de interpretación de R-cuadrado desde ajuste pobre a bueno, visualizado con patrones de datos de ejemplo">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Escala de Interpretación de R²</text>
+      <rect x="40" y="40" width="520" height="200" fill="#fff" stroke="#e5e7eb"/>
+      <rect x="40" y="40" width="156" height="200" fill="#fee2e2" fill-opacity="0.4"/>
+      <rect x="196" y="40" width="208" height="200" fill="#fef3c7" fill-opacity="0.4"/>
+      <rect x="404" y="40" width="156" height="200" fill="#d1fae5" fill-opacity="0.4"/>
+      <line x1="196" y1="40" x2="196" y2="240" stroke="#9ca3af" stroke-dasharray="3 3"/>
+      <line x1="404" y1="40" x2="404" y2="240" stroke="#9ca3af" stroke-dasharray="3 3"/>
+      <text x="118" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">Pobre (0.0–0.3)</text>
+      <text x="300" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#d97706">Moderado (0.3–0.7)</text>
+      <text x="482" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#059669">Bueno (0.7–1.0)</text>
+      <g transform="translate(50, 90)">
+        <line x1="0" y1="100" x2="120" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 80 L 120 60" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="20" cy="40" r="3.5" fill="#1e40af"/>
+        <circle cx="40" cy="90" r="3.5" fill="#1e40af"/>
+        <circle cx="60" cy="20" r="3.5" fill="#1e40af"/>
+        <circle cx="80" cy="70" r="3.5" fill="#1e40af"/>
+        <circle cx="100" cy="50" r="3.5" fill="#1e40af"/>
+        <text x="60" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.15</text>
+      </g>
+      <g transform="translate(220, 90)">
+        <line x1="0" y1="100" x2="160" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 80 L 160 30" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="20" cy="60" r="3.5" fill="#1e40af"/>
+        <circle cx="50" cy="55" r="3.5" fill="#1e40af"/>
+        <circle cx="80" cy="50" r="3.5" fill="#1e40af"/>
+        <circle cx="110" cy="40" r="3.5" fill="#1e40af"/>
+        <circle cx="140" cy="45" r="3.5" fill="#1e40af"/>
+        <text x="80" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.55</text>
+      </g>
+      <g transform="translate(430, 90)">
+        <line x1="0" y1="100" x2="120" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 90 L 120 20" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="15" cy="82" r="3.5" fill="#1e40af"/>
+        <circle cx="35" cy="68" r="3.5" fill="#1e40af"/>
+        <circle cx="55" cy="55" r="3.5" fill="#1e40af"/>
+        <circle cx="75" cy="42" r="3.5" fill="#1e40af"/>
+        <circle cx="95" cy="30" r="3.5" fill="#1e40af"/>
+        <text x="60" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.92</text>
+      </g>
+    </g>
+  </svg>
+  <figcaption>Escala de interpretación de R² visualizada. La zona roja (0.0–0.3) representa un ajuste pobre donde los puntos se dispersan ampliamente alrededor de la línea de tendencia. La zona amarilla (0.3–0.7) muestra un ajuste moderado con dispersión visible. La zona verde (0.7–1.0) representa un ajuste bueno donde los puntos se agrupan estrechamente alrededor de la línea. Estos umbrales son guías, no reglas — el contexto del dominio importa: las ciencias sociales a menudo aceptan 0.3, mientras que la física puede exigir 0.9+.</figcaption>
+</figure>
+
+### ¿Qué Pasa con R² = 1?
+
+Un R² perfecto de 1.0 no es necesariamente motivo de celebración. Puede indicar sobreajuste, especialmente si tienes pocos puntos de datos y un modelo complejo. Un polinomio de grado n-1 siempre pasará perfectamente a través de n puntos de datos, dando R² = 1, pero tal modelo producirá extrapolaciones extremadamente erráticas. Esta es una de las advertencias más importantes en todo el análisis de regresión, y volveremos a ello más tarde.
+
+## La Métrica de Confianza y Cómo se Relaciona con R²
+
+El porcentaje de confianza que se muestra junto a tus resultados en la [calculadora de extrapolación](/) se deriva del valor de R² y representa qué tan confiablemente el modelo se ajusta al patrón de datos. Sirve como una representación más intuitiva y fácil de usar de la puntuación R².
+
+Conceptualmente, si R² es 0.85, la confianza podría expresarse como 85%, señalando que el modelo captura el 85% de la varianza de los datos. Si bien este mapeo parece sencillo, la métrica de confianza también incorpora factores contextuales adicionales en algunas implementaciones, como el número de puntos de datos en relación con la complejidad del modelo. Un modelo con R² = 0.95 construido sobre 3 puntos de datos es mucho menos confiable que uno con R² = 0.95 construido sobre 30 puntos de datos, y una métrica de confianza bien diseñada debería reflejar esa distinción.
+
+La métrica de confianza es más útil como referencia rápida: si ves una confianza por debajo del 50%, deberías cuestionar inmediatamente si el método de extrapolación elegido es apropiado. Si ves una confianza por encima del 80%, el modelo se ajusta bien a los datos históricos — pero como discutiremos, eso no significa automáticamente que la extrapolación será precisa.
+
+## Por qué un R² Alto No Garantiza una Extrapolación Precisa
+
+Este es quizás el punto más crítico en toda esta discusión. R² mide el **ajuste dentro de la muestra** — qué tan bien el modelo coincide con los datos que ya tienes. La extrapolación, por definición, se trata de predecir **fuera** del rango de datos observados. Estas son tareas fundamentalmente diferentes.
+
+Considera un ejemplo simple: supón que tienes datos que muestran el crecimiento de una planta durante 10 días. La planta crece constantemente, y un modelo lineal da R² = 0.92. ¿Significa eso que la planta continuará creciendo linealmente durante los próximos 100 días? Por supuesto que no — en algún momento, el crecimiento se estancará debido a limitaciones de recursos, y el modelo lineal sobrestimará masivamente.
+
+Por eso entender la naturaleza de tus datos importa tanto como las métricas estadísticas. La distinción entre [interpolación vs extrapolación](/blog/interpolation-vs-extrapolation/) es esencial: la interpolación estima dentro de los límites observados (donde R² es un buen indicador de confiabilidad), mientras que la extrapolación se aventura más allá de los límites observados (donde R² solo te dice que tu línea de tendencia es consistente con datos pasados, no que continuará).
+
+### La Trampa del Polinomio
+
+Los modelos polinómicos son particularmente engañosos. Un polinomio de grado superior casi siempre producirá un R² más alto en los datos de entrenamiento, porque tiene más flexibilidad para serpentear a través de cada punto. Pero los polinomios de alto grado tienden a divergir dramáticamente fuera del rango de datos. Un modelo cúbico o cuártico que se ajusta perfectamente dentro de tu rango observado podría curvarse abruptamente hacia arriba o hacia abajo en cuanto te sales de él, produciendo proyecciones sin sentido.
+
+Por eso es tan importante entender los [métodos polinómicos vs lineales](/blog/polynomial-vs-linear/). Los modelos lineales están más restringidos y por lo tanto son más estables en extrapolación, incluso si su R² es más bajo. Un R² más bajo con un modelo físicamente razonable es casi siempre preferible a un R² más alto con un modelo que no tiene justificación teórica.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Trampa del polinomio: un polinomio de alto grado que ajusta los datos perfectamente dentro del rango pero diverge salvajemente fuera">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">La Trampa del Polinomio: R²=1.0, Predicción=Absurdo</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="220" y1="40" x2="220" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="100" y="55" font-size="10" fill="#64748b">Datos de entrenamiento</text>
+      <text x="240" y="55" font-size="10" fill="#dc2626" font-weight="600">¡La extrapolación diverge!</text>
+      <path d="M 80 180 Q 100 140, 120 150 Q 140 100, 160 130 Q 180 80, 200 90 Q 215 70, 220 75" stroke="#d4af37" stroke-width="2" fill="none"/>
+      <path d="M 220 75 Q 240 -80, 280 280 Q 320 100, 360 30 Q 400 -20, 500 240" stroke="#dc2626" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+      <g fill="#1e40af">
+        <circle cx="80" cy="180" r="3.5"/>
+        <circle cx="100" cy="150" r="3.5"/>
+        <circle cx="120" cy="160" r="3.5"/>
+        <circle cx="140" cy="115" r="3.5"/>
+        <circle cx="160" cy="135" r="3.5"/>
+        <circle cx="180" cy="90" r="3.5"/>
+        <circle cx="200" cy="95" r="3.5"/>
+        <circle cx="220" cy="78" r="3.5"/>
+      </g>
+      <text x="100" y="200" font-size="9" fill="#64748b">R² = 1.00 (¡perfecto!)</text>
+      <text x="430" y="265" font-size="10" fill="#dc2626" font-weight="600">Predicción: -150 (¡sin sentido!)</text>
+    </g>
+  </svg>
+  <figcaption>La trampa del polinomio visualizada. Dentro del rango de datos (izquierda de la línea discontinua), un polinomio de alto grado serpentea a través de cada punto de entrenamiento y logra un R² perfecto = 1.00. Pero en cuanto te sales del rango observado (derecha de la línea discontinua), el mismo polinomio diverge salvajemente — oscilando de valores muy altos a muy bajos, produciendo predicciones matemáticamente perfectas por dentro pero prácticamente absurdas por fuera. Esta es la razón por la que R² solo es un mal guía para la extrapolación.</figcaption>
+</figure>
+
+## Ejemplo Práctico: Comparando R² Entre Diferentes Métodos en los Mismos Datos
+
+Hagamos esto concreto con un ejemplo práctico. Supón que tienes los siguientes puntos de datos que representan ingresos trimestrales (en miles) para un pequeño negocio:
+
+| Trimestre | Ingresos |
+|---------|---------|
+| 1 | 120 |
+| 2 | 135 |
+| 3 | 160 |
+| 4 | 200 |
+| 5 | 250 |
+| 6 | 310 |
+
+Quieres proyectar los ingresos para el trimestre 8 usando diferentes métodos. Aquí están los resultados de R² que podrías obtener:
+
+| Método | R² | Confianza | Ingresos Proyectados T8 |
+|--------|-----|------------|----------------------|
+| Lineal | 0.96 | 96% | 430 |
+| Exponencial | 0.99 | 99% | 530 |
+| Polinómico (grado 3) | 1.00 | 100% | 710 |
+| Logarítmico | 0.88 | 88% | 365 |
+El modelo exponencial tiene un R² casi perfecto, y el polinómico tiene uno literalmente perfecto. Pero ¿en qué proyección deberías confiar?
+
+Si el crecimiento de los ingresos está impulsado por efectos de red compuestos, el modelo exponencial puede estar justificado, y la proyección de [extrapolación exponencial](/blog/exponential-growth/) de 530 podría ser razonable. Si el negocio está en un mercado maduro donde el crecimiento se desacelera naturalmente, el modelo logarítmico podría ser más apropiado a pesar de su R² más bajo — el concepto de [extrapolación logarítmica](/blog/logarithmic-diminishing-returns/) captura los rendimientos decrecientes que el modelo exponencial ignora. Si el crecimiento está impulsado por una expansión lineal constante (agregando un número fijo de clientes por trimestre), el modelo lineal es la opción más segura.
+
+El modelo polinómico debe verse con profunda sospecha. Su R² perfecto es un artefacto matemático de tener suficientes grados de libertad para pasar a través de cada punto, no evidencia de comprensión genuina. La proyección de T8 de 710 es probablemente una sobreestimación impulsada por la tendencia del polinómico a oscilar salvajemente más allá del rango de entrenamiento.
+
+## Cómo Usar R² para Elegir Entre Métodos de Extrapolación
+
+Usar R² para la selección de modelos requiere un enfoque más matizado que simplemente elegir el valor más alto. Aquí hay un flujo de trabajo práctico:
+
+1. **Ajusta múltiples modelos** a tus datos usando la [calculadora de extrapolación](/). Registra cada valor de R².
+
+2. **Filtra los ajustes claramente pobres.** Si un modelo tiene R² por debajo de 0.3, no está capturando la tendencia en tus datos. Deséchalo independientemente del atractivo teórico.
+
+3. **Entre los modelos con R² aceptable (0.3 y superior), considera el conocimiento del dominio.** ¿El fenómeno subyacente sigue naturalmente un patrón exponencial? ¿Lineal? ¿Logarítmico? El conocimiento del dominio debe pesar fuertemente en tu decisión.
+
+4. **Cuidado con las pequeñas diferencias en R².** Si un modelo lineal da R² = 0.91 y un modelo exponencial da R² = 0.93, la diferencia no es lo suficientemente significativa como para anular el razonamiento del dominio. Ambos modelos se ajustan bien a los datos; elige el que tenga más sentido para tu situación específica.
+
+5. **Verifica el sobreajuste.** Si un modelo complejo supera dramáticamente a uno simple, pregúntate si la complejidad está justificada. Consulta el R² ajustado (discutido abajo) como salvaguarda.
+
+6. **Valida visualmente.** Mira la línea de tendencia trazada junto a tus puntos de datos. A veces un modelo con un R² ligeramente más bajo se "verá bien" visualmente mientras que un modelo con R² más alto mostrará curvatura sospechosa en los bordes.
+
+Este enfoque se alinea bien con entender la [extrapolación lineal](/blog/linear-extrapolation/) como línea base: comienza con el modelo razonable más simple y solo agrega complejidad cuando los datos y el conocimiento del dominio lo justifiquen.
+
+## R² Ajustado y Por Qué Importa para Grados Polinómicos
+
+El R² ajustado es una modificación del R² estándar que tiene en cuenta el número de predictores (o grados de libertad) en el modelo. La fórmula es:
+
+**R²_adj = 1 − ((1 − R²)(n − 1)) / (n − p − 1)**
+
+Donde **n** es el número de puntos de datos y **p** es el número de parámetros en el modelo (para un polinomio de grado k, p = k + 1).
+
+La idea clave es que el R² ajustado **penaliza** la complejidad del modelo. Cada parámetro adicional que agregues a un modelo aumentará R² (o al menos no lo disminuirá), pero el R² ajustado solo aumentará si el parámetro agregado mejora el ajuste lo suficiente como para justificar la pérdida de un grado de libertad.
+
+### Por Qué Esto Importa
+
+Considera nuestro ejemplo anterior con 6 puntos de datos. Un polinomio de grado 5 se ajustará perfectamente con R² = 1.0, pero su R² ajustado será sustancialmente más bajo — potencialmente incluso negativo — porque has usado casi tantos parámetros como puntos de datos. Mientras tanto, el modelo lineal (2 parámetros) y el modelo exponencial (2–3 parámetros) tendrán valores de R² ajustado mucho más cercanos a sus valores regulares de R² porque usan muchos menos parámetros en relación con los datos.
+
+Al usar la [calculadora de interpolación](/interpolation/) o la calculadora de extrapolación con modelos polinómicos, siempre verifica el R² ajustado junto con el R² regular. Si hay una gran brecha entre los dos, tu modelo probablemente está sobreajustando. Una buena regla general: la diferencia entre R² y R² ajustado debe ser pequeña (menos de 0.05) para un modelo que sea apropiadamente parsimonioso para tus datos.
+
+### Guías Prácticas
+
+| Escenario | R² | R² Ajustado | Interpretación |
+|----------|-----|-------------|----------------|
+| Modelo simple, buen ajuste | 0.85 | 0.84 | Excelente; sobreajuste mínimo |
+| Modelo complejo, buen ajuste | 0.98 | 0.92 | Buen ajuste pero algo de sobreajuste; considera un modelo más simple |
+| Modelo complejo, ajuste perfecto | 1.00 | 0.60 | Sobreajuste severo; no confíes en este modelo |
+
+## Conceptos Erróneos Comunes Sobre R²
+
+### Concepto Erróneo 1: R² Mide la Precisión de la Predicción
+
+R² mide qué tan bien el modelo se ajusta a los datos observados, no con qué precisión predecirá valores futuros o fuera de rango. Un modelo con R² = 0.99 puede producir extrapolaciones extremadamente inexactas si la tendencia subyacente cambia más allá del rango de datos observados.
+
+### Concepto Erróneo 2: Un R² Más Alto Siempre Significa un Mejor Modelo
+
+Como se discutió, un R² más alto puede resultar de sobreajuste en lugar de poder explicativo genuino. Un modelo lineal con R² = 0.88 que refleja una relación física real es mucho más valioso para la extrapolación que un polinomio de grado 5 con R² = 1.00 que simplemente memoriza los datos de entrenamiento. Este problema de sobreajuste es especialmente pronunciado en machine learning — consulta [extrapolación en machine learning](/blog/extrapolation-machine-learning/) para entender por qué la generalización de ML más allá de los datos de entrenamiento es tan desafiante.
+
+### Concepto Erróneo 3: R² por Debajo de 0.5 es Inútil
+
+En algunos campos, un R² de 0.4 es perfectamente aceptable. Los datos ruidosos con muchos factores influyentes no medidos producirán naturalmente valores de R² más bajos. El modelo aún puede capturar la tendencia dominante, lo cual es valioso. No descartes un modelo solo porque R² sea modesto — considera si el ajuste es suficientemente bueno para tu propósito.
+
+### Concepto Erróneo 4: R² Puede Compararse Directamente Entre Diferentes Conjuntos de Datos
+
+R² depende de la varianza total en los datos (SS_total). Un modelo con R² = 0.8 en un conjunto de datos de alta varianza puede tener residuales mucho más grandes que un modelo con R² = 0.5 en un conjunto de datos de baja varianza. Siempre considera la magnitud absoluta de los residuales, no solo R².
+
+### Concepto Erróneo 5: R² es la Única Métrica que Importa
+
+R² es solo una pieza del rompecabezas. Te informa sobre la calidad del ajuste pero nada sobre patrones de residuales, intervalos de predicción, o si se cumplen las suposiciones del modelo. Siempre complementa R² con otros diagnósticos.
+
+## Otras Métricas a Considerar Junto a R²
+
+### Error Cuadrático Medio (RMSE)
+
+RMSE mide la magnitud promedio de los residuales en las unidades originales de los datos. A diferencia de R², que es una medida relativa, RMSE te da un sentido absoluto de qué tan lejos están típicamente tus predicciones. Si tus datos de ingresos están en miles, un RMSE de 5 significa que las predicciones de tu modelo típicamente se desvían por unos $5,000 — lo cual es fácil de interpretar y actuar.
+
+### Error Absoluto Medio (MAE)
+
+Similar a RMSE pero menos sensible a valores atípicos, MAE da el residual absoluto promedio. Proporciona una medida más robusta del error típico cuando tus datos contienen valores extremos ocasionales.
+
+### Análisis de Residuales
+
+Examinar el patrón de los residuales (las diferencias entre valores observados y predichos) puede revelar problemas sistemáticos que R² pasa por alto. Si los residuales muestran un patrón claro — como ser consistentemente positivos en un extremo y negativos en el otro — tu modelo está perdiendo una característica estructural de los datos. Los residuales dispersos aleatoriamente son una señal de que el modelo ha capturado la tendencia dominante.
+
+### Intervalos de Predicción
+
+Los intervalos de predicción te dan un rango dentro del cual se espera que caigan las observaciones futuras, con una probabilidad especificada. Estos intervalos se ensanchan a medida que te alejas del rango de datos observados, lo que representa visualmente la creciente incertidumbre de la extrapolación. Un modelo con R² = 0.90 e intervalos de predicción amplios en el punto de extrapolación puede ser menos útil que uno con R² = 0.80 pero intervalos más ajustados.
+
+### El Criterio de Información de Akaike (AIC)
+
+AIC equilibra el ajuste del modelo contra la complejidad, similar en espíritu al R² ajustado pero con una base teórica más sólida. Valores de AIC más bajos indican un mejor equilibrio entre ajuste y simplicidad. Al comparar modelos con diferentes números de parámetros, AIC es a menudo más confiable que el R² simple.
+
+## Marco de Decisión Práctico
+
+Poniendo todo esto junto, aquí hay un marco estructurado para usar R² y métricas de confianza al realizar extrapolación:
+
+**Paso 1: Recoge e inspecciona tus datos.** Antes de ajustar cualquier modelo, mira tus datos. Gráfalos. Identifica cualquier patrón obvio, valores atípicos o rupturas estructurales. Entender la forma de tus datos te ayudará a elegir métodos apropiados.
+
+**Paso 2: Ajusta múltiples modelos.** Usa la [calculadora de extrapolación](/) para ajustar varios métodos candidatos — lineal, exponencial, logarítmico y polinómico. Registra R², R² ajustado y confianza para cada uno. También puedes realizar este análisis en una hoja de cálculo — consulta nuestro tutorial sobre [cómo extrapolar datos en Excel](/blog/how-to-extrapolate-data-in-excel/) para instrucciones paso a paso.
+
+**Paso 3: Elimina ajustes pobres.** Elimina cualquier modelo con R² por debajo de 0.3 o con una gran brecha entre R² y R² ajustado (sugiriendo sobreajuste).
+
+**Paso 4: Aplica conocimiento del dominio.** Entre los modelos restantes, considera cuáles se alinean con lo que sabes sobre el fenómeno subyacente. Un modelo exponencial con R² = 0.95 está equivocado para un fenómeno que sabes que está acotado.
+
+**Paso 5: Compara competidores cercanos cuidadosamente.** Si dos o tres modelos tienen valores de R² similares, mira los patrones de residuales, RMSE e intervalos de predicción. Prefiere el modelo más simple a menos que el complejo muestre diagnósticos materialmente mejores.
+
+**Paso 6: Cuantifica tu incertidumbre.** Nunca reportes un solo valor extrapolado sin comunicar también la incertidumbre. Usa intervalos de predicción, rangos de confianza, o al menos una declaración cualitativa sobre la fiabilidad de la proyección.
+
+**Paso 7: Verifica la cordura del resultado.** ¿El valor extrapolado tiene sentido físico, económico o lógico? Si tu extrapolación dice que los ingresos serán de $50 millones el próximo trimestre y la empresa nunca ha superado $1 millón, algo está mal independientemente de R².
+
+**Paso 8: Monitorea y actualiza.** La extrapolación no es una actividad única. A medida que nuevos datos estén disponibles, reajusta tus modelos y verifica si R² cambia. Un modelo que antes tenía R² = 0.90 podría caer a 0.60 una vez que nuevos datos revelen un cambio de tendencia.
+
+## Reflexiones Finales
+
+R² y la métrica de confianza son herramientas esenciales para evaluar la calidad de la extrapolación, pero son puntos de partida, no puntos finales. Un R² alto te dice que tu modelo es consistente con los datos observados; no te dice que esta consistencia persistirá más allá del rango de los datos. Las extrapolaciones más confiables provienen de combinar un buen ajuste estadístico con un sólido entendimiento del dominio y una dosis saludable de escepticismo.
+
+Cuando la próxima vez uses la [calculadora de extrapolación](/), tómate un momento para comparar métodos, verificar el R² ajustado y pensar si las suposiciones del modelo coinciden con la realidad de tus datos. Y si estás trabajando dentro del rango de tus datos en lugar de más allá, la [calculadora de interpolación](/interpolation/) puede darte resultados más confiables con el mismo conjunto de herramientas estadísticas. Los números son tan buenos como el juicio detrás de ellos.
+
+## Preguntas Frecuentes
+
+<details class="faq-item">
+<summary>¿Qué es un buen valor de R² para extrapolación?</summary>
+
+Depende de tu campo, pero generalmente R² > 0.7 indica un ajuste razonable. Para pronósticos precisos, apunta a R² > 0.85. Sin embargo, recuerda que un R² alto dentro del rango de datos no garantiza una extrapolación precisa — solo mide qué tan bien el modelo se ajusta a los puntos observados.
+
+</details>
+
+<details class="faq-item">
+<summary>¿Puede R² ser negativo?</summary>
+
+Sí, para modelos no lineales. R² se define como 1 − (SS_residual / SS_total). Si el modelo ajusta peor que una línea horizontal en la media, SS_residual excede SS_total y R² se vuelve negativo. Un R² negativo es una fuerte advertencia de que el método elegido es inapropiado para los datos.
+
+</details>
+
+<details class="faq-item">
+<summary>¿Debería elegir siempre el método con el R² más alto?</summary>
+
+No necesariamente. El método con el R² más alto puede estar sobreajustando, especialmente si es un polinomio de alto grado. Usa R² ajustado para penalizar la complejidad del modelo, y siempre valida los valores extrapolados contra el conocimiento del dominio. Un modelo más simple con un R² ligeramente más bajo es a menudo más confiable para la predicción.
+
+</details>
+
+<details class="faq-item">
+<summary>¿En qué se diferencia R² de la confianza?</summary>
+
+R² mide qué tan bien la línea de regresión se ajusta a los datos observados — es una medida de la calidad del ajuste. La confianza se refiere a la fiabilidad de la extrapolación en sí misma. Un R² alto te da más confianza en el método, pero la confianza también depende de qué tan lejos estás extrapolando y si la tendencia subyacente podría cambiar.
+
+</details>

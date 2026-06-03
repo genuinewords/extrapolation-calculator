@@ -1,0 +1,218 @@
+﻿---
+title: "Métodos de Interpolação Comparados: Linear vs Lagrange vs Spline Cúbico"
+description: Uma comparação prática de três métodos de interpolação — linear, polinômio de Lagrange e spline cúbico natural — com exemplos, casos de uso e quando cada um é melhor.
+publishDate: 2026-05-25
+author: Equipe da Calculadora de Extrapolação
+category: Métodos
+featuredImage: ""
+---
+
+Você tem um conjunto de pontos de dados conhecidos e precisa estimar um valor que está entre eles. Qual método de interpolação você deve usar? O linear é rápido e simples. O polinômio de Lagrange ajusta cada ponto exatamente. O spline cúbico fornece a curva mais suave. Cada um tem um ponto ideal — e cada um pode enganar se aplicado descuidadamente.
+
+Este guia compara três métodos de interpolação frente a frente, com exemplos resolvidos, uma estrutura de decisão e recomendações práticas. Se você também está prevendo valores *além* do seu intervalo de dados, consulte nosso guia sobre [interpolação vs extrapolação](/blog/interpolation-vs-extrapolation/) para essa distinção.
+
+## O Que é Interpolação?
+
+A interpolação estima valores desconhecidos dentro do intervalo de pontos de dados conhecidos. Ao contrário dos métodos de [extrapolação](/blog/what-is-extrapolation/) que projetam além dos dados observados, a interpolação é limitada — sua estimativa está sempre cercada por medições reais em ambos os lados.
+
+Essa restrição torna a interpolação inerentemente mais confiável. O valor estimado é limitado pelos dados, razão pela qual engenheiros, cientistas e analistas recorrem à interpolação sempre que o ponto alvo está dentro do seu conjunto de dados.
+
+Os três métodos que nossa [calculadora de interpolação](/interpolation/) suporta — linear, polinômio de Lagrange e spline cúbico natural — adotam abordagens fundamentalmente diferentes para o mesmo problema. Aqui está como eles se comparam.
+
+## Interpolação Linear
+
+### Como Funciona
+
+A interpolação linear conecta dois pontos de dados vizinhos com uma linha reta e lê o valor no seu x alvo. Ela encontra os dois pontos que delimitam seu alvo, calcula a inclinação entre eles e estende essa inclinação até o ponto alvo.
+
+A fórmula é direta:
+
+**y = y₁ + (x − x₁) × (y₂ − y₁) / (x₂ − x₁)**
+
+Onde (x₁, y₁) e (x₂, y₂) são os dois pontos delimitadores.
+
+### Quando Funciona Melhor
+
+- **Dados uniformemente espaçados** onde a tendência subjacente é aproximadamente linear
+- **Estimativas rápidas** onde a velocidade importa mais que a precisão
+- **Grandes conjuntos de dados** onde calcular um modelo complexo seria caro
+- **Consultas tabulares** — tabelas de engenharia, curvas de rendimento financeiro, leituras de sensores
+
+### Onde Fica Aquém
+
+A interpolação linear assume uma linha reta entre cada par de pontos adjacentes. Se seus dados têm alguma curvatura — crescimento acelerado, retornos decrescentes ou oscilação — a suposição de linha reta introduz erro. O valor estimado estará sempre na corda entre dois pontos, nunca em uma curva suave através deles.
+
+Isso é especialmente visível com dados esparsos. Se você tem apenas cinco pontos traçando uma parábola, a interpolação linear produzirá uma estimativa dentada e linear por partes que subestima picos e superestima vales.
+
+## Interpolação por Polinômio de Lagrange
+
+### Como Funciona
+
+A interpolação de Lagrange constrói um único polinômio que passa exatamente por *cada* ponto de dados. Para n pontos, constrói um polinômio de grau n−1 usando funções de base ponderadas — cada função de base é igual a 1 em seu próprio ponto de dados e 0 em todos os outros.
+
+O resultado é um ajuste matematicamente exato: o polinômio toca cada ponto. Sem resíduo, sem erro nos dados conhecidos.
+
+### Quando Funciona Melhor
+
+- **Pequenos conjuntos de dados** (2–5 pontos) onde você deseja um ajuste exato
+- **Tendências subjacentes suaves** onde um único polinômio pode capturar o padrão
+- **Análise teórica** onde a elegância matemática importa
+- **Fins educacionais** — o método é transparente e instrutivo
+
+Nossa [calculadora de interpolação](/interpolation/) limita Lagrange a um máximo de 5 pontos, onde o método tem melhor desempenho.
+
+### Onde Fica Aquém
+
+Os polinômios de Lagrange sofrem do **fenômeno de Runge** — oscilações selvagens entre os pontos de dados quando o grau fica alto. Um polinômio de grau 8 ajustando 9 pontos pode oscilar dramaticamente entre observações consecutivas, produzindo valores interpolados que são matematicamente corretos, mas fisicamente absurdos.
+
+É por isso que limitamos a 5 pontos. Além disso, as oscilações tornam o método não confiável. Se você tem mais de 5 pontos e precisa de uma curva suave, o spline cúbico é a melhor escolha.
+
+Lagrange também não lida com novos pontos com elegância — adicionar uma única observação muda todo o polinômio, o que o torna impraticável para conjuntos de dados incrementais.
+
+## Interpolação por Spline Cúbico Natural
+
+### Como Funciona
+
+Um spline cúbico ajusta um polinômio cúbico separado entre cada par de pontos de dados adjacentes e os une com condições de correspondência. Em cada ponto interior, os cúbicos adjacentes compartilham o mesmo valor, a mesma primeira derivada (inclinação) e a mesma segunda derivada (curvatura). A condição "natural" define a segunda derivada como zero em ambos os extremos.
+
+O resultado é a curva mais suave possível através dos seus dados — matematicamente, minimiza a curvatura total em todos os segmentos.
+
+### Quando Funciona Melhor
+
+- **Curvas suaves** — quadros-chave de animação, perfis de engenharia, dados científicos
+- **Conjuntos de dados moderados a grandes** onde o linear é muito áspero e Lagrange oscila
+- **Sistemas físicos** onde o processo subjacente é contínuo e diferenciável
+- **Qualquer cenário onde a suavidade visual importa** — renderização de gráficos, CAD, processamento de sinais
+
+### Onde Fica Aquém
+
+O spline cúbico não pode extrapolar — funciona apenas dentro do intervalo de dados. Se seu x alvo está abaixo do menor ponto de dados ou acima do maior, o método lança um erro. Isso é por design: extrapolar com um spline é perigosamente não confiável porque os segmentos cúbicos não são restritos além dos extremos.
+
+O cálculo do spline também é mais caro que a interpolação linear. Para conjuntos de dados muito grandes (milhares de pontos), a resolução do sistema tridiagonal adiciona sobrecarga, embora ainda seja eficiente em comparação com polinômios de alto grau.
+
+Para entender a qualidade do ajuste do modelo entre métodos, nosso guia sobre [pontuações R²](/blog/r-squared-confidence/) explica como avaliar se seu método escolhido realmente corresponde ao padrão dos seus dados.
+
+## Comparação Frente a Frente
+
+| Característica | Linear | Lagrange | Spline Cúbico |
+|---------|--------|----------|--------------|
+| Qualidade do ajuste | Aproximado | Exato nos pontos de dados | Exato nos pontos de dados |
+| Suavidade | Nenhuma (linear por partes) | Pode oscilar | Suave (derivadas contínuas) |
+| Máx. pontos | Ilimitado | 5 (recomendado) | Ilimitado |
+| Extrapolação | Limitada (usa segmento de borda) | Possível mas arriscada | Não suportada |
+| Velocidade de cálculo | Mais rápida | Moderada | Moderada |
+| Melhor para | Estimativas rápidas, tendências lineares | Pequenos conjuntos, ajustes exatos | Curvas suaves, dados físicos |
+| Maior risco | Perde curvatura | Fenômeno de Runge | Não pode extrapolar |
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Interpolação linear vs Lagrange vs spline cúbico nos mesmos quatro pontos de dados">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="10" fill="#374151">
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Três Métodos nos Mesmos Dados</text>
+      <g fill="#1e40af">
+        <circle cx="100" cy="200" r="4.5"/>
+        <circle cx="200" cy="140" r="4.5"/>
+        <circle cx="300" cy="80" r="4.5"/>
+        <circle cx="400" cy="160" r="4.5"/>
+      </g>
+      <path d="M 100 200 L 200 140 L 300 80 L 400 160" stroke="#d4af37" stroke-width="2" stroke-dasharray="4 2"/>
+      <path d="M 100 200 Q 200 130, 300 80 Q 400 130, 400 160" stroke="#1e40af" stroke-width="2" fill="none"/>
+      <path d="M 100 200 C 200 130, 250 100, 300 80 C 350 90, 380 140, 400 160" stroke="#059669" stroke-width="2.5" fill="none"/>
+      <g transform="translate(420, 50)">
+        <rect x="0" y="0" width="160" height="100" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <line x1="10" y1="22" x2="40" y2="22" stroke="#d4af37" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="48" y="25" font-size="10">Linear (por partes)</text>
+        <line x1="10" y1="44" x2="40" y2="44" stroke="#1e40af" stroke-width="2"/>
+        <text x="48" y="47" font-size="10">Lagrange (curvado)</text>
+        <line x1="10" y1="66" x2="40" y2="66" stroke="#059669" stroke-width="2.5"/>
+        <text x="48" y="69" font-size="10">Spline cúbico (suave)</text>
+        <circle cx="25" cy="86" r="3.5" fill="#1e40af"/>
+        <text x="48" y="89" font-size="10">Pontos de dados</text>
+      </g>
+      <text x="120" y="260" font-size="9" fill="#d4af37" font-weight="600">Linear</text>
+      <text x="220" y="260" font-size="9" fill="#1e40af" font-weight="600">Lagrange</text>
+      <text x="330" y="260" font-size="9" fill="#059669" font-weight="600">Spline</text>
+    </g>
+  </svg>
+  <figcaption>Três métodos de interpolação aplicados aos mesmos quatro pontos de dados. Linear (dourado tracejado) conecta pontos adjacentes com segmentos retos — simples mas perde a curvatura. Lagrange (azul) ajusta um único polinômio através de todos os pontos — exato mas pode oscilar. Spline cúbico (verde) une segmentos cúbicos com derivadas contínuas — suave e estável para conjuntos de dados moderados. A escolha depende da forma dos dados, número de pontos e se a extrapolação é necessária.</figcaption>
+</figure>
+
+## Um Exemplo Prático
+
+Considere estes quatro pontos de dados rastreando a temperatura ao longo de um dia:
+
+| Hora | Temperatura (°C) |
+|------|-------------------|
+| 6 | 12 |
+| 10 | 18 |
+| 14 | 26 |
+| 18 | 20 |
+
+Queremos a temperatura às 12:00 (hora 12).
+
+**Interpolação linear**: Entre (10, 18) e (14, 26). Inclinação = (26−18)/(14−10) = 2. Resultado: 18 + 2×2 = **22°C**.
+
+**Polinômio de Lagrange**: Ajusta um polinômio de grau 3 através de todos os quatro pontos. O polinômio inclina-se ligeiramente abaixo da estimativa linear porque leva em conta a queda subsequente na hora 18. Resultado: aproximadamente **23,5°C**.
+
+**Spline cúbico natural**: Ajusta segmentos cúbicos com curvatura contínua. O spline reconhece que a temperatura ainda está subindo na hora 12, mas desacelerando em direção ao pico. Resultado: aproximadamente **23,2°C**.
+
+As diferenças são pequenas neste exemplo, mas importam. O linear subestima porque ignora a curvatura. Lagrange superestima ligeiramente porque o polinômio de alto grau oscila. O spline fica entre eles — suave, limitado e fisicamente razoável.
+
+## Como Escolher o Método Certo
+
+Use esta estrutura de decisão:
+
+1. **Seus dados são aproximadamente lineares?** Use interpolação linear — é rápida, simples e não o enganará
+2. **Você tem 5 pontos ou menos e precisa de um ajuste exato?** Use o polinômio de Lagrange
+3. **Você precisa de uma curva suave através de muitos pontos?** Use spline cúbico
+4. **Você está trabalhando com dados físicos ou de engenharia?** Use spline cúbico — sistemas reais são suaves
+5. **Você precisa prever além do intervalo de dados?** Nenhum desses métodos é seguro para isso — use nossa [calculadora de extrapolação gratuita](https://www.extrapolationcalculator.com/) que oferece métodos de extrapolação [linear](/blog/linear-extrapolation/), [exponencial](/blog/exponential-growth/) e [logarítmica](/blog/logarithmic-diminishing-returns/)
+6. **Você está comparando tipos de modelo?** Nosso guia sobre [métodos polinomiais vs lineares](/blog/polynomial-vs-linear/) cobre as vantagens e desvantagens em detalhes
+
+## Dicas Práticas
+
+- **Sempre visualize seus dados primeiro** — se parece uma linha reta, use interpolação linear; se é curva, use spline
+- **Verifique valores atípicos** — um único ponto ruim distorce Lagrange dramaticamente e afeta a curvatura do spline
+- **Linear nunca está errado** — é apenas menos preciso para dados curvos. Se não tiver certeza, o linear fornece uma linha de base defensável
+- **Não misture interpolação e extrapolação** — interpole dentro do seu intervalo, extrapole com métodos dedicados
+- **Mais pontos ajudam todos os métodos** — mas Lagrange degrada com muitos, enquanto linear e spline melhoram
+
+## Conclusão
+
+A interpolação linear é rápida e confiável para dados aproximadamente lineares. O polinômio de Lagrange fornece ajustes exatos para pequenos conjuntos de dados, mas oscila com mais pontos. O spline cúbico natural produz as curvas mais suaves e lida bem com conjuntos de dados moderados a grandes, mas não pode extrapolar.
+
+A escolha certa depende da forma dos seus dados, do número de pontos e se você precisa de velocidade, suavidade ou exatidão. Experimente todos os três métodos no mesmo conjunto de dados usando nossa [calculadora de interpolação](/interpolation/) e compare os resultados — as diferenças dizem muito sobre o padrão subjacente dos seus dados.
+
+Para previsões numéricas além do seu intervalo de dados, a [calculadora de extrapolação](https://www.extrapolationcalculator.com/) fornece cinco métodos adequados para diferentes padrões de tendência. Quando você precisa modelar a relação entre variáveis em vez de interpolar entre pontos, a [calculadora de regressão](/regression/) oferece ferramentas de análise de regressão.
+
+## Perguntas Frequentes
+
+<details class="faq-item">
+<summary>Qual método de interpolação é o mais preciso?</summary>
+
+Nenhum método único é sempre o mais preciso. O linear é mais preciso para dados verdadeiramente lineares. O spline cúbico é mais preciso para processos físicos suaves e contínuos. Lagrange é mais preciso quando você tem muito poucos pontos e a função subjacente é polinomial. O melhor método corresponde ao padrão real dos seus dados.
+
+</details>
+
+<details class="faq-item">
+<summary>Quando devo evitar a interpolação por spline cúbico?</summary>
+
+Evite spline cúbico quando precisar extrapolar além do seu intervalo de dados — funciona apenas dentro dos limites do seu conjunto de dados. Tenha cuidado também com dados que têm cantos afiados ou descontinuidades, onde a restrição de suavidade do spline pode suavizar características reais.
+
+</details>
+
+<details class="faq-item">
+<summary>A interpolação de Lagrange é melhor que a linear?</summary>
+
+Não necessariamente. Lagrange ajusta cada ponto exatamente, mas essa exatidão pode produzir oscilações selvagens entre pontos (fenômeno de Runge) quando você tem mais de 5–6 observações. A interpolação linear é mais estável e previsível, especialmente com dados ruidosos ou irregulares.
+
+</details>
+
+<details class="faq-item">
+<summary>Posso usar interpolação para previsão?</summary>
+
+Não. A interpolação estima valores *entre* pontos de dados conhecidos. A previsão requer predizer além do intervalo observado, que é extrapolação. Use uma [calculadora de extrapolação](https://www.extrapolationcalculator.com/) para previsão — ela fornece métodos projetados para predição além do intervalo.
+
+</details>

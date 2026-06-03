@@ -1,0 +1,102 @@
+﻿---
+title: "İnterpolasyon Yöntemleri Karşılaştırması: Lineer vs Lagrange vs Kübik Spline"
+description: Üç interpolasyon yönteminin — lineer, Lagrange polinomu ve doğal kübik spline — örnekler, kullanım alanları ve her birinin ne zaman en iyi olduğu ile pratik bir karşılaştırması.
+publishDate: 2026-05-25
+author: Extrapolation Calculator Ekibi
+category: Yöntemler
+featuredImage: ""
+---
+
+Elinizde bir dizi bilinen veri noktası var ve bunların arasında kalan bir değeri tahmin etmeniz gerekiyor. Hangi interpolasyon yöntemini kullanmalısınız? Lineer hızlı ve basittir. Lagrange polinomu her noktayı tam olarak eşler. Kübik spline size en pürüzsüz eğriyi verir. Her birinin bir tatlı noktası vardır — ve her biri dikkatsizce uygulanırsa sizi yanıltabilir.
+
+Bu rehber, üç interpolasyon yöntemini çalışılmış örnekler, bir karar çerçevesi ve pratik önerilerle kafa kafaya karşılaştırır. Eğer veri aralığınızın *ötesinde* değerler tahmin ediyorsanız, bu ayrım için [interpolasyon vs ekstrapolasyon](/blog/interpolation-vs-extrapolation/) rehberimize bakın.
+
+## İnterpolasyon Nedir?
+
+İnterpolasyon, bilinen veri noktalarının aralığı içindeki bilinmeyen değerleri tahmin eder. Gözlemlenen verinin ötesine projeksiyon yapan [ekstrapolasyon](/blog/what-is-extrapolation/) yöntemlerinin aksine, interpolasyon sınırlıdır — tahmininiz her zaman her iki tarafta gerçek ölçümlerle çevrilidir.
+
+Bu kısıtlama, interpolasyonu doğası gereği daha güvenilir kılar. Tahmini değer veri tarafından sınırlandırılır, bu nedenle mühendisler, bilim insanları ve analistler hedef nokta veri kümesinin içine düştüğünde interpolasyona başvururlar.
+
+[İnterpolasyon hesaplayıcımızın](/interpolation/) desteklediği üç yöntem — lineer, Lagrange polinomu ve doğal kübik spline — aynı soruna temelde farklı yaklaşımlar getirir. İşte nasıl karşılaştırıldıkları.
+
+## Lineer İnterpolasyon
+
+### Nasıl Çalışır
+
+Lineer interpolasyon, iki komşu veri noktasını düz bir çizgiyle birleştirir ve hedef x'inizdeki değeri okur. Hedefinizi çevreleyen iki noktayı bulur, aralarındaki eğimi hesaplar ve bu eğimi hedef noktaya kadar uzatır.
+
+Formül basittir:
+
+**y = y₁ + (x − x₁) × (y₂ − y₁) / (x₂ − x₁)**
+
+Burada (x₁, y₁) ve (x₂, y₂) iki çevreleyen noktadır.
+
+### En İyi Ne Zaman Çalışır
+
+- **Eşit aralıklı veri** temel eğilimin kabaca lineer olduğu durumlarda
+- **Hızlı tahminler** hızın hassasiyetten daha önemli olduğu durumlarda
+- **Büyük veri kümeleri** karmaşık bir model hesaplamanın pahalı olacağı durumlarda
+- **Tablo aramaları** — mühendislik tabloları, finansal getiri eğrileri, sensör okumaları
+
+### Eksik Kaldığı Yerler
+
+Lineer interpolasyon, her bitişik nokta çifti arasında düz bir çizgi olduğunu varsayar. Verinizde herhangi bir eğrilik varsa — hızlanan büyüme, yavaşlayan getiriler veya salınım — düz çizgi varsayımı hata getirir. Tahmini değer her zaman iki nokta arasındaki kiriş üzerinde olacaktır, asla bunların arasından geçen pürüzsüz bir eğri üzerinde olmayacaktır.
+
+Bu, özellikle seyrek verilerde belirgindir. Bir parabolü izleyen yalnızca beş noktanız varsa, lineer interpolasyon zirvelerin altında kalan ve vadileri aşan pürüzlü, parçalı düz bir tahmin üretecektir.
+
+## Lagrange Polinom İnterpolasyonu
+
+### Nasıl Çalışır
+
+Lagrange interpolasyonu, *her* veri noktasından tam olarak geçen tek bir polinom oluşturur. n nokta için, ağırlıklı temel fonksiyonlar kullanarak n−1 dereceli bir polinom kurar — her temel fonksiyon kendi veri noktasında 1'e ve diğerlerinde 0'a eşittir.
+
+Sonuç matematiksel olarak tam bir uyumdur: polinom her noktaya dokunur. Bilinen verilerde artık, hata yoktur.
+
+### En İyi Ne Zaman Çalışır
+
+- **Küçük veri kümeleri** (2–5 nokta) tam bir uyum istediğinizde
+- **Pürüzsüz temel eğilimler** tek bir polinomun deseni yakalayabildiği durumlarda
+- **Teorik analiz** matematiksel zarafetin önemli olduğu durumlarda
+- **Eğitim amaçları** — yöntem şeffaf ve öğreticidir
+
+[İnterpolasyon hesaplayıcımız](/interpolation/), Lagrange'ı en iyi performans gösterdiği yerde maksimum 5 nokta ile sınırlar.
+
+### Eksik Kaldığı Yerler
+
+Lagrange polinomları, **Runge fenomeninden** muzdariptir — derece yükseldiğinde veri noktaları arasında vahşi salınımlar. 9 noktayı eşleştiren 8. dereceden bir polinom, ardışık gözlemler arasında dramatik şekilde salınarak matematiksel olarak doğru ancak fiziksel olarak saçma enterpolasyonlu değerler üretebilir.
+
+Bu yüzden onu 5 noktada sınırlıyoruz. Bunun ötesinde, salınımlar yöntemi güvenilmez hale getirir. 5'ten fazla noktanız varsa ve pürüzsüz bir eğriye ihtiyacınız varsa, kübik spline daha iyi bir seçimdir.
+
+Lagrange ayrıca yeni noktaları zarif bir şekilde işlemez — tek bir gözlem eklemek tüm polinomu değiştirir, bu da onu artan veri kümeleri için pratik olmaktan çıkarır.
+
+## Doğal Kübik Spline İnterpolasyonu
+
+### Nasıl Çalışır
+
+Bir kübik spline, her bir bitişik veri noktası çifti arasına ayrı bir kübik polinom yerleştirir, ardından bunları eşleşme koşullarıyla birleştirir. Her iç noktada, bitişik kübikler aynı değeri, aynı birinci türevi (eğim) ve aynı ikinci türevi (eğrilik) paylaşır. "Doğal" koşul, ikinci türevi her iki uç noktada sıfıra ayarlar.
+
+Sonuç, verilerinizden geçen mümkün olan en pürüzsüz eğridir — matematiksel olarak, tüm segmentlerdeki toplam eğriliği en aza indirir.
+
+### En İyi Ne Zaman Çalışır
+
+- **Pürüzsüz eğriler** — animasyon kareleri, mühendislik profilleri, bilimsel veriler
+- **Orta ila büyük veri kümeleri** lineerin çok pürüzlü ve Lagrange'ın salınımlı olduğu durumlarda
+- **Fiziksel sistemler** temel sürecin sürekli ve türevlenebilir olduğu durumlarda
+- **Görsel pürüzsüzlüğün önemli olduğu her senaryo** — grafik oluşturma, CAD, sinyal işleme
+
+### Eksik Kaldığı Yerler
+
+Kübik spline ekstrapolasyon yapamaz — yalnızca veri aralığı içinde çalışır. Hedef x'iniz en küçük veri noktasının altındaysa veya en büyüğünün üstündeyse, yöntem hata verir. Bu tasarım gereğidir: bir spline ile ekstrapolasyon yapmak tehlikeli derecede güvenilmezdir çünkü kübik segmentler uç noktaların ötesinde sınırsızdır.
+
+Spline hesaplaması ayrıca lineer interpolasyondan daha pahalıdır. Çok büyük veri kümeleri (binlerce nokta) için, üç köşegenli sistem çözümü ek yük getirir, ancak yine de yüksek dereceli polinomlara kıyasla verimlidir.
+
+Yöntemler arasında model uyum kalitesini anlamak için, [R² skorları](/blog/r-squared-confidence/) rehberimiz seçtiğiniz yöntemin verinizin deseniyle gerçekten eşleşip eşleşmediğini nasıl değerlendireceğinizi açıklar.
+
+## Kafa Kafaya Karşılaştırma
+
+| Özellik | Lineer | Lagrange | Kübik Spline |
+|---------|--------|----------|--------------|
+| Uyum kalitesi | Yaklaşık | Veri noktalarında tam | Veri noktalarında tam |
+| Pürüzsüzlük | Yok (parçalı düz) | Salınım yapabilir | Pürüzsüz (sürekli türevler) |
+| Maks. nokta | Sınırsız | 5 (önerilen) | Sınırsız |
+# ...truncated for display...

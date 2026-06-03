@@ -1,0 +1,439 @@
+﻿---
+title: "Cara Mengekstrapolasi Data dalam Excel (Langkah-demi-Langkah)"
+description: Pelajari 4 cara mudah untuk mengekstrapolasi data dalam Excel menggunakan TREND, FORECAST.LINEAR, garis trend, dan helaian ramalan. Contoh langkah-demi-langkah disertakan.
+publishDate: 2026-06-10
+author: Pasukan Kalkulator Ekstrapolasi
+category: Tutorial
+featuredImage: ""
+---
+
+Excel adalah salah satu alat yang paling banyak digunakan untuk ramalan data. Sama ada anda meramalkan hasil suku tahunan, menganggarkan keperluan inventori bulan depan, atau meramalkan pertumbuhan pengguna, Excel mempunyai fungsi terbina yang menjadikan ekstrapolasi boleh diakses oleh sesiapa sahaja yang mempunyai hamparan.
+
+Tetapi mengetahui cara mengekstrapolasi data dalam Excel memerlukan pemilihan kaedah yang sesuai untuk situasi anda. Panduan ini membimbing anda melalui empat pendekatan — daripada formula mudah hingga helaian ramalan satu klik — supaya anda boleh memilih yang sesuai dengan data dan tahap kemahiran anda. Jika anda baru kepada konsep itu sendiri, mulakan dengan panduan kami tentang [apa itu ekstrapolasi](/blog/what-is-extrapolation/).
+
+### Empat Kaedah Ekstrapolasi Excel Sekilas Pandang
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Gambaran keseluruhan empat kaedah ekstrapolasi Excel">
+  <rect width="600" height="200" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <g transform="translate(20, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">1</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">TREND</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">Formula</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">pelbagai</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">nilai</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">Semua Excel</text>
+    </g>
+    <g transform="translate(165, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">2</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">FORECAST</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">.LINEAR</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">tunggal</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">nilai</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">2016+</text>
+    </g>
+    <g transform="translate(310, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">3</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">Garis Trend</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">visual</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">carta</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">tindih</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">Semua Excel</text>
+    </g>
+    <g transform="translate(455, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">4</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">Ramalan</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">Helaian</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">satu klik</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">papan pemuka</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">2016+</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Empat cara untuk mengekstrapolasi data dalam Excel: fungsi TREND, FORECAST.LINEAR, garis trend carta, dan Helaian Ramalan — dibandingkan secara bersebelahan untuk kemudahan penggunaan dan keserasian versi Excel.</figcaption>
+</figure>
+
+## Kaedah 1: Menggunakan Fungsi TREND
+
+### Apa Yang Ia Lakukan
+
+Fungsi TREND mengira nilai ramalan sepanjang trend linear. Ia mengambil data diketahui anda, menyesuaikan garis lurus melaluinya menggunakan kuasa dua terkecil, dan mengembalikan nilai-y untuk mana-mana nilai-x baharu yang anda nyatakan.
+
+### Sintaks
+
+`
+=TREND(known_y's, known_x's, new_x's)
+`
+
+- **known_y's**: Julat nilai bersandar diketahui (cth., angka jualan)
+- **known_x's**: Julat nilai bebas diketahui (cth., nombor bulan)
+- **new_x's**: Nilai-x yang anda mahu ramalkan
+
+### Gambaran Visual
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Fungsi TREND: data diketahui dilanjutkan ke nilai ramalan melalui garis trend linear">
+  <defs>
+    <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="280" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">Fungsi TREND — Unjuran Linear</text>
+    <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <path d="M 40 220 L 560 80" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M 130 205 L 175 180 L 220 158 L 265 138 L 310 115 L 355 95 L 400 80 L 445 65 L 490 50 L 535 38" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <path d="M 400 80 L 445 65 L 490 50 L 535 38 L 535 240 L 400 240 Z" fill="url(#trendFill)"/>
+    <line x1="400" y1="40" x2="400" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="425" y="232" font-size="10" fill="#64748b">diramalkan</text>
+    <g fill="#d4af37">
+      <circle cx="130" cy="205" r="4"/>
+      <circle cx="175" cy="180" r="4"/>
+      <circle cx="220" cy="158" r="4"/>
+      <circle cx="265" cy="138" r="4"/>
+      <circle cx="310" cy="115" r="4"/>
+      <circle cx="355" cy="95" r="4"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="400" cy="80" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="445" cy="65" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="490" cy="50" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="535" cy="38" r="5" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="120" y="258" font-size="10" fill="#64748b">M1</text>
+    <text x="165" y="258" font-size="10" fill="#64748b">M2</text>
+    <text x="210" y="258" font-size="10" fill="#64748b">M3</text>
+    <text x="255" y="258" font-size="10" fill="#64748b">M4</text>
+    <text x="300" y="258" font-size="10" fill="#64748b">M5</text>
+    <text x="345" y="258" font-size="10" fill="#64748b">M6</text>
+    <text x="388" y="258" font-size="10" fill="#1e40af" font-weight="600">M7</text>
+    <text x="433" y="258" font-size="10" fill="#1e40af" font-weight="600">M8</text>
+    <text x="478" y="258" font-size="10" fill="#1e40af" font-weight="600">M9</text>
+    <text x="523" y="258" font-size="10" fill="#1e40af" font-weight="600">M10</text>
+    <g transform="translate(0,0)">
+      <circle cx="155" cy="100" r="4" fill="#d4af37"/>
+      <text x="166" y="104" font-size="10">Data diketahui (emas)</text>
+      <circle cx="155" cy="118" r="4" fill="#1e40af"/>
+      <text x="166" y="122" font-size="10">Diramalkan (biru)</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Ilustrasi fungsi TREND Excel: enam bulan data jualan diketahui (titik emas, M1–M6) disesuaikan dengan garis trend linear kuasa dua terkecil yang dilanjutkan ke hadapan untuk meramalkan empat bulan akan datang (titik biru, M7–M10). Garis emas putus-putus menunjukkan model linear asas yang digunakan untuk mengekstrapolasi nilai di luar julat yang diperhatikan.</figcaption>
+</figure>
+
+### Contoh Langkah-demi-Langkah
+
+Katakan anda mempunyai data jualan bulanan untuk Januari hingga Jun dan ingin meramalkan Julai dan Ogos:
+
+| Bulan | Jualan |
+|-------|-------|
+| 1 | ,000 |
+| 2 | ,000 |
+| 3 | ,500 |
+| 4 | ,000 |
+| 5 | ,500 |
+| 6 | ,000 |
+
+1. Masukkan data anda dalam lajur A (Bulan) dan B (Jualan)
+2. Dalam sel D2, masukkan: =TREND(B2:B7, A2:A7, 7) — ini meramalkan bulan 7
+3. Dalam sel D3, masukkan: =TREND(B2:B7, A2:A7, 8) — ini meramalkan bulan 8
+
+Excel menyesuaikan trend linear melalui bulan 1–6 dan mengunjurkannya ke hadapan. Fungsi TREND mengembalikan kira-kira ,143 untuk bulan 7 dan ,286 untuk bulan 8.
+
+TREND sangat berguna apabila anda perlu meramalkan pelbagai nilai sekaligus — anda boleh menghantar tatasusunan nilai-x baharu dan mendapatkan semua ramalan dalam satu langkah.
+
+## Kaedah 2: Menggunakan Fungsi FORECAST.LINEAR
+
+### Apa Yang Ia Lakukan
+
+FORECAST.LINEAR (tersedia dalam Excel 2016 dan lebih baharu) meramalkan nilai-y tunggal untuk nilai-x tertentu berdasarkan data sedia ada. Ia menggunakan algoritma regresi linear yang sama seperti TREND tetapi direka untuk ramalan titik tunggal.
+
+### Sintaks
+
+`
+=FORECAST.LINEAR(x, known_y's, known_x's)
+`
+
+- **x**: Titik data khusus yang anda mahu ramalkan
+- **known_y's**: Julat nilai bersandar diketahui
+- **known_x's**: Julat nilai bebas diketahui
+
+### Gambaran Visual
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="FORECAST.LINEAR: input x tunggal mengembalikan satu nilai y ramalan pada garis trend linear">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e40af"/>
+    </marker>
+  </defs>
+  <rect width="600" height="280" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">FORECAST.LINEAR — Ramalan Titik Tunggal</text>
+    <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <path d="M 70 220 L 530 50" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M 90 210 L 150 190 L 210 170 L 270 145 L 330 120 L 390 95 L 450 70 L 510 50" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <g fill="#d4af37">
+      <circle cx="90" cy="210" r="4"/>
+      <circle cx="150" cy="190" r="4"/>
+      <circle cx="210" cy="170" r="4"/>
+      <circle cx="270" cy="145" r="4"/>
+      <circle cx="330" cy="120" r="4"/>
+      <circle cx="390" cy="95" r="4"/>
+      <circle cx="450" cy="70" r="4"/>
+      <circle cx="510" cy="50" r="4"/>
+    </g>
+    <line x1="510" y1="50" x2="510" y2="240" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <line x1="40" y1="50" x2="510" y2="50" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="510" cy="50" r="6" fill="#1e40af" stroke="#fff" stroke-width="2"/>
+    <text x="500" y="258" font-size="10" fill="#1e40af" font-weight="600">x = 12</text>
+    <text x="22" y="54" font-size="10" fill="#1e40af" font-weight="600">y ≈ ,857</text>
+    <g>
+      <rect x="120" y="100" width="180" height="50" rx="6" fill="#fff" stroke="#1e40af" stroke-width="1.5"/>
+      <text x="130" y="120" font-size="10" font-weight="600" fill="#0a0a0a">Formula sel</text>
+      <text x="130" y="138" font-size="10" font-family="monospace" fill="#1e40af">=FORECAST.LINEAR(12, B2:B7, A2:A7)</text>
+    </g>
+    <line x1="300" y1="125" x2="505" y2="55" stroke="#1e40af" stroke-width="1.2" marker-end="url(#arrow)"/>
+  </g>
+</svg>
+  <figcaption>Contoh FORECAST.LINEAR Excel: satu nilai-x sasaran 12 dimasukkan ke dalam formula bersama julat-y diketahui (B2:B7) dan julat-x (A2:A7), mengembalikan satu nilai-y ramalan kira-kira ,857. Titik biru pada garis trend emas menandakan di mana unjuran itu mendarat.</figcaption>
+</figure>
+
+### Contoh Langkah-demi-Langkah
+
+Menggunakan data jualan yang sama, ramalkan hasil untuk bulan 12:
+
+1. Dalam mana-mana sel kosong, masukkan: =FORECAST.LINEAR(12, B2:B7, A2:A7)
+2. Excel mengembalikan jualan yang diunjurkan untuk bulan 12 berdasarkan trend linear melalui bulan 1–6
+
+Hasilnya akan menjadi kira-kira ,857 — hampir dua kali ganda nilai bulan 1, mencerminkan trend menaik yang stabil.
+
+FORECAST.LINEAR adalah cara paling mudah untuk mendapatkan ekstrapolasi nilai tunggal yang cepat. Untuk [ekstrapolasi linear](/blog/linear-extrapolation/) pada data stabil, satu formula ini selalunya semua yang anda perlukan.
+
+## Kaedah 3: Menggunakan Garis Trend dalam Carta
+
+### Apa Yang Ia Lakukan
+
+Garis trend menambah unjuran visual pada carta Excel anda. Anda boleh memilih jenis garis trend (linear, polinomial, eksponen) dan memanjangkannya ke hadapan untuk melihat ke mana data anda menuju. Ini adalah kaedah yang paling intuitif kerana anda boleh *melihat* ramalan itu.
+
+### Gambaran Visual
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Carta garis trend: titik data dengan garis trend linear yang memanjang ke hadapan ke masa depan">
+  <rect width="600" height="300" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">Garis Trend — Ramalan Visual dalam Carta</text>
+    <rect x="40" y="40" width="520" height="220" fill="#fff" stroke="#e5e7eb"/>
+    <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="140" x2="540" y2="140" stroke="#e5e7eb" stroke-dasharray="3 3"/>
+    <line x1="380" y1="60" x2="380" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="200" y="55" font-size="10" fill="#64748b">Data sejarah</text>
+    <text x="420" y="55" font-size="10" fill="#64748b">Kawasan ramalan</text>
+    <path d="M 80 220 L 130 200 L 180 180 L 230 160 L 280 140 L 330 115 L 380 100 L 430 80 L 480 60 L 530 40" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <g fill="#d4af37">
+      <circle cx="80" cy="220" r="4"/>
+      <circle cx="130" cy="200" r="4"/>
+      <circle cx="180" cy="180" r="4"/>
+      <circle cx="230" cy="160" r="4"/>
+      <circle cx="280" cy="140" r="4"/>
+      <circle cx="330" cy="115" r="4"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="380" cy="100" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="430" cy="80" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="480" cy="60" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="530" cy="40" r="5" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="455" y="280" font-size="11" font-family="monospace" fill="#d4af37" font-weight="600">y = 2,143x + 7,857</text>
+    <text x="510" y="295" font-size="11" font-family="monospace" fill="#0a0a0a" font-weight="600">R² = 0.998</text>
+  </g>
+</svg>
+  <figcaption>Garis trend carta Excel: garis trend linear ditindih pada plot taburan jualan dan dilanjutkan ke hadapan untuk mengunjurkan empat tempoh seterusnya (titik biru). Carta memaparkan persamaan garis trend (y = 2,143x + 7,857) dan nilai R² 0.998, menunjukkan kesesuaian linear yang sangat baik yang menyokong ekstrapolasi yakin.</figcaption>
+</figure>
+
+### Arahan Langkah-demi-Langkah
+
+1. Pilih data anda (bulan dan jualan)
+2. Pergi ke **Sisip → Carta** dan pilih carta Garisan atau Serakan
+3. Klik pada mana-mana titik data dalam carta untuk memilih siri
+4. Klik kanan dan pilih **Tambah Garis Trend**
+5. Dalam anak tetingkap Pilihan Garis Trend:
+   - Pilih **Linear** (atau Polinomial/Eksponen jika data anda melengkung)
+   - Di bawah **Ramalan**, tetapkan **Ke Hadapan** kepada bilangan tempoh yang anda mahu unjurkan (cth., 6 bulan)
+   - Tandakan **Paparkan Persamaan pada carta** dan **Paparkan nilai R-kuasa dua** untuk melihat kualiti kesesuaian
+
+Garis trend memanjang melampaui data anda, menunjukkan nilai yang diunjurkan secara visual. Nilai R² memberitahu anda sejauh mana garis itu sesuai — lihat panduan kami tentang [skor R²](/blog/r-squared-confidence/) untuk tafsiran.
+
+### Bila Menggunakan Kaedah Ini
+
+Garis trend adalah terbaik apabila anda memerlukan ramalan visual untuk pembentangan atau laporan. Ia tidak memberikan nilai sel yang tepat, tetapi ia menjadikan trend dapat difahami dengan segera oleh khalayak bukan teknikal.
+
+## Kaedah 4: Menggunakan Helaian Ramalan Excel (Satu Klik)
+
+### Apa Yang Ia Lakukan
+
+Ciri Helaian Ramalan (Excel 2016+) menjana ramalan lengkap dengan carta, selang keyakinan, dan jadual nilai ramalan — semuanya dalam satu klik. Ia adalah cara terpantas untuk mendapatkan ramalan yang kelihatan profesional.
+
+### Gambaran Visual
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Helaian Ramalan: carta penuh dengan data sejarah, garis ramalan, dan jalur selang keyakinan atas/bawah, serta jadual ramalan">
+  <defs>
+    <linearGradient id="ciFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.10"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="320" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">Helaian Ramalan — Carta + Selang Keyakinan + Jadual</text>
+    <rect x="40" y="40" width="380" height="220" fill="#fff" stroke="#e5e7eb"/>
+    <line x1="60" y1="240" x2="400" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="260" y1="60" x2="260" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <path d="M 70 220 L 100 205 L 130 190 L 160 175 L 190 160 L 220 145 L 250 125 L 280 110 L 310 90 L 340 75 L 370 60" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <path d="M 260 110 L 280 90 L 310 65 L 340 45 L 370 25 L 370 95 L 340 105 L 310 115 L 280 130 L 260 110 Z" fill="url(#ciFill)" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 2"/>
+    <g fill="#d4af37">
+      <circle cx="70" cy="220" r="3.5"/>
+      <circle cx="100" cy="205" r="3.5"/>
+      <circle cx="130" cy="190" r="3.5"/>
+      <circle cx="160" cy="175" r="3.5"/>
+      <circle cx="190" cy="160" r="3.5"/>
+      <circle cx="220" cy="145" r="3.5"/>
+      <circle cx="250" cy="125" r="3.5"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="280" cy="110" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="310" cy="90" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="340" cy="75" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="370" cy="60" r="4" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="135" y="55" font-size="10" fill="#64748b">Sejarah</text>
+    <text x="285" y="55" font-size="10" fill="#1e40af" font-weight="600">Ramalan</text>
+    <rect x="60" y="265" width="350" height="14" fill="#94a3b8" fill-opacity="0.3"/>
+    <text x="66" y="275" font-size="9" fill="#475569">Selang keyakinan 95%</text>
+    <g transform="translate(440, 50)">
+      <rect x="0" y="0" width="140" height="210" fill="#fff" stroke="#e5e7eb" rx="4"/>
+      <text x="10" y="18" font-size="10" font-weight="600" fill="#0a0a0a">Jadual ramalan</text>
+      <line x1="10" y1="25" x2="130" y2="25" stroke="#e5e7eb"/>
+      <text x="10" y="42" font-size="9" fill="#64748b">Tempoh</text>
+      <text x="80" y="42" font-size="9" fill="#64748b">Nilai</text>
+      <line x1="10" y1="48" x2="130" y2="48" stroke="#e5e7eb"/>
+      <text x="10" y="62" font-size="9" fill="#1e40af">M7</text>
+      <text x="80" y="62" font-size="9" fill="#1e40af">,143</text>
+      <text x="10" y="78" font-size="9" fill="#1e40af">M8</text>
+      <text x="80" y="78" font-size="9" fill="#1e40af">,286</text>
+      <text x="10" y="94" font-size="9" fill="#1e40af">M9</text>
+      <text x="80" y="94" font-size="9" fill="#1e40af">,429</text>
+      <text x="10" y="110" font-size="9" fill="#1e40af">M10</text>
+      <text x="80" y="110" font-size="9" fill="#1e40af">,571</text>
+      <text x="10" y="126" font-size="9" fill="#1e40af">M11</text>
+      <text x="80" y="126" font-size="9" fill="#1e40af">,714</text>
+      <text x="10" y="142" font-size="9" fill="#1e40af">M12</text>
+      <text x="80" y="142" font-size="9" fill="#1e40af">,857</text>
+      <line x1="10" y1="152" x2="130" y2="152" stroke="#e5e7eb"/>
+      <text x="10" y="168" font-size="9" fill="#64748b" font-style="italic">CI: ±,400</text>
+      <text x="10" y="184" font-size="9" fill="#64748b" font-style="italic">Tahap 95%</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Helaian Ramalan Excel: papan pemuka satu klik yang menggabungkan carta sejarah (garis emas, M1–M7), kesinambungan ramalan (garis biru, M8–M11) dengan jalur selang keyakinan 95% (kawasan berlorek kelabu), dan jadual ramalan yang menyenaraikan nilai ramalan untuk setiap tempoh masa depan. Paparan ini sesuai untuk laporan di mana pembaca memerlukan kedua-dua nombor dan visualisasi ketidakpastian ramalan sekilas pandang.</figcaption>
+</figure>
+
+### Arahan Langkah-demi-Langkah
+
+1. Pilih julat data anda (termasuk tarikh dan nilai)
+2. Pergi ke tab **Data** dan klik **Helaian Ramalan**
+3. Dalam dialog Cipta Lembaran Kerja Ramalan:
+   - Tetapkan tarikh **Tamat Ramalan**
+   - Laraskan selang keyakinan jika perlu (lalai ialah 95%)
+   - Pilih sama ada untuk menyertakan pengesanan kemusiman
+4. Klik **Cipta**
+
+Excel menjana helaian baharu dengan carta yang menunjukkan data sejarah, nilai ramalan, dan sempadan keyakinan. Ia juga menghasilkan jadual dengan setiap nilai ramalan dan julat keyakinannya.
+
+### Bila Menggunakan Kaedah Ini
+
+Helaian Ramalan sesuai untuk laporan perniagaan di mana anda memerlukan kedua-dua nombor dan visualisasi yang digilap. Ia mengendalikan kemusiman secara automatik, yang tidak dilakukan oleh kaedah yang lebih ringkas. Untuk data dengan corak bermusim berulang (cth., jualan runcit yang memuncak setiap Disember), ini adalah pilihan Excel terbaik.
+
+## Jadual Perbandingan: Kaedah Mana Yang Patut Anda Gunakan?
+
+| Kaedah | Terbaik Untuk | Versi Excel | Mudah Digunakan |
+|--------|----------|---------------|-------------|
+| TREND | Berbilang titik data | Semua versi | Sederhana |
+| FORECAST.LINEAR | Nilai tunggal cepat | 2016+ | Mudah |
+| Garis Trend | Ramalan visual | Semua versi | Mudah |
+| Helaian Ramalan | Ramalan lanjutan dengan kemusiman | 2016+ | Paling mudah |
+
+Setiap kaedah menganggap hubungan linear secara lalai, walaupun garis trend dan Helaian Ramalan menyokong corak lain. Untuk membandingkan pendekatan linear vs melengkung, lihat panduan kami tentang [ekstrapolasi polinomial vs linear](/blog/polynomial-extrapolation-vs-linear/).
+
+## Petua & Amalan Terbaik
+
+- **Semak pencilan terlebih dahulu** — satu titik data anomali boleh menarik garis trend jauh dari realiti
+- **Gunakan data sejarah yang mencukupi** — sekurang-kurangnya 5–6 titik data untuk trend yang bermakna; kurang daripada itu dan anda hanya meneka
+- **Sahkan trend sebelum memanjangkannya** — jika R² anda di bawah 0.7, model linear mungkin tidak sesuai dengan cukup baik untuk ekstrapolasi yang boleh dipercayai
+- **Trend linear berfungsi paling baik untuk data stabil** — jika pertumbuhan anda semakin laju atau perlahan, pertimbangkan kaedah polinomial atau [ekstrapolasi eksponen](/blog/exponential-growth/)
+- **Jangan ramalkan terlalu jauh ke hadapan** — semakin jauh dari data anda, semakin kurang boleh dipercayai sebarang ekstrapolasi
+
+## Had Ekstrapolasi Excel
+
+Alat ramalan Excel adalah mudah tetapi mempunyai kekangan sebenar:
+
+- **Linear secara lalai**: TREND dan FORECAST.LINEAR menganggap hubungan garis lurus. Jika data anda mengikuti lengkung, fungsi ini akan mengelirukan anda
+- **Tiada pemilihan model automatik**: Excel tidak membandingkan kaedah atau memberitahu anda jenis trend yang paling sesuai. Anda perlu menyemak R² sendiri
+- **Risiko keyakinan berlebihan**: Selang keyakinan Helaian Ramalan kelihatan tepat, tetapi ia berdasarkan andaian bahawa masa depan akan menyerupai masa lalu — tepat andaian yang runtuh semasa peralihan atau gangguan pasaran
+
+Untuk data yang jelas melengkung, [kalkulator interpolasi](/interpolation/) dan alat ekstrapolasi khusus menyediakan lebih banyak pilihan kaedah daripada lalai linear terbina Excel.
+
+## Bila Menggunakan Kalkulator Khusus
+
+Excel hebat untuk bekerja dengan hamparan, tetapi apabila anda memerlukan ekstrapolasi cepat dan tepat dengan pelbagai pilihan kaedah, alat khusus menjimatkan masa. [Kalkulator ekstrapolasi](https://www.extrapolationcalculator.com/) menawarkan lima kaedah — linear, eksponen, logaritma, polinomial, dan kuadratik — supaya anda boleh membandingkan hasil secara bersebelahan dan memilih yang paling sesuai.
+
+Tiada formula untuk ditulis, tiada persediaan carta, tiada tekaan tentang jenis garis trend yang hendak digunakan. Masukkan data anda, pilih kaedah, dan dapatkan unjuran anda serta-merta. Untuk memodelkan hubungan asas antara pemboleh ubah, [kalkulator regresi](/regression/) menyediakan analisis regresi terperinci.
+
+## Kesimpulan
+
+Anda boleh mengekstrapolasi data dalam Excel menggunakan empat kaedah: fungsi TREND untuk ramalan berbilang titik, FORECAST.LINEAR untuk nilai tunggal cepat, garis trend untuk ramalan visual, dan Helaian Ramalan untuk laporan satu klik dengan kemusiman. Setiap kaedah mempunyai tempatnya bergantung pada data anda dan apa yang anda perlukan daripada ramalan.
+
+Untuk hasil yang lebih pantas dengan lima kaedah ekstrapolasi berbeza — dan tiada penyahpepijatan formula — cuba [kalkulator ekstrapolasi percuma](https://www.extrapolationcalculator.com/).
+
+## Soalan Lazim
+
+<details class="faq-item">
+<summary>Bolehkah Excel mengekstrapolasi data?</summary>
+
+Ya. Excel menawarkan beberapa alat terbina dalam untuk ekstrapolasi: fungsi TREND, fungsi FORECAST.LINEAR, garis trend carta, dan ciri Helaian Ramalan. Semua menggunakan regresi linear secara lalai, walaupun garis trend dan Helaian Ramalan menyokong corak lain.
+
+</details>
+
+<details class="faq-item">
+<summary>Apakah fungsi TREND dalam Excel?</summary>
+
+TREND mengira nilai-y ramalan sepanjang trend linear berdasarkan data diketahui anda. Sintaksnya ialah =TREND(known_y's, known_x's, new_x's). Ia menyesuaikan garis lurus melalui data anda menggunakan kuasa dua terkecil dan mengembalikan nilai yang diunjurkan untuk nilai-x baharu yang anda nyatakan.
+
+</details>
+
+<details class="faq-item">
+<summary>Bagaimana saya memanjangkan garis trend dalam Excel?</summary>
+
+Tambah garis trend pada carta anda dengan mengklik kanan titik data dan memilih "Tambah Garis Trend." Dalam Pilihan Garis Trend, tetapkan medan ramalan "Ke Hadapan" kepada bilangan tempoh yang anda mahu unjurkan melebihi data anda. Garis trend akan memanjang secara visual ke julat masa depan.
+
+</details>
+
+<details class="faq-item">
+<summary>Adakah FORECAST.LINEAR tepat?</summary>
+
+FORECAST.LINEAR adalah tepat untuk data yang mengikuti trend linear tulen. Seperti semua kaedah linear, ia menjadi tidak boleh dipercayai apabila corak asas adalah bukan linear atau apabila anda mengunjurkan jauh di luar julat data yang diperhatikan. Sentiasa semak nilai R² untuk menilai kualiti kesesuaian sebelum mempercayai ramalan.
+
+</details>
+

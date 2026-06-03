@@ -1,0 +1,439 @@
+﻿---
+title: "Excel에서 데이터를 외삽하는 방법(단계별)"
+description: TREND, FORECAST.LINEAR, 추세선 및 예측 시트를 사용하여 Excel에서 데이터를 외삽하는 4가지 쉬운 방법을 알아보세요. 단계별 예제가 포함되어 있습니다.
+publishDate: 2026-06-10
+author: 외삽 계산기 팀
+category: 튜토리얼
+featuredImage: ""
+---
+
+Excel은 데이터 예측에 가장 널리 사용되는 도구 중 하나입니다. 분기별 수익을 예측하든, 다음 달 재고 요구량을 추정하든, 사용자 성장을 예측하든, Excel에는 스프레드시트를 가진 누구나 외삽을 사용할 수 있는 내장 함수가 있습니다.
+
+그러나 Excel에서 데이터를 외삽하는 방법을 알려면 상황에 맞는 올바른 방법을 선택해야 합니다. 이 가이드는 간단한 수식부터 원클릭 예측 시트까지 네 가지 접근 방식을 안내하여 데이터와 기술 수준에 맞는 방법을 선택할 수 있도록 합니다. 개념 자체가 처음이라면 [외삽이란 무엇인가](/blog/what-is-extrapolation/)에 대한 가이드부터 시작하세요.
+
+### 네 가지 Excel 외삽 방법 한눈에 보기
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="네 가지 Excel 외삽 방법 개요">
+  <rect width="600" height="200" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <g transform="translate(20, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">1</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">TREND</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">수식</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">다중</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">값</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">모든 Excel</text>
+    </g>
+    <g transform="translate(165, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">2</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">FORECAST</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">.LINEAR</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">단일</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">값</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">2016+</text>
+    </g>
+    <g transform="translate(310, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">3</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">추세선</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">시각적</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">차트</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">오버레이</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">모든 Excel</text>
+    </g>
+    <g transform="translate(455, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">4</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">예측</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">시트</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">원클릭</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">대시보드</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">2016+</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Excel에서 데이터를 외삽하는 네 가지 방법: TREND 함수, FORECAST.LINEAR, 차트 추세선 및 예측 시트 — 사용 편의성과 Excel 버전 호환성 측면에서 나란히 비교됩니다.</figcaption>
+</figure>
+
+## 방법 1: TREND 함수 사용하기
+
+### 기능
+
+TREND 함수는 선형 추세를 따라 예측 값을 계산합니다. 알려진 데이터를 가져와 최소 제곱법을 사용해 직선을 적합시키고 지정한 새 x 값에 대한 y 값을 반환합니다.
+
+### 구문
+
+`
+=TREND(known_y's, known_x's, new_x's)
+`
+
+- **known_y's**: 알려진 종속 값의 범위 (예: 판매 수치)
+- **known_x's**: 알려진 독립 값의 범위 (예: 월 번호)
+- **new_x's**: 예측하려는 x 값
+
+### 시각적 개요
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="TREND 함수: 알려진 데이터가 선형 추세선을 통해 예측 값으로 확장됩니다">
+  <defs>
+    <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="280" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">TREND 함수 — 선형 예측</text>
+    <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <path d="M 40 220 L 560 80" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M 130 205 L 175 180 L 220 158 L 265 138 L 310 115 L 355 95 L 400 80 L 445 65 L 490 50 L 535 38" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <path d="M 400 80 L 445 65 L 490 50 L 535 38 L 535 240 L 400 240 Z" fill="url(#trendFill)"/>
+    <line x1="400" y1="40" x2="400" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="425" y="232" font-size="10" fill="#64748b">예측됨</text>
+    <g fill="#d4af37">
+      <circle cx="130" cy="205" r="4"/>
+      <circle cx="175" cy="180" r="4"/>
+      <circle cx="220" cy="158" r="4"/>
+      <circle cx="265" cy="138" r="4"/>
+      <circle cx="310" cy="115" r="4"/>
+      <circle cx="355" cy="95" r="4"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="400" cy="80" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="445" cy="65" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="490" cy="50" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="535" cy="38" r="5" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="120" y="258" font-size="10" fill="#64748b">M1</text>
+    <text x="165" y="258" font-size="10" fill="#64748b">M2</text>
+    <text x="210" y="258" font-size="10" fill="#64748b">M3</text>
+    <text x="255" y="258" font-size="10" fill="#64748b">M4</text>
+    <text x="300" y="258" font-size="10" fill="#64748b">M5</text>
+    <text x="345" y="258" font-size="10" fill="#64748b">M6</text>
+    <text x="388" y="258" font-size="10" fill="#1e40af" font-weight="600">M7</text>
+    <text x="433" y="258" font-size="10" fill="#1e40af" font-weight="600">M8</text>
+    <text x="478" y="258" font-size="10" fill="#1e40af" font-weight="600">M9</text>
+    <text x="523" y="258" font-size="10" fill="#1e40af" font-weight="600">M10</text>
+    <g transform="translate(0,0)">
+      <circle cx="155" cy="100" r="4" fill="#d4af37"/>
+      <text x="166" y="104" font-size="10">알려진 데이터 (금색)</text>
+      <circle cx="155" cy="118" r="4" fill="#1e40af"/>
+      <text x="166" y="122" font-size="10">예측됨 (파란색)</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Excel TREND 함수 그림: 6개월의 알려진 판매 데이터(금색 점, M1–M6)에 최소 제곱 선형 추세선을 적합시켜 미래 4개월(파란색 점, M7–M10)을 예측하기 위해 앞으로 확장합니다. 점선 금색 선은 관찰된 범위를 넘어 값을 외삽하는 데 사용되는 기본 선형 모델을 보여줍니다.</figcaption>
+</figure>
+
+### 단계별 예제
+
+1월부터 6월까지의 월별 판매 데이터가 있고 7월과 8월을 예측하려고 한다고 가정해 보겠습니다:
+
+| 월 | 판매액 |
+|-------|-------|
+| 1 | ,000 |
+| 2 | ,000 |
+| 3 | ,500 |
+| 4 | ,000 |
+| 5 | ,500 |
+| 6 | ,000 |
+
+1. A열(월)과 B열(판매액)에 데이터를 입력합니다
+2. D2 셀에 =TREND(B2:B7, A2:A7, 7)을 입력합니다 — 이는 7월을 예측합니다
+3. D3 셀에 =TREND(B2:B7, A2:A7, 8)을 입력합니다 — 이는 8월을 예측합니다
+
+Excel은 1~6월을 통해 선형 추세를 적합시키고 앞으로 투영합니다. TREND 함수는 7월에 약 ,143, 8월에 약 ,286을 반환합니다.
+
+TREND는 한 번에 여러 값을 예측해야 할 때 특히 유용합니다 — 새 x 값의 배열을 전달하면 모든 예측을 한 번에 얻을 수 있습니다.
+
+## 방법 2: FORECAST.LINEAR 함수 사용하기
+
+### 기능
+
+FORECAST.LINEAR(Excel 2016 이상에서 사용 가능)는 기존 데이터를 기반으로 주어진 x 값에 대한 단일 y 값을 예측합니다. TREND와 동일한 선형 회귀 알고리즘을 사용하지만 단일 지점 예측을 위해 설계되었습니다.
+
+### 구문
+
+`
+=FORECAST.LINEAR(x, known_y's, known_x's)
+`
+
+- **x**: 예측하려는 특정 데이터 포인트
+- **known_y's**: 알려진 종속 값의 범위
+- **known_x's**: 알려진 독립 값의 범위
+
+### 시각적 개요
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="FORECAST.LINEAR: 단일 x 입력이 선형 추세선에서 하나의 예측 y 값을 반환합니다">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e40af"/>
+    </marker>
+  </defs>
+  <rect width="600" height="280" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">FORECAST.LINEAR — 단일 지점 예측</text>
+    <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <path d="M 70 220 L 530 50" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M 90 210 L 150 190 L 210 170 L 270 145 L 330 120 L 390 95 L 450 70 L 510 50" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <g fill="#d4af37">
+      <circle cx="90" cy="210" r="4"/>
+      <circle cx="150" cy="190" r="4"/>
+      <circle cx="210" cy="170" r="4"/>
+      <circle cx="270" cy="145" r="4"/>
+      <circle cx="330" cy="120" r="4"/>
+      <circle cx="390" cy="95" r="4"/>
+      <circle cx="450" cy="70" r="4"/>
+      <circle cx="510" cy="50" r="4"/>
+    </g>
+    <line x1="510" y1="50" x2="510" y2="240" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <line x1="40" y1="50" x2="510" y2="50" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="510" cy="50" r="6" fill="#1e40af" stroke="#fff" stroke-width="2"/>
+    <text x="500" y="258" font-size="10" fill="#1e40af" font-weight="600">x = 12</text>
+    <text x="22" y="54" font-size="10" fill="#1e40af" font-weight="600">y ≈ ,857</text>
+    <g>
+      <rect x="120" y="100" width="180" height="50" rx="6" fill="#fff" stroke="#1e40af" stroke-width="1.5"/>
+      <text x="130" y="120" font-size="10" font-weight="600" fill="#0a0a0a">셀 수식</text>
+      <text x="130" y="138" font-size="10" font-family="monospace" fill="#1e40af">=FORECAST.LINEAR(12, B2:B7, A2:A7)</text>
+    </g>
+    <line x1="300" y1="125" x2="505" y2="55" stroke="#1e40af" stroke-width="1.2" marker-end="url(#arrow)"/>
+  </g>
+</svg>
+  <figcaption>Excel FORECAST.LINEAR 예제: 단일 대상 x 값 12가 알려진 y 범위(B2:B7) 및 x 범위(A2:A7)와 함께 수식에 입력되어 약 ,857의 예측 y 값 하나를 반환합니다. 금색 추세선의 파란색 점은 예측이 도달하는 위치를 표시합니다.</figcaption>
+</figure>
+
+### 단계별 예제
+
+동일한 판매 데이터를 사용하여 12월의 수익을 예측합니다:
+
+1. 빈 셀에 =FORECAST.LINEAR(12, B2:B7, A2:A7)을 입력합니다
+2. Excel은 1~6월의 선형 추세를 기반으로 12월의 예상 판매액을 반환합니다
+
+결과는 약 ,857로, 1월 값의 거의 두 배이며 꾸준한 상승 추세를 반영합니다.
+
+FORECAST.LINEAR는 빠른 단일 값 외삽을 얻는 가장 간단한 방법입니다. 안정적인 데이터에 대한 [선형 외삽](/blog/linear-extrapolation/)의 경우 이 하나의 수식만으로도 충분한 경우가 많습니다.
+
+## 방법 3: 차트에서 추세선 사용하기
+
+### 기능
+
+추세선은 Excel 차트에 시각적 예측을 추가합니다. 추세선 유형(선형, 다항식, 지수)을 선택하고 데이터의 방향을 확인하기 위해 앞으로 확장할 수 있습니다. 예측을 *볼* 수 있기 때문에 가장 직관적인 방법입니다.
+
+### 시각적 개요
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="추세선 차트: 데이터 포인트와 미래로 확장되는 선형 추세선">
+  <rect width="600" height="300" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">추세선 — 차트의 시각적 예측</text>
+    <rect x="40" y="40" width="520" height="220" fill="#fff" stroke="#e5e7eb"/>
+    <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="140" x2="540" y2="140" stroke="#e5e7eb" stroke-dasharray="3 3"/>
+    <line x1="380" y1="60" x2="380" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="200" y="55" font-size="10" fill="#64748b">과거 데이터</text>
+    <text x="420" y="55" font-size="10" fill="#64748b">예측 영역</text>
+    <path d="M 80 220 L 130 200 L 180 180 L 230 160 L 280 140 L 330 115 L 380 100 L 430 80 L 480 60 L 530 40" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <g fill="#d4af37">
+      <circle cx="80" cy="220" r="4"/>
+      <circle cx="130" cy="200" r="4"/>
+      <circle cx="180" cy="180" r="4"/>
+      <circle cx="230" cy="160" r="4"/>
+      <circle cx="280" cy="140" r="4"/>
+      <circle cx="330" cy="115" r="4"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="380" cy="100" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="430" cy="80" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="480" cy="60" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="530" cy="40" r="5" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="455" y="280" font-size="11" font-family="monospace" fill="#d4af37" font-weight="600">y = 2,143x + 7,857</text>
+    <text x="510" y="295" font-size="11" font-family="monospace" fill="#0a0a0a" font-weight="600">R² = 0.998</text>
+  </g>
+</svg>
+  <figcaption>Excel 차트 추세선: 판매 산점도에 선형 추세선이 오버레이되고 다음 네 기간(파란색 점)을 예측하기 위해 앞으로 확장됩니다. 차트는 추세선 방정식(y = 2,143x + 7,857)과 0.998의 R² 값을 표시하여 신뢰할 수 있는 외삽을 지원하는 우수한 선형 적합을 나타냅니다.</figcaption>
+</figure>
+
+### 단계별 지침
+
+1. 데이터(월 및 판매액)를 선택합니다
+2. **삽입 → 차트**로 이동하여 꺾은선형 또는 분산형 차트를 선택합니다
+3. 차트의 데이터 포인트를 클릭하여 계열을 선택합니다
+4. 마우스 오른쪽 버튼을 클릭하고 **추세선 추가**를 선택합니다
+5. 추세선 옵션 창에서:
+   - **선형**을 선택합니다(데이터가 곡선인 경우 다항식 또는 지수)
+   - **예측** 아래에서 **앞으로**를 투영하려는 기간 수로 설정합니다(예: 6개월)
+   - 적합 품질을 확인하려면 **차트에 방정식 표시** 및 **R-제곱 값 표시**를 체크합니다
+
+추세선은 데이터를 넘어 확장되어 예측 값을 시각적으로 표시합니다. R² 값은 선이 얼마나 잘 적합하는지 알려줍니다 — 해석은 [R² 점수](/blog/r-squared-confidence/) 가이드를 참조하세요.
+
+### 이 방법을 사용해야 하는 경우
+
+추세선은 프레젠테이션이나 보고서를 위한 시각적 예측이 필요할 때 가장 좋습니다. 정확한 셀 값을 제공하지는 않지만 비기술적 사용자도 추세를 즉시 이해할 수 있게 합니다.
+
+## 방법 4: Excel의 예측 시트 사용하기(원클릭)
+
+### 기능
+
+예측 시트 기능(Excel 2016+)은 차트, 신뢰 구간 및 예측 값 테이블이 포함된 완전한 예측을 한 번의 클릭으로 생성합니다. 전문적인 예측을 얻는 가장 빠른 방법입니다.
+
+### 시각적 개요
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="예측 시트: 과거 데이터, 예측 선, 상하 신뢰 구간 밴드 및 예측 테이블이 포함된 전체 차트">
+  <defs>
+    <linearGradient id="ciFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.10"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="320" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">예측 시트 — 차트 + 신뢰 구간 + 테이블</text>
+    <rect x="40" y="40" width="380" height="220" fill="#fff" stroke="#e5e7eb"/>
+    <line x1="60" y1="240" x2="400" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="260" y1="60" x2="260" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <path d="M 70 220 L 100 205 L 130 190 L 160 175 L 190 160 L 220 145 L 250 125 L 280 110 L 310 90 L 340 75 L 370 60" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <path d="M 260 110 L 280 90 L 310 65 L 340 45 L 370 25 L 370 95 L 340 105 L 310 115 L 280 130 L 260 110 Z" fill="url(#ciFill)" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 2"/>
+    <g fill="#d4af37">
+      <circle cx="70" cy="220" r="3.5"/>
+      <circle cx="100" cy="205" r="3.5"/>
+      <circle cx="130" cy="190" r="3.5"/>
+      <circle cx="160" cy="175" r="3.5"/>
+      <circle cx="190" cy="160" r="3.5"/>
+      <circle cx="220" cy="145" r="3.5"/>
+      <circle cx="250" cy="125" r="3.5"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="280" cy="110" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="310" cy="90" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="340" cy="75" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="370" cy="60" r="4" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="135" y="55" font-size="10" fill="#64748b">과거</text>
+    <text x="285" y="55" font-size="10" fill="#1e40af" font-weight="600">예측</text>
+    <rect x="60" y="265" width="350" height="14" fill="#94a3b8" fill-opacity="0.3"/>
+    <text x="66" y="275" font-size="9" fill="#475569">95% 신뢰 구간</text>
+    <g transform="translate(440, 50)">
+      <rect x="0" y="0" width="140" height="210" fill="#fff" stroke="#e5e7eb" rx="4"/>
+      <text x="10" y="18" font-size="10" font-weight="600" fill="#0a0a0a">예측 테이블</text>
+      <line x1="10" y1="25" x2="130" y2="25" stroke="#e5e7eb"/>
+      <text x="10" y="42" font-size="9" fill="#64748b">기간</text>
+      <text x="80" y="42" font-size="9" fill="#64748b">값</text>
+      <line x1="10" y1="48" x2="130" y2="48" stroke="#e5e7eb"/>
+      <text x="10" y="62" font-size="9" fill="#1e40af">M7</text>
+      <text x="80" y="62" font-size="9" fill="#1e40af">,143</text>
+      <text x="10" y="78" font-size="9" fill="#1e40af">M8</text>
+      <text x="80" y="78" font-size="9" fill="#1e40af">,286</text>
+      <text x="10" y="94" font-size="9" fill="#1e40af">M9</text>
+      <text x="80" y="94" font-size="9" fill="#1e40af">,429</text>
+      <text x="10" y="110" font-size="9" fill="#1e40af">M10</text>
+      <text x="80" y="110" font-size="9" fill="#1e40af">,571</text>
+      <text x="10" y="126" font-size="9" fill="#1e40af">M11</text>
+      <text x="80" y="126" font-size="9" fill="#1e40af">,714</text>
+      <text x="10" y="142" font-size="9" fill="#1e40af">M12</text>
+      <text x="80" y="142" font-size="9" fill="#1e40af">,857</text>
+      <line x1="10" y1="152" x2="130" y2="152" stroke="#e5e7eb"/>
+      <text x="10" y="168" font-size="9" fill="#64748b" font-style="italic">CI: ±,400</text>
+      <text x="10" y="184" font-size="9" fill="#64748b" font-style="italic">95% 수준</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Excel 예측 시트: 과거 차트(금색 선, M1–M7), 95% 신뢰 구간 밴드(회색 음영 영역)가 있는 예측 연속(파란색 선, M8–M11), 그리고 각 미래 기간에 대한 예측 값을 나열한 예측 테이블을 결합한 원클릭 대시보드입니다. 이 보기는 수치와 예측 불확실성의 한눈에 보는 시각화가 모두 필요한 보고서에 이상적입니다.</figcaption>
+</figure>
+
+### 단계별 지침
+
+1. 데이터 범위(날짜 및 값 포함)를 선택합니다
+2. **데이터** 탭으로 이동하여 **예측 시트**를 클릭합니다
+3. 예측 워크시트 만들기 대화상자에서:
+   - **예측 종료** 날짜를 설정합니다
+   - 필요에 따라 신뢰 구간을 조정합니다(기본값은 95%)
+   - 계절성 감지 포함 여부를 선택합니다
+4. **만들기**를 클릭합니다
+
+Excel은 과거 데이터, 예측 값 및 신뢰 범위를 보여주는 차트가 포함된 새 시트를 생성합니다. 또한 각 예측 값과 해당 신뢰 범위가 포함된 테이블을 생성합니다.
+
+### 이 방법을 사용해야 하는 경우
+
+예측 시트는 수치와 정교한 시각화가 모두 필요한 비즈니스 보고서에 이상적입니다. 더 간단한 방법으로는 처리할 수 없는 계절성을 자동으로 처리합니다. 반복되는 계절 패턴이 있는 데이터(예: 매년 12월에 최고조에 달하는 소매 판매)의 경우, 이것이 최상의 Excel 옵션입니다.
+
+## 비교 표: 어떤 방법을 사용해야 합니까?
+
+| 방법 | 최적 용도 | Excel 버전 | 사용 편의성 |
+|--------|----------|---------------|-------------|
+| TREND | 여러 데이터 포인트 | 모든 버전 | 중간 |
+| FORECAST.LINEAR | 빠른 단일 값 | 2016+ | 쉬움 |
+| 추세선 | 시각적 예측 | 모든 버전 | 쉬움 |
+| 예측 시트 | 계절성을 포함한 고급 예측 | 2016+ | 가장 쉬움 |
+
+각 방법은 기본적으로 선형 관계를 가정하지만, 추세선과 예측 시트는 다른 패턴을 지원합니다. 선형 접근 방식과 곡선 접근 방식 비교에 대해서는 [다항식 vs 선형 외삽](/blog/polynomial-extrapolation-vs-linear/) 가이드를 참조하세요.
+
+## 팁 및 모범 사례
+
+- **먼저 이상치를 확인하세요** — 하나의 이상 데이터 포인트가 추세선을 현실에서 멀어지게 할 수 있습니다
+- **충분한 과거 데이터를 사용하세요** — 의미 있는 추세를 위해 최소 5~6개의 데이터 포인트; 그 미만은 추측에 불과합니다
+- **확장하기 전에 추세를 검증하세요** — R²가 0.7 미만이면 선형 모델이 신뢰할 수 있는 외삽에 충분히 적합하지 않을 수 있습니다
+- **선형 추세는 안정적인 데이터에 가장 적합합니다** — 성장이 가속화 또는 둔화되는 경우 다항식 또는 [지수 외삽](/blog/exponential-growth/) 방법을 고려하세요
+- **너무 멀리 예측하지 마세요** — 데이터에서 멀어질수록 외삽의 신뢰성이 떨어집니다
+
+## Excel 외삽의 한계
+
+Excel의 예측 도구는 편리하지만 실제 제약이 있습니다:
+
+- **기본적으로 선형**: TREND와 FORECAST.LINEAR는 직선 관계를 가정합니다. 데이터가 곡선을 따르는 경우 이러한 함수는 잘못된 결과를 초래합니다
+- **자동 모델 선택 없음**: Excel은 방법을 비교하거나 어떤 추세 유형이 가장 적합한지 알려주지 않습니다. R²를 직접 확인해야 합니다
+- **과신의 위험**: 예측 시트의 신뢰 구간은 정확해 보이지만 미래가 과거와 유사할 것이라는 가정에 기반합니다 — 시장 변화나 혼란 중에 무너지는 바로 그 가정입니다
+
+명확하게 곡선을 그리는 데이터의 경우 [보간 계산기](/interpolation/)와 전용 외삽 도구가 Excel의 기본 선형 기본값보다 더 많은 방법 옵션을 제공합니다.
+
+## 전용 계산기를 사용해야 하는 경우
+
+Excel은 스프레드시트 작업에 탁월하지만 여러 방법 옵션으로 빠르고 정확한 외삽이 필요할 때 전용 도구가 시간을 절약해 줍니다. [외삽 계산기](https://www.extrapolationcalculator.com/)는 선형, 지수, 로그, 다항식 및 2차의 5가지 방법을 제공하여 결과를 나란히 비교하고 최적의 적합을 선택할 수 있습니다.
+
+수식을 작성할 필요도, 차트를 설정할 필요도, 사용할 추세선 유형을 추측할 필요도 없습니다. 데이터를 입력하고 방법을 선택하면 즉시 예측을 얻을 수 있습니다. 변수 간의 기본 관계를 모델링하려면 [회귀 계산기](/regression/)가 상세한 회귀 분석을 제공합니다.
+
+## 결론
+
+Excel에서는 네 가지 방법을 사용하여 데이터를 외삽할 수 있습니다: 다중 지점 예측에는 TREND 함수, 빠른 단일 값에는 FORECAST.LINEAR, 시각적 예측에는 추세선, 계절성을 포함한 원클릭 보고서에는 예측 시트. 데이터와 예측 요구 사항에 따라 각각 적합한 위치가 있습니다.
+
+5가지 외삽 방법으로 더 빠른 결과를 얻으려면 — 수식 디버깅 없이 — [무료 외삽 계산기](https://www.extrapolationcalculator.com/)를 사용해 보세요.
+
+## 자주 묻는 질문
+
+<details class="faq-item">
+<summary>Excel에서 데이터를 외삽할 수 있나요?</summary>
+
+네. Excel은 외삽을 위한 여러 내장 도구를 제공합니다: TREND 함수, FORECAST.LINEAR 함수, 차트 추세선 및 예측 시트 기능. 모두 기본적으로 선형 회귀를 사용하지만 추세선과 예측 시트는 다른 패턴을 지원합니다.
+
+</details>
+
+<details class="faq-item">
+<summary>Excel의 TREND 함수란 무엇인가요?</summary>
+
+TREND는 알려진 데이터를 기반으로 선형 추세를 따라 예측 y 값을 계산합니다. 구문은 =TREND(known_y's, known_x's, new_x's)입니다. 최소 제곱법을 사용하여 데이터에 직선을 적합시키고 지정한 새 x 값에 대한 예측 값을 반환합니다.
+
+</details>
+
+<details class="faq-item">
+<summary>Excel에서 추세선을 어떻게 확장하나요?</summary>
+
+데이터 포인트를 마우스 오른쪽 버튼으로 클릭하고 "추세선 추가"를 선택하여 차트에 추세선을 추가합니다. 추세선 옵션에서 "앞으로" 예측 필드를 데이터를 넘어 투영하려는 기간 수로 설정합니다. 추세선이 시각적으로 미래 범위로 확장됩니다.
+
+</details>
+
+<details class="faq-item">
+<summary>FORECAST.LINEAR는 정확한가요?</summary>
+
+FORECAST.LINEAR는 진정한 선형 추세를 따르는 데이터에 대해 정확합니다. 모든 선형 방법과 마찬가지로 기본 패턴이 비선형이거나 관찰된 데이터 범위를 훨씬 넘어 투영할 때 신뢰성이 떨어집니다. 예측을 신뢰하기 전에 항상 R² 값을 확인하여 적합 품질을 평가하세요.
+
+</details>
+

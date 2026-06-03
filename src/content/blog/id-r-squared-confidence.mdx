@@ -1,0 +1,251 @@
+---
+title: Menafsirkan R² dan Keyakinan dalam Ekstrapolasi
+description: Pelajari cara menafsirkan skor R² dan metrik keyakinan untuk menilai keandalan hasil ekstrapolasi Anda.
+publishDate: 2026-05-14
+author: Extrapolation Calculator Team
+category: Dasar
+featuredImage: ""
+---
+
+Saat Anda menggunakan [kalkulator ekstrapolasi](/), setiap hasil mencakup dua metrik penting: skor R² dan persentase keyakinan. Memahami nilai-nilai ini sangat penting untuk membuat keputusan berdasarkan ekstrapolasi Anda. Terlalu sering, orang melihat nilai R² yang tinggi dan menganggap proyeksi mereka dapat dipercaya, hanya untuk kemudian menemukan bahwa model tersebut menyesatkan. Postingan ini membahas secara mendalam apa yang sebenarnya diukur oleh R², bagaimana kaitannya dengan keyakinan, dan mengapa R² tidak boleh menjadi satu-satunya metrik yang Anda andalkan saat memproyeksikan melampaui data Anda.
+
+## Apa itu R²?
+
+R², yang secara formal dikenal sebagai koefisien determinasi, mengukur proporsi varians dalam variabel dependen yang dijelaskan oleh variabel independen melalui model regresi. Secara sederhana, ini memberi tahu Anda seberapa banyak "pergerakan" dalam data Anda yang ditangkap oleh garis tren yang Anda pasang.
+
+### Rumusnya
+
+Rumus untuk R² dibangun dari dua kuantitas fundamental:
+
+**SS_total** (Jumlah Kuadrat Total): Ini mewakili total varians dalam data yang diamati, dihitung sebagai jumlah perbedaan kuadrat antara setiap nilai yang diamati dan rata-rata dari nilai yang diamati:
+
+**SS_total = Σ(yᵢ − ȳ)²**
+
+**SS_residual** (Jumlah Kuadrat Residual): Ini mewakili varians yang gagal ditangkap oleh model, dihitung sebagai jumlah perbedaan kuadrat antara setiap nilai yang diamati dan nilai yang diprediksi oleh model:
+
+**SS_residual = Σ(yᵢ − ŷᵢ)²**
+
+Menggabungkan keduanya, R² didefinisikan sebagai:
+
+**R² = 1 − (SS_residual / SS_total)**
+
+Ketika model cocok dengan data secara sempurna, setiap residual adalah nol, sehingga SS_residual sama dengan nol dan R² sama dengan 1. Ketika model tidak lebih baik daripada menggunakan rata-rata y sebagai prediksi Anda untuk setiap titik, SS_residual sama dengan SS_total dan R² sama dengan 0.
+
+### Memahami Intuisi Perhitungan
+
+Anggap SS_total sebagai "masalah" — jumlah total variasi yang perlu dijelaskan oleh model Anda — dan SS_residual sebagai "sisa" — apa yang gagal ditangkap oleh model Anda. Rasio SS_residual / SS_total memberi tahu Anda fraksi variasi yang masih belum dijelaskan. Mengurangkannya dari 1 memberi Anda fraksi yang **telah** dijelaskan. Inilah mengapa R² kadang-kadang digambarkan sebagai "fraksi varians yang dijelaskan."
+
+Perlu dicatat bahwa untuk model nonlinier, rumus R² standar di atas terkadang dapat menghasilkan nilai negatif. Ini terjadi ketika model cocok dengan data lebih buruk daripada garis horizontal pada rata-rata. Dalam kasus seperti itu, model secara aktif menyesatkan, dan R² negatif adalah tanda peringatan kuat bahwa metode yang dipilih tidak sesuai untuk data tersebut.
+
+## Rentang Interpretasi
+
+Meskipun tidak ada aturan universal yang berlaku untuk setiap disiplin ilmu, pedoman umum untuk menafsirkan R² dalam konteks ekstrapolasi dan analisis regresi adalah:
+
+| Rentang R² | Interpretasi | Makna Praktis |
+|----------|---------------|-------------------|
+| 0.0 – 0.3 | Kecocokan buruk | Model menjelaskan sangat sedikit varians; proyeksi tidak dapat diandalkan |
+| 0.3 – 0.7 | Kecocokan sedang | Model menangkap beberapa tren tetapi ada penyebaran yang signifikan; gunakan hati-hati |
+| 0.7 – 1.0 | Kecocokan baik | Model menjelaskan sebagian besar varians; proyeksi mungkin masuk akal |
+
+Ambang batas ini bukanlah batasan yang kaku. Di beberapa bidang seperti ilmu sosial, R² 0,3 mungkin dianggap terhormat karena perilaku manusia pada dasarnya bising. Dalam fisika atau teknik, apa pun di bawah 0,9 mungkin dianggap tidak dapat diterima. Saat bekerja dengan [kalkulator regresi](/regression/), selalu pertimbangkan domain tempat Anda bekerja dan tingkat kecocokan yang diharapkan untuk jenis data tersebut.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Skala interpretasi R-kuadrat dari kecocokan buruk hingga baik, divisualisasikan dengan pola data contoh">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Skala Interpretasi R²</text>
+      <rect x="40" y="40" width="520" height="200" fill="#fff" stroke="#e5e7eb"/>
+      <rect x="40" y="40" width="156" height="200" fill="#fee2e2" fill-opacity="0.4"/>
+      <rect x="196" y="40" width="208" height="200" fill="#fef3c7" fill-opacity="0.4"/>
+      <rect x="404" y="40" width="156" height="200" fill="#d1fae5" fill-opacity="0.4"/>
+      <line x1="196" y1="40" x2="196" y2="240" stroke="#9ca3af" stroke-dasharray="3 3"/>
+      <line x1="404" y1="40" x2="404" y2="240" stroke="#9ca3af" stroke-dasharray="3 3"/>
+      <text x="118" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">Buruk (0.0–0.3)</text>
+      <text x="300" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#d97706">Sedang (0.3–0.7)</text>
+      <text x="482" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#059669">Baik (0.7–1.0)</text>
+      <g transform="translate(50, 90)">
+        <line x1="0" y1="100" x2="120" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 80 L 120 60" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="20" cy="40" r="3.5" fill="#1e40af"/>
+        <circle cx="40" cy="90" r="3.5" fill="#1e40af"/>
+        <circle cx="60" cy="20" r="3.5" fill="#1e40af"/>
+        <circle cx="80" cy="70" r="3.5" fill="#1e40af"/>
+        <circle cx="100" cy="50" r="3.5" fill="#1e40af"/>
+        <text x="60" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.15</text>
+      </g>
+      <g transform="translate(220, 90)">
+        <line x1="0" y1="100" x2="160" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 80 L 160 30" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="20" cy="60" r="3.5" fill="#1e40af"/>
+        <circle cx="50" cy="55" r="3.5" fill="#1e40af"/>
+        <circle cx="80" cy="50" r="3.5" fill="#1e40af"/>
+        <circle cx="110" cy="40" r="3.5" fill="#1e40af"/>
+        <circle cx="140" cy="45" r="3.5" fill="#1e40af"/>
+        <text x="80" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.55</text>
+      </g>
+      <g transform="translate(430, 90)">
+        <line x1="0" y1="100" x2="120" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 90 L 120 20" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="15" cy="82" r="3.5" fill="#1e40af"/>
+        <circle cx="35" cy="68" r="3.5" fill="#1e40af"/>
+        <circle cx="55" cy="55" r="3.5" fill="#1e40af"/>
+        <circle cx="75" cy="42" r="3.5" fill="#1e40af"/>
+        <circle cx="95" cy="30" r="3.5" fill="#1e40af"/>
+        <text x="60" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.92</text>
+      </g>
+    </g>
+  </svg>
+  <figcaption>Skala interpretasi R² divisualisasikan. Zona merah (0.0–0.3) mewakili kecocokan buruk di mana titik-titik tersebar luas di sekitar garis tren. Zona kuning (0.3–0.7) menunjukkan kecocokan sedang dengan penyebaran yang terlihat. Zona hijau (0.7–1.0) mewakili kecocokan baik di mana titik-titik mengelompok erat di sekitar garis. Ambang batas ini adalah pedoman, bukan aturan — konteks domain penting: ilmu sosial sering menerima 0,3, sementara fisika mungkin menuntut 0,9+.</figcaption>
+</figure>
+
+### Bagaimana dengan R² = 1?
+
+R² sempurna 1,0 belum tentu menjadi alasan untuk merayakan. Ini dapat menunjukkan overfitting, terutama jika Anda memiliki sedikit titik data dan model yang kompleks. Polinomial derajat n-1 akan selalu melewati n titik data dengan sempurna, menghasilkan R² = 1, tetapi model seperti itu akan menghasilkan ekstrapolasi yang sangat tidak menentu. Ini adalah salah satu peringatan paling penting dalam semua analisis regresi, dan kita akan kembali lagi nanti.
+
+## Metrik Keyakinan dan Hubungannya dengan R²
+
+Persentase keyakinan yang ditampilkan bersama hasil Anda di [kalkulator ekstrapolasi](/) berasal dari nilai R² dan mewakili seberapa andal model tersebut cocok dengan pola data. Ini berfungsi sebagai representasi yang lebih intuitif dan ramah pengguna dari skor R².
+
+Secara konseptual, jika R² adalah 0,85, keyakinan dapat dinyatakan sebagai 85%, menandakan bahwa model menangkap 85% varians data. Meskipun pemetaan ini tampak sederhana, metrik keyakinan juga menggabungkan faktor kontekstual tambahan dalam beberapa implementasi, seperti jumlah titik data relatif terhadap kompleksitas model. Model dengan R² = 0,95 yang dibangun pada 3 titik data jauh kurang dapat dipercaya daripada model dengan R² = 0,95 yang dibangun pada 30 titik data, dan metrik keyakinan yang dirancang dengan baik harus mencerminkan perbedaan itu.
+
+Metrik keyakinan paling berguna sebagai referensi cepat: jika Anda melihat keyakinan di bawah 50%, Anda harus segera mempertanyakan apakah metode ekstrapolasi yang dipilih sesuai. Jika Anda melihat keyakinan di atas 80%, model tersebut cocok dengan data historis dengan baik — tetapi seperti yang akan kita bahas, itu tidak secara otomatis berarti ekstrapolasi akan akurat.
+
+## Mengapa R² Tinggi Tidak Menjamin Ekstrapolasi yang Akurat
+
+Ini mungkin poin paling kritis dalam seluruh diskusi ini. R² mengukur **kecocokan dalam sampel** — seberapa baik model cocok dengan data yang sudah Anda miliki. Ekstrapolasi, menurut definisi, adalah tentang memprediksi **di luar** rentang data yang diamati. Ini adalah tugas yang fundamental berbeda.
+
+Pertimbangkan contoh sederhana: misalkan Anda memiliki data yang menunjukkan pertumbuhan tanaman selama 10 hari. Tanaman tumbuh dengan stabil, dan model linier memberikan R² = 0,92. Apakah itu berarti tanaman akan terus tumbuh secara linear selama 100 hari ke depan? Tentu tidak — pada titik tertentu, pertumbuhan akan mencapai dataran tinggi karena keterbatasan sumber daya, dan model linier akan overpredict secara besar-besaran.
+
+Inilah mengapa memahami sifat data Anda sama pentingnya dengan metrik statistik. Perbedaan antara [interpolasi vs ekstrapolasi](/blog/interpolation-vs-extrapolation/) sangat penting: interpolasi memperkirakan dalam batas yang diamati (di mana R² adalah indikator keandalan yang baik), sementara ekstrapolasi melampaui batas yang diamati (di mana R² hanya memberi tahu Anda bahwa garis tren Anda konsisten dengan data masa lalu, bukan bahwa itu akan berlanjut).
+
+### Perangkap Polinomial
+
+Model polinomial sangat menipu. Polinomial derajat lebih tinggi hampir selalu menghasilkan R² yang lebih tinggi pada data pelatihan, karena memiliki lebih banyak fleksibilitas untuk berkelok-kelok melalui setiap titik. Tetapi polinomial derajat tinggi cenderung menyimpang secara dramatis di luar rentang data. Model kubik atau kuartik yang cocok dengan indah dalam rentang yang diamati mungkin melengkung tajam ke atas atau ke bawah saat Anda melangkah melampauinya, menghasilkan proyeksi yang tidak masuk akal.
+
+Inilah mengapa memahami [metode polinomial vs linier](/blog/polynomial-vs-linear/) sangat penting. Model linier lebih terbatas dan karenanya lebih stabil dalam ekstrapolasi, bahkan jika R² mereka lebih rendah. R² yang lebih rendah dengan model yang masuk akal secara fisik hampir selalu lebih baik daripada R² yang lebih tinggi dengan model yang tidak memiliki justifikasi teoretis.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Perangkap polinomial: polinomial derajat tinggi yang cocok dengan data secara sempurna di dalam rentang tetapi menyimpang secara liar di luar">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Perangkap Polinomial: R²=1.0, Prediksi=Absurd</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="220" y1="40" x2="220" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="100" y="55" font-size="10" fill="#64748b">Data pelatihan</text>
+      <text x="240" y="55" font-size="10" fill="#dc2626" font-weight="600">Ekstrapolasi menyimpang!</text>
+      <path d="M 80 180 Q 100 140, 120 150 Q 140 100, 160 130 Q 180 80, 200 90 Q 215 70, 220 75" stroke="#d4af37" stroke-width="2" fill="none"/>
+      <path d="M 220 75 Q 240 -80, 280 280 Q 320 100, 360 30 Q 400 -20, 500 240" stroke="#dc2626" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+      <g fill="#1e40af">
+        <circle cx="80" cy="180" r="3.5"/>
+        <circle cx="100" cy="150" r="3.5"/>
+        <circle cx="120" cy="160" r="3.5"/>
+        <circle cx="140" cy="115" r="3.5"/>
+        <circle cx="160" cy="135" r="3.5"/>
+        <circle cx="180" cy="90" r="3.5"/>
+        <circle cx="200" cy="95" r="3.5"/>
+        <circle cx="220" cy="78" r="3.5"/>
+      </g>
+      <text x="100" y="200" font-size="9" fill="#64748b">R² = 1.00 (sempurna!)</text>
+      <text x="430" y="265" font-size="10" fill="#dc2626" font-weight="600">Prediksi: -150 (tidak masuk akal!)</text>
+    </g>
+  </svg>
+  <figcaption>Perangkap polinomial divisualisasikan. Di dalam rentang data (kiri garis putus-putus), polinomial derajat tinggi berkelok-kelok melalui setiap titik pelatihan dan mencapai R² sempurna = 1.00. Tetapi saat Anda melangkah melampaui rentang yang diamati (kanan garis putus-putus), polinomial yang sama menyimpang secara liar — berayun dari nilai sangat tinggi ke sangat rendah, menghasilkan prediksi yang sempurna secara matematis di dalam tetapi absurd secara praktis di luar. Inilah mengapa R² saja adalah panduan yang buruk untuk ekstrapolasi.</figcaption>
+</figure>
+
+## Contoh Kerja: Membandingkan R² Antar Metode Berbeda pada Data yang Sama
+
+Mari kita buat ini konkret dengan contoh kerja. Misalkan Anda memiliki titik data berikut yang mewakili pendapatan triwulanan (dalam ribuan) untuk bisnis kecil:
+
+| Triwulan | Pendapatan |
+|---------|---------|
+| 1 | 120 |
+| 2 | 135 |
+| 3 | 160 |
+| 4 | 200 |
+| 5 | 250 |
+| 6 | 310 |
+
+Anda ingin memproyeksikan pendapatan untuk triwulan 8 menggunakan metode yang berbeda. Berikut adalah hasil R² yang mungkin Anda dapatkan:
+
+| Metode | R² | Keyakinan | Proyeksi Pendapatan Q8 |
+|--------|-----|------------|----------------------|
+| Linier | 0.96 | 96% | 430 |
+| Eksponensial | 0.99 | 99% | 530 |
+| Polinomial (derajat 3) | 1.00 | 100% | 710 |
+| Logaritmik | 0.88 | 88% | 365 |
+
+Model eksponensial memiliki R² hampir sempurna, dan polinomial memiliki R² yang secara harfiah sempurna. Tapi proyeksi mana yang harus Anda percaya?
+
+Jika pertumbuhan pendapatan didorong oleh efek jaringan majemuk, model eksponensial mungkin dapat dibenarkan, dan proyeksi [ekstrapolasi eksponensial](/blog/exponential-growth/) 530 bisa masuk akal. Jika bisnis berada di pasar matang di mana pertumbuhan secara alami melambat, model logaritmik mungkin lebih tepat meskipun R² lebih rendah — konsep [ekstrapolasi logaritmik](/blog/logarithmic-diminishing-returns/) menangkap diminishing returns yang diabaikan oleh model eksponensial. Jika pertumbuhan didorong oleh ekspansi linier yang stabil (menambahkan jumlah pelanggan tetap per triwulan), model linier adalah pilihan teraman.
+
+Model polinomial harus dilihat dengan kecurigaan mendalam. R² sempurnanya adalah artefak matematis dari memiliki cukup derajat kebebasan untuk melewati setiap titik, bukan bukti pemahaman sejati. Proyeksi Q8 sebesar 710 kemungkinan merupakan perkiraan berlebihan yang didorong oleh kecenderungan polinomial untuk berayun liar di luar rentang pelatihan.
+
+## Cara Menggunakan R² untuk Memilih Antara Metode Ekstrapolasi
+
+Menggunakan R² untuk pemilihan model memerlukan pendekatan yang lebih bernuansa daripada sekadar memilih nilai tertinggi. Berikut adalah alur kerja praktis:
+
+1. **Pasang beberapa model** ke data Anda menggunakan [kalkulator ekstrapolasi](https://www.extrapolationcalculator.com/). Catat setiap nilai R².
+
+2. **Saring kecocokan yang jelas buruk.** Jika sebuah model memiliki R² di bawah 0,3, model itu tidak menangkap tren dalam data Anda. Buang model itu terlepas dari daya tarik teoretisnya.
+
+3. **Di antara model dengan R² yang dapat diterima (0,3 ke atas), pertimbangkan pengetahuan domain.** Apakah fenomena yang mendasarinya secara alami mengikuti pola eksponensial? Linier? Logaritmik? Pengetahuan domain harus dipertimbangkan secara kuat dalam keputusan Anda.
+
+4. **Waspadai celah kecil dalam R².** Jika model linier memberikan R² = 0,91 dan model eksponensial memberikan R² = 0,93, perbedaannya tidak cukup berarti untuk mengesampingkan penalaran domain.
+
+5. **Periksa overfitting.** Jika model kompleks secara dramatis mengungguli model sederhana, tanyakan pada diri sendiri apakah kompleksitas tersebut dapat dibenarkan. Merujuk pada R² yang disesuaikan (dibahas di bawah) sebagai pengaman.
+
+6. **Validasi secara visual.** Lihat garis tren yang diplot di samping titik data Anda.
+
+Pendekatan ini selaras dengan baik dengan pemahaman [ekstrapolasi linier](/blog/linear-extrapolation/) sebagai garis dasar: mulailah dengan model paling sederhana yang masuk akal dan hanya tambahkan kompleksitas ketika data dan pengetahuan domain membenarkannya.
+
+## R² yang Disesuaikan dan Mengapa Penting untuk Derajat Polinomial
+
+R² yang disesuaikan adalah modifikasi dari R² standar yang memperhitungkan jumlah prediktor (atau derajat kebebasan) dalam model. Rumusnya adalah:
+
+**R²_adj = 1 − ((1 − R²)(n − 1)) / (n − p − 1)**
+
+Di mana **n** adalah jumlah titik data dan **p** adalah jumlah parameter dalam model (untuk polinomial derajat k, p = k + 1).
+
+Wawasan utama adalah bahwa R² yang disesuaikan **menghukum** kompleksitas model. Setiap parameter tambahan yang Anda tambahkan ke model akan meningkatkan R² (atau setidaknya tidak menurunkannya), tetapi R² yang disesuaikan hanya akan meningkat jika parameter yang ditambahkan meningkatkan kecocokan cukup untuk membenarkan hilangnya satu derajat kebebasan.
+
+### Mengapa Ini Penting
+
+Pertimbangkan contoh kita sebelumnya dengan 6 titik data. Polinomial derajat 5 akan cocok dengan sempurna dengan R² = 1,0, tetapi R² yang disesuaikan akan jauh lebih rendah — berpotensi bahkan negatif — karena Anda telah menggunakan parameter hampir sebanyak titik data. Sementara itu...
+
+R² dan metrik keyakinan adalah alat penting untuk mengevaluasi kualitas ekstrapolasi, tetapi mereka adalah titik awal, bukan titik akhir. R² yang tinggi memberi tahu Anda bahwa model Anda konsisten dengan data yang diamati; itu tidak memberi tahu Anda bahwa konsistensi ini akan bertahan melampaui rentang data. Ekstrapolasi yang paling andal datang dari menggabungkan kecocokan statistik yang baik dengan pemahaman domain yang kuat dan dosis skeptisisme yang sehat.
+
+Saat Anda menggunakan [kalkulator ekstrapolasi](/) lain kali, luangkan waktu sejenak untuk membandingkan metode, periksa R² yang disesuaikan, dan pikirkan apakah asumsi model sesuai dengan realitas data Anda. Dan jika Anda bekerja dalam rentang data Anda daripada melampauinya, [kalkulator interpolasi](/interpolation/) mungkin memberi Anda hasil yang lebih andal dengan perangkat statistik yang sama. Angka hanya sebaik penilaian di belakangnya.
+
+## Pertanyaan yang Sering Diajukan
+
+<details class="faq-item">
+<summary>Apa nilai R² yang baik untuk ekstrapolasi?</summary>
+
+Itu tergantung pada bidang Anda, tetapi secara umum R² > 0,7 menunjukkan kecocokan yang wajar. Untuk peramalan yang tepat, targetkan R² > 0,85. Namun, ingat bahwa R² yang tinggi dalam rentang data tidak menjamin ekstrapolasi yang akurat — itu hanya mengukur seberapa baik model cocok dengan titik-titik yang diamati.
+
+</details>
+
+<details class="faq-item">
+<summary>Bisakah R² menjadi negatif?</summary>
+
+Ya, untuk model nonlinier. R² didefinisikan sebagai 1 − (SS_residual / SS_total). Jika model cocok lebih buruk daripada garis horizontal pada rata-rata, SS_residual melebihi SS_total dan R² menjadi negatif. R² negatif adalah peringatan kuat bahwa metode yang dipilih tidak sesuai untuk data.
+
+</details>
+
+<details class="faq-item">
+<summary>Haruskah saya selalu memilih metode dengan R² tertinggi?</summary>
+
+Belum tentu. Metode dengan R² tertinggi mungkin overfitting, terutama jika itu adalah polinomial derajat tinggi. Gunakan R² yang disesuaikan untuk menghukum kompleksitas model, dan selalu validasi nilai yang diekstrapolasi terhadap pengetahuan domain. Model yang lebih sederhana dengan R² sedikit lebih rendah seringkali lebih andal untuk prediksi.
+
+</details>
+
+<details class="faq-item">
+<summary>Bagaimana R² berbeda dari keyakinan?</summary>
+
+R² mengukur seberapa baik garis regresi cocok dengan data yang diamati — ini adalah ukuran kualitas kecocokan. Keyakinan mengacu pada keandalan ekstrapolasi itu sendiri. R² yang tinggi memberi Anda lebih banyak keyakinan pada metode, tetapi keyakinan juga tergantung pada seberapa jauh Anda mengekstrapolasi dan apakah tren yang mendasarinya dapat berubah.
+
+</details>

@@ -1,0 +1,230 @@
+---
+title: "İnterpolasyon vs Ekstrapolasyon: Her Yöntem Ne Zaman Kullanılmalı"
+description: İnterpolasyon ve ekstrapolasyon arasındaki temel farklar, her yöntemin ne zaman uygun olduğu ve tahminlerinizde yaygın tuzaklardan nasıl kaçınacağınıza dair net bir rehber.
+publishDate: 2026-05-18
+author: Extrapolation Calculator Team
+category: Temeller
+featuredImage: ""
+---
+
+İnterpolasyon ve ekstrapolasyon aynı madalyonun iki yüzüdür — her ikisi de bilinen veri noktalarından bilinmeyen değerleri tahmin eder, ancak temelde farklı bölgelerde çalışırlar. İnterpolasyon, gözlemler *arasındaki* boşlukları doldurur; ekstrapolasyon, onların *ötesine* geçer. Yanlış olanı seçmek, güvenilir bir tahmini kör bir varsayıma dönüştürebilir. Bu rehber, her yöntemin tam olarak nasıl çalıştığını, ne zaman kullanılacağını ve en yaygın tahmin hatalarından nasıl kaçınılacağını açıklar.
+
+## Temel Fark
+
+**İnterpolasyon**, mevcut verinizin aralığı içindeki değerleri tahmin eder. Saat 14:00'te sıcaklığı (22°C) ve 16:00'da (26°C) biliyorsanız, saat 15:00'teki sıcaklığı enterpolasyon yapmak size sınırlı, yüksek güvenilirlikte bir tahmin verir — doğrusal enterpolasyon kullanarak yaklaşık 24°C. Cevabın 22 ile 26 arasında olması gerektiğini bilirsiniz, çünkü her iki taraftaki veri sonucu sınırlar.
+
+**Ekstrapolasyon**, verinizin aralığı dışındaki değerleri tahmin eder. Aynı sıcaklık okumalarını kullanarak gece yarısı sıcaklığını tahmin etmek [ekstrapolasyondur](/blog/what-is-extrapolation/) — gözlemlenen pencerenin ötesine trendi uzatırsınız, koşulların dramatik biçimde değişebileceği bir bölgeye. Gece yarısı sıcaklığı, saf bir doğrusal projeksiyonun önereceği 9°C değil, kolayca 13°C veya 4°C olabilir, çünkü sıcaklıklar iki noktalı veri setinizin yakalayamayacağı günlük döngüleri takip eder.
+
+Ayrım basittir ancak sonuçları derindir: enterpolasyon doğası gereği daha güvenlidir çünkü her iki taraftaki veri tarafından sınırlanır. Ekstrapolasyonun böyle koruyucu korkulukları yoktur. Gözlemlenen aralığın ötesine geçtiğiniz her birim mesafe, bileşik belirsizlik getirir.
+
+Sayısal olarak ifade etmek gerekirse: veriniz x = 0'dan x = 100'e kadar uzanıyorsa, x = 50'deki bir enterpolasyon tipik olarak ölçümlerinizin gürültü seviyesi dahilinde doğrudur. x = 150'ye bir ekstrapolasyon, birkaç kat daha büyük hata marjları taşıyabilir — ve x = 200'de tahmin esasen anlamsız olabilir. Güvenin bozulma hızı yönteme ve veriye bağlıdır, ancak yönsel gerçek evrenseldir: **ekstrapolasyon hatası, veri sınırından uzaklaştıkça artar**.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="İnterpolasyon bölgesi (veriyle sınırlı) vs ekstrapolasyon bölgesi (verinin ötesi) güven konileriyle">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">İnterpolasyon (güvenli) vs Ekstrapolasyon (riskli)</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <rect x="100" y="40" width="280" height="200" fill="#10b981" fill-opacity="0.08"/>
+      <path d="M 100 50 L 380 230" stroke="#10b981" stroke-width="2"/>
+      <path d="M 100 230 L 380 50" stroke="#10b981" stroke-width="2" stroke-dasharray="3 3"/>
+      <text x="240" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#059669">İnterpolasyon bölgesi</text>
+      <text x="240" y="155" text-anchor="middle" font-size="9" fill="#059669" font-style="italic">her iki tarafta veriyle sınırlı</text>
+      <text x="240" y="170" text-anchor="middle" font-size="9" fill="#059669" font-style="italic">dar tahmin konisi</text>
+      <path d="M 380 110 L 500 40" stroke="#1e40af" stroke-width="2"/>
+      <path d="M 380 170 L 500 240" stroke="#1e40af" stroke-width="2" stroke-dasharray="3 3"/>
+      <path d="M 380 110 L 540 -30" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <path d="M 380 170 L 540 320" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <text x="450" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#dc2626">Ekstrapolasyon bölgesi</text>
+      <text x="450" y="155" text-anchor="middle" font-size="9" fill="#dc2626" font-style="italic">uzak tarafta veri yok</text>
+      <text x="450" y="170" text-anchor="middle" font-size="9" fill="#dc2626" font-style="italic">koni mesafeyle genişler</text>
+      <g fill="#1e40af">
+        <circle cx="100" cy="180" r="4"/>
+        <circle cx="200" cy="155" r="4"/>
+        <circle cx="300" cy="120" r="4"/>
+        <circle cx="380" cy="95" r="4"/>
+      </g>
+      <line x1="380" y1="40" x2="380" y2="240" stroke="#0a0a0a" stroke-width="1.5"/>
+      <text x="385" y="255" font-size="9" fill="#0a0a0a" font-weight="700">veri sınırı</text>
+      <text x="475" y="105" font-size="9" fill="#1e40af" font-weight="600">en iyi tahmin</text>
+    </g>
+  </svg>
+  <figcaption>Tahmin konileri olarak enterpolasyon ve ekstrapolasyon. Solda (yeşil bölge), tahmin her iki taraftaki veri noktalarıyla sınırlanır — olası değerler konisi dar kalır. Sağda (kırmızı bölge, dikey çizgiyle işaretlenmiş veri sınırının ötesinde), tahminin uzak tarafta dayanağı yoktur ve koni veriden uzaklaştıkça genişler. Bu genişleyen belirsizlik, ekstrapolasyonun doğası gereği enterpolasyondan daha riskli olmasının temel nedenidir.</figcaption>
+</figure>
+
+## İnterpolasyon Ne Zaman Kullanılmalı
+
+İnterpolasyon, iki veya daha fazla bilinen veri noktası arasında kalan bir değeri tahmin etmeniz gerektiğinde doğru seçimdir. Yaygın senaryolar şunları içerir:
+
+- **Sensör verilerindeki boşlukları doldurma** — her saat kayıt yapan ancak saat 15:00 okumasını kaçıran bir hava istasyonu, bu değeri komşularından güvenilir şekilde kurtarabilir
+- **Düzgün eğriler oluşturma** — animatörler ve grafik tasarımcılar, anahtar kareler arasında akıcı hareket oluşturmak için spline enterpolasyonu kullanır
+- **Finansal getiri eğrileri** — tahvil tüccarları, aktif olarak işlem görmeyen vadeler için faiz oranlarını enterpolasyon yapar, çünkü yakın vadelerdeki oranlar güçlü dayanaklar sağlar
+- **Mühendislik arama tabloları** — tablolanmamış sıcaklık veya basınçlardaki malzeme özellikleri (ısıl iletkenlik, çekme dayanımı) tablolanmış değerlerden tahmin edilebilir
+- **Tıbbi dozaj tabloları** — tablo 20 kg ve 25 kg listelediğinde 23 kg ağırlığındaki bir çocuk için pediatrik ilaç dozajları
+- **Jeo-uzamsal analiz** — çift doğrusal veya çift kübik enterpolasyon kullanarak ölçülen noktalar arasındaki koordinatlarda yükseklik tahmini
+
+[İnterpolasyon hesaplayıcımız](/interpolation/) üç yöntemi destekler: doğrusal enterpolasyon (hızlı, eşit aralıklı veriler için iyi), Lagrange polinomu (az noktayla düzgün eğriler) ve doğal kübik spline (düzgün, kararlı enterpolasyon için altın standart).
+
+### Çalışılmış Bir İnterpolasyon Örneği
+
+Bir bakteri kolonisinin büyüme hızını üç zaman noktasında ölçtüğünüzü varsayalım:
+
+| Zaman (saat) | Koloni sayısı (×10³) |
+|---|---|
+| 2 | 4.0 |
+| 6 | 12.0 |
+| 10 | 20.0 |
+
+4 saatteki koloni sayısını istiyorsunuz. 4, 2 ve 6 arasında olduğu için bu enterpolasyondur. (2, 4.0) ve (6, 12.0) arasında doğrusal enterpolasyon kullanarak:
+
+**y = y₁ + (x − x₁)(y₂ − y₁) / (x₂ − x₁) = 4.0 + (4−2)(12.0−4.0) / (6−2) = 4.0 + 4.0 = 8.0**
+
+8.0 × 10³ koloni tahmini makuldür — 4.0 ve 12.0 arasında düzgünce yer alır ve büyüme bu pencerede kabaca doğrusal görünür. Her üç noktayı da içeren doğal bir kübik spline kullansaydınız, eğriliği hesaba katan biraz farklı bir değer elde edebilirdiniz, ancak her iki yöntem de makul bir cevap üretecektir çünkü hedef nokta veriyle çevrilidir.
+
+## Ekstrapolasyon Ne Zaman Kullanılmalı
+
+Ekstrapolasyon, gözlemlenen aralığın ötesinde tahmin yapmanız gerektiğinde gereklidir. Gerçek dünya uygulamaları şunları içerir:
+
+- **Gelir tahmini** — geçmiş verilerden gelecek çeyreğin satışlarını projekte etme
+- **Nüfus modellemesi** — nüfus kayıtlarından gelecekteki nüfusu tahmin etme, genellikle erken aşama büyüme için [üstel ekstrapolasyon](/blog/exponential-growth/) veya olgun popülasyonlar için logaritmik modeller kullanarak
+- **Bilimsel tahmin** — ölçülen aralıkların ötesinde iklim değişkenlerini tahmin etme
+- **Kapasite planlaması** — sunucu trafiğinin mevcut altyapıyı ne zaman aşacağını tahmin etme
+- **İlaç etkinliği** — klinik deneylerde test edilenlerden daha yüksek dozlarda terapötik yanıtı tahmin etme
+- **Ekonomik göstergeler** — politika planlaması için GSYİH, işsizlik veya enflasyonu ileriye yönelik projekte etme
+
+[Ekstrapolasyon hesaplayıcımız](/) beş yöntem sunar: doğrusal, üstel, logaritmik, polinom ve ikinci dereceden. Her biri farklı bir trend desenini yakalar — anahtar, yöntemi verinizin davranışıyla eşleştirmektir. Örneğin, [doğrusal ekstrapolasyon](/blog/linear-extrapolation/) istikrarlı, toplamsal trendler için iyi çalışırken, üstel yöntemler faiz veya viral yayılma gibi bileşik büyüme fenomenlerine uygundur.
+
+### Çalışılmış Bir Ekstrapolasyon Örneği
+
+Aynı bakteri kolonisi verisini kullanarak, koloni sayısını 14 saatte — son ölçümünüzün dört saat ötesinde — tahmin etmek istediğinizi varsayalım. Bu ekstrapolasyondur. Son iki noktaya (6, 12.0) ve (10, 20.0) dayalı doğrusal ekstrapolasyon kullanarak:
+
+**y = 20.0 + (14−10)(20.0−12.0) / (10−6) = 20.0 + 8.0 = 28.0**
+
+Doğrusal yöntem 28.0 × 10³ koloni tahmin eder. Ancak bakteri büyümesi tipik olarak lojistik bir eğri izler — hızlanır, sonra kaynaklar tükendikçe yavaşlar. 14 saatteki gerçek sayı, büyüme yavaşladığı için yalnızca 24.0 × 10³ olabilir veya tamamen platoya ulaşabilir. Doğrusal ekstrapolasyonun bunu hesaba katma yolu yoktur. Üstel bir model 40.0 × 10³ veya daha yüksek tahmin edebilir, ters yönde aşırı tahmin yapabilir.
+
+Tahminler arasındaki bu fark — 24 vs 28 vs 40 — yanıp sönen bir uyarı işaretidir. Farklı makul yöntemler önemli ölçüde farklı ekstrapole edilmiş değerler ürettiğinde, ekstrapolasyon mesafesi çok fazladır veya model yanlış belirlenmiştir.
+
+## Doğruluk Karşılaştırması
+
+| Faktör | İnterpolasyon | Ekstrapolasyon |
+|--------|--------------|---------------|
+| Güven | Yüksek — veriyle sınırlı | Veriden uzaklaştıkça azalır |
+| Hata aralığı | Dar ve öngörülebilir | Geniş ve öngörülemez |
+| Başarısızlık riski | Düşük | Önemli, özellikle veriden uzakta |
+| En iyi kullanım | Boşlukları doldurma | Trendleri tahmin etme |
+| Gerekli veri | En az 2 nokta | En az 2 nokta (daha fazla = daha iyi) |
+| Güven için R² eşiği | Orta düzey R² kabul edilebilir | Yüksek R² gerekli (0,95+) |
+| Aykırı değerlere duyarlılık | Orta (sınırlı etki) | Yüksek (aykırı etkiler büyür) |
+
+Verinizin ötesine ne kadar çok ekstrapolasyon yaparsanız, tahmin o kadar az güvenilir olur. Veri aralığı içinde mükemmel uyan bir doğrusal ekstrapolasyon (R² = 0,99), altta yatan trend değişirse yine de absürt sonuçlar üretebilir — taşıma kapasitesini hesaba katmadan nüfus artışını projekte ettiğinizde veya bir piyasa çöküşü boyunca hisse senedi fiyatlarını tahmin ettiğinizde tam olarak olan budur.
+
+[R² ve güven metriklerini](/blog/r-squared-confidence/) anlamak, yöntem seçimi için gereklidir. Veri aralığı içinde yüksek bir R², güvenilir ekstrapolasyon için gerekli ancak yeterli değildir — size modelin gözlemlenen veriye uyduğunu söyler, modelin varsayımlarının ötesinde geçerli olduğunu değil. Doğru işlevsel formu yakalayan R² = 0,97'lik bir model, yüksek dereceli bir polinomla aşırı uyum sağlayan R² = 0,999'luk bir modelden çok daha iyi ekstrapolasyon yapacaktır.
+
+## Tehlike Bölgesi: Ekstrapolasyon Başarısız Olduğunda
+
+Tarih, ekstrapolasyon felaketleriyle doludur:
+
+- **2008 öncesi konut fiyatları** — doğrusal ekstrapolasyon, döngüsel piyasa dinamiklerini görmezden gelerek fiyatların süresiz olarak yükselmeye devam edeceğini varsaydı
+- **Erken COVID modelleri** — üstel ekstrapolasyon, davranış değişikliklerini, politika müdahalelerini ve bağışıklık eşiklerini hesaba katmadan uzun vadeli yayılımı olduğundan fazla tahmin etti
+- **Teknoloji tahminleri** — mevcut büyüme oranlarını on yıllar ileriye projekte etmek, fiziksel ve ekonomik sınırları görmezden gelir (Moore Yasası, üstel ekstrapolasyonun nihayetinde temel fiziksel kısıtlamalarla karşılaştığı ünlü bir örnektir)
+- **Malthusçu nüfus tahminleri** — 1798'de Thomas Malthus, denklemi dramatik şekilde değiştiren tarım devrimini öngörmeden nüfus artışını doğrusal olarak ekstrapole etti
+- **Roma Kulübü (1972)** — "Büyümenin Sınırları" raporu, kaynak tükenmesini ve kirliliği ileriye ekstrapole ederek 1990'lara kadar çöküş öngördü; teknolojik yenilik ve ikame etkileri bu sonuçların çoğunu geciktirdi
+- **Y2K personel projeksiyonları** — şirketler büyüyen BT işgücü ihtiyaçlarını ileriye ekstrapole etti ve aşırı işe alım yaptı, ancak ardından keskin bir düzeltmeyle karşılaştı
+
+Desen her zaman aynıdır: gözlemlenen aralık içinde geçerli olan bir trend, dışında bozulur. Bu nedenle matematiksel ekstrapolasyona alan bilgisi eşlik etmelidir. Sayılar tek başına kuralların ne zaman değiştiğini bilmez. Bu, bir veri dağılımı üzerinde eğitilen modellerin, dağılım dışı girdilerle karşılaştığında sıklıkla başarısız olduğu [makine öğreniminde ekstrapolasyonun](/blog/extrapolation-machine-learning/) temel bir zorluğudur.
+
+Yararlı bir zihinsel model: **ekstrapolasyon durağanlık varsayar** — verinizi oluşturan sürecin aynı kurallar altında çalışmaya devam ettiğini. Bu varsayım ihlal edildiğinde, en matematiksel olarak titiz ekstrapolasyon bile başarısız olacaktır. Soru asla "ekstrapolasyon yapabilir miyim?" değil, "altta yatan sürecin istikrarlı kalması için nedenim var mı?" dır.
+
+## Doğru Ekstrapolasyon Yöntemini Seçmek
+
+Tüm ekstrapolasyon eşit yaratılmamıştır. Seçtiğiniz yöntem, trendin doğasını yansıtmalıdır:
+
+| Trend davranışı | Önerilen yöntem | Örnek |
+|---|---|---|
+| İstikrarlı, sabit oranlı değişim | Doğrusal | Aylık sabit oranda artan kamu hizmeti maliyetleri |
+| Hızlanan, bileşik büyüme | Üstel | Viral benimseme, bileşik faiz |
+| Yavaşlayan, azalan getiriler | [Logaritmik ekstrapolasyon](/blog/logarithmic-diminishing-returns/) | Artan harcama seviyelerinde pazarlama ROI'si |
+| Karmaşık, çok aşamalı desenler | Polinom | Dönüm noktaları olan mevsimsel gelir |
+| Hafif eğrili düz çizgi | İkinci dereceden | Mermi hareketi, yumuşak ivme |
+
+[Polinom vs doğrusal yöntemler](/blog/polynomial-vs-linear/) arasında seçim yapmak bir ödünleşim içerir: polinom modeller, doğrusal modellerin kaçırdığı eğriliği yakalayabilir, ancak özellikle yüksek derecelerde veri aralığı dışında vahşi salınımlar riski taşırlar. Verinize güzelce uyan 6. dereceden bir polinom, sınırın hemen ötesinde aşırı değerlere sapabilir. Kural olarak, trendi yeterince yakalayan en düşük dereceli modeli kullanın.
+
+## Pratik Bir Karar Çerçevesi
+
+Kendinize şu soruları sorun:
+
+1. **Hedef değerim bilinen veri noktaları arasında mı?** → [İnterpolasyon hesaplayıcısını](/interpolation/) kullanın
+2. **Hedef değerim veri aralığının dışında mı?** → [Ekstrapolasyon hesaplayıcısını](/) kullanın
+3. **Belirli bir değeri tahmin etmek yerine bir değişken ilişkisini modellemem mi gerekiyor?** → [Regresyon hesaplayıcısını](/regression/) kullanın
+4. **Verinin ne kadar ötesini tahmin ediyorum?** → Ne kadar uzak, o kadar dikkatli olmalısınız. Temel kural: güçlü alan gerekçesi olmadan veri aralığının %10–20'sinden fazla ekstrapolasyonlara şüpheyle yaklaşın.
+5. **Altta yatan trend değişebilir mi?** → Evet ise, ekstrapolasyon önemli risk taşır. Bilinen dönüm noktaları, kapasite sınırları veya rejim değişiklikleri olup olmadığını sorgulayın.
+6. **Birden çok yöntem aynı fikirde mi?** → Doğrusal, üstel ve polinom ekstrapolasyon benzer tahminler üretiyorsa, tahmininiz daha sağlamdır. Keskin şekilde ayrışıyorlarsa, ekstrapolasyon mesafeniz çok fazla olabilir.
+7. **R² yeterince yüksek mi?** → İnterpolasyon için R² > 0,80 genellikle kabul edilebilir. Ekstrapolasyon için R² > 0,95 talep etmeli ve yine de alan bilgisiyle doğrulamalısınız.
+
+## İnterpolasyon ve Ekstrapolasyon Yöntemlerini Birleştirme
+
+En güvenilir yaklaşım genellikle her iki yöntemi yapılandırılmış bir iş akışında birlikte kullanmaktır:
+
+1. **Veri aralığınız içinde enterpolasyon yapın** seçtiğiniz yöntemin iyi uyduğunu doğrulamak için. Modeliniz, tutulduklarında bilinen veri noktalarını doğru tahmin edemiyorsa, ekstrapolasyon için güvenilmez.
+2. **R² skorunu kontrol edin** — veri aralığı içinde zayıf uyum, ekstrapolasyonun güvenilmez olacağı anlamına gelir. [R² ve güven metriklerini](/blog/r-squared-confidence/) anlamak, her yönteme ne kadar güven duyacağınızı ölçmenize yardımcı olur.
+3. **Tutumlu ekstrapolasyon yapın** — veri aralığının yalnızca biraz ötesini tahmin edin ve her dışa adımı azalan güvenilirlikte ele alın.
+4. **Birden çok ekstrapolasyon yöntemini karşılaştırın** — doğrusal ve üstel çok farklı tahminler veriyorsa, hiçbiri uzak mesafede güvenilmemelidir. Yöntemler arasındaki yayılma, kendisi bir belirsizlik ölçüsüdür.
+5. **Alan bilgisi uygulayın** — istatistiksel tahminler fiziksel, ekonomik veya mantıksal kısıtlamalara karşı kontrol edilmelidir. Hiçbir model size bir nüfusun çevresinin taşıma kapasitesini aşacağını veya bir hisse senedi fiyatının sonsuza kadar GSYİH'dan hızlı büyüyeceğini söyleyemez.
+6. **Sağlama kontrolü olarak enterpolasyon kullanın** — son veri noktasını tutar, kalan noktalardan ekstrapolasyon yapar ve ekstrapole edilen değeri tutulan gerçekle karşılaştırırsanız, ekstrapolasyon hatasının doğrudan bir tahminini elde edersiniz. **Geriye dönük test** veya **tutma doğrulaması** olarak adlandırılan bu teknik, ekstrapolasyonunuzun güvenilir olup olmadığını değerlendirmenin en pratik yollarından biridir.
+7. **Veri desteklediğinde yöntemleri harmanlayın** — örneğin, azalan getirilerin beklendiği kısa vadede [logaritmik ekstrapolasyon](/blog/logarithmic-diminishing-returns/) kullanın ve uzun vadede doğrusal bir taban modeline geçin. Bu tür bir hibrit yaklaşım genellikle tek bir yöntemden daha iyi performans gösterir.
+
+### Birleşik Yaklaşım Örneği
+
+Son 8 çeyreğe ait üç aylık gelir veriniz olduğunu ve sonraki 2 çeyreği tahmin etmeniz gerektiğini hayal edin. İşte sağlam bir iş akışı:
+
+1. Q8'i ayırın, Q1–Q7'ye bir model uydurun ve Q8'e "ekstrapolasyon" yapın. Tahmini gerçekle karşılaştırın. Bu size 1 çeyrek mesafede ne kadar hata bekleyeceğinizi söyler.
+2. Doğrusal, üstel ve polinom modelleri deneyin. Her üçü de Q8'i gerçeğin %5'i içinde tahmin ediyorsa, Q9 ve Q10'u tahmin etmek için güçlü bir temeliniz var demektir.
+3. Modeller ayrışıyorsa — doğrusal 1,2 milyon $, üstel 1,8 milyon $ tahmin ediyorsa — belirsizliğin büyük olduğunu bilirsiniz. Bir nokta tahmini değil, bir aralık bildirin.
+4. İş bilgisini uygulayın: Q9'da mevsimsel bir düşüş var mı? Q10'da bir ürün lansmanı mı? İstatistiksel tahmini buna göre ayarlayın.
+5. Q9 ve Q10'u tahmin etmeden önce tüm 8 çeyrekte tam modeli yeniden çalıştırın, çünkü artık yöntemi doğrulamış oldunuz.
+
+Bu tür disiplinli, çok yöntemli bir yaklaşım, utanç verici tahmin başarısızlıkları riskini önemli ölçüde azaltır.
+
+## Temel Çıkarımlar
+
+- İnterpolasyon veri noktaları **arasını** tahmin eder; ekstrapolasyon onların **ötesini** tahmin eder
+- İnterpolasyon, gözlemlerle sınırlandığı için doğası gereği daha güvenilirdir
+- Ekstrapolasyon tahmin için gereklidir ancak veri sınırından uzaklaştıkça artan belirsizlik taşır
+- Her zaman R² ve güven metriklerini kontrol edin — ve matematiksel sonuçları alan uzmanlığıyla birleştirin
+- Ekstrapolasyon yöntemi seçimi (doğrusal, üstel, logaritmik, polinom) altta yatan trend davranışıyla eşleşmelidir
+- Birden çok yöntem aynı fikirde olmadığında, tercih ettiğiniz cevabı seçmek yerine yayılmayı bir belirsizlik ölçüsü olarak ele alın
+- Tutma doğrulaması — bilinen bir veri noktasına ekstrapolasyon yapmak — ekstrapolasyon güvenilirliğinin en iyi pratik testidir
+- Aralık içi tahminler için [interpolasyon hesaplayıcımızı](/interpolation/) ve aralık dışı tahminler için [ekstrapolasyon hesaplayıcımızı](/) kullanın
+
+Her iki araç da ücretsiz, özeldir ve tamamen tarayıcınızda çalışır — verileriniz cihazınızdan asla ayrılmaz.
+
+## Sıkça Sorulan Sorular
+
+<details class="faq-item">
+<summary>İnterpolasyon her zaman ekstrapolasyondan daha mı doğrudur?</summary>
+
+Evet, genel olarak. İnterpolasyon her iki taraftaki veriyle sınırlanır, bu da tahmini kısıtlar. Ekstrapolasyon, hiçbir sınırın olmadığı bilinen verinin ötesine uzanır. Ancak, interpolasyon doğruluğu yine de doğru yöntemi seçmeye ve altta yatan deseni yakalamak için yeterli veri noktasına sahip olmaya bağlıdır.
+
+</details>
+
+<details class="faq-item">
+<summary>Verimin kısa mesafeler ötesinde ekstrapolasyon kullanabilir miyim?</summary>
+
+Evet ve kısa mesafeli ekstrapolasyon genellikle oldukça güvenilirdir — özellikle yüksek R² değerleriyle. Anahtar risk çarpanı mesafedir: verinizin ötesine ne kadar uzak, altta yatan trendin değişmiş olma olasılığı o kadar artar. İstatistiksel projeksiyonları her zaman alan bilgisiyle birleştirin.
+
+</details>
+
+<details class="faq-item">
+<summary>Boşluk doldurma vs tahmin için hangi hesaplayıcıyı kullanmalıyım?</summary>
+
+Hedef değeriniz bilinen veri noktaları arasında olduğunda [interpolasyon hesaplayıcısını](/interpolation/) kullanın. Gözlemlenen aralığın ötesinde tahmin yapmanız gerektiğinde [ekstrapolasyon hesaplayıcısını](https://www.extrapolationcalculator.com/) kullanın. Belirli bir noktayı tahmin etmektense değişkenler arasındaki ilişkiyi modellemek istediğinizde [regresyon hesaplayıcısını](/regression/) kullanın.
+
+</details>
+
+<details class="faq-item">
+<summary>En güvenli ekstrapolasyon yöntemi hangisidir?</summary>
+
+Doğrusal ekstrapolasyon genellikle en güvenlidir çünkü verinin şekli hakkında en az varsayımı yapar. Sabit bir değişim oranı projekte eder, ki bu muhafazakardır. [Üstel](/blog/exponential-growth/) veya polinom gibi daha karmaşık yöntemler eğitim verisine daha iyi uyabilir ancak ötesinde dramatik şekilde ayrışabilir.
+
+</details>

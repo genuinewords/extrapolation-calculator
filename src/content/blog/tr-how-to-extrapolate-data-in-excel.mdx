@@ -1,0 +1,438 @@
+---
+title: "Excel'de Veri Nasıl Tahmin Edilir (Adım Adım)"
+description: TREND, FORECAST.LINEAR, eğilim çizgileri ve tahmin sayfalarını kullanarak Excel'de verileri tahmin etmenin 4 kolay yolunu öğrenin. Adım adım örnekler dahildir.
+publishDate: 2026-06-10
+author: Tahmin Hesaplayıcı Ekibi
+category: Eğiticiler
+featuredImage: ""
+---
+
+Excel, veri tahmini için en yaygın kullanılan araçlardan biridir. Üç aylık gelir projeksiyonu yapıyor, gelecek ayın stok ihtiyaçlarını tahmin ediyor veya kullanıcı büyümesini öngörüyor olun, Excel'de bir e-tablosu olan herkesin tahmin yapmasını sağlayan yerleşik işlevler bulunur.
+
+Ancak Excel'de verileri nasıl tahmin edeceğinizi bilmek, durumunuza uygun doğru yöntemi seçmeyi gerektirir. Bu kılavuz, basit formüllerden tek tıklamalı tahmin sayfalarına kadar dört yaklaşımda size yol gösterir, böylece verilerinize ve beceri seviyenize uygun olanı seçebilirsiniz. Kavramın kendisinde yeniyseniz, [tahmin nedir](/blog/what-is-extrapolation/) kılavuzumuzla başlayın.
+
+### Dört Excel Tahmin Yöntemine Bir Bakış
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Dört Excel tahmin yöntemine genel bakış">
+  <rect width="600" height="200" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <g transform="translate(20, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">1</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">TREND</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">Formül</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">çoklu</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">değer</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">Tüm Excel</text>
+    </g>
+    <g transform="translate(165, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">2</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">FORECAST</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">.LINEAR</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">tek</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">değer</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">2016+</text>
+    </g>
+    <g transform="translate(310, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">3</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">Eğilim</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">Çizgisi</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">görsel</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">grafik</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">Tüm Excel</text>
+    </g>
+    <g transform="translate(455, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">4</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">Tahmin</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">Sayfası</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">tek tık</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">pano</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">2016+</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Excel'de veri tahmin etmenin dört yolu: TREND işlevi, FORECAST.LINEAR, grafik eğilim çizgileri ve Tahmin Sayfası — kullanım kolaylığı ve Excel sürüm uyumluluğu açısından yan yana karşılaştırılmıştır.</figcaption>
+</figure>
+
+## Yöntem 1: TREND İşlevini Kullanma
+
+### Ne Yapar
+
+TREND işlevi, doğrusal bir eğilim boyunca tahmin edilen değerleri hesaplar. Bilinen verilerinizi alır, en küçük kareler yöntemini kullanarak bunların içinden düz bir çizgi geçirir ve belirttiğiniz herhangi bir yeni x-değeri için y-değerlerini döndürür.
+
+### Sözdizimi
+
+```
+=TREND(known_y's, known_x's, new_x's)
+```
+
+- **known_y's**: Bilinen bağımlı değerlerin aralığı (ör. satış rakamları)
+- **known_x's**: Bilinen bağımsız değerlerin aralığı (ör. ay numaraları)
+- **new_x's**: Tahmin etmek istediğiniz x-değerleri
+
+### Görsel Genel Bakış
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="TREND işlevi: bilinen veriler, doğrusal bir eğilim çizgisi aracılığıyla tahmin edilen değerlere uzanır">
+  <defs>
+    <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="280" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">TREND İşlevi — Doğrusal Projeksiyon</text>
+    <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <path d="M 40 220 L 560 80" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M 130 205 L 175 180 L 220 158 L 265 138 L 310 115 L 355 95 L 400 80 L 445 65 L 490 50 L 535 38" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <path d="M 400 80 L 445 65 L 490 50 L 535 38 L 535 240 L 400 240 Z" fill="url(#trendFill)"/>
+    <line x1="400" y1="40" x2="400" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="425" y="232" font-size="10" fill="#64748b">tahmin edilen</text>
+    <g fill="#d4af37">
+      <circle cx="130" cy="205" r="4"/>
+      <circle cx="175" cy="180" r="4"/>
+      <circle cx="220" cy="158" r="4"/>
+      <circle cx="265" cy="138" r="4"/>
+      <circle cx="310" cy="115" r="4"/>
+      <circle cx="355" cy="95" r="4"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="400" cy="80" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="445" cy="65" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="490" cy="50" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="535" cy="38" r="5" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="120" y="258" font-size="10" fill="#64748b">M1</text>
+    <text x="165" y="258" font-size="10" fill="#64748b">M2</text>
+    <text x="210" y="258" font-size="10" fill="#64748b">M3</text>
+    <text x="255" y="258" font-size="10" fill="#64748b">M4</text>
+    <text x="300" y="258" font-size="10" fill="#64748b">M5</text>
+    <text x="345" y="258" font-size="10" fill="#64748b">M6</text>
+    <text x="388" y="258" font-size="10" fill="#1e40af" font-weight="600">M7</text>
+    <text x="433" y="258" font-size="10" fill="#1e40af" font-weight="600">M8</text>
+    <text x="478" y="258" font-size="10" fill="#1e40af" font-weight="600">M9</text>
+    <text x="523" y="258" font-size="10" fill="#1e40af" font-weight="600">M10</text>
+    <g transform="translate(0,0)">
+      <circle cx="155" cy="100" r="4" fill="#d4af37"/>
+      <text x="166" y="104" font-size="10">Bilinen veriler (altın)</text>
+      <circle cx="155" cy="118" r="4" fill="#1e40af"/>
+      <text x="166" y="122" font-size="10">Tahmin edilen (mavi)</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Excel TREND işlevi gösterimi: altı aylık bilinen satış verileri (altın noktalar, M1–M6), gelecekteki dört ayı (mavi noktalar, M7–M10) tahmin etmek için ileriye uzanan bir en küçük kareler doğrusal eğilim çizgisiyle eşleştirilir. Kesikli altın çizgi, gözlemlenen aralığın ötesindeki değerleri tahmin etmek için kullanılan temel doğrusal modeli gösterir.</figcaption>
+</figure>
+
+### Adım Adım Örnek
+
+Ocak'tan Haziran'a kadar aylık satış verileriniz olduğunu ve Temmuz ile Ağustos'u tahmin etmek istediğinizi varsayalım:
+
+| Ay | Satışlar |
+|-------|-------|
+| 1 | $10,000 |
+| 2 | $12,000 |
+| 3 | $14,500 |
+| 4 | $16,000 |
+| 5 | $18,500 |
+| 6 | $20,000 |
+
+1. Verilerinizi A sütununa (Ay) ve B sütununa (Satışlar) girin
+2. D2 hücresine şunu girin: `=TREND(B2:B7, A2:A7, 7)` — bu, ay 7'yi tahmin eder
+3. D3 hücresine şunu girin: `=TREND(B2:B7, A2:A7, 8)` — bu, ay 8'i tahmin eder
+
+Excel, 1–6. aylar boyunca doğrusal bir eğilim oluşturur ve ileriye yansıtır. TREND işlevi, ay 7 için yaklaşık $22,143 ve ay 8 için $24,286 döndürür.
+
+TREND, aynı anda birden çok değeri tahmin etmeniz gerektiğinde özellikle kullanışlıdır — yeni x-değerlerinden oluşan bir dizi iletebilir ve tüm tahminleri tek adımda alabilirsiniz.
+
+## Yöntem 2: FORECAST.LINEAR İşlevini Kullanma
+
+### Ne Yapar
+
+FORECAST.LINEAR (Excel 2016 ve sonrasında mevcuttur), mevcut verilere dayanarak belirli bir x-değeri için tek bir y-değeri tahmin eder. TREND ile aynı doğrusal regresyon algoritmasını kullanır, ancak tek nokta tahminleri için tasarlanmıştır.
+
+### Sözdizimi
+
+```
+=FORECAST.LINEAR(x, known_y's, known_x's)
+```
+
+- **x**: Tahmin etmek istediğiniz belirli veri noktası
+- **known_y's**: Bilinen bağımlı değerlerin aralığı
+- **known_x's**: Bilinen bağımsız değerlerin aralığı
+
+### Görsel Genel Bakış
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="FORECAST.LINEAR: tek x girişi, doğrusal bir eğilim çizgisi üzerinde tahmin edilen bir y değeri döndürür">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e40af"/>
+    </marker>
+  </defs>
+  <rect width="600" height="280" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">FORECAST.LINEAR — Tek Nokta Tahmini</text>
+    <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <path d="M 70 220 L 530 50" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M 90 210 L 150 190 L 210 170 L 270 145 L 330 120 L 390 95 L 450 70 L 510 50" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <g fill="#d4af37">
+      <circle cx="90" cy="210" r="4"/>
+      <circle cx="150" cy="190" r="4"/>
+      <circle cx="210" cy="170" r="4"/>
+      <circle cx="270" cy="145" r="4"/>
+      <circle cx="330" cy="120" r="4"/>
+      <circle cx="390" cy="95" r="4"/>
+      <circle cx="450" cy="70" r="4"/>
+      <circle cx="510" cy="50" r="4"/>
+    </g>
+    <line x1="510" y1="50" x2="510" y2="240" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <line x1="40" y1="50" x2="510" y2="50" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="510" cy="50" r="6" fill="#1e40af" stroke="#fff" stroke-width="2"/>
+    <text x="500" y="258" font-size="10" fill="#1e40af" font-weight="600">x = 12</text>
+    <text x="22" y="54" font-size="10" fill="#1e40af" font-weight="600">y ≈ $32,857</text>
+    <g>
+      <rect x="120" y="100" width="180" height="50" rx="6" fill="#fff" stroke="#1e40af" stroke-width="1.5"/>
+      <text x="130" y="120" font-size="10" font-weight="600" fill="#0a0a0a">Hücre formülü</text>
+      <text x="130" y="138" font-size="10" font-family="monospace" fill="#1e40af">=FORECAST.LINEAR(12, B2:B7, A2:A7)</text>
+    </g>
+    <line x1="300" y1="125" x2="505" y2="55" stroke="#1e40af" stroke-width="1.2" marker-end="url(#arrow)"/>
+  </g>
+</svg>
+  <figcaption>Excel FORECAST.LINEAR örneği: tek bir hedef x-değeri 12, bilinen y-aralığı (B2:B7) ve x-aralığı (A2:A7) ile birlikte formüle girilerek yaklaşık $32,857 değerinde tahmin edilen bir y-değeri döndürülür. Altın eğilim çizgisi üzerindeki mavi nokta, projeksiyonun nereye düştüğünü işaretler.</figcaption>
+</figure>
+
+### Adım Adım Örnek
+
+Aynı satış verilerini kullanarak, ay 12 için geliri tahmin edin:
+
+1. Herhangi bir boş hücreye şunu girin: `=FORECAST.LINEAR(12, B2:B7, A2:A7)`
+2. Excel, 1–6. aylar boyunca doğrusal eğilime dayalı olarak ay 12 için projekte edilen satışları döndürür
+
+Sonuç yaklaşık $32,857 olacaktır — ay 1'in değerinin neredeyse iki katı, istikrarlı yukarı yönlü eğilimi yansıtır.
+
+FORECAST.LINEAR, hızlı bir tek değerli tahmin elde etmenin en basit yoludur. Kararlı verilerde [doğrusal tahmin](/blog/linear-extrapolation/) için, genellikle tek bir formül yeterlidir.
+
+## Yöntem 3: Grafikte Eğilim Çizgisi Kullanma
+
+### Ne Yapar
+
+Bir eğilim çizgisi, Excel grafiğinize görsel bir projeksiyon ekler. Eğilim çizgisinin türünü (doğrusal, polinom, üstel) seçebilir ve verilerinizin nereye gittiğini görmek için ileriye doğru uzatabilirsiniz. Tahmini *görebildiğiniz* için bu en sezgisel yöntemdir.
+
+### Görsel Genel Bakış
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Eğilim çizgisi grafiği: veri noktaları ve geleceğe doğru uzanan doğrusal bir eğilim çizgisi">
+  <rect width="600" height="300" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">Eğilim Çizgisi — Grafikte Görsel Tahmin</text>
+    <rect x="40" y="40" width="520" height="220" fill="#fff" stroke="#e5e7eb"/>
+    <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="140" x2="540" y2="140" stroke="#e5e7eb" stroke-dasharray="3 3"/>
+    <line x1="380" y1="60" x2="380" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="200" y="55" font-size="10" fill="#64748b">Geçmiş veriler</text>
+    <text x="420" y="55" font-size="10" fill="#64748b">Tahmin bölgesi</text>
+    <path d="M 80 220 L 130 200 L 180 180 L 230 160 L 280 140 L 330 115 L 380 100 L 430 80 L 480 60 L 530 40" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <g fill="#d4af37">
+      <circle cx="80" cy="220" r="4"/>
+      <circle cx="130" cy="200" r="4"/>
+      <circle cx="180" cy="180" r="4"/>
+      <circle cx="230" cy="160" r="4"/>
+      <circle cx="280" cy="140" r="4"/>
+      <circle cx="330" cy="115" r="4"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="380" cy="100" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="430" cy="80" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="480" cy="60" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="530" cy="40" r="5" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="455" y="280" font-size="11" font-family="monospace" fill="#d4af37" font-weight="600">y = 2,143x + 7,857</text>
+    <text x="510" y="295" font-size="11" font-family="monospace" fill="#0a0a0a" font-weight="600">R² = 0.998</text>
+  </g>
+</svg>
+  <figcaption>Excel grafik eğilim çizgisi: satış serpme grafiğinin üzerine doğrusal bir eğilim çizgisi yerleştirilir ve sonraki dört dönemi (mavi noktalar) tahmin etmek için ileriye doğru uzatılır. Grafik, eğilim çizgisi denklemini (y = 2,143x + 7,857) ve 0,998'lik bir R² değerini görüntüleyerek güvenli tahmini destekleyen mükemmel bir doğrusal uyum olduğunu gösterir.</figcaption>
+</figure>
+
+### Adım Adım Talimatlar
+
+1. Verilerinizi seçin (aylar ve satışlar)
+2. **Ekle → Grafik**'e gidin ve bir Çizgi veya Dağılım grafiği seçin
+3. Seriyi seçmek için grafikteki herhangi bir veri noktasına tıklayın
+4. Sağ tıklayın ve **Eğilim Çizgisi Ekle**'yi seçin
+5. Eğilim Çizgisi Seçenekleri bölmesinde:
+   - **Doğrusal**'ı seçin (verileriniz eğriyse Polinom veya Üstel)
+   - **Tahmin** altında, **İleri**'yi tahmin etmek istediğiniz dönem sayısına ayarlayın (ör. 6 ay)
+   - Uyum kalitesini görmek için **Denklemi grafikte göster** ve **R-kare değerini göster**'i işaretleyin
+
+Eğilim çizgisi, verilerinizin ötesine uzanarak tahmin edilen değerleri görsel olarak gösterir. R² değeri, çizginin ne kadar iyi uyduğunu söyler — yorumlama için [R² puanları](/blog/r-squared-confidence/) kılavuzumuza bakın.
+
+### Bu Yöntemi Ne Zaman Kullanmalı
+
+Eğilim çizgileri, sunumlar veya raporlar için görsel bir tahmine ihtiyacınız olduğunda en iyisidir. Size kesin hücre değerleri vermezler, ancak eğilimi teknik olmayan kitleler için anında anlaşılır hale getirirler.
+
+## Yöntem 4: Excel'in Tahmin Sayfasını Kullanma (Tek Tık)
+
+### Ne Yapar
+
+Tahmin Sayfası özelliği (Excel 2016+), bir grafik, güven aralıkları ve tahmin edilen değerler tablosuyla eksiksiz bir tahmin oluşturur — tümü tek tıkla. Profesyonel görünümlü bir tahmin almanın en hızlı yoludur.
+
+### Görsel Genel Bakış
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Tahmin Sayfası: geçmiş veriler, tahmin çizgisi ve üst/alt güven aralığı bantları ile bir tahmin tablosu içeren tam grafik">
+  <defs>
+    <linearGradient id="ciFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.10"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="320" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">Tahmin Sayfası — Grafik + Güven Aralığı + Tablo</text>
+    <rect x="40" y="40" width="380" height="220" fill="#fff" stroke="#e5e7eb"/>
+    <line x1="60" y1="240" x2="400" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="260" y1="60" x2="260" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <path d="M 70 220 L 100 205 L 130 190 L 160 175 L 190 160 L 220 145 L 250 125 L 280 110 L 310 90 L 340 75 L 370 60" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <path d="M 260 110 L 280 90 L 310 65 L 340 45 L 370 25 L 370 95 L 340 105 L 310 115 L 280 130 L 260 110 Z" fill="url(#ciFill)" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 2"/>
+    <g fill="#d4af37">
+      <circle cx="70" cy="220" r="3.5"/>
+      <circle cx="100" cy="205" r="3.5"/>
+      <circle cx="130" cy="190" r="3.5"/>
+      <circle cx="160" cy="175" r="3.5"/>
+      <circle cx="190" cy="160" r="3.5"/>
+      <circle cx="220" cy="145" r="3.5"/>
+      <circle cx="250" cy="125" r="3.5"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="280" cy="110" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="310" cy="90" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="340" cy="75" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="370" cy="60" r="4" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="135" y="55" font-size="10" fill="#64748b">Geçmiş</text>
+    <text x="285" y="55" font-size="10" fill="#1e40af" font-weight="600">Tahmin</text>
+    <rect x="60" y="265" width="350" height="14" fill="#94a3b8" fill-opacity="0.3"/>
+    <text x="66" y="275" font-size="9" fill="#475569">%95 güven aralığı</text>
+    <g transform="translate(440, 50)">
+      <rect x="0" y="0" width="140" height="210" fill="#fff" stroke="#e5e7eb" rx="4"/>
+      <text x="10" y="18" font-size="10" font-weight="600" fill="#0a0a0a">Tahmin tablosu</text>
+      <line x1="10" y1="25" x2="130" y2="25" stroke="#e5e7eb"/>
+      <text x="10" y="42" font-size="9" fill="#64748b">Dönem</text>
+      <text x="80" y="42" font-size="9" fill="#64748b">Değer</text>
+      <line x1="10" y1="48" x2="130" y2="48" stroke="#e5e7eb"/>
+      <text x="10" y="62" font-size="9" fill="#1e40af">M7</text>
+      <text x="80" y="62" font-size="9" fill="#1e40af">$22,143</text>
+      <text x="10" y="78" font-size="9" fill="#1e40af">M8</text>
+      <text x="80" y="78" font-size="9" fill="#1e40af">$24,286</text>
+      <text x="10" y="94" font-size="9" fill="#1e40af">M9</text>
+      <text x="80" y="94" font-size="9" fill="#1e40af">$26,429</text>
+      <text x="10" y="110" font-size="9" fill="#1e40af">M10</text>
+      <text x="80" y="110" font-size="9" fill="#1e40af">$28,571</text>
+      <text x="10" y="126" font-size="9" fill="#1e40af">M11</text>
+      <text x="80" y="126" font-size="9" fill="#1e40af">$30,714</text>
+      <text x="10" y="142" font-size="9" fill="#1e40af">M12</text>
+      <text x="80" y="142" font-size="9" fill="#1e40af">$32,857</text>
+      <line x1="10" y1="152" x2="130" y2="152" stroke="#e5e7eb"/>
+      <text x="10" y="168" font-size="9" fill="#64748b" font-style="italic">CI: ±$2,400</text>
+      <text x="10" y="184" font-size="9" fill="#64748b" font-style="italic">%95 seviye</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>Excel Tahmin Sayfası: geçmiş grafiği (altın çizgi, M1–M7), %95 güven aralığı bandı (gri gölgeli alan) ile tahmin devamını (mavi çizgi, M8–M11) ve her gelecek dönem için tahmin edilen değerleri listeleyen bir tahmin tablosunu birleştiren tek tıklamalı bir panodur. Bu görünüm, okuyucuların hem sayılara hem de tahmin belirsizliğinin bir bakışta görselleştirilmesine ihtiyaç duyduğu raporlar için idealdir.</figcaption>
+</figure>
+
+### Adım Adım Talimatlar
+
+1. Veri aralığınızı seçin (tarihler ve değerler dahil)
+2. **Veri** sekmesine gidin ve **Tahmin Sayfası**'na tıklayın
+3. Tahmin Çalışma Sayfası Oluştur iletişim kutusunda:
+   - **Tahmin Bitiş** tarihini ayarlayın
+   - Gerekirse güven aralığını ayarlayın (varsayılan %95'tir)
+   - Mevsimsellik algılamayı dahil edip etmeyeceğinizi seçin
+4. **Oluştur**'a tıklayın
+
+Excel, geçmiş verileri, tahmin edilen değerleri ve güven sınırlarını gösteren bir grafikle yeni bir sayfa oluşturur. Ayrıca, tahmin edilen her değer ve güven aralığıyla birlikte bir tablo oluşturur.
+
+### Bu Yöntemi Ne Zaman Kullanmalı
+
+Tahmin Sayfası, hem sayılara hem de cilalı bir görselleştirmeye ihtiyaç duyduğunuz iş raporları için idealdir. Daha basit yöntemlerin yapamadığı mevsimselliği otomatik olarak işler. Tekrarlayan mevsimsel desenlere sahip veriler için (ör. her Aralık'ta zirve yapan perakende satışları), bu en iyi Excel seçeneğidir.
+
+## Karşılaştırma Tablosu: Hangi Yöntemi Kullanmalısınız?
+
+| Yöntem | En İyi Olduğu Durum | Excel Sürümü | Kullanım Kolaylığı |
+|--------|----------|---------------|-------------|
+| TREND | Birden çok veri noktası | Tüm sürümler | Orta |
+| FORECAST.LINEAR | Hızlı tek değer | 2016+ | Kolay |
+| Eğilim Çizgisi | Görsel tahmin | Tüm sürümler | Kolay |
+| Tahmin Sayfası | Mevsimsellik ile gelişmiş tahmin | 2016+ | En kolay |
+
+Her yöntem varsayılan olarak doğrusal bir ilişki varsayar, ancak eğilim çizgileri ve Tahmin Sayfası diğer desenleri destekler. Doğrusal ve eğrisel yaklaşımları karşılaştırmak için [polinom ve doğrusal tahmin](/blog/polynomial-extrapolation-vs-linear/) kılavuzumuza bakın.
+
+## İpuçları ve En İyi Uygulamalar
+
+- **Önce aykırı değerleri kontrol edin** — tek bir anormal veri noktası eğilim çizgisini gerçeklikten uzaklaştırabilir
+- **Yeterli geçmiş veri kullanın** — anlamlı bir eğilim için en az 5–6 veri noktası; bundan azı tahmin etmekten ibarettir
+- **Uzatmadan önce eğilimi doğrulayın** — R²'niz 0,7'nin altındaysa, doğrusal model güvenilir tahmin için yeterince iyi uymayabilir
+- **Doğrusal eğilimler kararlı veriler için en iyisidir** — büyümeniz hızlanıyor veya yavaşlıyorsa, polinom veya [üstel tahmin](/blog/exponential-growth/) yöntemlerini düşünün
+- **Çok ileriye tahmin yapmayın** — verilerinizden ne kadar uzaklaşırsanız, herhangi bir tahmin o kadar az güvenilir olur
+
+## Excel Tahmininin Sınırlamaları
+
+Excel'in tahmin araçları kullanışlıdır ancak gerçek kısıtlamaları vardır:
+
+- **Varsayılan olarak doğrusal**: TREND ve FORECAST.LINEAR düz bir çizgi ilişkisi varsayar. Verileriniz bir eğri izliyorsa, bu işlevler sizi yanıltacaktır
+- **Otomatik model seçimi yok**: Excel, yöntemleri karşılaştırmaz veya hangi eğilim türünün en iyi uyduğunu söylemez. R²'yi kendiniz kontrol etmelisiniz
+- **Aşırı güven riski**: Tahmin Sayfası'nın güven aralıkları kesin görünür, ancak geleceğin geçmişe benzeyeceği varsayımına dayanırlar — piyasa değişimleri veya aksamalar sırasında çöken tam da bu varsayımdır
+
+Açıkça eğri olan veriler için, [enterpolasyon hesaplayıcısı](/interpolation/) ve özel tahmin araçları, Excel'in yerleşik doğrusal varsayılanlarından daha fazla yöntem seçeneği sağlar.
+
+## Özel Bir Hesaplayıcı Ne Zaman Kullanılmalı
+
+Excel, e-tablolarla çalışmak için harikadır, ancak birden çok yöntem seçeneğiyle hızlı ve doğru tahmine ihtiyacınız olduğunda, özel bir araç zaman kazandırır. [Tahmin hesaplayıcısı](https://www.extrapolationcalculator.com/) beş yöntem sunar — doğrusal, üstel, logaritmik, polinom ve ikinci dereceden — böylece sonuçları yan yana karşılaştırabilir ve en iyi uyumu seçebilirsiniz.
+
+Yazılacak formül yok, grafik kurulumu yok, hangi eğilim çizgisi türünü kullanacağınızı tahmin etme yok. Verilerinizi girin, bir yöntem seçin ve projeksiyonunuzu anında alın. Değişkenler arasındaki temel ilişkiyi modellemek için [regresyon hesaplayıcısı](/regression/) ayrıntılı regresyon analizi sağlar.
+
+## Sonuç
+
+Excel'de dört yöntem kullanarak verileri tahmin edebilirsiniz: çok noktalı tahminler için TREND işlevi, hızlı tek değerler için FORECAST.LINEAR, görsel tahminler için eğilim çizgileri ve mevsimsellik ile tek tıklamalı raporlar için Tahmin Sayfası. Her birinin, verilerinize ve tahminden ihtiyacınız olana bağlı olarak yeri vardır.
+
+Beş farklı tahmin yöntemiyle daha hızlı sonuçlar için — ve formül hata ayıklaması yapmadan — [ücretsiz tahmin hesaplayıcısını](https://www.extrapolationcalculator.com/) deneyin.
+
+## Sıkça Sorulan Sorular
+
+<details class="faq-item">
+<summary>Excel verileri tahmin edebilir mi?</summary>
+
+Evet. Excel, tahmin için birkaç yerleşik araç sunar: TREND işlevi, FORECAST.LINEAR işlevi, grafik eğilim çizgileri ve Tahmin Sayfası özelliği. Tümü varsayılan olarak doğrusal regresyon kullanır, ancak eğilim çizgileri ve Tahmin Sayfası diğer desenleri destekler.
+
+</details>
+
+<details class="faq-item">
+<summary>Excel'de TREND işlevi nedir?</summary>
+
+TREND, bilinen verilerinize dayanarak doğrusal bir eğilim boyunca tahmin edilen y-değerlerini hesaplar. Sözdizimi `=TREND(known_y's, known_x's, new_x's)` şeklindedir. En küçük kareler yöntemini kullanarak verilerinizden düz bir çizgi geçirir ve belirttiğiniz yeni x-değerleri için tahmin edilen değerleri döndürür.
+
+</details>
+
+<details class="faq-item">
+<summary>Excel'de bir eğilim çizgisini nasıl uzatırım?</summary>
+
+Bir veri noktasına sağ tıklayıp "Eğilim Çizgisi Ekle"yi seçerek grafiğinize bir eğilim çizgisi ekleyin. Eğilim Çizgisi Seçenekleri'nde, "İleri" tahmin alanını verilerinizin ötesine yansıtmak istediğiniz dönem sayısına ayarlayın. Eğilim çizgisi görsel olarak gelecek aralığa doğru uzanacaktır.
+
+</details>
+
+<details class="faq-item">
+<summary>FORECAST.LINEAR doğru mudur?</summary>
+
+FORECAST.LINEAR, gerçek bir doğrusal eğilim izleyen veriler için doğrudur. Tüm doğrusal yöntemler gibi, temel desen doğrusal olmadığında veya gözlemlenen veri aralığının çok ötesine yansıttığınızda güvenilmez hale gelir. Tahmine güvenmeden önce uyum kalitesini değerlendirmek için her zaman R² değerini kontrol edin.
+
+</details>

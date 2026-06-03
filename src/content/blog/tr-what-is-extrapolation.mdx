@@ -1,0 +1,196 @@
+---
+title: "Ekstrapolasyon Nedir? Tanım, Formül ve Örnekler"
+description: Ekstrapolasyonun ne olduğunu, formülün nasıl çalıştığını öğrenin ve gerçek hayattan örnekler görün. Pratik ipuçları ve ücretsiz bir hesaplayıcı ile yeni başlayanlar için rehber.
+publishDate: 2026-06-03
+author: Ekstrapolasyon Hesaplayıcı Ekibi
+category: Temeller
+featuredImage: ""
+---
+
+## Giriş
+
+Yarın şemsiyeye ihtiyacınız olacak mı? Şirketiniz gelecek çeyrekte gelir hedefine ulaşacak mı? Küresel nüfus 2050'ye kadar 10 milyara ulaşacak mı? Bunlar, ekstrapolasyonun yanıtlamaya yardımcı olduğu türden sorulardır. **Ekstrapolasyon nedir** diye hiç merak ettiyseniz, kavram şaşırtıcı derecede basittir: ekstrapolasyon, gözlemlenen verilerinizin aralığının ötesinde bilinen bir deseni veya eğilimi genişleterek bilinmeyen değerleri tahmin etme yöntemidir. Bu makalede, ekstrapolasyon tanımını ayrıntılı olarak inceleyecek, gerçek sayılar kullanarak formülü adım adım gösterecek, ana ekstrapolasyon türlerini keşfedecek ve günlük yaşamdan pratik örneklere bakacağız. İster öğrenci, ister veri analisti olun, ister sadece meraklı olun, bu rehber size ekstrapolasyonun nasıl çalıştığı ve ne zaman sorumlu bir şekilde kullanılacağı konusunda sağlam bir anlayış kazandıracaktır.
+
+## Ekstrapolasyon Tanımı
+
+Resmi **ekstrapolasyon tanımı**, mevcut eğilimi yansıtarak bilinen veri noktalarının aralığı dışında bir değeri tahmin etme veya öngörme sürecidir. Basit bir ifadeyle, zaten sahip olduğunuz verilere bakarsınız, izledikleri deseni belirlersiniz ve ardından bu deseni ileriye — veya geriye — doğru, ölçümlerinizin olmadığı bölgelere genişletirsiniz. Anahtar kelime "ötesi"dir. Ekstrapolasyon her zaman gözlemlediğiniz verilerin ötesine geçer; bu da onu, mevcut veri noktaları arasındaki boşlukları dolduran ilgili bir teknik olan enterpolasyondan ayırır. **Ekstrapolasyon anlamı** en kolay bir benzetme yoluyla anlaşılır: son on dakikadır saatte 60 mil hızla kuzeye giden bir araba gördüyseniz, on dakika sonra hâlâ saatte yaklaşık 60 mil hızla kuzeye gidiyor olacağını makul bir şekilde tahmin edebilirsiniz. Bilinen bir deseni geleceğe genişletiyorsunuz — işte bu ekstrapolasyondur.
+
+## Ekstrapolasyon Formülü
+
+En yaygın kullanılan **ekstrapolasyon formülü**, doğrusal ekstrapolasyon formülüdür. Şu şekilde ifade edilir:
+
+**y = y₁ + (x − x₁) × (y₂ − y₁) / (x₂ − x₁)**
+
+Her değişkenin temsil ettiği şey:
+
+- **y** — tahmin etmek istediğiniz bilinmeyen değer
+- **x** — tahmin yaptığınız girdi değeri
+- **x₁, y₁** — ilk bilinen veri noktanızın koordinatları
+- **x₂, y₂** — ikinci bilinen veri noktanızın koordinatları
+
+Formül, iki bilinen nokta arasındaki değişim oranını hesaplar ve ardından aynı oranı uygulayarak çizgi boyunca farklı bir noktada yeni bir değer yansıtır. Hızlı bir örnek üzerinden gidelim. Satışlarınızın 1. ayda 10.000 $ ve 4. ayda 16.000 $ olduğunu varsayalım. 7. ay için satışları tahmin etmek istiyorsunuz.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Doğrusal ekstrapolasyon formülü: bilinen veri noktaları gelecekteki bir değeri tahmin etmek için uzanan bir çizgiyle bağlanmıştır">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Doğrusal Ekstrapolasyon: Bilinen Bir Eğilimi Genişletme</text>
+      <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <text x="22" y="62" font-size="10" fill="#64748b">$22K</text>
+      <text x="22" y="132" font-size="10" fill="#64748b">$16K</text>
+      <text x="22" y="202" font-size="10" fill="#64748b">$10K</text>
+      <line x1="40" y1="200" x2="40" y2="200" stroke="none"/>
+      <line x1="40" y1="200" x2="200" y2="200" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <line x1="200" y1="40" x2="200" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <line x1="460" y1="40" x2="460" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <path d="M 80 200 L 200 130 L 460 60" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+      <g fill="#d4af37">
+        <circle cx="80" cy="200" r="5" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="200" cy="130" r="5" stroke="#fff" stroke-width="1.5"/>
+      </g>
+      <g fill="#1e40af">
+        <circle cx="460" cy="60" r="6" stroke="#fff" stroke-width="2"/>
+      </g>
+      <text x="65" y="220" font-size="10" font-weight="600" fill="#0a0a0a">A1</text>
+      <text x="80" y="186" font-size="9" fill="#64748b">$10.000</text>
+      <text x="180" y="120" font-size="9" fill="#64748b">$16.000</text>
+      <text x="180" y="150" font-size="10" font-weight="600" fill="#0a0a0a">A4</text>
+      <text x="440" y="50" font-size="9" fill="#1e40af" font-weight="600">$22.000</text>
+      <text x="440" y="80" font-size="10" font-weight="600" fill="#1e40af">A7</text>
+      <text x="240" y="255" font-size="10" fill="#64748b" font-style="italic">enterpolasyon bölgesi (verilerle sınırlı)</text>
+      <text x="380" y="255" font-size="10" fill="#1e40af" font-weight="600" font-style="italic">ekstrapolasyon bölgesi (verilerin ötesinde)</text>
+    </g>
+  </svg>
+  <figcaption>Doğrusal ekstrapolasyon gösterimi: iki bilinen veri noktası (A1 = $10.000 ve A4 = $16.000) düz bir çizgiyle bağlanmıştır. Aynı eğim daha sonra gözlemlenen aralığın ötesine uzatılarak A7'de (yaklaşık $22.000) gelecekteki bir değer yansıtılır. Sağdaki gölgeli alan ekstrapolasyon bölgesini işaretler — gözlemlenmiş verinin olmadığı, tahminlerin daha fazla belirsizlik taşıdığı bölge.</figcaption>
+</figure>
+
+Formülü kullanarak: **y = 10000 + (7 − 1) × (16000 − 10000) / (4 − 1)**
+
+Adım adım: **y = 10000 + 6 × 6000 / 3**
+
+**y = 10000 + 12000 = 22000**
+
+7. ay için tahmini satışlarınız 22.000 $ olacaktır. Bu yöntem hakkında daha fazla bilgiyi [doğrusal ekstrapolasyon rehberimizde](/blog/linear-extrapolation/) okuyabilirsiniz.
+
+## Ekstrapolasyon Türleri
+
+### Doğrusal Ekstrapolasyon
+
+Doğrusal ekstrapolasyon en yaygın ve basit türdür. Değişkenleriniz arasındaki ilişkinin düz bir çizgi izlediğini varsayar. Bu, verileriniz tutarlı bir değişim oranı gösterdiğinde iyi çalışır. Örneğin, bir fabrika her gün 500 birim üretiyorsa, doğrusal ekstrapolasyon kullanarak bir haftada 3.500 birim üreteceğini güvenle tahmin edebilirsiniz.
+
+### Polinom Ekstrapolasyonu
+
+Polinom ekstrapolasyonu, düz bir çizgi yerine verilerinize eğri bir çizgi uydurur. Bu, eğiliminiz hızlandığında veya yavaşladığında kullanışlıdır. Örneğin, bir arabanın yakıt tüketimi yüksek hızlarda daha hızlı artıyorsa, bir polinom eğrisi bu doğrusal olmayan deseni düz bir çizgiden daha doğru yakalayacaktır. [Polinom ekstrapolasyonu](/blog/polynomial-extrapolation-vs-linear/) rehberimizde daha fazla bilgi edinin.
+
+### Üstel Ekstrapolasyon
+
+Üstel ekstrapolasyon, veriler sürekli artan bir oranda büyüdüğünde kullanılır. Bu, her yeni değerin eklenmek yerine çarpıldığı viral içerik, bileşik faiz veya pandemileri içeren senaryolarda yaygındır. Bir sosyal medya gönderisi ilk gün 100, ikinci gün 200 ve üçüncü gün 400 paylaşım alıyorsa, üstel bir model bu hızlı büyümeyi ileriye yansıtacaktır. Daha derinlemesine bir inceleme için [üstel ekstrapolasyon](/blog/exponential-growth/) makalemize bakın.
+
+### Dört Tür Görselleştirilmiş
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Dört ekstrapolasyon türünün karşılaştırması: doğrusal, polinom, üstel ve logaritmik">
+    <rect width="600" height="320" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="10" fill="#374151">
+      <g transform="translate(30, 30)">
+        <rect x="0" y="0" width="260" height="240" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Doğrusal & Polinom</text>
+        <line x1="30" y1="210" x2="240" y2="210" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="30" x2="30" y2="210" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 50 180 L 100 150 L 150 120 L 200 90" stroke="#d4af37" stroke-width="2" fill="none"/>
+        <path d="M 50 180 L 100 145 L 150 105 L 200 55" stroke="#1e40af" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+        <text x="50" y="170" font-size="9" fill="#d4af37" font-weight="600">Doğrusal</text>
+        <text x="200" y="50" font-size="9" fill="#1e40af" font-weight="600">Polinom</text>
+      </g>
+      <g transform="translate(310, 30)">
+        <rect x="0" y="0" width="260" height="240" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Üstel & Logaritmik</text>
+        <line x1="30" y1="210" x2="240" y2="210" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="30" x2="30" y2="210" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 50 195 L 90 175 L 130 150 L 170 110 L 200 60" stroke="#d4af37" stroke-width="2" fill="none"/>
+        <path d="M 50 195 L 100 105 L 150 75 L 200 55" stroke="#1e40af" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+        <text x="50" y="185" font-size="9" fill="#1e40af" font-weight="600">Logaritmik</text>
+        <text x="200" y="50" font-size="9" fill="#d4af37" font-weight="600">Üstel</text>
+      </g>
+      <text x="300" y="295" text-anchor="middle" font-size="10" fill="#64748b" font-style="italic">Altın = taban çizgisi, Mavi = alternatif şekil</text>
+    </g>
+  </svg>
+  <figcaption>Dört ana ekstrapolasyon türü yan yana karşılaştırılmıştır. Doğrusal ve polinom yöntemleri verilerin içinden düz veya eğri çizgiler geçirir; üstel modeller hızlanan çarpımsal büyümeyi (eğri dikleşir) yakalar; logaritmik modeller yavaşlayan büyümeyi (eğri düzleşir) yakalar. Doğru türü seçmek, verilerinizi oluşturan temel mekanizmaya bağlıdır.</figcaption>
+</figure>
+
+## Gerçek Hayattan Ekstrapolasyon Örnekleri
+
+Ekstrapolasyon beklediğinizden daha fazla yerde karşımıza çıkar. İşte bazı tanıdık **gerçek hayatta ekstrapolasyon** örnekleri:
+
+- **Hava durumu tahmini** — Meteorologlar, günler ilerideki sıcaklıkları, yağış miktarlarını ve fırtına yollarını tahmin etmek için mevcut atmosferik okumaları ve tarihsel desenleri kullanır.
+- **Borsa tahminleri** — Analistler, bir hisse senedinin nereye gidebileceğini tahmin etmek için fiyat trendlerini ve işlem hacimlerini genişletir, ancak oynaklık bunu özellikle riskli kılar.
+- **Nüfus artışı** — Hükümetler, doğum ve göç oranlarını genişleterek gelecekteki nüfus rakamlarını yansıtır; bu da altyapı planlaması ve bütçelemeyi bilgilendirir.
+- **Satış tahmini** — İşletmeler, önceki çeyreklerdeki eğilimi sürdürerek gelecek çeyreğin gelirini tahmin eder; bu, **istatistikte ekstrapolasyonun** yaygın bir uygulamasıdır.
+- **Bilimsel araştırma** — İklim modelleri, on yıllar ilerideki küresel ısınma senaryolarını tahmin etmek için mevcut sıcaklık ve emisyon verilerini genişletir.
+
+Bunların her biri aynı temel fikre dayanır: bildiklerinizi alın ve deseni ileriye doğru genişletin. İlgili bir teknikle daha derin bir karşılaştırma için, [enterpolasyon vs ekstrapolasyon](/blog/interpolation-vs-extrapolation/) makalemizi okuyun.
+
+## Ekstrapolasyon Ne Zaman Kullanılır
+
+Ekstrapolasyon, üç koşul karşılandığında en iyi şekilde çalışır. Birincisi, verilerinizdeki eğilim istikrarlı ve tutarlı olmalıdır — ani sıçramalar olmadan düz veya tahmin edilebilir bir eğri. İkincisi, güncel verilerle çalışmalısınız, çünkü daha eski desenler artık mevcut koşulları yansıtmayabilir. Üçüncüsü, bilinen verilerinizin yalnızca kısa bir mesafe ötesini yansıtmalısınız. Tahmininiz son gözlem noktanıza ne kadar yakınsa, o kadar güvenilir olacaktır. Klasik bir **doğrusal ekstrapolasyon örneği**, kullanımın istikrarlı olduğu son üç aya dayanarak gelecek ayın fatura tahminini yapmak olabilir. Verilerin değişken olduğu veya temel sistemin değiştiği durumlarda, ekstrapolasyonu diğer tahmin yöntemleriyle birleştirmelisiniz. Ayrıca, ileriye yansıtmadan önce [R² skoru](/blog/r-squared-confidence/) kullanarak eğiliminizin güvenilirliğini kontrol edebilirsiniz.
+
+## Ekstrapolasyonun Sınırlamaları
+
+Ekstrapolasyon güçlüdür, ancak önemli risklerle birlikte gelir. En büyük tehlike, eğilimlerin her zaman devam etmemesidir. Yılda yüzde 20 büyüyen bir işletme, pazar sınırına ulaşabilir, yeni rekabetle karşılaşabilir veya büyümeyi bir gecede durduracak bir düzenleyici değişiklikle karşılaşabilir. Verilerinizin ötesinde ne kadar uzağa ekstrapolasyon yaparsanız, tahmin o kadar riskli hale gelir — altı ay süren bir desen, on ikinci ayda tamamen çökebilir. Finansal krizler veya doğal afetler gibi kara kuğu olayları, en dikkatle yansıtılmış eğilimi bile bir anda raydan çıkarabilir. Bu nedenle ekstrapolasyon her zaman bir karara girdi olarak ele alınmalı, nihai yanıt olarak değil. Dikkatli yargı, alan bilgisi ve ideal olarak diğer tahmin yöntemlerine karşı bir gerçeklik kontrolü gerektirir. Ekstrapolasyonun karmaşık sistemlerde nasıl davrandığı hakkında daha fazla bilgi için, [makine öğreniminde ekstrapolasyon](/blog/extrapolation-machine-learning/) makalemize bakın.
+
+## Ekstrapolasyon Nasıl Hesaplanır (Adım Adım)
+
+Tam bir örnek üzerinde çalışalım. Düzenli aralıklarla alınmış aşağıdaki sıcaklık okumalarına sahip olduğunuzu hayal edin:
+
+| Zaman (saat) | Sıcaklık (°F) |
+|---|---|
+| 2 | 68 |
+| 6 | 80 |
+
+10. saatteki sıcaklığı tahmin etmek istiyorsunuz. İşte adımlar:
+
+1. Bilinen veri noktalarınızı belirleyin: (x₁, y₁) = (2, 68) ve (x₂, y₂) = (6, 80).
+2. Hedef girdinizi belirleyin: x = 10.
+3. Değişim oranını hesaplayın: **(y₂ − y₁) / (x₂ − x₁) = (80 − 68) / (6 − 2) = 12 / 4 = 3** derece/saat.
+4. Formülü uygulayın: **y = y₁ + (x − x₁) × oran = 68 + (10 − 2) × 3 = 68 + 24 = 92**.
+
+10. saatteki ekstrapolasyon sıcaklığınız 92°F'dir. Bu noktanın her iki bilinen ölçümün de ötesine düştüğüne dikkat edin; bu, onu bir [enterpolasyon hesaplayıcısı](/interpolation/) kullanmaktan ziyade ekstrapolasyon yapar.
+
+## Bir Ekstrapolasyon Hesaplayıcısı Kullanma
+
+Matematiği elle yapmak eğiticidir, ancak özellikle daha büyük veri kümeleri veya birden çok veri noktasıyla çalışırken yavaş ve hataya açık olabilir. İşte bu noktada [ekstrapolasyon hesaplayıcımız](https://www.extrapolationcalculator.com/) devreye girer. Elektronik tablo tabanlı bir yaklaşım için, [Excel'de veri nasıl ekstrapole edilir](/blog/how-to-extrapolate-data-in-excel/) eğitimimiz, çalışma kitabınızda doğrudan eğilimleri nasıl yansıtacağınızı gösterir. Değişkenler arasındaki ilişkiyi modellemek için [regresyon hesaplayıcısı](/regression/), regresyon modellerini uydurmanıza ve değerlendirmenize yardımcı olur. Bilinen x ve y değerlerinizi girin, tahmin etmek istediğiniz hedef noktayı belirtin; hesaplayıcı gerisini anında halleder. Ücretsizdir, doğrudur ve sizi manuel aritmetik hatalardan kurtarır.
+
+## Sonuç
+
+Ekstrapolasyon, bilinen eğilimleri bilinmeyen bölgelere yansıtmanıza olanak tanıyan güçlü bir tahmin aracıdır. Verileriniz istikrarlı bir desen izlediğinde ve kısa mesafeli tahminler yaptığınızda, dikkate değer ölçüde doğru olabilir. Sadece sınırlamalarını unutmayın — eğilimler kırılabilir ve verilerinizin ötesine ne kadar uzanırsanız, o kadar dikkatli olmalısınız. İster gelecekteki satışları tahmin edin, ister sıcaklıkları yansıtın, ister nüfus artışını modelleyin, ekstrapolasyonu anlamak size pratik bir avantaj sağlar. Kendi verilerinizi yansıtmak için [ücretsiz ekstrapolasyon hesaplayıcısını](https://www.extrapolationcalculator.com/) deneyin.
+
+## SSS
+
+<details class="faq-item">
+<summary>Basit terimlerle ekstrapolasyon nedir?</summary>
+
+Ekstrapolasyon, mevcut eğilimi genişleterek bilinen verilerinizin ötesinde bir değeri tahmin etme sürecidir. Bir şeyin nasıl değiştiğini biliyorsanız, gelecekte veya ölçülmemiş bölgede ne olacağını tahmin etmek için bu deseni kullanırsınız.
+
+</details>
+
+<details class="faq-item">
+<summary>Ekstrapolasyon formülü nedir?</summary>
+
+Standart doğrusal ekstrapolasyon formülü **y = y₁ + (x − x₁) × (y₂ − y₁) / (x₂ − x₁)** şeklindedir. İki bilinen veri noktasını kullanarak değişim oranını hesaplar ve ardından bu oranı yeni bir noktada değer yansıtmak için uygular.
+
+</details>
+
+<details class="faq-item">
+<summary>Ekstrapolasyon ve tahmin arasındaki fark nedir?</summary>
+
+Ekstrapolasyon, bilinen verilerden matematiksel bir eğilimi genişletmeye dayanan belirli bir tahmin türüdür. Tahmin, uzman görüşü, nitel analiz veya herhangi bir öngörü yöntemini içerebilen daha geniş bir terimdir — yalnızca eğilim genişletme değil.
+
+</details>
+
+<details class="faq-item">
+<summary>Ekstrapolasyon gerçek hayatta nerede kullanılır?</summary>
+
+Ekstrapolasyon, hava durumu tahmini, borsa analizi, nüfus projeksiyonları, satış tahmini ve bilimsel modellemede kullanılır. Geçmiş verilerden gelecekteki değerleri tahmin etmesi gereken her alan, bir tür ekstrapolasyona dayanır.
+
+</details>

@@ -1,0 +1,230 @@
+---
+title: "Interpolation vs Extrapolation : Quand Utiliser Chaque Méthode"
+description: Un guide clair des différences clés entre l'interpolation et l'extrapolation, quand chaque méthode est appropriée et comment éviter les pièges courants dans vos prédictions.
+publishDate: 2026-05-18
+author: Équipe de la Calculatrice d'Extrapolation
+category: Fondamentaux
+featuredImage: ""
+---
+
+L'interpolation et l'extrapolation sont les deux faces d'une même médaille — toutes deux estiment des valeurs inconnues à partir de points de données connus, mais elles opèrent dans des territoires fondamentalement différents. L'interpolation comble les lacunes *entre* les observations ; l'extrapolation s'aventure *au-delà* d'elles. Choisir la mauvaise peut transformer une estimation fiable en une supposition hasardeuse. Ce guide explique exactement comment chaque méthode fonctionne, quand les utiliser et comment éviter les erreurs de prédiction les plus courantes.
+
+## La Différence Fondamentale
+
+**L'interpolation** estime des valeurs dans la plage de vos données existantes. Si vous connaissez la température à 14h (72°F) et à 16h (78°F), interpoler la température à 15h vous donne une estimation limitée et de haute confiance — environ 75°F en utilisant l'interpolation linéaire. Vous savez que la réponse doit se situer entre 72 et 78, car les données des deux côtés contraignent le résultat.
+
+**L'extrapolation** estime des valeurs en dehors de la plage de vos données. Utiliser ces mêmes relevés de température pour prédire la température à minuit est de l'[extrapolation](/blog/what-is-extrapolation/) — vous prolongez la tendance au-delà de la fenêtre observée, où les conditions peuvent changer radicalement. La température à minuit pourrait facilement être de 55°F ou 40°F, et non les 48°F qu'une projection linéaire naïve suggérerait, car les températures suivent des cycles diurnes que votre ensemble de données à deux points ne peut pas capturer.
+
+La distinction est simple mais les implications sont profondes : l'interpolation est intrinsèquement plus sûre car elle est contrainte par les données des deux côtés. L'extrapolation n'a pas de telles barrières. Chaque unité de distance que vous parcourez au-delà de la plage observée introduit une incertitude croissante.
+
+Pour le dire numériquement : si vos données s'étendent de x = 0 à x = 100, une interpolation à x = 50 est généralement précise dans la limite du bruit de vos mesures. Une extrapolation à x = 150 peut avoir des marges d'erreur plusieurs fois plus grandes — et à x = 200, la prédiction peut être essentiellement dénuée de sens. Le taux auquel la confiance se dégrade dépend de la méthode et des données, mais la vérité directionnelle est universelle : **l'erreur d'extrapolation croît avec la distance par rapport à la limite des données**.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Zone d'interpolation (limitée par les données) vs zone d'extrapolation (au-delà des données) avec cônes de confiance">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Interpolation (sûre) vs Extrapolation (risquée)</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <rect x="100" y="40" width="280" height="200" fill="#10b981" fill-opacity="0.08"/>
+      <path d="M 100 50 L 380 230" stroke="#10b981" stroke-width="2"/>
+      <path d="M 100 230 L 380 50" stroke="#10b981" stroke-width="2" stroke-dasharray="3 3"/>
+      <text x="240" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#059669">Zone d'interpolation</text>
+      <text x="240" y="155" text-anchor="middle" font-size="9" fill="#059669" font-style="italic">limitée par des données des deux côtés</text>
+      <text x="240" y="170" text-anchor="middle" font-size="9" fill="#059669" font-style="italic">cône de prédiction étroit</text>
+      <path d="M 380 110 L 500 40" stroke="#1e40af" stroke-width="2"/>
+      <path d="M 380 170 L 500 240" stroke="#1e40af" stroke-width="2" stroke-dasharray="3 3"/>
+      <path d="M 380 110 L 540 -30" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <path d="M 380 170 L 540 320" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <text x="450" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#dc2626">Zone d'extrapolation</text>
+      <text x="450" y="155" text-anchor="middle" font-size="9" fill="#dc2626" font-style="italic">aucune donnée du côté lointain</text>
+      <text x="450" y="170" text-anchor="middle" font-size="9" fill="#dc2626" font-style="italic">le cône s'élargit avec la distance</text>
+      <g fill="#1e40af">
+        <circle cx="100" cy="180" r="4"/>
+        <circle cx="200" cy="155" r="4"/>
+        <circle cx="300" cy="120" r="4"/>
+        <circle cx="380" cy="95" r="4"/>
+      </g>
+      <line x1="380" y1="40" x2="380" y2="240" stroke="#0a0a0a" stroke-width="1.5"/>
+      <text x="385" y="255" font-size="9" fill="#0a0a0a" font-weight="700">limite des données</text>
+      <text x="475" y="105" font-size="9" fill="#1e40af" font-weight="600">meilleure estimation</text>
+    </g>
+  </svg>
+  <figcaption>Interpolation versus extrapolation en tant que cônes de prédiction. À gauche (zone verte), la prédiction est limitée par des points de données des deux côtés — le cône des valeurs plausibles reste étroit. À droite (zone rouge, au-delà de la limite des données marquée par la ligne verticale), la prédiction n'a pas d'ancre du côté lointain, et le cône s'élargit avec la distance par rapport aux données. Cette incertitude croissante est la raison fondamentale pour laquelle l'extrapolation est intrinsèquement plus risquée que l'interpolation.</figcaption>
+</figure>
+
+## Quand Utiliser l'Interpolation
+
+L'interpolation est le bon choix lorsque vous avez besoin d'estimer une valeur qui se situe entre deux ou plusieurs points de données connus. Les scénarios courants incluent :
+
+- **Combler les lacunes dans les données de capteurs** — une station météo qui enregistre toutes les heures mais a manqué la relevé de 15h peut récupérer cette valeur de ses voisins
+- **Générer des courbes lisses** — les animateurs et les graphistes utilisent l'interpolation spline pour créer un mouvement fluide entre les images clés
+- **Courbes de rendement financières** — les traders d'obligations interpolent les taux d'intérêt pour les échéances non activement négociées, car les taux aux échéances proches fournissent des ancres solides
+- **Tables de consultation d'ingénierie** — les propriétés des matériaux (conductivité thermique, résistance à la traction) à des températures ou pressions non tabulées peuvent être estimées à partir de valeurs tabulées
+- **Tableaux de dosage médical** — doses pédiatriques pour un enfant de 23 kg lorsque le tableau liste 20 kg et 25 kg
+- **Analyse géospatiale** — estimation de l'altitude à des coordonnées entre des points levés en utilisant l'interpolation bilinéaire ou bicubique
+
+Notre [calculatrice d'interpolation](/interpolation/) prend en charge trois méthodes : l'interpolation linéaire (rapide, bonne pour les données espacées uniformément), le polynôme de Lagrange (courbes lisses avec peu de points) et la spline cubique naturelle (l'étalon-or pour une interpolation lisse et stable).
+
+### Un Exemple d'Interpolation Travaillé
+
+Supposons que vous ayez mesuré le taux de croissance d'une colonie bactérienne à trois moments :
+
+| Temps (heures) | Nombre de colonies (×10³) |
+|---|---|
+| 2 | 4.0 |
+| 6 | 12.0 |
+| 10 | 20.0 |
+
+Vous voulez le nombre de colonies à 4 heures. Comme 4 se situe entre 2 et 6, c'est une interpolation. En utilisant l'interpolation linéaire entre (2, 4.0) et (6, 12.0) :
+
+**y = y₁ + (x − x₁)(y₂ − y₁) / (x₂ − x₁) = 4.0 + (4−2)(12.0−4.0) / (6−2) = 4.0 + 4.0 = 8.0**
+
+L'estimation de 8.0 × 10³ colonies est raisonnable — elle se situe bien entre 4.0 et 12.0, et la croissance semble à peu près linéaire dans cette fenêtre. Si vous aviez utilisé une spline cubique naturelle incorporant les trois points, vous auriez pu obtenir une valeur légèrement différente tenant compte de la courbure, mais les deux méthodes produiront une réponse plausible car le point cible est entouré de données.
+
+## Quand Utiliser l'Extrapolation
+
+L'extrapolation est nécessaire lorsque vous devez prédire au-delà de la plage observée. Les applications réelles incluent :
+
+- **Prévision des revenus** — projection des ventes du prochain trimestre à partir de données historiques
+- **Modélisation démographique** — estimation de la population future à partir des registres de recensement, utilisant souvent l'[extrapolation exponentielle](/blog/exponential-growth/) pour la croissance en phase précoce ou des modèles logarithmiques pour les populations matures
+- **Prédiction scientifique** — prévision des variables climatiques au-delà des plages mesurées
+- **Planification des capacités** — prédire quand le trafic serveur dépassera l'infrastructure actuelle
+- **Efficacité des médicaments** — estimation de la réponse thérapeutique à des doses plus élevées que celles testées dans les essais cliniques
+- **Indicateurs économiques** — projection du PIB, du chômage ou de l'inflation pour la planification politique
+
+Notre [calculatrice d'extrapolation](/) propose cinq méthodes : linéaire, exponentielle, logarithmique, polynomiale et quadratique. Chacune capture un modèle de tendance différent — la clé est de faire correspondre la méthode au comportement de vos données. Par exemple, l'[extrapolation linéaire](/blog/linear-extrapolation/) fonctionne bien pour les tendances additives stables, tandis que les méthodes exponentielles conviennent aux phénomènes composés comme les intérêts ou la propagation virale.
+
+### Un Exemple d'Extrapolation Travaillé
+
+En utilisant les mêmes données de colonie bactérienne, supposons que vous vouliez le nombre de colonies à 14 heures — quatre heures au-delà de votre dernière mesure. C'est une extrapolation. En utilisant l'extrapolation linéaire basée sur les deux derniers points (6, 12.0) et (10, 20.0) :
+
+**y = 20.0 + (14−10)(20.0−12.0) / (10−6) = 20.0 + 8.0 = 28.0**
+
+La méthode linéaire prédit 28.0 × 10³ colonies. Mais la croissance bactérienne suit typiquement une courbe logistique — elle accélère, puis décélère à mesure que les ressources s'épuisent. Le nombre réel à 14 heures pourrait n'être que de 24.0 × 10³ alors que la croissance ralentit, ou pourrait plafonner complètement. L'extrapolation linéaire n'a aucun moyen d'en tenir compte. Un modèle exponentiel pourrait prédire 40.0 × 10³ ou plus, dépassant dans la direction opposée.
+
+Cet écart entre les prédictions — 24 vs 28 vs 40 — est un signal d'alarme clignotant. Lorsque différentes méthodes raisonnables produisent des valeurs extrapolées sensiblement différentes, la distance d'extrapolation est trop grande ou le modèle est mal spécifié.
+
+## Comparaison de Précision
+
+| Facteur | Interpolation | Extrapolation |
+|--------|--------------|---------------|
+| Confiance | Élevée — limitée par les données | Diminue avec la distance des données |
+| Plage d'erreur | Étroite et prévisible | Large et imprévisible |
+| Risque d'échec | Faible | Significatif, surtout loin des données |
+| Meilleur usage | Combler les lacunes | Prévoir les tendances |
+| Données requises | Au moins 2 points | Au moins 2 points (plus = mieux) |
+| Seuil R² pour la confiance | R² modéré acceptable | R² élevé requis (0.95+) |
+| Sensibilité aux valeurs aberrantes | Modérée (impact limité) | Élevée (les effets aberrants s'amplifient) |
+
+Plus vous extrapolez au-delà de vos données, moins la prédiction devient fiable. Une extrapolation linéaire qui s'ajuste parfaitement dans la plage de données (R² = 0.99) peut encore produire des résultats absurdes si la tendance sous-jacente change — c'est exactement ce qui se produit lorsque vous projetez la croissance démographique sans tenir compte de la capacité de charge, ou que vous prédisez les cours boursiers en plein krach.
+
+Comprendre [R² et les métriques de confiance](/blog/r-squared-confidence/) est essentiel pour la sélection de la méthode. Un R² élevé dans la plage de données est nécessaire mais pas suffisant pour une extrapolation fiable — il vous indique que le modèle s'ajuste aux données observées, pas que les hypothèses du modèle tiennent au-delà. Un modèle avec R² = 0.97 qui capture la forme fonctionnelle correcte extrapolera bien mieux qu'un modèle avec R² = 0.999 qui surajuste avec un polynôme de degré élevé.
+
+## La Zone de Danger : Quand l'Extrapolation Échoue
+
+L'histoire est pleine de désastres d'extrapolation :
+
+- **Prix de l'immobilier avant 2008** — l'extrapolation linéaire supposait que les prix continueraient d'augmenter indéfiniment, ignorant la dynamique cyclique du marché
+- **Premiers modèles COVID** — l'extrapolation exponentielle a surestimé la propagation à long terme sans tenir compte des changements de comportement, des interventions politiques et des seuils d'immunité
+- **Prévisions technologiques** — projeter les taux de croissance actuels des décennies en avant ignore les limites physiques et économiques (la loi de Moore est un cas célèbre où l'extrapolation exponentielle a finalement rencontré des contraintes physiques fondamentales)
+- **Prédictions malthusiennes de population** — en 1798, Thomas Malthus a extrapolé linéairement la croissance démographique sans prévoir la révolution agricole qui a radicalement changé la donne
+- **Club de Rome (1972)** — le rapport « Les Limites à la Croissance » a extrapolé l'épuisement des ressources et la pollution, prédisant un effondrement pour les années 1990 ; l'innovation technologique et les effets de substitution ont retardé nombre de ces résultats
+- **Projections de personnel Y2K** — les entreprises ont extrapolé leurs besoins croissants en main-d'œuvre informatique et ont trop embauché, pour ensuite faire face à une correction brutale
+
+Le schéma est toujours le même : une tendance qui se maintient dans la plage observée se rompt en dehors. C'est pourquoi la connaissance du domaine doit accompagner l'extrapolation mathématique. Les seuls chiffres ne savent pas quand les règles changent. C'est un défi central dans [l'extrapolation en apprentissage automatique](/blog/extrapolation-machine-learning/), où les modèles entraînés sur une distribution de données échouent souvent lorsqu'ils rencontrent des entrées hors distribution.
+
+Un modèle mental utile : **l'extrapolation suppose la stationnarité** — que le processus générant vos données continue de fonctionner selon les mêmes règles. Lorsque cette hypothèse est violée, même l'extrapolation la plus mathématiquement rigoureuse échouera. La question n'est jamais « puis-je extrapoler ? » mais « ai-je des raisons de croire que le processus sous-jacent reste stable ? »
+
+## Choisir la Bonne Méthode d'Extrapolation
+
+Toutes les extrapolations ne se valent pas. La méthode que vous choisissez doit refléter la nature de la tendance :
+
+| Comportement de la tendance | Méthode recommandée | Exemple |
+|---|---|---|
+| Changement stable et à taux constant | Linéaire | Coûts des services publics augmentant à un taux fixe par mois |
+| Croissance accélérée et composée | Exponentielle | Adoption virale, intérêts composés |
+| Rendements décroissants, ralentissement | [Extrapolation logarithmique](/blog/logarithmic-diminishing-returns/) | ROI marketing à des niveaux de dépenses croissants |
+| Modèles complexes multi-phases | Polynomial | Revenus saisonniers avec points d'inflexion |
+| Ligne droite avec légère courbe | Quadratique | Mouvement de projectile, accélération douce |
+
+Choisir entre [les méthodes polynomiales vs linéaires](/blog/polynomial-vs-linear/) implique un compromis : les modèles polynomiaux peuvent capturer la courbure que les modèles linéaires manquent, mais ils risquent également des oscillations sauvages en dehors de la plage de données, surtout à des degrés élevés. Un polynôme de degré 6 qui s'ajuste magnifiquement à vos données peut osciller vers des valeurs extrêmes juste au-delà de la limite. En règle générale, utilisez le modèle de degré le plus bas qui capture adéquatement la tendance.
+
+## Un Cadre de Décision Pratique
+
+Posez-vous ces questions :
+
+1. **Ma valeur cible se situe-t-elle entre des points de données connus ?** → Utilisez la [calculatrice d'interpolation](/interpolation/)
+2. **Ma valeur cible est-elle au-delà de la plage de données ?** → Utilisez la [calculatrice d'extrapolation](/)
+3. **Ai-je besoin de modéliser une relation de variable plutôt que de prédire une valeur spécifique ?** → Utilisez la [calculatrice de régression](/regression/)
+4. **À quelle distance au-delà des données est-ce que je prédis ?** → Plus c'est loin, plus vous devez être prudent. Une règle empirique : soyez sceptique quant aux extrapolations de plus de 10–20 % au-delà de la plage de données sans une solide justification du domaine.
+5. **La tendance sous-jacente pourrait-elle changer ?** → Si oui, l'extrapolation comporte un risque significatif. Demandez-vous s'il existe des points d'inflexion connus, des limites de capacité ou des changements de régime à venir.
+6. **Plusieurs méthodes s'accordent-elles ?** → Si les extrapolations linéaire, exponentielle et polynomiale produisent toutes des prédictions similaires, votre prévision est plus robuste. Si elles divergent fortement, votre distance d'extrapolation est peut-être trop grande.
+7. **Le R² est-il suffisamment élevé ?** → Pour l'interpolation, R² > 0.80 est souvent acceptable. Pour l'extrapolation, vous devriez exiger R² > 0.95 et encore vérifier avec la connaissance du domaine.
+
+## Combinaison des Méthodes d'Interpolation et d'Extrapolation
+
+L'approche la plus fiable consiste souvent à utiliser les deux méthodes ensemble dans un flux de travail structuré :
+
+1. **Interpolez dans votre plage de données** pour valider que votre méthode choisie s'adapte bien. Si votre modèle ne peut pas prédire avec précision des points de données connus lorsqu'ils sont retenus, on ne peut pas lui faire confiance pour extrapoler.
+2. **Vérifiez le score R²** — un mauvais ajustement dans la plage de données signifie que l'extrapolation sera peu fiable. Comprendre [R² et les métriques de confiance](/blog/r-squared-confidence/) vous aide à quantifier la confiance à accorder à chaque méthode.
+3. **Extrapolez de manière conservative** — prédisez seulement légèrement au-delà de la plage de données et traitez chaque pas vers l'extérieur comme de moins en moins fiable.
+4. **Comparez plusieurs méthodes d'extrapolation** — si le linéaire et l'exponentiel donnent des prédictions très différentes, aucun ne devrait être fiable loin. L'écart entre les méthodes est en soi une mesure d'incertitude.
+5. **Appliquez la connaissance du domaine** — les prédictions statistiques doivent être vérifiées par rapport aux contraintes physiques, économiques ou logiques. Aucun modèle ne peut vous dire qu'une population dépassera la capacité de charge de son environnement, ou qu'un cours d'action croîtra plus vite que le PIB pour toujours.
+6. **Utilisez l'interpolation comme test de cohérence** — si vous retenez le dernier point de données, extrapolez à partir des points restants et comparez la valeur extrapolée à la valeur réelle retenue, vous obtenez une estimation directe de l'erreur d'extrapolation. Cette technique, appelée **backtesting** ou **validation par retenue**, est l'un des moyens les plus pratiques d'évaluer si votre extrapolation est fiable.
+7. **Mélangez les méthodes lorsque les données le soutiennent** — par exemple, utilisez l'[extrapolation logarithmique](/blog/logarithmic-diminishing-returns/) pour le court terme où des rendements décroissants sont attendus, et passez à un modèle de plancher linéaire pour le long terme. Ce type d'approche hybride surpasse souvent toute méthode unique.
+
+### Un Exemple d'Approche Combinée
+
+Imaginez que vous ayez des données de revenus trimestriels pour les 8 derniers trimestres et que vous deviez prévoir les 2 prochains. Voici un flux de travail robuste :
+
+1. Retenez le T8, ajustez un modèle sur T1–T7, et « extrapolez » jusqu'au T8. Comparez la prédiction à la réalité. Cela vous indique l'erreur à attendre à une distance de 1 trimestre.
+2. Essayez les modèles linéaire, exponentiel et polynomial. Si les trois prédisent le T8 à moins de 5 % de la réalité, vous avez une base solide pour prévoir T9 et T10.
+3. Si les modèles divergent — linéaire prédit 1,2 M$, exponentiel prédit 1,8 M$ — vous savez que l'incertitude est grande. Rapportez une plage, pas une estimation ponctuelle.
+4. Appliquez la connaissance métier : y a-t-il une baisse saisonnière au T9 ? Un lancement de produit au T10 ? Ajustez la prévision statistique en conséquence.
+5. Réexécutez le modèle complet sur les 8 trimestres avant de prévoir T9 et T10, puisque vous avez maintenant validé la méthode.
+
+Ce type d'approche disciplinée et multi-méthodes réduit considérablement le risque d'échecs embarrassants de prévision.
+
+## Points Clés à Retenir
+
+- L'interpolation estime **entre** les points de données ; l'extrapolation estime **au-delà** d'eux
+- L'interpolation est intrinsèquement plus fiable car elle est limitée par les observations
+- L'extrapolation est essentielle pour la prévision mais comporte une incertitude croissante avec la distance par rapport à la limite des données
+- Vérifiez toujours R² et les métriques de confiance — et combinez les résultats mathématiques avec l'expertise du domaine
+- Le choix de la méthode d'extrapolation (linéaire, exponentielle, logarithmique, polynomiale) doit correspondre au comportement de la tendance sous-jacente
+- Lorsque plusieurs méthodes sont en désaccord, traitez l'écart comme une mesure d'incertitude plutôt que de choisir la réponse que vous préférez
+- La validation par retenue — extrapoler à un point de données connu — est le meilleur test pratique de fiabilité de l'extrapolation
+- Utilisez notre [calculatrice d'interpolation](/interpolation/) pour les estimations dans la plage et notre [calculatrice d'extrapolation](/) pour les prédictions au-delà de la plage
+
+Les deux outils sont gratuits, privés et fonctionnent entièrement dans votre navigateur — vos données ne quittent jamais votre appareil.
+
+## Questions Fréquemment Posées
+
+<details class="faq-item">
+<summary>L'interpolation est-elle toujours plus précise que l'extrapolation ?</summary>
+
+Oui, en général. L'interpolation est limitée par des données des deux côtés, ce qui contraint l'estimation. L'extrapolation s'étend au-delà des données connues où aucune limite n'existe. Cependant, la précision de l'interpolation dépend encore du choix de la bonne méthode et du fait d'avoir suffisamment de points de données pour capturer le schéma sous-jacent.
+
+</details>
+
+<details class="faq-item">
+<summary>Puis-je utiliser l'extrapolation pour de courtes distances au-delà de mes données ?</summary>
+
+Oui, et l'extrapolation à courte distance est souvent assez fiable — surtout avec des valeurs R² élevées. Le multiplicateur de risque clé est la distance : plus vous vous éloignez de vos données, plus il est probable que la tendance sous-jacente ait changé. Combinez toujours les projections statistiques avec la connaissance du domaine.
+
+</details>
+
+<details class="faq-item">
+<summary>Quelle calculatrice dois-je utiliser pour combler les lacunes vs prévoir ?</summary>
+
+Utilisez la [calculatrice d'interpolation](/interpolation/) lorsque votre valeur cible se situe entre des points de données connus. Utilisez la [calculatrice d'extrapolation](https://www.extrapolationcalculator.com/) lorsque vous devez prédire au-delà de la plage observée. Utilisez la [calculatrice de régression](/regression/) lorsque vous souhaitez modéliser la relation entre variables plutôt que de prédire un point spécifique.
+
+</details>
+
+<details class="faq-item">
+<summary>Quelle est la méthode d'extrapolation la plus sûre ?</summary>
+
+L'extrapolation linéaire est généralement la plus sûre car elle fait le moins d'hypothèses sur la forme des données. Elle projette un taux de changement constant, ce qui est conservateur. Les méthodes plus complexes comme l'[exponentielle](/blog/exponential-growth/) ou la polynomiale peuvent mieux s'ajuster aux données d'entraînement mais peuvent diverger dramatiquement au-delà.
+
+</details>

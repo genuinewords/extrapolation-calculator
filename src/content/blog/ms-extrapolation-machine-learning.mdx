@@ -1,0 +1,152 @@
+---
+title: "Ekstrapolasi dalam Pembelajaran Mesin: Panduan Lengkap"
+description: Pelajari apa maksud ekstrapolasi dalam pembelajaran mesin, mengapa model bergelut dengannya, dan kaedah apa yang membantu meningkatkan ramalan luar taburan.
+publishDate: 2026-05-27
+author: Pasukan Kalkulator Ekstrapolasi
+category: Pembelajaran Mesin
+featuredImage: ""
+---
+
+## Pengenalan
+
+Model pembelajaran mesin sangat baik dalam meramal dalam corak yang telah mereka lihat. Mereka mengklasifikasikan imej, mengesyorkan produk, dan mengesan anomali dengan ketepatan tinggi — selagi input menyerupai data latihan mereka. Tetapi apabila anda meminta mereka meramal sesuatu di luar julat biasa itu, prestasi sering runtuh. Ini adalah cabaran utama ekstrapolasi dalam pembelajaran mesin: membuat ramalan yang boleh dipercayai di luar sempadan apa yang telah dipelajari oleh model. Ia adalah masalah yang didokumentasikan dengan baik yang mempengaruhi segala-galanya daripada meramal harga saham hingga memodelkan trend iklim. Memahami mengapa model gagal dalam ekstrapolasi — dan apa yang boleh dilakukan — adalah penting bagi sesiapa yang membina sistem ramalan yang perlu bertahan di dunia nyata.
+
+## Apa itu Ekstrapolasi dalam ML?
+
+Ekstrapolasi dalam pembelajaran mesin bermaksud meramal nilai sasaran untuk input yang berada di luar julat data latihan. Jika model dilatih pada harga rumah antara $100,000 dan $500,000, memintanya menganggarkan harga rumah $1,000,000 adalah tugas ekstrapolasi. Model tidak pernah melihat data di kawasan itu, jadi ramalannya sememangnya tidak pasti.
+
+Ini berbeza dengan interpolasi, di mana ramalan dibuat dalam julat titik data yang diperhatikan. Interpolasi biasanya boleh dipercayai kerana model boleh bergantung pada contoh berdekatan untuk membimbing outputnya. [Ekstrapolasi ML](/blog/what-is-extrapolation/), sebaliknya, memaksa model ke wilayah di mana tiada titik rujukan wujud — menjadikannya bentuk ramalan luar taburan yang kebanyakan algoritma tidak direka untuk dikendalikan dengan baik.
+
+Dalam amalan, sempadan antara interpolasi dan ekstrapolasi tidak selalu jelas. Titik data mungkin jarang di kawasan tertentu, mengubah apa yang kelihatan seperti interpolasi menjadi masalah ekstrapolasi de facto. Untuk melihat lebih mendalam tentang sempadan ini, lihat panduan kami tentang [interpolasi vs ekstrapolasi](/blog/interpolation-vs-extrapolation/).
+
+## Mengapa Model ML Bergelut dengan Ekstrapolasi
+
+Kebanyakan model pembelajaran mesin belajar corak daripada data, bukan peraturan asas atau undang-undang fizik. Mereka menganggarkan hubungan yang ada dalam set latihan tanpa memahami mengapa hubungan itu wujud. Apabila diminta meramal di luar data itu, tiada corak untuk diikuti — hanya tekaan.
+
+Masalah "luar taburan" adalah pusat di sini. Model yang dilatih pada satu taburan data mungkin menghadapi taburan yang berbeza sama sekali semasa inferens. Rangkaian neural yang dilatih pada imej yang diambil pada waktu siang mungkin akan gagal pada imej malam, walaupun objeknya sama.
+
+Rangkaian neural ekstrapolasi menghadapi had asas: rangkaian neural pada dasarnya adalah interpolator dimensi tinggi. Output mereka adalah gabungan berwajaran contoh latihan, jadi mereka cenderung menghasilkan ramalan yang licin dan dipuratakan di luar julat latihan mereka daripada mengikuti trend sebenar. Pokok keputusan dan hutan rawak mempunyai masalah yang berbeza tetapi sama terhad — mereka tidak boleh meramal nilai di luar julat nod daun mereka. Pokok yang membahagikan data kepada daun dengan nilai maksimum 500 tidak akan pernah mengeluarkan 501, tanpa mengira input.
+
+Malah kaedah ensemble dan seni bina dalam mewarisi masalah ini. Tanpa mekanisme eksplisit untuk mengendalikan kawasan yang tidak dilihat, model lalai kepada tingkah laku yang selamat secara matematik tetapi salah secara praktikal. Memahami [skor R²](/blog/r-squared-confidence/) boleh membantu mengukur betapa teruknya model merosot apabila ditolak di luar domain latihannya.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Kegagalan ekstrapolasi ML: rangkaian neural menjadi rata di luar julat latihan manakala model linear meneruskan trend">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Mengapa model ML gagal dalam ekstrapolasi</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="280" y1="40" x2="280" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="120" y="55" font-size="10" fill="#64748b">Julat latihan</text>
+      <text x="350" y="55" font-size="10" fill="#dc2626" font-weight="600">Luar julat latihan</text>
+      <path d="M 80 220 Q 110 180, 140 140 Q 180 100, 220 80 L 280 75" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+      <path d="M 280 75 L 480 70" stroke="#d4af37" stroke-width="2.5" fill="none" stroke-dasharray="4 2"/>
+      <path d="M 280 75 Q 320 73, 360 72 Q 420 70, 480 69" stroke="#1e40af" stroke-width="2" fill="none"/>
+      <text x="430" y="95" font-size="10" font-weight="600" fill="#1e40af">NN: menjadi rata</text>
+      <text x="430" y="60" font-size="10" font-weight="600" fill="#d4af37">Linear: meneruskan trend</text>
+      <g fill="#1e40af">
+        <circle cx="80" cy="220" r="3.5"/>
+        <circle cx="120" cy="180" r="3.5"/>
+        <circle cx="160" cy="140" r="3.5"/>
+        <circle cx="200" cy="100" r="3.5"/>
+        <circle cx="240" cy="85" r="3.5"/>
+        <circle cx="280" cy="75" r="3.5"/>
+      </g>
+      <text x="60" y="265" font-size="9" fill="#64748b" font-style="italic">Rangkaian neural menghasilkan ramalan dipuratakan dan rata di luar julat latihan mereka</text>
+    </g>
+  </svg>
+  <figcaption>Mengapa model ML gagal dalam ekstrapolasi. Di dalam julat latihan (kiri garis putus-putus), rangkaian neural (biru) mengikuti data dengan rapat. Tetapi di luar (kanan garis putus-putus), output rangkaian menjadi rata kepada nilai hampir malar — ia tidak mempunyai corak yang dipelajari untuk dilanjutkan. Model linear (putus-putus emas), sebaliknya, meneruskan trendnya selama-lamanya. Had asas ini menjejaskan semua model jenis interpolator: mereka boleh mencampurkan contoh yang diketahui tetapi tidak boleh mencipta yang baru.</figcaption>
+</figure>
+
+## Kaedah yang Meningkatkan Ekstrapolasi dalam ML
+
+Tiada satu kaedah pun menghapuskan masalah ekstrapolasi sepenuhnya, tetapi beberapa pendekatan boleh meningkatkan ramalan luar taburan secara bermakna.
+
+### Regresi Linear
+
+Regresi linear adalah salah satu daripada beberapa model yang secara semula jadi mengekstrapolasi. Kerana ia memuatkan fungsi linear kepada data, ia memanjangkan fungsi itu selama-lamanya dalam kedua-dua arah. Walaupun ini boleh menghasilkan ramalan yang tidak realistik jika hubungan sebenar adalah tidak linear, ia sekurang-kurangnya mengikuti trend yang konsisten daripada menjadi rata. Untuk kes penggunaan mudah, [ekstrapolasi linear](/blog/linear-extrapolation/) kekal sebagai garis dasar praktikal.
+
+### Hutan Rawak dengan Daun Linear
+
+Hutan rawak standard tidak boleh mengekstrapolasi di luar julat latihan mereka. Walau bagaimanapun, varian yang memuatkan model linear pada nod daun dan bukannya nilai malar boleh memanjangkan ramalan di luar data yang diperhatikan. Ini menggabungkan fleksibiliti model berasaskan pokok dengan keupayaan ekstrapolasi regresi linear, meningkatkan prestasi pada tugas dengan trend tulen.
+
+### Rangkaian Neural dengan Kekangan Monotonik
+
+Dengan mengenakan kekangan monotonisitas pada ciri input tertentu, rangkaian neural boleh dipandu untuk menghasilkan ramalan yang mengikuti hubungan arah yang diketahui. Jika pengetahuan domain mengatakan bahawa suhu harus meningkat dengan tekanan, kekangan monotonik memastikan rangkaian menghormati peraturan itu walaupun di luar julat latihan. Ini amat berguna dalam aplikasi saintifik dan kejuruteraan.
+
+### Regresi Simbolik
+
+Regresi simbolik mencari ruang ungkapan matematik untuk mencari formula yang sesuai dengan data. Kerana hasilnya adalah persamaan eksplisit dan bukannya pemetaan yang dipelajari, ia boleh mengekstrapolasi dengan cara yang konsisten dengan hubungan yang ditemui. Alat seperti PySR dan Eureqa menjadikan pendekatan ini semakin mudah diakses.
+
+### Rangkaian Neural Termaklum Fizik (PINNs)
+
+PINN menggabungkan undang-undang fizik secara langsung ke dalam proses latihan dengan menambahkan kekangan persamaan pembezaan kepada fungsi kerugian. Ini bermakna rangkaian tidak boleh melanggar fizik yang diketahui, walaupun di kawasan tanpa data latihan. PINN telah menunjukkan hasil ekstrapolasi yang kuat dalam dinamik bendalir, pemindahan haba, dan domain lain yang ditadbir oleh persamaan yang difahami dengan baik.
+
+## Contoh Dunia Nyata
+
+Cabaran ekstrapolasi muncul di banyak industri dan domain penyelidikan.
+
+**Pemodelan perubahan iklim** bergantung pada mengunjurkan data suhu dan pelepasan jauh melangkaui rekod sejarah. Model mesti meramalkan keadaan yang tiada preseden dalam data yang diperhatikan, menjadikan ramalan pembelajaran mesin amat sukar dan tidak pasti.
+
+**Ramalan kewangan** secara tetap memerlukan ramalan di luar tingkah laku pasaran terkini. Keadaan ekonomi berubah, rejim beralih, dan model yang dilatih pada pasaran menaik mungkin gagal secara bencana semasa kemerosotan — kegagalan ekstrapolasi klasik.
+
+**Penemuan ubat** sering melibatkan ramalan kesan sebatian pada dos atau kombinasi yang tidak pernah diuji dalam ujian klinikal. Model yang dilatih pada respons dos rendah mesti mengekstrapolasi untuk meramalkan keselamatan pada dos yang lebih tinggi, di mana ketoksikan tidak linear boleh muncul.
+
+**Kereta pandu sendiri** menghadapi keadaan jalan raya, peristiwa cuaca, dan konfigurasi halangan yang tiada dalam data latihan mereka. Operasi yang boleh dipercayai memerlukan sedikit keupayaan untuk ekstrapolasi, atau sekurang-kurangnya degradasi yang anggun apabila menghadapi yang tidak dikenali.
+
+## Ekstrapolasi vs Interpolasi dalam ML
+
+Memahami perbezaan antara interpolasi dan ekstrapolasi adalah penting untuk memilih model yang betul dan menetapkan jangkaan yang realistik. Jadual di bawah menyerlahkan perbezaan utama. Untuk perbandingan yang lebih terperinci, lihat artikel kami tentang [interpolasi vs ekstrapolasi](/blog/interpolation-vs-extrapolation/).
+
+| Aspek | Interpolasi | Ekstrapolasi |
+|--------|--------------|---------------|
+| Julat data | Dalam data latihan | Luar data latihan |
+| Keyakinan model | Lebih tinggi | Lebih rendah |
+| Risiko ralat | Lebih rendah | Lebih tinggi |
+| Penggunaan biasa | Klasifikasi, pemuatan | Ramalan, jangkaan |
+
+Interpolasi mendapat manfaat daripada titik rujukan padat yang menambat ramalan. Ekstrapolasi kekurangan sauh tersebut, jadi generalisasi ML menjadi kebimbangan utama — dan risiko utama. Model yang generalisasi dengan baik dalam taburan latihan mereka mungkin tidak generalisasi langsung di luarnya. Anda boleh meneroka kedua-dua pendekatan secara langsung dengan [kalkulator interpolasi](/interpolation/) atau [kalkulator regresi](/regression/) kami.
+
+## Amalan Terbaik
+
+- **Sahkan pada set ujian luar taburan.** Pembahagian latihan-ujian standard mengekalkan penilaian dalam taburan latihan. Sengaja tahan data dari julat atau keadaan yang berbeza untuk mengukur prestasi ekstrapolasi sebenar.
+- **Gunakan pengetahuan domain untuk mengekang ramalan.** Masukkan undang-undang fizik yang diketahui, hubungan monotonik, atau keadaan sempadan ke dalam proses pemodelan. Ini menghalang model daripada menghasilkan keputusan yang mustahil secara fizikal.
+- **Gabungkan ML dengan kaedah statistik tradisional.** Pendekatan hibrid yang mencampurkan corak yang dipelajari dengan teknik ekstrapolasi berprinsip — seperti [kaedah ekstrapolasi](/blog/polynomial-vs-linear/) yang diambil daripada statistik klasik — cenderung mengatasi ML tulen dalam tetapan luar taburan. Untuk perbandingan tertumpu dua kaedah klasik yang paling biasa, lihat [ekstrapolasi polinomial vs linear](/blog/polynomial-extrapolation-vs-linear/).
+
+## Alat dan Sumber
+
+Beberapa perpustakaan Python menyokong pemodelan sedar ekstrapolasi. **scikit-learn** menyediakan model linear dan kaedah berasaskan pokok yang boleh dikonfigurasikan untuk tingkah laku ekstrapolasi yang lebih baik. **PyTorch** membolehkan fungsi kerugian tersuai dan kekangan seni bina, termasuk ciri monotonik dan gelung latihan termaklum fizik. Untuk keperluan yang lebih mudah, **kalkulator ekstrapolasi** menawarkan cara cepat untuk mengunjurkan trend tanpa menulis kod.
+
+Ramalan berangka tradisional? Cuba [kalkulator ekstrapolasi](https://www.extrapolationcalculator.com/) untuk unjuran trend pantas.
+
+## Kesimpulan
+
+Ekstrapolasi dalam pembelajaran mesin sememangnya sukar, tetapi tidak mustahil. Model linear, seni bina terkekang, regresi simbolik, dan pendekatan termaklum fizik masing-masing menawarkan laluan kepada ramalan luar taburan yang lebih boleh dipercayai. Kuncinya adalah mengenali bila ekstrapolasi diperlukan, memilih kaedah yang sesuai untuk tugas, dan mengesahkan secara agresif di luar taburan latihan. Eksperimen dengan pendekatan berbeza, ukur apa yang gagal, dan ulang. Apabila anda memerlukan cara mudah untuk mengunjurkan trend tanpa membina saluran paip ML yang lengkap, cuba [kalkulator ekstrapolasi](https://www.extrapolationcalculator.com/).
+
+<details class="faq-item">
+<summary>Bolehkah rangkaian neural mengekstrapolasi?</summary>
+
+Rangkaian neural standard adalah lemah dalam ekstrapolasi. Mereka belajar untuk interpolasi antara contoh latihan dan cenderung menghasilkan ramalan rata atau tidak menentu di luar julat latihan. Seni bina khusus dengan kekangan monotonik atau fungsi kerugian termaklum fizik boleh meningkatkan ekstrapolasi, tetapi rangkaian vanila secara amnya tidak boleh.
+
+</details>
+
+<details class="faq-item">
+<summary>Mengapa ekstrapolasi sukar dalam pembelajaran mesin?</summary>
+
+Ekstrapolasi sukar kerana model ML belajar corak statistik daripada data latihan dan bukannya peraturan sebab akibat. Apabila input jatuh di luar taburan latihan, tiada corak untuk diikuti, dan model tidak mempunyai asas berprinsip untuk ramalannya. Ini membawa kepada output yang tidak dapat diramalkan dan sering kali sangat salah.
+
+</details>
+
+<details class="faq-item">
+<summary>Apakah perbezaan antara interpolasi dan ekstrapolasi dalam ML?</summary>
+
+Interpolasi meramal dalam julat data latihan, di mana model boleh merujuk contoh berdekatan. Ekstrapolasi meramal di luar julat itu, di mana tiada titik rujukan wujud. Interpolasi biasanya tepat; ekstrapolasi biasanya tidak pasti dan mudah ralat.
+
+</details>
+
+<details class="faq-item">
+<summary>Model ML mana yang boleh mengekstrapolasi?</summary>
+
+Regresi linear mengekstrapolasi secara semula jadi dengan memanjangkan garisan yang dipasang. Model linear dengan regularisasi (ridge, lasso) berkelakuan sama. Hutan rawak dengan daun linear, model regresi simbolik, dan rangkaian neural termaklum fizik juga boleh mengekstrapolasi dengan pelbagai tahap kebolehpercayaan. Kebanyakan model lain — termasuk rangkaian neural standard, pokok keputusan, dan jiran terdekat k — tidak boleh.
+
+</details>

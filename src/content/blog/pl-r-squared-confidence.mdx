@@ -1,0 +1,251 @@
+---
+title: Interpretacja R² i Pewności w Ekstrapolacji
+description: Dowiedz się, jak interpretować wynik R² i metryki pewności, aby ocenić wiarygodność wyników ekstrapolacji.
+publishDate: 2026-05-14
+author: Extrapolation Calculator Team
+category: Podstawy
+featuredImage: ""
+---
+
+Kiedy używasz [kalkulatora ekstrapolacji](/), każdy wynik zawiera dwie ważne metryki: wynik R² i procent pewności. Zrozumienie tych wartości jest kluczowe dla podejmowania świadomych decyzji opartych na ekstrapolacjach. Zbyt często ludzie patrzą na wysoką wartość R² i zakładają, że ich projekcja jest godna zaufania, tylko po to, by później odkryć, że model był mylący. Ten artykuł zagłębia się w to, co R² faktycznie mierzy, jak odnosi się do pewności i dlaczego nigdy nie powinien być jedyną metryką, na której polegasz przy prognozowaniu poza zakresem danych.
+
+## Czym jest R²?
+
+R², formalnie znany jako współczynnik determinacji, mierzy proporcję wariancji w zmiennej zależnej, która jest wyjaśniona przez zmienną niezależną poprzez model regresji. Mówiąc prościej, informuje, ile "ruchu" w danych jest uchwycone przez dopasowaną linię trendu.
+
+### Wzór
+
+Wzór na R² opiera się na dwóch podstawowych wielkościach:
+
+**SS_total** (Całkowita suma kwadratów): Reprezentuje całkowitą wariancję w obserwowanych danych, obliczaną jako suma kwadratów różnic między każdą obserwowaną wartością a średnią obserwowanych wartości:
+
+**SS_total = Σ(yᵢ − ȳ)²**
+
+**SS_residual** (Resztkowa suma kwadratów): Reprezentuje wariancję, której model nie jest w stanie uchwycić, obliczaną jako suma kwadratów różnic między każdą obserwowaną wartością a wartością przewidzianą przez model:
+
+**SS_residual = Σ(yᵢ − ŷᵢ)²**
+
+Łącząc je, R² definiuje się jako:
+
+**R² = 1 − (SS_residual / SS_total)**
+
+Gdy model idealnie pasuje do danych, każda reszta wynosi zero, więc SS_residual wynosi zero, a R² równa się 1. Gdy model nie jest lepszy niż użycie średniej y jako prognozy dla każdego punktu, SS_residual równa się SS_total, a R² wynosi 0.
+
+### Zrozumienie Intuicji Obliczeniowej
+
+Pomyśl o SS_total jako o "problemie" — całkowitej ilości zmienności, którą model musi wyjaśnić — a o SS_residual jako o "reszcie" — tym, czego model nie zdołał uchwycić. Stosunek SS_residual / SS_total mówi, jaka część zmienności pozostaje niewyjaśniona. Odjęcie tego od 1 daje część, która **została** wyjaśniona. Dlatego R² jest czasami opisywany jako "frakcja wyjaśnionej wariancji."
+
+Warto zauważyć, że dla modeli nieliniowych standardowy wzór R² powyżej może czasami dawać wartości ujemne. Dzieje się tak, gdy model pasuje do danych gorzej niż linia pozioma na poziomie średniej. W takich przypadkach model aktywnie wprowadza w błąd, a ujemne R² jest silnym sygnałem ostrzegawczym, że wybrana metoda jest nieodpowiednia dla danych.
+
+## Zakresy Interpretacji
+
+Chociaż nie ma uniwersalnej reguły obowiązującej w każdej dyscyplinie, ogólne wytyczne dotyczące interpretacji R² w kontekście ekstrapolacji i analizy regresji są następujące:
+
+| Zakres R² | Interpretacja | Znaczenie Praktyczne |
+|----------|---------------|-------------------|
+| 0.0 – 0.3 | Słabe dopasowanie | Model wyjaśnia bardzo mało wariancji; prognozy są niewiarygodne |
+| 0.3 – 0.7 | Umiarkowane dopasowanie | Model uchwyca pewien trend, ale występuje znaczny rozrzut; zachowaj ostrożność |
+| 0.7 – 1.0 | Dobre dopasowanie | Model wyjaśnia większość wariancji; prognozy mogą być rozsądne |
+
+Te progi nie są sztywnymi granicami. W niektórych dziedzinach, takich jak nauki społeczne, R² równe 0,3 może być uważane za szanowane, ponieważ ludzkie zachowanie jest z natury hałaśliwe. W fizyce lub inżynierii wszystko poniżej 0,9 może być uznane za nieakceptowalne. Podczas pracy z [kalkulatorem regresji](/regression/), zawsze bierz pod uwagę dziedzinę, w której pracujesz i jaki poziom dopasowania jest oczekiwany dla tego typu danych.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Skala interpretacji R-kwadrat od słabego do dobrego dopasowania, zwizualizowana z przykładowymi wzorcami danych">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Skala Interpretacji R²</text>
+      <rect x="40" y="40" width="520" height="200" fill="#fff" stroke="#e5e7eb"/>
+      <rect x="40" y="40" width="156" height="200" fill="#fee2e2" fill-opacity="0.4"/>
+      <rect x="196" y="40" width="208" height="200" fill="#fef3c7" fill-opacity="0.4"/>
+      <rect x="404" y="40" width="156" height="200" fill="#d1fae5" fill-opacity="0.4"/>
+      <line x1="196" y1="40" x2="196" y2="240" stroke="#9ca3af" stroke-dasharray="3 3"/>
+      <line x1="404" y1="40" x2="404" y2="240" stroke="#9ca3af" stroke-dasharray="3 3"/>
+      <text x="118" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">Słabe (0.0–0.3)</text>
+      <text x="300" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#d97706">Umiarkowane (0.3–0.7)</text>
+      <text x="482" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#059669">Dobre (0.7–1.0)</text>
+      <g transform="translate(50, 90)">
+        <line x1="0" y1="100" x2="120" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 80 L 120 60" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="20" cy="40" r="3.5" fill="#1e40af"/>
+        <circle cx="40" cy="90" r="3.5" fill="#1e40af"/>
+        <circle cx="60" cy="20" r="3.5" fill="#1e40af"/>
+        <circle cx="80" cy="70" r="3.5" fill="#1e40af"/>
+        <circle cx="100" cy="50" r="3.5" fill="#1e40af"/>
+        <text x="60" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.15</text>
+      </g>
+      <g transform="translate(220, 90)">
+        <line x1="0" y1="100" x2="160" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 80 L 160 30" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="20" cy="60" r="3.5" fill="#1e40af"/>
+        <circle cx="50" cy="55" r="3.5" fill="#1e40af"/>
+        <circle cx="80" cy="50" r="3.5" fill="#1e40af"/>
+        <circle cx="110" cy="40" r="3.5" fill="#1e40af"/>
+        <circle cx="140" cy="45" r="3.5" fill="#1e40af"/>
+        <text x="80" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.55</text>
+      </g>
+      <g transform="translate(430, 90)">
+        <line x1="0" y1="100" x2="120" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 90 L 120 20" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="15" cy="82" r="3.5" fill="#1e40af"/>
+        <circle cx="35" cy="68" r="3.5" fill="#1e40af"/>
+        <circle cx="55" cy="55" r="3.5" fill="#1e40af"/>
+        <circle cx="75" cy="42" r="3.5" fill="#1e40af"/>
+        <circle cx="95" cy="30" r="3.5" fill="#1e40af"/>
+        <text x="60" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.92</text>
+      </g>
+    </g>
+  </svg>
+  <figcaption>Skala interpretacji R² zwizualizowana. Czerwona strefa (0.0–0.3) reprezentuje słabe dopasowanie, gdzie punkty są szeroko rozrzucone wokół linii trendu. Żółta strefa (0.3–0.7) pokazuje umiarkowane dopasowanie z widocznym rozrzutem. Zielona strefa (0.7–1.0) reprezentuje dobre dopasowanie, gdzie punkty skupiają się ciasno wokół linii. Te progi są wytycznymi, a nie regułami — kontekst dziedziny ma znaczenie: nauki społeczne często akceptują 0,3, podczas gdy fizyka może wymagać 0,9+.</figcaption>
+</figure>
+
+### A co z R² = 1?
+
+Idealne R² równe 1,0 niekoniecznie jest powodem do świętowania. Może wskazywać na nadmierne dopasowanie (overfitting), zwłaszcza jeśli masz mało punktów danych i złożony model. Wielomian stopnia n-1 zawsze przejdzie idealnie przez n punktów danych, dając R² = 1, ale taki model będzie generował skrajnie nieprzewidywalne ekstrapolacje. To jedno z najważniejszych zastrzeżeń w całej analizie regresji i wrócimy do niego później.
+
+## Metryka Pewności i Jak Odnosi się do R²
+
+Procent pewności wyświetlany obok wyników w [kalkulatorze ekstrapolacji](/) pochodzi z wartości R² i reprezentuje, jak wiarygodnie model pasuje do wzorca danych. Służy jako bardziej intuicyjna i przyjazna dla użytkownika reprezentacja wyniku R².
+
+Koncepcyjnie, jeśli R² wynosi 0,85, pewność może być wyrażona jako 85%, sygnalizując, że model uchwyca 85% wariancji danych. Chociaż to mapowanie wydaje się proste, metryka pewności w niektórych implementacjach uwzględnia również dodatkowe czynniki kontekstowe, takie jak liczba punktów danych w stosunku do złożoności modelu. Model z R² = 0,95 zbudowany na 3 punktach danych jest znacznie mniej godny zaufania niż model z R² = 0,95 zbudowany na 30 punktach danych, a dobrze zaprojektowana metryka pewności powinna odzwierciedlać to rozróżnienie.
+
+Metryka pewności jest najbardziej przydatna jako szybkie odniesienie: jeśli widzisz pewność poniżej 50%, powinieneś natychmiast zakwestionować, czy wybrana metoda ekstrapolacji jest odpowiednia. Jeśli widzisz pewność powyżej 80%, model dobrze pasuje do danych historycznych — ale jak omówimy, nie oznacza to automatycznie, że ekstrapolacja będzie dokładna.
+
+## Dlaczego Wysokie R² Nie Gwarantuje Dokładnej Ekstrapolacji
+
+To jest prawdopodobnie najważniejszy punkt w całej tej dyskusji. R² mierzy **dopasowanie w próbie** — jak dobrze model pasuje do danych, które już masz. Ekstrapolacja z definicji polega na przewidywaniu **poza** zakresem obserwowanych danych. Są to fundamentalnie różne zadania.
+
+Rozważ prosty przykład: załóżmy, że masz dane pokazujące wzrost rośliny przez 10 dni. Roślina rośnie stabilnie, a model liniowy daje R² = 0,92. Czy to oznacza, że roślina będzie rosnąć liniowo przez następne 100 dni? Oczywiście nie — w pewnym momencie wzrost osiągnie plateau z powodu ograniczeń zasobów, a model liniowy będzie massively overpredict.
+
+Dlatego zrozumienie natury danych jest równie ważne jak metryki statystyczne. Rozróżnienie między [interpolacją a ekstrapolacją](/blog/interpolation-vs-extrapolation/) jest niezbędne: interpolacja szacuje w ramach obserwowanych granic (gdzie R² jest dobrym wskaźnikiem wiarygodności), podczas gdy ekstrapolacja wykracza poza obserwowane granice (gdzie R² mówi tylko, że linia trendu jest zgodna z przeszłymi danymi, a nie że będzie kontynuowana).
+
+### Pułapka Wielomianowa
+
+Modele wielomianowe są szczególnie mylące. Wielomian wyższego stopnia prawie zawsze da wyższe R² na danych treningowych, ponieważ ma większą elastyczność, aby wirować przez każdy punkt. Ale wielomiany wysokiego stopnia mają tendencję do dramatycznego rozbiegania się poza zakresem danych. Model sześcienny lub kwartyczny, który pięknie pasuje w obserwowanym zakresie, może gwałtownie zakrzywić się w górę lub w dół, gdy tylko wyjdziesz poza niego, produkując bezsensowne prognozy.
+
+Dlatego zrozumienie [metod wielomianowych vs liniowych](/blog/polynomial-vs-linear/) jest tak ważne. Modele liniowe są bardziej ograniczone, a zatem bardziej stabilne w ekstrapolacji, nawet jeśli ich R² jest niższe. Niższe R² z fizycznie rozsądnym modelem jest prawie zawsze lepsze niż wyższe R² z modelem, który nie ma teoretycznego uzasadnienia.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Pułapka wielomianowa: wielomian wysokiego stopnia, który idealnie pasuje do danych wewnątrz zakresu, ale dziko rozbiega się na zewnątrz">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Pułapka Wielomianowa: R²=1.0, Prognoza=Absurd</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="220" y1="40" x2="220" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="100" y="55" font-size="10" fill="#64748b">Dane treningowe</text>
+      <text x="240" y="55" font-size="10" fill="#dc2626" font-weight="600">Ekstrapolacja rozbiega się!</text>
+      <path d="M 80 180 Q 100 140, 120 150 Q 140 100, 160 130 Q 180 80, 200 90 Q 215 70, 220 75" stroke="#d4af37" stroke-width="2" fill="none"/>
+      <path d="M 220 75 Q 240 -80, 280 280 Q 320 100, 360 30 Q 400 -20, 500 240" stroke="#dc2626" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+      <g fill="#1e40af">
+        <circle cx="80" cy="180" r="3.5"/>
+        <circle cx="100" cy="150" r="3.5"/>
+        <circle cx="120" cy="160" r="3.5"/>
+        <circle cx="140" cy="115" r="3.5"/>
+        <circle cx="160" cy="135" r="3.5"/>
+        <circle cx="180" cy="90" r="3.5"/>
+        <circle cx="200" cy="95" r="3.5"/>
+        <circle cx="220" cy="78" r="3.5"/>
+      </g>
+      <text x="100" y="200" font-size="9" fill="#64748b">R² = 1.00 (idealnie!)</text>
+      <text x="430" y="265" font-size="10" fill="#dc2626" font-weight="600">Prognoza: -150 (bezsensowne!)</text>
+    </g>
+  </svg>
+  <figcaption>Pułapka wielomianowa zwizualizowana. Wewnątrz zakresu danych (na lewo od przerywanej linii) wielomian wysokiego stopnia wije się przez każdy punkt treningowy i osiąga idealne R² = 1.00. Ale gdy tylko wyjdziesz poza obserwowany zakres (na prawo od przerywanej linii), ten sam wielomian dziko się rozbiega — wahając się od bardzo wysokich do bardzo niskich wartości, produkując prognozy matematycznie idealne wewnątrz, ale praktycznie absurdalne na zewnątrz. Dlatego samo R² jest słabym przewodnikiem dla ekstrapolacji.</figcaption>
+</figure>
+
+## Przykład Praktyczny: Porównanie R² Różnymi Metodami na Tych Samych Danych
+
+Sprawmy, aby to było konkretne z praktycznym przykładem. Załóżmy, że masz następujące punkty danych reprezentujące kwartalne przychody (w tysiącach) dla małej firmy:
+
+| Kwartał | Przychód |
+|---------|---------|
+| 1 | 120 |
+| 2 | 135 |
+| 3 | 160 |
+| 4 | 200 |
+| 5 | 250 |
+| 6 | 310 |
+
+Chcesz prognozować przychód dla kwartału 8 różnymi metodami. Oto wyniki R², które możesz uzyskać:
+
+| Metoda | R² | Pewność | Prognozowany Przychód Q8 |
+|--------|-----|------------|----------------------|
+| Liniowa | 0.96 | 96% | 430 |
+| Wykładnicza | 0.99 | 99% | 530 |
+| Wielomian (stopień 3) | 1.00 | 100% | 710 |
+| Logarytmiczna | 0.88 | 88% | 365 |
+
+Model wykładniczy ma prawie idealne R², a wielomian ma dosłownie idealne. Ale której prognozie powinieneś zaufać?
+
+Jeśli wzrost przychodów jest napędzany przez złożone efekty sieciowe, model wykładniczy może być uzasadniony, a prognoza [ekstrapolacji wykładniczej](/blog/exponential-growth/) 530 może być rozsądna. Jeśli firma jest na dojrzałym rynku, gdzie wzrost naturalnie zwalnia, model logarytmiczny może być bardziej odpowiedni pomimo niższego R² — koncepcja [ekstrapolacji logarytmicznej](/blog/logarithmic-diminishing-returns/) uchwytuje malejące zyski, które model wykładniczy ignoruje. Jeśli wzrost jest napędzany przez stabilną liniową ekspansję (dodawanie stałej liczby klientów na kwartał), model liniowy jest najbezpieczniejszym wyborem.
+
+Model wielomianowy powinien być traktowany z głębokim podejrzeniem. Jego idealne R² jest matematycznym artefaktem posiadania wystarczającej liczby stopni swobody, aby przejść przez każdy punkt, a nie dowodem prawdziwego zrozumienia. Prognoza Q8 wynosząca 710 jest prawdopodobnie przeszacowaniem napędzanym tendencją wielomianu do dzikiego wahania się poza zakresem treningowym.
+
+## Jak Używać R² do Wyboru Między Metodami Ekstrapolacji
+
+Używanie R² do wyboru modelu wymaga bardziej subtelnego podejścia niż zwykłe wybranie najwyższej wartości. Oto praktyczny przepis pracy:
+
+1. **Dopasuj wiele modeli** do swoich danych za pomocą [kalkulatora ekstrapolacji](https://www.extrapolationcalculator.com/). Zanotuj każdą wartość R².
+
+2. **Odfiltruj wyraźnie słabe dopasowania.** Jeśli model ma R² poniżej 0,3, nie uchwytuje trendu w danych. Odrzuć go niezależnie od teoretycznej atrakcyjności.
+
+3. **Wśród modeli z akceptowalnym R² (0,3 i powyżej), uwzględnij wiedzę dziedzinową.** Czy podstawowe zjawisko naturalnie podąża za wzorcem wykładniczym? Liniowym? Logarytmicznym? Wiedza dziedzinowa powinna mieć duże znaczenie w twojej decyzji.
+
+4. **Strzeż się małych różnic w R².** Jeśli model liniowy daje R² = 0,91, a model wykładniczy daje R² = 0,93, różnica nie jest wystarczająco znacząca, aby przeważyć reasoning.
+
+5. **Sprawdź overfitting.** Jeśli złożony model dramatycznie przewyższa prosty, zadaj sobie pytanie, czy złożoność jest uzasadniona. Odwołaj się do skorygowanego R² (omówionego poniżej) jako zabezpieczenia.
+
+6. **Zweryfikuj wizualnie.** Spójrz na narysowaną linię trendu obok punktów danych.
+
+To podejście dobrze współgra ze zrozumieniem [ekstrapolacji liniowej](/blog/linear-extrapolation/) jako linii bazowej: zacznij od najprostszego rozsądnego modelu i dodawaj złożoność tylko wtedy, gdy dane i wiedza dziedzinowa to uzasadniają.
+
+## Skorygowane R² i Dlaczego Jest Ważne dla Stopni Wielomianu
+
+Skorygowane R² jest modyfikacją standardowego R², która uwzględnia liczbę predyktorów (lub stopni swobody) w modelu. Wzór to:
+
+**R²_adj = 1 − ((1 − R²)(n − 1)) / (n − p − 1)**
+
+Gdzie **n** to liczba punktów danych, a **p** to liczba parametrów w modelu (dla wielomianu stopnia k, p = k + 1).
+
+Kluczowym spostrzeżeniem jest to, że skorygowane R² **karze** za złożoność modelu. Każdy dodatkowy parametr dodany do modelu zwiększy R² (lub przynajmniej go nie zmniejszy), ale skorygowane R² wzrośnie tylko wtedy, gdy dodany parametr poprawi dopasowanie na tyle, aby uzasadnić utratę stopnia swobody.
+
+### Dlaczego To Jest Ważne
+
+Rozważ nasz wcześniejszy przykład z 6 punktami danych. Wielomian stopnia 5 dopasuje się idealnie z R² = 1,0, ale jego skorygowane R² będzie znacznie niższe — potencjalnie nawet ujemne — ponieważ użyłeś prawie tyle parametrów, ile punktów danych. W międzyczasie...
+
+R² i metryka pewności są niezbędnymi narzędziami do oceny jakości ekstrapolacji, ale są punktami wyjścia, a nie punktami końcowymi. Wysokie R² mówi, że twój model jest zgodny z obserwowanymi danymi; nie mówi, że ta zgodność utrzyma się poza zakresem danych. Najbardziej wiarygodne ekstrapolacje pochodzą z połączenia dobrego dopasowania statystycznego z silnym zrozumieniem dziedziny i zdrową dawką sceptycyzmu.
+
+Kiedy następnym razem użyjesz [kalkulatora ekstrapolacji](), poświęć chwilę na porównanie metod, sprawdź skorygowane R² i pomyśl, czy założenia modelu pasują do rzeczywistości twoich danych. A jeśli pracujesz w zakresie swoich danych, a nie poza nim, [kalkulator interpolacji](/interpolation/) może dać ci bardziej wiarygodne wyniki przy użyciu tego samego zestawu narzędzi statystycznych. Liczby są tak dobre, jak osąd, który za nimi stoi.
+
+## Często Zadawane Pytania
+
+<details class="faq-item">
+<summary>Jaka jest dobra wartość R² dla ekstrapolacji?</summary>
+
+To zależy od twojej dziedziny, ale ogólnie R² > 0,7 wskazuje na rozsądne dopasowanie. Do dokładnego prognozowania dąż do R² > 0,85. Pamiętaj jednak, że wysokie R² w zakresie danych nie gwarantuje dokładnej ekstrapolacji — mierzy tylko, jak dobrze model pasuje do obserwowanych punktów.
+
+</details>
+
+<details class="faq-item">
+<summary>Czy R² może być ujemne?</summary>
+
+Tak, dla modeli nieliniowych. R² definiuje się jako 1 − (SS_residual / SS_total). Jeśli model pasuje gorzej niż linia pozioma na średniej, SS_residual przekracza SS_total i R² staje się ujemne. Ujemne R² jest silnym ostrzeżeniem, że wybrana metoda jest nieodpowiednia dla danych.
+
+</details>
+
+<details class="faq-item">
+<summary>Czy zawsze powinienem wybierać metodę z najwyższym R²?</summary>
+
+Niekoniecznie. Metoda z najwyższym R² może być nadmiernie dopasowana (overfitting), zwłaszcza jeśli jest to wielomian wysokiego stopnia. Użyj skorygowanego R², aby ukarać złożoność modelu i zawsze weryfikuj ekstrapolowane wartości względem wiedzy dziedzinowej. Prostszy model z nieco niższym R² jest często bardziej wiarygodny do prognozowania.
+
+</details>
+
+<details class="faq-item">
+<summary>Czym R² różni się od pewności?</summary>
+
+R² mierzy, jak dobrze linia regresji pasuje do obserwowanych danych — jest to miara jakości dopasowania. Pewność odnosi się do wiarygodności samej ekstrapolacji. Wysokie R² daje większą pewność co do metody, ale pewność zależy również od tego, jak daleko ekstrapolujesz i czy podstawowy trend może się zmienić.
+
+</details>

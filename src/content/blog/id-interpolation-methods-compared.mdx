@@ -1,0 +1,218 @@
+---
+title: "Metode Interpolasi Dibandingkan: Linear vs Lagrange vs Spline Kubik"
+description: Perbandingan praktis tiga metode interpolasi — linear, polinomial Lagrange, dan spline kubik natural — dengan contoh, kasus penggunaan, dan kapan masing-masing terbaik.
+publishDate: 2026-05-25
+author: Tim Kalkulator Ekstrapolasi
+category: Metode
+featuredImage: ""
+---
+
+Anda memiliki sekumpulan titik data yang diketahui, dan Anda perlu memperkirakan nilai yang berada di antaranya. Metode interpolasi mana yang harus Anda gunakan? Linear cepat dan sederhana. Polinomial Lagrange mencocokkan setiap titik secara tepat. Spline kubik memberi Anda kurva paling halus. Masing-masing memiliki titik optimal — dan masing-masing dapat menyesatkan jika diterapkan secara ceroboh.
+
+Panduan ini membandingkan tiga metode interpolasi secara langsung, dengan contoh pengerjaan, kerangka keputusan, dan rekomendasi praktis. Jika Anda juga memprediksi nilai *di luar* rentang data Anda, lihat panduan kami tentang [interpolasi vs ekstrapolasi](/blog/interpolation-vs-extrapolation/) untuk perbedaan tersebut.
+
+## Apa itu Interpolasi?
+
+Interpolasi memperkirakan nilai yang tidak diketahui dalam rentang titik data yang diketahui. Tidak seperti metode [ekstrapolasi](/blog/what-is-extrapolation/) yang memproyeksikan melampaui data yang diamati, interpolasi terbatas — perkiraan Anda selalu dikelilingi oleh pengukuran nyata di kedua sisi.
+
+Batasan ini membuat interpolasi secara inheren lebih dapat diandalkan. Nilai yang diperkirakan dibatasi oleh data, itulah sebabnya para insinyur, ilmuwan, dan analis menggunakan interpolasi setiap kali titik target berada di dalam dataset mereka.
+
+Tiga metode yang didukung [kalkulator interpolasi](/interpolation/) kami — linear, polinomial Lagrange, dan spline kubik natural — mengambil pendekatan yang fundamental berbeda untuk masalah yang sama. Berikut perbandingannya.
+
+## Interpolasi Linear
+
+### Cara Kerjanya
+
+Interpolasi linear menghubungkan dua titik data yang berdekatan dengan garis lurus dan membaca nilai pada x target Anda. Ia menemukan dua titik yang mengapit target Anda, menghitung kemiringan di antaranya, dan memperpanjang kemiringan tersebut ke titik target.
+
+Rumusnya sederhana:
+
+**y = y₁ + (x − x₁) × (y₂ − y₁) / (x₂ − x₁)**
+
+Di mana (x₁, y₁) dan (x₂, y₂) adalah dua titik pengapit.
+
+### Kapan Paling Efektif
+
+- **Data berjarak seragam** di mana tren yang mendasari kira-kira linear
+- **Perkiraan cepat** di mana kecepatan lebih penting daripada presisi
+- **Dataset besar** di mana menghitung model yang kompleks akan mahal
+- **Pencarian tabel** — tabel teknik, kurva hasil keuangan, pembacaan sensor
+
+### Di Mana Kurang Efektif
+
+Interpolasi linear mengasumsikan garis lurus antara setiap pasangan titik yang berdekatan. Jika data Anda memiliki kelengkungan — pertumbuhan yang dipercepat, hasil yang menurun, atau osilasi — asumsi garis lurus menimbulkan kesalahan. Nilai perkiraan akan selalu terletak pada tali busur antara dua titik, tidak pernah pada kurva halus yang melaluinya.
+
+Ini terutama terlihat dengan data yang jarang. Jika Anda hanya memiliki lima titik yang melacak parabola, interpolasi linear akan menghasilkan perkiraan lurus bergerigi yang meremehkan puncak dan melebih-lebihkan lembah.
+
+## Interpolasi Polinomial Lagrange
+
+### Cara Kerjanya
+
+Interpolasi Lagrange membangun satu polinomial yang melewati *setiap* titik data secara tepat. Untuk n titik, ia membangun polinomial berderajat n−1 menggunakan fungsi basis berbobot — setiap fungsi basis sama dengan 1 pada titik datanya sendiri dan 0 pada semua titik lainnya.
+
+Hasilnya adalah kecocokan yang tepat secara matematis: polinomial menyentuh setiap titik. Tidak ada residu, tidak ada kesalahan pada data yang diketahui.
+
+### Kapan Paling Efektif
+
+- **Dataset kecil** (2–5 titik) di mana Anda menginginkan kecocokan yang tepat
+- **Tren dasar yang halus** di mana satu polinomial dapat menangkap pola
+- **Analisis teoretis** di mana keanggunan matematis penting
+- **Tujuan pendidikan** — metodenya transparan dan instruktif
+
+[Kalkulator interpolasi](/interpolation/) kami membatasi Lagrange hingga maksimal 5 titik, di mana metode ini berkinerja terbaik.
+
+### Di Mana Kurang Efektif
+
+Polinomial Lagrange menderita **fenomena Runge** — osilasi liar antara titik data ketika derajatnya tinggi. Polinomial derajat-8 yang mencocokkan 9 titik dapat berosilasi secara dramatis antara pengamatan berurutan, menghasilkan nilai interpolasi yang benar secara matematis tetapi tidak masuk akal secara fisik.
+
+Inilah sebabnya kami membatasinya hingga 5 titik. Di luar itu, osilasi membuat metode ini tidak dapat diandalkan. Jika Anda memiliki lebih dari 5 titik dan membutuhkan kurva yang halus, spline kubik adalah pilihan yang lebih baik.
+
+Lagrange juga tidak menangani titik baru dengan baik — menambahkan satu pengamatan mengubah seluruh polinomial, yang membuatnya tidak praktis untuk dataset inkremental.
+
+## Interpolasi Spline Kubik Natural
+
+### Cara Kerjanya
+
+Spline kubik mencocokkan polinomial kubik terpisah antara setiap pasangan titik data yang berdekatan, lalu menjahitnya bersama dengan kondisi pencocokan. Di setiap titik interior, kubik yang berdekatan berbagi nilai yang sama, turunan pertama yang sama (kemiringan), dan turunan kedua yang sama (kelengkungan). Kondisi "natural" menetapkan turunan kedua menjadi nol di kedua ujung.
+
+Hasilnya adalah kurva paling halus yang mungkin melalui data Anda — secara matematis, ia meminimalkan total kelengkungan di semua segmen.
+
+### Kapan Paling Efektif
+
+- **Kurva halus** — bingkai kunci animasi, profil teknik, data ilmiah
+- **Dataset sedang hingga besar** di mana linear terlalu kasar dan Lagrange berosilasi
+- **Sistem fisik** di mana proses yang mendasari kontinu dan dapat dibedakan
+- **Skenario apa pun di mana kehalusan visual penting** — rendering grafik, CAD, pemrosesan sinyal
+
+### Di Mana Kurang Efektif
+
+Spline kubik tidak dapat mengekstrapolasi — ia hanya bekerja dalam rentang data. Jika x target Anda berada di bawah titik data terkecil atau di atas yang terbesar, metode ini menghasilkan kesalahan. Ini sesuai desain: mengekstrapolasi dengan spline sangat tidak dapat diandalkan karena segmen kubik tidak dibatasi di luar ujung-ujungnya.
+
+Perhitungan spline juga lebih mahal daripada interpolasi linear. Untuk dataset yang sangat besar (ribuan titik), penyelesaian sistem tridiagonal menambah overhead, meskipun masih efisien dibandingkan dengan polinomial derajat tinggi.
+
+Untuk memahami kualitas kecocokan model di seluruh metode, panduan kami tentang [skor R²](/blog/r-squared-confidence/) menjelaskan cara mengevaluasi apakah metode yang Anda pilih benar-benar sesuai dengan pola data Anda.
+
+## Perbandingan Langsung
+
+| Fitur | Linear | Lagrange | Spline Kubik |
+|---------|--------|----------|--------------|
+| Kualitas kecocokan | Perkiraan | Tepat di titik data | Tepat di titik data |
+| Kehalusan | Tidak ada (lurus per segmen) | Dapat berosilasi | Halus (turunannya kontinu) |
+| Poin maksimum | Tak terbatas | 5 (disarankan) | Tak terbatas |
+| Ekstrapolasi | Terbatas (menggunakan segmen batas) | Mungkin tetapi berisiko | Tidak didukung |
+| Kecepatan komputasi | Tercepat | Sedang | Sedang |
+| Terbaik untuk | Perkiraan cepat, tren linear | Dataset kecil, kecocokan tepat | Kurva halus, data fisik |
+| Risiko terbesar | Melewatkan kelengkungan | Fenomena Runge | Tidak bisa mengekstrapolasi |
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Interpolasi linear vs Lagrange vs spline kubik pada empat titik data yang sama">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="10" fill="#374151">
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Tiga Metode pada Data yang Sama</text>
+      <g fill="#1e40af">
+        <circle cx="100" cy="200" r="4.5"/>
+        <circle cx="200" cy="140" r="4.5"/>
+        <circle cx="300" cy="80" r="4.5"/>
+        <circle cx="400" cy="160" r="4.5"/>
+      </g>
+      <path d="M 100 200 L 200 140 L 300 80 L 400 160" stroke="#d4af37" stroke-width="2" stroke-dasharray="4 2"/>
+      <path d="M 100 200 Q 200 130, 300 80 Q 400 130, 400 160" stroke="#1e40af" stroke-width="2" fill="none"/>
+      <path d="M 100 200 C 200 130, 250 100, 300 80 C 350 90, 380 140, 400 160" stroke="#059669" stroke-width="2.5" fill="none"/>
+      <g transform="translate(420, 50)">
+        <rect x="0" y="0" width="160" height="100" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <line x1="10" y1="22" x2="40" y2="22" stroke="#d4af37" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="48" y="25" font-size="10">Linear (per segmen)</text>
+        <line x1="10" y1="44" x2="40" y2="44" stroke="#1e40af" stroke-width="2"/>
+        <text x="48" y="47" font-size="10">Lagrange (melengkung)</text>
+        <line x1="10" y1="66" x2="40" y2="66" stroke="#059669" stroke-width="2.5"/>
+        <text x="48" y="69" font-size="10">Spline kubik (halus)</text>
+        <circle cx="25" cy="86" r="3.5" fill="#1e40af"/>
+        <text x="48" y="89" font-size="10">Titik data</text>
+      </g>
+      <text x="120" y="260" font-size="9" fill="#d4af37" font-weight="600">Linear</text>
+      <text x="220" y="260" font-size="9" fill="#1e40af" font-weight="600">Lagrange</text>
+      <text x="330" y="260" font-size="9" fill="#059669" font-weight="600">Spline</text>
+    </g>
+  </svg>
+  <figcaption>Tiga metode interpolasi diterapkan pada empat titik data yang sama. Linear (emas putus-putus) menghubungkan titik yang berdekatan dengan segmen lurus — sederhana tetapi melewatkan kelengkungan. Lagrange (biru) mencocokkan satu polinomial melalui semua titik — tepat tetapi dapat berosilasi. Spline kubik (hijau) menjahit segmen kubik dengan turunan kontinu — halus dan stabil untuk dataset sedang. Pilihan tergantung pada bentuk data, jumlah titik, dan apakah ekstrapolasi diperlukan.</figcaption>
+</figure>
+
+## Contoh Pengerjaan
+
+Pertimbangkan empat titik data yang melacak suhu selama sehari berikut:
+
+| Jam | Suhu (°C) |
+|-----|-----------|
+| 6 | 12 |
+| 10 | 18 |
+| 14 | 26 |
+| 18 | 20 |
+
+Kami ingin suhu pada jam 12 siang (jam 12).
+
+**Interpolasi linear**: Antara (10, 18) dan (14, 26). Kemiringan = (26−18)/(14−10) = 2. Hasil: 18 + 2×2 = **22°C**.
+
+**Polinomial Lagrange**: Mencocokkan polinomial derajat-3 melalui keempat titik. Polinomial sedikit miring di bawah perkiraan linear karena memperhitungkan penurunan berikutnya pada jam 18. Hasil: sekitar **23,5°C**.
+
+**Spline kubik natural**: Mencocokkan segmen kubik dengan kelengkungan kontinu. Spline menyadari bahwa suhu masih naik pada jam 12 tetapi melambat menuju puncak. Hasil: sekitar **23,2°C**.
+
+Perbedaannya kecil dalam contoh ini, tetapi penting. Linear meremehkan karena mengabaikan kelengkungan. Lagrange sedikit melebih-lebihkan karena polinomial derajat tinggi bergoyang. Spline berada di antara keduanya — halus, terbatas, dan masuk akal secara fisik.
+
+## Cara Memilih Metode yang Tepat
+
+Gunakan kerangka keputusan ini:
+
+1. **Apakah data Anda kira-kira linear?** Gunakan interpolasi linear — cepat, sederhana, dan tidak akan menyesatkan Anda
+2. **Apakah Anda memiliki 5 titik atau kurang dan membutuhkan kecocokan tepat?** Gunakan polinomial Lagrange
+3. **Apakah Anda membutuhkan kurva halus melalui banyak titik?** Gunakan spline kubik
+4. **Apakah Anda bekerja dengan data fisik atau teknik?** Gunakan spline kubik — sistem nyata itu halus
+5. **Apakah Anda perlu memprediksi di luar rentang data?** Tidak ada metode ini yang aman untuk itu — gunakan [kalkulator ekstrapolasi gratis](https://www.extrapolationcalculator.com/) kami yang menawarkan metode ekstrapolasi [linear](/blog/linear-extrapolation/), [eksponensial](/blog/exponential-growth/), dan [logaritmik](/blog/logarithmic-diminishing-returns/)
+6. **Apakah Anda membandingkan jenis model?** Panduan kami tentang [metode polinomial vs linear](/blog/polynomial-vs-linear/) mencakup trade-off secara detail
+
+## Tips Praktis
+
+- **Selalu visualisasikan data Anda terlebih dahulu** — jika terlihat seperti garis lurus, gunakan interpolasi linear; jika melengkung, gunakan spline
+- **Periksa pencilan** — satu titik buruk mendistorsi Lagrange secara dramatis dan mempengaruhi kelengkungan spline
+- **Linear tidak pernah salah** — hanya kurang presisi untuk data melengkung. Jika Anda tidak yakin, linear memberikan dasar yang dapat dipertahankan
+- **Jangan mencampur interpolasi dan ekstrapolasi** — interpolasi dalam rentang Anda, ekstrapolasi dengan metode khusus
+- **Lebih banyak titik membantu semua metode** — tetapi Lagrange menurun dengan terlalu banyak, sementara linear dan spline meningkat
+
+## Kesimpulan
+
+Interpolasi linear cepat dan dapat diandalkan untuk data yang kira-kira linear. Polinomial Lagrange memberikan kecocokan tepat untuk dataset kecil tetapi berosilasi dengan lebih banyak titik. Spline kubik natural menghasilkan kurva paling halus dan menangani dataset sedang hingga besar dengan baik, tetapi tidak dapat mengekstrapolasi.
+
+Pilihan yang tepat tergantung pada bentuk data Anda, jumlah titik, dan apakah Anda membutuhkan kecepatan, kehalusan, atau ketepatan. Coba ketiga metode pada dataset yang sama menggunakan [kalkulator interpolasi](/interpolation/) kami dan bandingkan hasilnya — perbedaannya memberi tahu Anda banyak tentang pola dasar data Anda.
+
+Untuk prediksi numerik di luar rentang data Anda, [kalkulator ekstrapolasi](https://www.extrapolationcalculator.com/) menyediakan lima metode yang sesuai untuk pola tren yang berbeda. Saat Anda perlu memodelkan hubungan antara variabel daripada menginterpolasi antara titik, [kalkulator regresi](/regression/) menawarkan alat analisis regresi.
+
+## Pertanyaan yang Sering Diajukan
+
+<details class="faq-item">
+<summary>Metode interpolasi mana yang paling akurat?</summary>
+
+Tidak ada satu metode pun yang selalu paling akurat. Linear paling akurat untuk data yang benar-benar linear. Spline kubik paling akurat untuk proses fisik yang halus dan kontinu. Lagrange paling akurat ketika Anda memiliki sangat sedikit titik dan fungsi dasarnya adalah polinomial. Metode terbaik sesuai dengan pola data Anda yang sebenarnya.
+
+</details>
+
+<details class="faq-item">
+<summary>Kapan saya harus menghindari interpolasi spline kubik?</summary>
+
+Hindari spline kubik ketika Anda perlu mengekstrapolasi di luar rentang data Anda — ia hanya bekerja dalam batas dataset Anda. Juga berhati-hati dengan data yang memiliki sudut tajam atau diskontinuitas, di mana batasan kehalusan spline mungkin meratakan fitur yang nyata.
+
+</details>
+
+<details class="faq-item">
+<summary>Apakah interpolasi Lagrange lebih baik daripada linear?</summary>
+
+Belum tentu. Lagrange mencocokkan setiap titik secara tepat, tetapi ketepatan itu dapat menghasilkan osilasi liar antara titik (fenomena Runge) ketika Anda memiliki lebih dari 5–6 pengamatan. Interpolasi linear lebih stabil dan dapat diprediksi, terutama dengan data yang bising atau tidak teratur.
+
+</details>
+
+<details class="faq-item">
+<summary>Bisakah saya menggunakan interpolasi untuk peramalan?</summary>
+
+Tidak. Interpolasi memperkirakan nilai *di antara* titik data yang diketahui. Peramalan memerlukan prediksi melampaui rentang yang diamati, yaitu ekstrapolasi. Gunakan [kalkulator ekstrapolasi](https://www.extrapolationcalculator.com/) untuk peramalan — ia menyediakan metode yang dirancang untuk prediksi di luar rentang.
+
+</details>

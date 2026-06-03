@@ -1,0 +1,438 @@
+---
+title: "كيفية استقراء البيانات في إكسل (خطوة بخطوة)"
+description: تعلم 4 طرق سهلة لاستقراء البيانات في إكسل باستخدام TREND وFORECAST.LINEAR وخطوط الاتجاه وأوراق التنبؤ. أمثلة خطوة بخطوة مضمنة.
+publishDate: 2026-06-10
+author: فريق حاسبة الاستقراء
+category: دروس تعليمية
+featuredImage: ""
+---
+
+يعد إكسل أحد أكثر الأدوات استخدامًا للتنبؤ بالبيانات. سواء كنت تتوقع الإيرادات ربع السنوية، أو تقدر احتياجات المخزون للشهر القادم، أو تتنبأ بنمو المستخدمين، فإن إكسل يحتوي على وظائف مدمجة تجعل الاستقراء في متناول أي شخص لديه جدول بيانات.
+
+لكن معرفة كيفية استقراء البيانات في إكسل تتطلب اختيار الطريقة المناسبة لموقفك. يرشدك هذا الدليل عبر أربعة أساليب — من الصيغ البسيطة إلى أوراق التنبؤ بنقرة واحدة — حتى تتمكن من اختيار ما يناسب بياناتك ومستوى مهاراتك. إذا كنت جديدًا على المفهوم نفسه، فابدأ بدليلنا حول [ما هو الاستقراء](/blog/what-is-extrapolation/).
+
+### طرق الاستقراء الأربع في إكسل بنظرة سريعة
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="نظرة عامة على طرق الاستقراء الأربع في إكسل">
+  <rect width="600" height="200" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <g transform="translate(20, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">1</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">TREND</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">صيغة</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">متعددة</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">القيم</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">كل إكسل</text>
+    </g>
+    <g transform="translate(165, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">2</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">FORECAST</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">.LINEAR</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">قيمة</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">مفردة</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">2016+</text>
+    </g>
+    <g transform="translate(310, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">3</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">خط الاتجاه</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">مرئي</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">مخطط</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">تراكب</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">كل إكسل</text>
+    </g>
+    <g transform="translate(455, 30)">
+      <rect x="0" y="0" width="130" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="1.5"/>
+      <text x="65" y="25" text-anchor="middle" font-size="22" font-weight="700" fill="#d4af37">4</text>
+      <text x="65" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#0a0a0a">ورقة</text>
+      <text x="65" y="72" text-anchor="middle" font-size="10" fill="#64748b">التنبؤ</text>
+      <text x="65" y="88" text-anchor="middle" font-size="9" fill="#64748b">نقرة واحدة</text>
+      <text x="65" y="100" text-anchor="middle" font-size="9" fill="#64748b">لوحة</text>
+      <text x="65" y="130" text-anchor="middle" font-size="9" fill="#d4af37" font-weight="600">2016+</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>أربع طرق لاستقراء البيانات في إكسل: دالة TREND، وFORECAST.LINEAR، وخطوط اتجاه المخطط، وورقة التنبؤ — مقارنة جنبًا إلى جنب لسهولة الاستخدام وتوافق إصدار إكسل.</figcaption>
+</figure>
+
+## الطريقة 1: استخدام دالة TREND
+
+### ما تفعله
+
+تحسب دالة TREND القيم المتوقعة على طول اتجاه خطي. تأخذ بياناتك المعروفة، وتناسب خطًا مستقيمًا من خلالها باستخدام المربعات الصغرى، وتعيد قيم y لأي قيم x جديدة تحددها.
+
+### الصيغة
+
+```
+=TREND(known_y's, known_x's, new_x's)
+```
+
+- **known_y's**: نطاق القيم التابعة المعروفة (مثل أرقام المبيعات)
+- **known_x's**: نطاق القيم المستقلة المعروفة (مثل أرقام الأشهر)
+- **new_x's**: قيم x التي تريد التنبؤ بها
+
+### نظرة عامة مرئية
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="دالة TREND: تمتد البيانات المعروفة إلى قيم متوقعة عبر خط اتجاه خطي">
+  <defs>
+    <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="280" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">دالة TREND — الإسقاط الخطي</text>
+    <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <path d="M 40 220 L 560 80" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M 130 205 L 175 180 L 220 158 L 265 138 L 310 115 L 355 95 L 400 80 L 445 65 L 490 50 L 535 38" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <path d="M 400 80 L 445 65 L 490 50 L 535 38 L 535 240 L 400 240 Z" fill="url(#trendFill)"/>
+    <line x1="400" y1="40" x2="400" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="425" y="232" font-size="10" fill="#64748b">متوقع</text>
+    <g fill="#d4af37">
+      <circle cx="130" cy="205" r="4"/>
+      <circle cx="175" cy="180" r="4"/>
+      <circle cx="220" cy="158" r="4"/>
+      <circle cx="265" cy="138" r="4"/>
+      <circle cx="310" cy="115" r="4"/>
+      <circle cx="355" cy="95" r="4"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="400" cy="80" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="445" cy="65" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="490" cy="50" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="535" cy="38" r="5" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="120" y="258" font-size="10" fill="#64748b">M1</text>
+    <text x="165" y="258" font-size="10" fill="#64748b">M2</text>
+    <text x="210" y="258" font-size="10" fill="#64748b">M3</text>
+    <text x="255" y="258" font-size="10" fill="#64748b">M4</text>
+    <text x="300" y="258" font-size="10" fill="#64748b">M5</text>
+    <text x="345" y="258" font-size="10" fill="#64748b">M6</text>
+    <text x="388" y="258" font-size="10" fill="#1e40af" font-weight="600">M7</text>
+    <text x="433" y="258" font-size="10" fill="#1e40af" font-weight="600">M8</text>
+    <text x="478" y="258" font-size="10" fill="#1e40af" font-weight="600">M9</text>
+    <text x="523" y="258" font-size="10" fill="#1e40af" font-weight="600">M10</text>
+    <g transform="translate(0,0)">
+      <circle cx="155" cy="100" r="4" fill="#d4af37"/>
+      <text x="166" y="104" font-size="10">البيانات المعروفة (ذهبي)</text>
+      <circle cx="155" cy="118" r="4" fill="#1e40af"/>
+      <text x="166" y="122" font-size="10">متوقع (أزرق)</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>رسم توضيحي لدالة TREND في إكسل: ستة أشهر من بيانات المبيعات المعروفة (نقاط ذهبية، M1–M6) يتم تركيبها بخط اتجاه خطي للمربعات الصغرى يمتد للأمام للتنبؤ بأربعة أشهر قادمة (نقاط زرقاء، M7–M10). يظهر الخط الذهبي المتقطع النموذج الخطي الأساسي المستخدم لاستقراء القيم خارج النطاق المرصود.</figcaption>
+</figure>
+
+### مثال خطوة بخطوة
+
+افترض أن لديك بيانات مبيعات شهرية من يناير إلى يونيو وتريد التنبؤ بيوليو وأغسطس:
+
+| الشهر | المبيعات |
+|-------|-------|
+| 1 | $10,000 |
+| 2 | $12,000 |
+| 3 | $14,500 |
+| 4 | $16,000 |
+| 5 | $18,500 |
+| 6 | $20,000 |
+
+1. أدخل بياناتك في العمودين A (الشهر) و B (المبيعات)
+2. في الخلية D2، أدخل: `=TREND(B2:B7, A2:A7, 7)` — يتنبأ هذا بالشهر 7
+3. في الخلية D3، أدخل: `=TREND(B2:B7, A2:A7, 8)` — يتنبأ هذا بالشهر 8
+
+يقوم إكسل بتركيب اتجاه خطي خلال الأشهر 1–6 وإسقاطه للأمام. ترجع دالة TREND تقريبًا $22,143 للشهر 7 و $24,286 للشهر 8.
+
+تكون TREND مفيدة بشكل خاص عندما تحتاج إلى التنبؤ بقيم متعددة في وقت واحد — يمكنك تمرير مصفوفة من قيم x الجديدة والحصول على جميع التنبؤات في خطوة واحدة.
+
+## الطريقة 2: استخدام دالة FORECAST.LINEAR
+
+### ما تفعله
+
+تتنبأ دالة FORECAST.LINEAR (المتاحة في إكسل 2016 والإصدارات الأحدث) بقيمة y واحدة لقيمة x معينة بناءً على البيانات الموجودة. تستخدم نفس خوارزمية الانحدار الخطي مثل TREND ولكنها مصممة للتنبؤات بنقطة واحدة.
+
+### الصيغة
+
+```
+=FORECAST.LINEAR(x, known_y's, known_x's)
+```
+
+- **x**: نقطة البيانات المحددة التي تريد التنبؤ بها
+- **known_y's**: نطاق القيم التابعة المعروفة
+- **known_x's**: نطاق القيم المستقلة المعروفة
+
+### نظرة عامة مرئية
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="FORECAST.LINEAR: إدخال x واحد يعيد قيمة y متوقعة واحدة على خط اتجاه خطي">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e40af"/>
+    </marker>
+  </defs>
+  <rect width="600" height="280" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">FORECAST.LINEAR — التنبؤ بنقطة واحدة</text>
+    <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <path d="M 70 220 L 530 50" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 4"/>
+    <path d="M 90 210 L 150 190 L 210 170 L 270 145 L 330 120 L 390 95 L 450 70 L 510 50" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <g fill="#d4af37">
+      <circle cx="90" cy="210" r="4"/>
+      <circle cx="150" cy="190" r="4"/>
+      <circle cx="210" cy="170" r="4"/>
+      <circle cx="270" cy="145" r="4"/>
+      <circle cx="330" cy="120" r="4"/>
+      <circle cx="390" cy="95" r="4"/>
+      <circle cx="450" cy="70" r="4"/>
+      <circle cx="510" cy="50" r="4"/>
+    </g>
+    <line x1="510" y1="50" x2="510" y2="240" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <line x1="40" y1="50" x2="510" y2="50" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="510" cy="50" r="6" fill="#1e40af" stroke="#fff" stroke-width="2"/>
+    <text x="500" y="258" font-size="10" fill="#1e40af" font-weight="600">x = 12</text>
+    <text x="22" y="54" font-size="10" fill="#1e40af" font-weight="600">y ≈ $32,857</text>
+    <g>
+      <rect x="120" y="100" width="180" height="50" rx="6" fill="#fff" stroke="#1e40af" stroke-width="1.5"/>
+      <text x="130" y="120" font-size="10" font-weight="600" fill="#0a0a0a">صيغة الخلية</text>
+      <text x="130" y="138" font-size="10" font-family="monospace" fill="#1e40af">=FORECAST.LINEAR(12, B2:B7, A2:A7)</text>
+    </g>
+    <line x1="300" y1="125" x2="505" y2="55" stroke="#1e40af" stroke-width="1.2" marker-end="url(#arrow)"/>
+  </g>
+</svg>
+  <figcaption>مثال FORECAST.LINEAR في إكسل: يتم إدخال قيمة x مستهدفة واحدة 12 في الصيغة جنبًا إلى جنب مع نطاق y المعروف (B2:B7) ونطاق x (A2:A7)، مما يعيد قيمة y متوقعة واحدة تبلغ حوالي $32,857. تحدد النقطة الزرقاء على خط الاتجاه الذهبي موضع الإسقاط.</figcaption>
+</figure>
+
+### مثال خطوة بخطوة
+
+باستخدام نفس بيانات المبيعات، توقع الإيرادات للشهر 12:
+
+1. في أي خلية فارغة، أدخل: `=FORECAST.LINEAR(12, B2:B7, A2:A7)`
+2. يعيد إكسل المبيعات المتوقعة للشهر 12 بناءً على الاتجاه الخطي خلال الأشهر 1–6
+
+ستكون النتيجة حوالي $32,857 — أي ضعف قيمة الشهر 1 تقريبًا، مما يعكس الاتجاه التصاعدي الثابت.
+
+FORECAST.LINEAR هي أبسط طريقة للحصول على استقراء سريع بقيمة واحدة. بالنسبة [للاستقراء الخطي](/blog/linear-extrapolation/) على بيانات مستقرة، غالبًا ما تكون هذه الصيغة الواحدة كل ما تحتاجه.
+
+## الطريقة 3: استخدام خط الاتجاه في مخطط
+
+### ما يفعله
+
+يضيف خط الاتجاه إسقاطًا مرئيًا إلى مخطط إكسل الخاص بك. يمكنك اختيار نوع خط الاتجاه (خطي، متعدد الحدود، أسي) وتمديده للأمام لمعرفة أين تتجه بياناتك. هذه هي الطريقة الأكثر بديهية لأنه يمكنك *رؤية* التنبؤ.
+
+### نظرة عامة مرئية
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="مخطط خط الاتجاه: نقاط بيانات مع خط اتجاه خطي يمتد للأمام إلى المستقبل">
+  <rect width="600" height="300" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">خط الاتجاه — تنبؤ مرئي في مخطط</text>
+    <rect x="40" y="40" width="520" height="220" fill="#fff" stroke="#e5e7eb"/>
+    <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="140" x2="540" y2="140" stroke="#e5e7eb" stroke-dasharray="3 3"/>
+    <line x1="380" y1="60" x2="380" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="200" y="55" font-size="10" fill="#64748b">البيانات التاريخية</text>
+    <text x="420" y="55" font-size="10" fill="#64748b">منطقة التنبؤ</text>
+    <path d="M 80 220 L 130 200 L 180 180 L 230 160 L 280 140 L 330 115 L 380 100 L 430 80 L 480 60 L 530 40" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <g fill="#d4af37">
+      <circle cx="80" cy="220" r="4"/>
+      <circle cx="130" cy="200" r="4"/>
+      <circle cx="180" cy="180" r="4"/>
+      <circle cx="230" cy="160" r="4"/>
+      <circle cx="280" cy="140" r="4"/>
+      <circle cx="330" cy="115" r="4"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="380" cy="100" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="430" cy="80" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="480" cy="60" r="5" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="530" cy="40" r="5" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="455" y="280" font-size="11" font-family="monospace" fill="#d4af37" font-weight="600">y = 2,143x + 7,857</text>
+    <text x="510" y="295" font-size="11" font-family="monospace" fill="#0a0a0a" font-weight="600">R² = 0.998</text>
+  </g>
+</svg>
+  <figcaption>خط اتجاه مخطط إكسل: يتم تراكب خط اتجاه خطي على مخطط انتشار المبيعات وتمديده للأمام لإسقاط الفترات الأربع التالية (نقاط زرقاء). يعرض المخطط معادلة خط الاتجاه (y = 2,143x + 7,857) وقيمة R² البالغة 0.998، مما يشير إلى ملاءمة خطية ممتازة تدعم الاستقراء الواثق.</figcaption>
+</figure>
+
+### تعليمات خطوة بخطوة
+
+1. حدد بياناتك (الأشهر والمبيعات)
+2. انتقل إلى **إدراج → مخطط** واختر مخطط خطي أو مخطط مبعثر
+3. انقر على أي نقطة بيانات في المخطط لتحديد السلسلة
+4. انقر بزر الماوس الأيمن واختر **إضافة خط اتجاه**
+5. في جزء خيارات خط الاتجاه:
+   - اختر **خطي** (أو متعدد الحدود/أسي إذا كانت بياناتك منحنية)
+   - ضمن **التنبؤ**، اضبط **للأمام** على عدد الفترات التي تريد إسقاطها (مثل 6 أشهر)
+   - حدد **عرض المعادلة على المخطط** و **عرض قيمة R-square** لرؤية جودة الملاءمة
+
+يمتد خط الاتجاه إلى ما بعد بياناتك، ويظهر القيم المتوقعة بصريًا. تخبرك قيمة R² بمدى جودة ملاءمة الخط — راجع دليلنا حول [نتائج R²](/blog/r-squared-confidence/) للتفسير.
+
+### متى تستخدم هذه الطريقة
+
+خطوط الاتجاه هي الأفضل عندما تحتاج إلى تنبؤ مرئي للعروض التقديمية أو التقارير. لا تعطيك قيم خلايا دقيقة، لكنها تجعل الاتجاه مفهومًا فوريًا للجماهير غير التقنية.
+
+## الطريقة 4: استخدام ورقة التنبؤ في إكسل (نقرة واحدة)
+
+### ما تفعله
+
+تولد ميزة ورقة التنبؤ (إكسل 2016+) تنبؤًا كاملاً بمخطط وفترات ثقة وجدول من القيم المتوقعة — كل ذلك بنقرة واحدة. إنها أسرع طريقة للحصول على تنبؤ بمظهر احترافي.
+
+### نظرة عامة مرئية
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="ورقة التنبؤ: مخطط كامل ببيانات تاريخية وخط متوقع ونطاقات فاصل ثقة علوية/سفلية بالإضافة إلى جدول تنبؤ">
+  <defs>
+    <linearGradient id="ciFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.10"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="320" fill="#f8f8fc"/>
+  <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+    <text x="40" y="22" font-weight="600" fill="#0a0a0a">ورقة التنبؤ — مخطط + فاصل ثقة + جدول</text>
+    <rect x="40" y="40" width="380" height="220" fill="#fff" stroke="#e5e7eb"/>
+    <line x1="60" y1="240" x2="400" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="60" y1="60" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+    <line x1="260" y1="60" x2="260" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+    <path d="M 70 220 L 100 205 L 130 190 L 160 175 L 190 160 L 220 145 L 250 125 L 280 110 L 310 90 L 340 75 L 370 60" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+    <path d="M 260 110 L 280 90 L 310 65 L 340 45 L 370 25 L 370 95 L 340 105 L 310 115 L 280 130 L 260 110 Z" fill="url(#ciFill)" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 2"/>
+    <g fill="#d4af37">
+      <circle cx="70" cy="220" r="3.5"/>
+      <circle cx="100" cy="205" r="3.5"/>
+      <circle cx="130" cy="190" r="3.5"/>
+      <circle cx="160" cy="175" r="3.5"/>
+      <circle cx="190" cy="160" r="3.5"/>
+      <circle cx="220" cy="145" r="3.5"/>
+      <circle cx="250" cy="125" r="3.5"/>
+    </g>
+    <g fill="#1e40af">
+      <circle cx="280" cy="110" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="310" cy="90" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="340" cy="75" r="4" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="370" cy="60" r="4" stroke="#fff" stroke-width="1.5"/>
+    </g>
+    <text x="135" y="55" font-size="10" fill="#64748b">تاريخي</text>
+    <text x="285" y="55" font-size="10" fill="#1e40af" font-weight="600">تنبؤ</text>
+    <rect x="60" y="265" width="350" height="14" fill="#94a3b8" fill-opacity="0.3"/>
+    <text x="66" y="275" font-size="9" fill="#475569">فاصل ثقة 95%</text>
+    <g transform="translate(440, 50)">
+      <rect x="0" y="0" width="140" height="210" fill="#fff" stroke="#e5e7eb" rx="4"/>
+      <text x="10" y="18" font-size="10" font-weight="600" fill="#0a0a0a">جدول التنبؤ</text>
+      <line x1="10" y1="25" x2="130" y2="25" stroke="#e5e7eb"/>
+      <text x="10" y="42" font-size="9" fill="#64748b">الفترة</text>
+      <text x="80" y="42" font-size="9" fill="#64748b">القيمة</text>
+      <line x1="10" y1="48" x2="130" y2="48" stroke="#e5e7eb"/>
+      <text x="10" y="62" font-size="9" fill="#1e40af">M7</text>
+      <text x="80" y="62" font-size="9" fill="#1e40af">$22,143</text>
+      <text x="10" y="78" font-size="9" fill="#1e40af">M8</text>
+      <text x="80" y="78" font-size="9" fill="#1e40af">$24,286</text>
+      <text x="10" y="94" font-size="9" fill="#1e40af">M9</text>
+      <text x="80" y="94" font-size="9" fill="#1e40af">$26,429</text>
+      <text x="10" y="110" font-size="9" fill="#1e40af">M10</text>
+      <text x="80" y="110" font-size="9" fill="#1e40af">$28,571</text>
+      <text x="10" y="126" font-size="9" fill="#1e40af">M11</text>
+      <text x="80" y="126" font-size="9" fill="#1e40af">$30,714</text>
+      <text x="10" y="142" font-size="9" fill="#1e40af">M12</text>
+      <text x="80" y="142" font-size="9" fill="#1e40af">$32,857</text>
+      <line x1="10" y1="152" x2="130" y2="152" stroke="#e5e7eb"/>
+      <text x="10" y="168" font-size="9" fill="#64748b" font-style="italic">CI: ±$2,400</text>
+      <text x="10" y="184" font-size="9" fill="#64748b" font-style="italic">مستوى 95%</text>
+    </g>
+  </g>
+</svg>
+  <figcaption>ورقة التنبؤ في إكسل: لوحة تحكم بنقرة واحدة تجمع بين مخطط تاريخي (خط ذهبي، M1–M7)، واستمرار التنبؤ (خط أزرق، M8–M11) مع نطاق فاصل ثقة 95% (منطقة مظللة بالرمادي)، وجدول تنبؤ يسرد القيم المتوقعة لكل فترة مستقبلية. هذا المنظر مثالي للتقارير حيث يحتاج القراء إلى كل من الأرقام وتصور سريع لعدم اليقين في التنبؤ.</figcaption>
+</figure>
+
+### تعليمات خطوة بخطوة
+
+1. حدد نطاق بياناتك (بما في ذلك التواريخ والقيم)
+2. انتقل إلى علامة التبويب **بيانات** وانقر على **ورقة التنبؤ**
+3. في مربع حوار إنشاء ورقة عمل التنبؤ:
+   - حدد تاريخ **نهاية التنبؤ**
+   - اضبط فاصل الثقة إذا لزم الأمر (الافتراضي هو 95%)
+   - اختر ما إذا كنت تريد تضمين اكتشاف الموسمية
+4. انقر على **إنشاء**
+
+يقوم إكسل بإنشاء ورقة جديدة بمخطط يظهر البيانات التاريخية والقيم المتوقعة وحدود الثقة. كما ينشئ جدولاً بكل قيمة متوقعة ونطاق الثقة الخاص بها.
+
+### متى تستخدم هذه الطريقة
+
+ورقة التنبؤ مثالية للتقارير التجارية حيث تحتاج إلى كل من الأرقام وتصور مصقول. تتعامل تلقائيًا مع الموسمية، وهو ما لا تفعله الطرق الأبسط. للبيانات ذات الأنماط الموسمية المتكررة (مثل مبيعات التجزئة التي تبلغ ذروتها كل ديسمبر)، هذا هو أفضل خيار في إكسل.
+
+## جدول المقارنة: أي طريقة يجب استخدامها؟
+
+| الطريقة | الأفضل لـ | إصدار إكسل | سهولة الاستخدام |
+|--------|----------|---------------|-------------|
+| TREND | نقاط بيانات متعددة | جميع الإصدارات | متوسط |
+| FORECAST.LINEAR | قيمة مفردة سريعة | 2016+ | سهل |
+| خط الاتجاه | تنبؤ مرئي | جميع الإصدارات | سهل |
+| ورقة التنبؤ | تنبؤ متقدم بالموسمية | 2016+ | الأسهل |
+
+تفترض كل طريقة علاقة خطية افتراضيًا، على الرغم من أن خطوط الاتجاه وأوراق التنبؤ تدعم أنماطًا أخرى. لمقارنة الأساليب الخطية مقابل المنحنية، راجع دليلنا حول [الاستقراء متعدد الحدود مقابل الخطي](/blog/polynomial-extrapolation-vs-linear/).
+
+## نصائح وأفضل الممارسات
+
+- **تحقق من القيم الشاذة أولاً** — يمكن لنقطة بيانات شاذة واحدة أن تسحب خط الاتجاه بعيدًا عن الواقع
+- **استخدم بيانات تاريخية كافية** — على الأقل 5–6 نقاط بيانات لاتجاه ذي معنى؛ أقل من ذلك وأنت تخمن
+- **تحقق من صحة الاتجاه قبل تمديده** — إذا كان R² أقل من 0.7، فقد لا يكون النموذج الخطي ملائمًا بشكل كافٍ لاستقراء موثوق
+- **الاتجاهات الخطية تعمل بشكل أفضل للبيانات المستقرة** — إذا كان نموك يتسارع أو يتباطأ، فكر في طرق متعددة الحدود أو [الاستقراء الأسي](/blog/exponential-growth/)
+- **لا تتنبأ بعيدًا جدًا** — كلما ابتعدت عن بياناتك، قل موثوقية أي استقراء
+
+## قيود الاستقراء في إكسل
+
+أدوات التنبؤ في إكسل مريحة ولكن لها قيود حقيقية:
+
+- **خطي افتراضيًا**: تفترض TREND وFORECAST.LINEAR علاقة خط مستقيم. إذا كانت بياناتك تتبع منحنى، فستضللك هذه الدوال
+- **لا يوجد اختيار تلقائي للنموذج**: لا يقارن إكسل الطرق أو يخبرك بنوع الاتجاه الذي يناسب بشكل أفضل. عليك التحقق من R² بنفسك
+- **خطر الثقة المفرطة**: تبدو فترات الثقة في ورقة التنبؤ دقيقة، لكنها تستند إلى افتراض أن المستقبل سيشبه الماضي — وهو بالضبط الافتراض الذي ينهار أثناء التحولات أو الاضطرابات في السوق
+
+للبيانات المنحنية بوضوح، توفر [حاسبة الاستيفاء](/interpolation/) وأدوات الاستقراء المخصصة خيارات طرق أكثر من الإعدادات الخطية الافتراضية المضمنة في إكسل.
+
+## متى تستخدم حاسبة مخصصة
+
+إكسل رائع للعمل مع جداول البيانات، ولكن عندما تحتاج إلى استقراء سريع ودقيق مع خيارات طرق متعددة، فإن الأداة المخصصة توفر الوقت. تقدم [حاسبة الاستقراء](https://www.extrapolationcalculator.com/) خمس طرق — خطي، أسي، لوغاريتمي، متعدد الحدود، وتربيعي — حتى تتمكن من مقارنة النتائج جنبًا إلى جنب واختيار الأفضل ملاءمة.
+
+لا صيغ للكتابة، ولا إعداد للمخطط، ولا تخمين حول نوع خط الاتجاه الذي يجب استخدامه. أدخل بياناتك، واختر طريقة، واحصل على إسقاطك فورًا. لنمذجة العلاقة الأساسية بين المتغيرات، توفر [حاسبة الانحدار](/regression/) تحليل انحدار مفصل.
+
+## الخلاصة
+
+يمكنك استقراء البيانات في إكسل باستخدام أربع طرق: دالة TREND للتنبؤات متعددة النقاط، وFORECAST.LINEAR للقيم المفردة السريعة، وخطوط الاتجاه للتنبؤات المرئية، وورقة التنبؤ للتقارير بنقرة واحدة مع الموسمية. لكل منها مكانها اعتمادًا على بياناتك وما تحتاجه من التنبؤ.
+
+للحصول على نتائج أسرع بخمس طرق استقراء مختلفة — وبدون تصحيح أخطاء الصيغ — جرب [حاسبة الاستقراء المجانية](https://www.extrapolationcalculator.com/).
+
+## الأسئلة الشائعة
+
+<details class="faq-item">
+<summary>هل يمكن لإكسل استقراء البيانات؟</summary>
+
+نعم. يقدم إكسل عدة أدوات مدمجة للاستقراء: دالة TREND، ودالة FORECAST.LINEAR، وخطوط اتجاه المخطط، وميزة ورقة التنبؤ. تستخدم جميعها الانحدار الخطي افتراضيًا، على الرغم من أن خطوط الاتجاه وأوراق التنبؤ تدعم أنماطًا أخرى.
+
+</details>
+
+<details class="faq-item">
+<summary>ما هي دالة TREND في إكسل؟</summary>
+
+تحسب TREND قيم y المتوقعة على طول اتجاه خطي بناءً على بياناتك المعروفة. صيغتها هي `=TREND(known_y's, known_x's, new_x's)`. تناسب خطًا مستقيمًا من خلال بياناتك باستخدام المربعات الصغرى وتعيد القيم المتوقعة لقيم x الجديدة التي تحددها.
+
+</details>
+
+<details class="faq-item">
+<summary>كيف أمد خط الاتجاه في إكسل؟</summary>
+
+أضف خط اتجاه إلى المخطط الخاص بك عن طريق النقر بزر الماوس الأيمن على نقطة بيانات واختيار "إضافة خط اتجاه." في خيارات خط الاتجاه، اضبط حقل التنبؤ "للأمام" على عدد الفترات التي تريد إسقاطها بعد بياناتك. سيمتد خط الاتجاه بصريًا إلى النطاق المستقبلي.
+
+</details>
+
+<details class="faq-item">
+<summary>هل FORECAST.LINEAR دقيقة؟</summary>
+
+FORECAST.LINEAR دقيقة للبيانات التي تتبع اتجاهًا خطيًا حقيقيًا. مثل جميع الطرق الخطية، تصبح غير موثوقة عندما يكون النمط الأساسي غير خطي أو عندما تسقط بعيدًا خارج نطاق البيانات المرصودة. تحقق دائمًا من قيمة R² لتقييم جودة الملاءمة قبل الوثوق بالتنبؤ.
+
+</details>

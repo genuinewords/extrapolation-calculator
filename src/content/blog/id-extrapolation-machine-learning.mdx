@@ -1,0 +1,152 @@
+---
+title: "Ekstrapolasi dalam Pembelajaran Mesin: Panduan Lengkap"
+description: Pelajari apa itu ekstrapolasi dalam pembelajaran mesin, mengapa model kesulitan dengannya, dan metode apa yang membantu meningkatkan prediksi di luar distribusi.
+publishDate: 2026-05-27
+author: Tim Kalkulator Ekstrapolasi
+category: Pembelajaran Mesin
+featuredImage: ""
+---
+
+## Pendahuluan
+
+Model pembelajaran mesin sangat baik dalam memprediksi dalam pola yang telah mereka lihat. Mereka mengklasifikasikan gambar, merekomendasikan produk, dan mendeteksi anomali dengan akurasi tinggi — selama input menyerupai data pelatihan mereka. Tetapi saat Anda meminta mereka memprediksi sesuatu di luar rentang yang familiar, kinerja sering kali runtuh. Ini adalah tantangan utama ekstrapolasi dalam pembelajaran mesin: membuat prediksi yang andal di luar batas apa yang telah dipelajari model. Ini adalah masalah yang terdokumentasi dengan baik yang memengaruhi segalanya mulai dari memperkirakan harga saham hingga memodelkan tren iklim. Memahami mengapa model gagal dalam ekstrapolasi — dan apa yang dapat dilakukan — sangat penting bagi siapa pun yang membangun sistem prediktif yang perlu bertahan di dunia nyata.
+
+## Apa itu Ekstrapolasi dalam ML?
+
+Ekstrapolasi dalam pembelajaran mesin berarti memprediksi nilai target untuk input yang berada di luar rentang data pelatihan. Jika sebuah model dilatih pada harga rumah antara $100.000 dan $500.000, memintanya memperkirakan harga rumah sebesar $1.000.000 adalah tugas ekstrapolasi. Model belum pernah melihat data di wilayah itu, jadi prediksinya secara inheren tidak pasti.
+
+Ini berbeda dengan interpolasi, di mana prediksi dibuat dalam rentang titik data yang diamati. Interpolasi umumnya andal karena model dapat mengandalkan contoh terdekat untuk memandu keluarannya. [Ekstrapolasi ML](/blog/what-is-extrapolation/), di sisi lain, memaksa model ke wilayah di mana tidak ada titik referensi — menjadikannya bentuk prediksi di luar distribusi yang sebagian besar algoritma tidak dirancang untuk menanganinya dengan baik.
+
+Dalam praktiknya, batas antara interpolasi dan ekstrapolasi tidak selalu tajam. Titik data mungkin jarang di wilayah tertentu, mengubah apa yang tampak seperti interpolasi menjadi masalah ekstrapolasi de facto. Untuk melihat lebih dalam tentang batas ini, lihat panduan kami tentang [interpolasi vs ekstrapolasi](/blog/interpolation-vs-extrapolation/).
+
+## Mengapa Model ML Kesulitan dengan Ekstrapolasi
+
+Sebagian besar model pembelajaran mesin belajar pola dari data, bukan aturan mendasar atau hukum fisika. Mereka memperkirakan hubungan yang ada dalam set pelatihan tanpa memahami mengapa hubungan itu ada. Ketika diminta memprediksi di luar data itu, tidak ada pola yang bisa diikuti — hanya tebakan.
+
+Masalah "di luar distribusi" adalah inti di sini. Sebuah model yang dilatih pada satu distribusi data mungkin menghadapi distribusi yang sama sekali berbeda pada saat inferensi. Jaringan saraf yang dilatih pada gambar yang diambil pada siang hari kemungkinan akan gagal pada gambar malam hari, meskipun objeknya sama.
+
+Jaringan saraf ekstrapolasi menghadapi keterbatasan mendasar: jaringan saraf pada dasarnya adalah interpolator dimensi tinggi. Keluaran mereka adalah kombinasi tertimbang dari contoh pelatihan, sehingga mereka cenderung menghasilkan prediksi yang halus dan rata-rata di luar rentang pelatihan mereka daripada mengikuti tren sebenarnya. Pohon keputusan dan hutan acak memiliki masalah yang berbeda tetapi sama terbatasnya — mereka tidak dapat memprediksi nilai di luar rentang node daun mereka. Sebuah pohon yang membagi data menjadi daun dengan nilai maksimum 500 tidak akan pernah mengeluarkan 501, terlepas dari inputnya.
+
+Bahkan metode ensemble dan arsitektur dalam mewarisi masalah ini. Tanpa mekanisme eksplisit untuk menangani wilayah yang tidak terlihat, model default ke perilaku yang aman secara matematis tetapi salah secara praktis. Memahami [skor R²](/blog/r-squared-confidence/) dapat membantu mengukur seberapa buruk model menurun ketika didorong keluar dari domain pelatihannya.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Kegagalan ekstrapolasi ML: jaringan saraf mendatar di luar rentang pelatihan sementara model linear melanjutkan tren">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Mengapa model ML gagal dalam ekstrapolasi</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="280" y1="40" x2="280" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="120" y="55" font-size="10" fill="#64748b">Rentang pelatihan</text>
+      <text x="350" y="55" font-size="10" fill="#dc2626" font-weight="600">Di luar rentang pelatihan</text>
+      <path d="M 80 220 Q 110 180, 140 140 Q 180 100, 220 80 L 280 75" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+      <path d="M 280 75 L 480 70" stroke="#d4af37" stroke-width="2.5" fill="none" stroke-dasharray="4 2"/>
+      <path d="M 280 75 Q 320 73, 360 72 Q 420 70, 480 69" stroke="#1e40af" stroke-width="2" fill="none"/>
+      <text x="430" y="95" font-size="10" font-weight="600" fill="#1e40af">JST: mendatar</text>
+      <text x="430" y="60" font-size="10" font-weight="600" fill="#d4af37">Linear: melanjutkan tren</text>
+      <g fill="#1e40af">
+        <circle cx="80" cy="220" r="3.5"/>
+        <circle cx="120" cy="180" r="3.5"/>
+        <circle cx="160" cy="140" r="3.5"/>
+        <circle cx="200" cy="100" r="3.5"/>
+        <circle cx="240" cy="85" r="3.5"/>
+        <circle cx="280" cy="75" r="3.5"/>
+      </g>
+      <text x="60" y="265" font-size="9" fill="#64748b" font-style="italic">Jaringan saraf menghasilkan prediksi rata-rata dan datar di luar rentang pelatihan mereka</text>
+    </g>
+  </svg>
+  <figcaption>Mengapa model ML gagal dalam ekstrapolasi. Di dalam rentang pelatihan (kiri garis putus-putus), jaringan saraf (biru) mengikuti data dengan erat. Tetapi di luar (kanan garis putus-putus), keluaran jaringan mendatar ke nilai hampir konstan — ia tidak memiliki pola yang dipelajari untuk diperluas. Model linear (putus-putus emas), sebaliknya, melanjutkan trennya tanpa batas. Keterbatasan mendasar ini memengaruhi semua model tipe interpolator: mereka dapat mencampur contoh yang diketahui tetapi tidak dapat menciptakan yang baru.</figcaption>
+</figure>
+
+## Metode yang Meningkatkan Ekstrapolasi dalam ML
+
+Tidak ada satu metode pun yang sepenuhnya menghilangkan masalah ekstrapolasi, tetapi beberapa pendekatan dapat meningkatkan prediksi di luar distribusi secara berarti.
+
+### Regresi Linear
+
+Regresi linear adalah salah satu dari sedikit model yang secara alami mengekstrapolasi. Karena ia menyesuaikan fungsi linear dengan data, ia memperluas fungsi itu tanpa batas di kedua arah. Meskipun ini dapat menghasilkan prediksi yang tidak realistis jika hubungan sebenarnya non-linear, setidaknya ia mengikuti tren yang konsisten daripada mendatar. Untuk kasus penggunaan sederhana, [ekstrapolasi linear](/blog/linear-extrapolation/) tetap menjadi garis dasar yang praktis.
+
+### Hutan Acak dengan Daun Linear
+
+Hutan acak standar tidak dapat mengekstrapolasi di luar rentang pelatihan mereka. Namun, varian yang menyesuaikan model linear di node daun alih-alih nilai konstan dapat memperluas prediksi di luar data yang diamati. Ini menggabungkan fleksibilitas model berbasis pohon dengan kemampuan ekstrapolasi regresi linear, meningkatkan kinerja pada tugas dengan tren yang asli.
+
+### Jaringan Saraf dengan Kendala Monotonik
+
+Dengan menerapkan kendala monotonisitas pada fitur input tertentu, jaringan saraf dapat diarahkan untuk menghasilkan prediksi yang mengikuti hubungan arah yang diketahui. Jika pengetahuan domain mengatakan bahwa suhu harus meningkat dengan tekanan, kendala monotonik memastikan jaringan menghormati aturan itu bahkan di luar rentang pelatihan. Ini sangat berguna dalam aplikasi ilmiah dan teknik.
+
+### Regresi Simbolik
+
+Regresi simbolik mencari ruang ekspresi matematika untuk menemukan formula yang sesuai dengan data. Karena hasilnya adalah persamaan eksplisit daripada pemetaan yang dipelajari, ia dapat mengekstrapolasi dengan cara yang konsisten dengan hubungan yang ditemukan. Alat seperti PySR dan Eureqa membuat pendekatan ini semakin mudah diakses.
+
+### Jaringan Saraf yang Diinformasikan Fisika (PINNs)
+
+PINN menggabungkan hukum fisika langsung ke dalam proses pelatihan dengan menambahkan kendala persamaan diferensial ke fungsi kerugian. Ini berarti jaringan tidak dapat melanggar fisika yang diketahui, bahkan di wilayah tanpa data pelatihan. PINN telah menunjukkan hasil ekstrapolasi yang kuat dalam dinamika fluida, perpindahan panas, dan domain lain yang diatur oleh persamaan yang dipahami dengan baik.
+
+## Contoh Dunia Nyata
+
+Tantangan ekstrapolasi muncul di banyak industri dan domain penelitian.
+
+**Pemodelan perubahan iklim** bergantung pada memproyeksikan data suhu dan emosi jauh melampaui catatan sejarah. Model harus memprediksi kondisi yang tidak memiliki preseden dalam data yang diamati, membuat peramalan pembelajaran mesin menjadi sangat sulit dan tidak pasti.
+
+**Peramalan keuangan** secara teratur memerlukan prediksi di luar perilaku pasar terkini. Kondisi ekonomi berubah, rezim bergeser, dan model yang dilatih pada pasar bull mungkin gagal secara dahsyat selama penurunan — kegagalan ekstrapolasi klasik.
+
+**Penemuan obat** sering melibatkan prediksi efek senyawa pada dosis atau kombinasi yang belum pernah diuji dalam uji klinis. Model yang dilatih pada respons dosis rendah harus mengekstrapolasi untuk memprediksi keamanan pada dosis yang lebih tinggi, di mana toksisitas non-linear dapat muncul.
+
+**Mobil self-driving** menghadapi kondisi jalan, peristiwa cuaca, dan konfigurasi rintangan yang tidak ada dalam data pelatihan mereka. Operasi yang andal memerlukan beberapa kapasitas untuk ekstrapolasi, atau setidaknya degradasi yang anggun saat menghadapi hal yang tidak dikenal.
+
+## Ekstrapolasi vs Interpolasi dalam ML
+
+Memahami perbedaan antara interpolasi dan ekstrapolasi sangat penting untuk memilih model yang tepat dan menetapkan harapan yang realistis. Tabel di bawah menyoroti perbedaan utama. Untuk perbandingan yang lebih rinci, lihat artikel kami tentang [interpolasi vs ekstrapolasi](/blog/interpolation-vs-extrapolation/).
+
+| Aspek | Interpolasi | Ekstrapolasi |
+|--------|--------------|---------------|
+| Rentang data | Dalam data pelatihan | Di luar data pelatihan |
+| Keyakinan model | Lebih tinggi | Lebih rendah |
+| Risiko kesalahan | Lebih rendah | Lebih tinggi |
+| Penggunaan umum | Klasifikasi, penyesuaian | Peramalan, prediksi |
+
+Interpolasi mendapat manfaat dari titik referensi padat yang menjangkar prediksi. Ekstrapolasi kekurangan jangkar tersebut, sehingga generalisasi ML menjadi perhatian utama — dan risiko utama. Model yang generalisasi dengan baik dalam distribusi pelatihan mereka mungkin tidak generalisasi sama sekali di luarnya. Anda dapat menjelajahi kedua pendekatan secara langsung dengan [kalkulator interpolasi](/interpolation/) atau [kalkulator regresi](/regression/) kami.
+
+## Praktik Terbaik
+
+- **Validasi pada set uji di luar distribusi.** Pembagian latihan-uji standar menjaga evaluasi dalam distribusi pelatihan. Dengan sengaja tahan data dari rentang atau kondisi yang berbeda untuk mengukur kinerja ekstrapolasi yang sebenarnya.
+- **Gunakan pengetahuan domain untuk membatasi prediksi.** Masukkan hukum fisika yang diketahui, hubungan monotonik, atau kondisi batas ke dalam proses pemodelan. Ini mencegah model menghasilkan hasil yang mustahil secara fisik.
+- **Gabungkan ML dengan metode statistik tradisional.** Pendekatan hibrida yang mencampur pola yang dipelajari dengan teknik ekstrapolasi berprinsip — seperti [metode ekstrapolasi](/blog/polynomial-vs-linear/) yang diambil dari statistik klasik — cenderung mengungguli ML murni dalam pengaturan di luar distribusi. Untuk perbandingan terfokus dari dua metode klasik yang paling umum, lihat [ekstrapolasi polinomial vs linear](/blog/polynomial-extrapolation-vs-linear/).
+
+## Alat dan Sumber Daya
+
+Beberapa pustaka Python mendukung pemodelan sadar ekstrapolasi. **scikit-learn** menyediakan model linear dan metode berbasis pohon yang dapat dikonfigurasi untuk perilaku ekstrapolasi yang lebih baik. **PyTorch** memungkinkan fungsi kerugian khusus dan kendala arsitektur, termasuk fitur monotonik dan loop pelatihan yang diinformasikan fisika. Untuk kebutuhan yang lebih sederhana, **kalkulator ekstrapolasi** menawarkan cara cepat untuk memproyeksikan tren tanpa menulis kode.
+
+Peramalan numerik tradisional? Coba [kalkulator ekstrapolasi](https://www.extrapolationcalculator.com/) untuk proyeksi tren cepat.
+
+## Kesimpulan
+
+Ekstrapolasi dalam pembelajaran mesin secara inheren sulit, tetapi bukan tidak mungkin. Model linear, arsitektur terbatas, regresi simbolik, dan pendekatan yang diinformasikan fisika masing-masing menawarkan jalur menuju prediksi di luar distribusi yang lebih andal. Kuncinya adalah mengenali kapan ekstrapolasi diperlukan, memilih metode yang sesuai dengan tugas, dan memvalidasi secara agresif di luar distribusi pelatihan. Bereksperimenlah dengan pendekatan yang berbeda, ukur apa yang gagal, dan ulangi. Ketika Anda membutuhkan cara langsung untuk memproyeksikan tren tanpa membangun pipeline ML yang lengkap, coba [kalkulator ekstrapolasi](https://www.extrapolationcalculator.com/).
+
+<details class="faq-item">
+<summary>Bisakah jaringan saraf mengekstrapolasi?</summary>
+
+Jaringan saraf standar buruk dalam ekstrapolasi. Mereka belajar menginterpolasi antara contoh pelatihan dan cenderung menghasilkan prediksi datar atau tidak menentu di luar rentang pelatihan. Arsitektur khusus dengan kendala monotonik atau fungsi kerugian yang diinformasikan fisika dapat meningkatkan ekstrapolasi, tetapi jaringan vanilla umumnya tidak bisa.
+
+</details>
+
+<details class="faq-item">
+<summary>Mengapa ekstrapolasi sulit dalam pembelajaran mesin?</summary>
+
+Ekstrapolasi sulit karena model ML belajar pola statistik dari data pelatihan daripada aturan kausal. Ketika input berada di luar distribusi pelatihan, tidak ada pola yang bisa diikuti, dan model tidak memiliki dasar berprinsip untuk prediksinya. Ini menyebabkan keluaran yang tidak dapat diprediksi dan sering kali sangat salah.
+
+</details>
+
+<details class="faq-item">
+<summary>Apa perbedaan antara interpolasi dan ekstrapolasi dalam ML?</summary>
+
+Interpolasi memprediksi dalam rentang data pelatihan, di mana model dapat merujuk contoh terdekat. Ekstrapolasi memprediksi di luar rentang itu, di mana tidak ada titik referensi. Interpolasi biasanya akurat; ekstrapolasi biasanya tidak pasti dan rentan kesalahan.
+
+</details>
+
+<details class="faq-item">
+<summary>Model ML mana yang dapat mengekstrapolasi?</summary>
+
+Regresi linear mengekstrapolasi secara alami dengan memperpanjang garis yang disesuaikan. Model linear dengan regularisasi (ridge, lasso) berperilaku serupa. Hutan acak dengan daun linear, model regresi simbolik, dan jaringan saraf yang diinformasikan fisika juga dapat mengekstrapolasi dengan berbagai tingkat keandalan. Sebagian besar model lain — termasuk jaringan saraf standar, pohon keputusan, dan tetangga terdekat k — tidak bisa.
+
+</details>

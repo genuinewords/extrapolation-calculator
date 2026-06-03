@@ -1,0 +1,251 @@
+---
+title: Ekstrapolasyonda R² ve Güven Yorumlaması
+description: Ekstrapolasyon sonuçlarınızın güvenilirliğini değerlendirmek için R² skorunu ve güven metriklerini nasıl yorumlayacağınızı öğrenin.
+publishDate: 2026-05-14
+author: Extrapolation Calculator Team
+category: Temeller
+featuredImage: ""
+---
+
+[Ekstrapolasyon hesaplayıcısını](/) kullandığınızda, her sonuç iki önemli metrik içerir: R² skoru ve güven yüzdesi. Bu değerleri anlamak, ekstrapolasyonlarınıza dayalı bilinçli kararlar almak için çok önemlidir. Çoğu zaman, insanlar yüksek bir R² değerine bakar ve projeksiyonlarının güvenilir olduğunu varsayar, ancak daha sonra modelin yanıltıcı olduğunu keşfeder. Bu yazı, R²'nin gerçekte neyi ölçtüğünü, güvenle nasıl ilişkili olduğunu ve verilerinizin ötesine projeksiyon yaparken güvenmeniz gereken tek metrik olmaması gerektiğini derinlemesine inceler.
+
+## R² Nedir?
+
+R², resmi olarak belirleme katsayısı olarak bilinir, bağımlı değişkendeki varyansın, regresyon modeli aracılığıyla bağımsız değişken tarafından açıklanan oranını ölçer. Daha basit bir ifadeyle, verilerinizdeki "hareketin" ne kadarının taktığınız trend çizgisi tarafından yakalandığını söyler.
+
+### Formül
+
+R² formülü iki temel nicelikten oluşur:
+
+**SS_total** (Toplam Kareler Toplamı): Gözlemlenen verilerdeki toplam varyansı temsil eder, her bir gözlemlenen değer ile gözlemlenen değerlerin ortalaması arasındaki kare farklarının toplamı olarak hesaplanır:
+
+**SS_total = Σ(yᵢ − ȳ)²**
+
+**SS_residual** (Artık Kareler Toplamı): Modelin yakalayamadığı varyansı temsil eder, her bir gözlemlenen değer ile model tarafından tahmin edilen değer arasındaki kare farklarının toplamı olarak hesaplanır:
+
+**SS_residual = Σ(yᵢ − ŷᵢ)²**
+
+Bunları bir araya getirerek R² şu şekilde tanımlanır:
+
+**R² = 1 − (SS_residual / SS_total)**
+
+Model verilere mükemmel uyduğunda, her artık sıfırdır, bu nedenle SS_residual sıfırdır ve R² 1'e eşittir. Model, her nokta için tahmin olarak y'nin ortalamasını kullanmaktan daha iyi olmadığında, SS_residual SS_total'e eşittir ve R² 0'a eşittir.
+
+### Hesaplama Sezgisini Anlamak
+
+SS_total'i "sorun" — modelinizin açıklaması gereken toplam varyasyon miktarı — ve SS_residual'i "kalan" — modelinizin yakalayamadığı şey — olarak düşünün. SS_residual / SS_total oranı, hala açıklanmamış varyasyonun kesrini söyler. Bunu 1'den çıkarmak size **açıklanan** kesri verir. Bu nedenle R² bazen "açıklanan varyansın kesri" olarak tanımlanır.
+
+Doğrusal olmayan modeller için yukarıdaki standart R² formülünün bazen negatif değerler üretebileceğini belirtmekte fayda var. Bu, modelin ortalamadaki yatay bir çizgiden daha kötü veriye uyması durumunda meydana gelir. Bu gibi durumlarda, model aktif olarak yanıltıcıdır ve negatif bir R², seçilen yöntemin veriler için uygunsuz olduğuna dair güçlü bir uyarı işaretidir.
+
+## Yorumlama Aralıkları
+
+Her disiplin için geçerli evrensel bir kural olmamakla birlikte, ekstrapolasyon ve regresyon analizi bağlamında R²'yi yorumlamak için genel yönergeler şunlardır:
+
+| R² Aralığı | Yorum | Pratik Anlamı |
+|----------|---------------|-------------------|
+| 0.0 – 0.3 | Zayıf uyum | Model varyansın çok azını açıklıyor; projeksiyonlar güvenilmez |
+| 0.3 – 0.7 | Orta uyum | Model bir miktar trend yakalıyor ancak önemli dağılım var; dikkatli kullanın |
+| 0.7 – 1.0 | İyi uyum | Model varyansın çoğunu açıklıyor; projeksiyonlar makul olabilir |
+
+Bu eşikler katı sınırlar değildir. Sosyal bilimler gibi bazı alanlarda, insan davranışı doğası gereği gürültülü olduğu için 0.3'lük bir R² saygın kabul edilebilir. Fizik veya mühendislikte, 0.9'un altındaki herhangi bir şey kabul edilemez olarak değerlendirilebilir. [Regresyon hesaplayıcısı](/regression/) ile çalışırken, her zaman çalıştığınız alanı ve bu tür veriler için beklenen uyum seviyesini göz önünde bulundurun.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="R-kare yorumlama ölçeği, zayıf uyumdan iyi uyuma, örnek veri desenleriyle görselleştirilmiş">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">R² Yorumlama Ölçeği</text>
+      <rect x="40" y="40" width="520" height="200" fill="#fff" stroke="#e5e7eb"/>
+      <rect x="40" y="40" width="156" height="200" fill="#fee2e2" fill-opacity="0.4"/>
+      <rect x="196" y="40" width="208" height="200" fill="#fef3c7" fill-opacity="0.4"/>
+      <rect x="404" y="40" width="156" height="200" fill="#d1fae5" fill-opacity="0.4"/>
+      <line x1="196" y1="40" x2="196" y2="240" stroke="#9ca3af" stroke-dasharray="3 3"/>
+      <line x1="404" y1="40" x2="404" y2="240" stroke="#9ca3af" stroke-dasharray="3 3"/>
+      <text x="118" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">Zayıf (0.0–0.3)</text>
+      <text x="300" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#d97706">Orta (0.3–0.7)</text>
+      <text x="482" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#059669">İyi (0.7–1.0)</text>
+      <g transform="translate(50, 90)">
+        <line x1="0" y1="100" x2="120" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 80 L 120 60" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="20" cy="40" r="3.5" fill="#1e40af"/>
+        <circle cx="40" cy="90" r="3.5" fill="#1e40af"/>
+        <circle cx="60" cy="20" r="3.5" fill="#1e40af"/>
+        <circle cx="80" cy="70" r="3.5" fill="#1e40af"/>
+        <circle cx="100" cy="50" r="3.5" fill="#1e40af"/>
+        <text x="60" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.15</text>
+      </g>
+      <g transform="translate(220, 90)">
+        <line x1="0" y1="100" x2="160" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 80 L 160 30" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="20" cy="60" r="3.5" fill="#1e40af"/>
+        <circle cx="50" cy="55" r="3.5" fill="#1e40af"/>
+        <circle cx="80" cy="50" r="3.5" fill="#1e40af"/>
+        <circle cx="110" cy="40" r="3.5" fill="#1e40af"/>
+        <circle cx="140" cy="45" r="3.5" fill="#1e40af"/>
+        <text x="80" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.55</text>
+      </g>
+      <g transform="translate(430, 90)">
+        <line x1="0" y1="100" x2="120" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="0" y1="0" x2="0" y2="100" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 0 90 L 120 20" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="15" cy="82" r="3.5" fill="#1e40af"/>
+        <circle cx="35" cy="68" r="3.5" fill="#1e40af"/>
+        <circle cx="55" cy="55" r="3.5" fill="#1e40af"/>
+        <circle cx="75" cy="42" r="3.5" fill="#1e40af"/>
+        <circle cx="95" cy="30" r="3.5" fill="#1e40af"/>
+        <text x="60" y="120" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">R² = 0.92</text>
+      </g>
+    </g>
+  </svg>
+  <figcaption>R² yorumlama ölçeği görselleştirilmiş. Kırmızı bölge (0.0–0.3) noktaların trend çizgisi etrafında genişçe dağıldığı zayıf uyumu temsil eder. Sarı bölge (0.3–0.7) görünür dağılımla orta uyumu gösterir. Yeşil bölge (0.7–1.0) noktaların çizgi etrafında sıkıca kümelendiği iyi uyumu temsil eder. Bu eşikler kılavuzdur, kural değildir — alan bağlamı önemlidir: sosyal bilimler genellikle 0.3'ü kabul ederken, fizik 0.9+ talep edebilir.</figcaption>
+</figure>
+
+### Peki ya R² = 1?
+
+1.0'lık mükemmel bir R² mutlaka kutlama nedeni değildir. Özellikle az sayıda veri noktanız ve karmaşık bir modeliniz varsa, aşırı uyumu (overfitting) gösterebilir. n-1 dereceli bir polinom her zaman n veri noktasından mükemmel bir şekilde geçer ve R² = 1 verir, ancak böyle bir model son derece düzensiz ekstrapolasyonlar üretecektir. Bu, tüm regresyon analizindeki en önemli uyarılardan biridir ve daha sonra buna geri döneceğiz.
+
+## Güven Metriği ve R² ile İlişkisi
+
+[Ekstrapolasyon hesaplayıcısında](/) sonuçlarınızla birlikte görüntülenen güven yüzdesi, R² değerinden türetilir ve modelin veri desenine ne kadar güvenilir bir şekilde uyduğunu temsil eder. R² skorunun daha sezgisel ve kullanıcı dostu bir temsili olarak hizmet eder.
+
+Kavramsal olarak, R² 0.85 ise, güven %85 olarak ifade edilebilir ve modelin verilerin varyansının %85'ini yakaladığını belirtir. Bu eşleme basit görünse de, güven metriği bazı uygulamalarda, model karmaşıklığına göre veri noktası sayısı gibi ek bağlamsal faktörleri de içerir. 3 veri noktası üzerine inşa edilmiş R² = 0.95'lik bir model, 30 veri noktası üzerine inşa edilmiş R² = 0.95'lik bir modelden çok daha az güvenilirdir ve iyi tasarlanmış bir güven metriği bu ayrımı yansıtmalıdır.
+
+Güven metriği en çok hızlı bir referans olarak kullanışlıdır: %50'nin altında bir güven görürseniz, seçilen ekstrapolasyon yönteminin uygun olup olmadığını hemen sorgulamalısınız. %80'in üzerinde bir güven görürseniz, model tarihsel verilere iyi uyuyordur — ancak tartışacağımız gibi, bu otomatik olarak ekstrapolasyonun doğru olacağı anlamına gelmez.
+
+## Yüksek R² Neden Doğru Ekstrapolasyonu Garanti Etmez
+
+Bu, tüm bu tartışmadaki belki de en kritik noktadır. R², **örnek içi uyumu** — modelin zaten sahip olduğunuz verilerle ne kadar iyi eşleştiğini — ölçer. Ekstrapolasyon, tanımı gereği, gözlemlenen verilerin **aralığının dışını** tahmin etmekle ilgilidir. Bunlar temelde farklı görevlerdir.
+
+Basit bir örnek düşünün: 10 gün boyunca bir bitkinin büyümesini gösteren verileriniz olduğunu varsayalım. Bitki istikrarlı bir şekilde büyüyor ve doğrusal bir model R² = 0.92 veriyor. Bu, bitkinin sonraki 100 gün boyunca doğrusal olarak büyümeye devam edeceği anlamına mı gelir? Elbette hayır — bir noktada, kaynak kısıtlamaları nedeniyle büyüme platoya ulaşacak ve doğrusal model aşırı tahmin yapacaktır.
+
+Bu nedenle, verilerinizin doğasını anlamak istatistiksel metrikler kadar önemlidir. [İnterpolasyon ve ekstrapolasyon](/blog/interpolation-vs-extrapolation/) arasındaki ayrım çok önemlidir: interpolasyon, gözlemlenen sınırlar içinde tahmin eder (R²'nin iyi bir güvenilirlik göstergesi olduğu yerde), ekstrapolasyon ise gözlemlenen sınırların ötesine geçer (R²'nin yalnızca trend çizginizin geçmiş verilerle tutarlı olduğunu söylediği, devam edeceğini söylemediği yerde).
+
+### Polinom Tuzağı
+
+Polinom modelleri özellikle aldatıcıdır. Daha yüksek dereceli bir polinom, her noktadan geçmek için daha fazla esnekliğe sahip olduğundan, eğitim verilerinde neredeyse her zaman daha yüksek bir R² üretecektir. Ancak yüksek dereceli polinomlar, veri aralığının dışında dramatik bir şekilde ıraksama eğilimindedir. Gözlemlenen aralığınız içinde güzelce uyan kübik veya kuartik bir model, onun ötesine adım attığınız anda keskin bir şekilde yukarı veya aşağı kıvrılabilir ve anlamsız projeksiyonlar üretebilir.
+
+Bu nedenle [polinom ve doğrusal yöntemler](/blog/polynomial-vs-linear/) arasındaki farkı anlamak çok önemlidir. Doğrusal modeller daha kısıtlıdır ve bu nedenle R²'leri daha düşük olsa bile ekstrapolasyonda daha kararlıdır. Fiziksel olarak makul bir modelle daha düşük bir R², teorik gerekçesi olmayan bir modelle daha yüksek bir R²'den neredeyse her zaman tercih edilir.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Polinom tuzağı: aralık içinde verilere mükemmel uyan ancak dışında vahşice ıraksayan yüksek dereceli bir polinom">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Polinom Tuzağı: R²=1.0, Tahmin=Saçma</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="220" y1="40" x2="220" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="100" y="55" font-size="10" fill="#64748b">Eğitim verileri</text>
+      <text x="240" y="55" font-size="10" fill="#dc2626" font-weight="600">Ekstrapolasyon ıraksıyor!</text>
+      <path d="M 80 180 Q 100 140, 120 150 Q 140 100, 160 130 Q 180 80, 200 90 Q 215 70, 220 75" stroke="#d4af37" stroke-width="2" fill="none"/>
+      <path d="M 220 75 Q 240 -80, 280 280 Q 320 100, 360 30 Q 400 -20, 500 240" stroke="#dc2626" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+      <g fill="#1e40af">
+        <circle cx="80" cy="180" r="3.5"/>
+        <circle cx="100" cy="150" r="3.5"/>
+        <circle cx="120" cy="160" r="3.5"/>
+        <circle cx="140" cy="115" r="3.5"/>
+        <circle cx="160" cy="135" r="3.5"/>
+        <circle cx="180" cy="90" r="3.5"/>
+        <circle cx="200" cy="95" r="3.5"/>
+        <circle cx="220" cy="78" r="3.5"/>
+      </g>
+      <text x="100" y="200" font-size="9" fill="#64748b">R² = 1.00 (mükemmel!)</text>
+      <text x="430" y="265" font-size="10" fill="#dc2626" font-weight="600">Tahmin: -150 (anlamsız!)</text>
+    </g>
+  </svg>
+  <figcaption>Polinom tuzağı görselleştirilmiş. Veri aralığı içinde (kesikli çizginin solunda), yüksek dereceli bir polinom her eğitim noktasından geçer ve mükemmel bir R² = 1.00 elde eder. Ancak gözlemlenen aralığın ötesine adım attığınız anda (kesikli çizginin sağında), aynı polinom vahşice ıraksar — çok yüksek değerlerden çok düşük değerlere salınarak, içte matematiksel olarak mükemmel ancak dışta pratik olarak saçma tahminler üretir. Bu nedenle R² tek başına ekstrapolasyon için zayıf bir kılavuzdur.</figcaption>
+</figure>
+
+## Çalışılmış Örnek: Aynı Verilerde Farklı Yöntemler Arasında R² Karşılaştırması
+
+Bunu çalışılmış bir örnekle somutlaştıralım. Küçük bir işletme için üç aylık geliri (bin olarak) temsil eden aşağıdaki veri noktalarına sahip olduğunuzu varsayalım:
+
+| Çeyrek | Gelir |
+|---------|---------|
+| 1 | 120 |
+| 2 | 135 |
+| 3 | 160 |
+| 4 | 200 |
+| 5 | 250 |
+| 6 | 310 |
+
+Farklı yöntemler kullanarak 8. çeyrek için gelir projeksiyonu yapmak istiyorsunuz. Alabileceğiniz R² sonuçları şunlardır:
+
+| Yöntem | R² | Güven | Projeksiyon Q8 Geliri |
+|--------|-----|------------|----------------------|
+| Doğrusal | 0.96 | %96 | 430 |
+| Üstel | 0.99 | %99 | 530 |
+| Polinom (3. derece) | 1.00 | %100 | 710 |
+| Logaritmik | 0.88 | %88 | 365 |
+
+Üstel model neredeyse mükemmel bir R²'ye sahiptir ve polinom tam anlamıyla mükemmel bir R²'ye sahiptir. Peki hangi projeksiyona güvenmelisiniz?
+
+Gelir büyümesi bileşik ağ etkileri tarafından yönlendiriliyorsa, üstel model haklı çıkarılabilir ve 530'luk [üstel ekstrapolasyon](/blog/exponential-growth/) projeksiyonu makul olabilir. İşletme, büyümenin doğal olarak yavaşladığı olgun bir pazardaysa, logaritmik model daha düşük R²'sine rağmen daha uygun olabilir — [logaritmik ekstrapolasyon](/blog/logarithmic-diminishing-returns/) kavramı, üstel modelin göz ardı ettiği azalan getirileri yakalar. Büyüme istikrarlı doğrusal genişleme (çeyrek başına sabit sayıda müşteri ekleme) tarafından yönlendiriliyorsa, doğrusal model en güvenli seçimdir.
+
+Polinom modeli derin bir şüpheyle ele alınmalıdır. Mükemmel R²'si, her noktadan geçmek için yeterli serbestlik derecesine sahip olmanın matematiksel bir yapaylığıdır, gerçek anlayışın kanıtı değildir. 710'luk Q8 projeksiyonu, polinomun eğitim aralığının ötesinde vahşice salınma eğilimi tarafından yönlendirilen bir fazla tahmin olma olasılığı yüksektir.
+
+## Ekstrapolasyon Yöntemleri Arasında Seçim Yapmak için R² Nasıl Kullanılır
+
+Model seçimi için R² kullanmak, sadece en yüksek değeri seçmekten daha nüanslı bir yaklaşım gerektirir. İşte pratik bir iş akışı:
+
+1. [Ekstrapolasyon hesaplayıcısını](https://www.extrapolationcalculator.com/) kullanarak verilerinize **birden çok model uydurun**. Her R² değerini kaydedin.
+
+2. **Açıkça zayıf uyumları filtreleyin.** Bir modelin R²'si 0.3'ün altındaysa, verilerinizdeki trendi yakalamıyordur. Teorik çekiciliği ne olursa olsun onu atın.
+
+3. **Kabul edilebilir R²'ye (0.3 ve üzeri) sahip modeller arasında, alan bilgisini göz önünde bulundurun.** Temel olay doğal olarak üstel bir desen mi izliyor? Doğrusal? Logaritmik? Alan bilgisi kararınızda ağırlıklı olarak yer almalıdır.
+
+4. **R²'deki küçük boşluklara dikkat edin.** Doğrusal bir model R² = 0.91 ve üstel bir model R² = 0.93 veriyorsa, fark alan muhakemesini geçersiz kılacak kadar anlamlı değildir.
+
+5. **Aşırı uyumu (overfitting) kontrol edin.** Karmaşık bir model basit olanı dramatik bir şekilde geride bırakıyorsa, karmaşıklığın haklı olup olmadığını kendinize sorun. Bir güvenlik önlemi olarak düzeltilmiş R²'ye (aşağıda tartışılmıştır) başvurun.
+
+6. **Görsel olarak doğrulayın.** Çizilen trend çizgisine veri noktalarınızın yanında bakın.
+
+Bu yaklaşım, [doğrusal ekstrapolasyonu](/blog/linear-extrapolation/) bir temel çizgi olarak anlamakla iyi uyum sağlar: en basit makul modelle başlayın ve yalnızca veriler ve alan bilgisi haklı çıkardığında karmaşıklık ekleyin.
+
+## Düzeltilmiş R² ve Polinom Dereceleri İçin Neden Önemlidir
+
+Düzeltilmiş R², modeldeki tahmin edicilerin (veya serbestlik derecelerinin) sayısını hesaba katan standart R²'nin bir modifikasyonudur. Formül şudur:
+
+**R²_adj = 1 − ((1 − R²)(n − 1)) / (n − p − 1)**
+
+Burada **n** veri noktası sayısı ve **p** modeldeki parametre sayısıdır (derece k olan bir polinom için p = k + 1).
+
+Anahtar içgörü, düzeltilmiş R²'nin model karmaşıklığını **cezalandırmasıdır**. Bir modele eklediğiniz her ek parametre R²'yi artıracaktır (veya en azından azaltmayacaktır), ancak düzeltilmiş R² yalnızca eklenen parametre, bir serbestlik derecesinin kaybını haklı çıkarmak için uyumu yeterince iyileştirirse artacaktır.
+
+### Bu Neden Önemlidir
+
+6 veri noktası içeren önceki örneğimizi düşünün. 5. dereceden bir polinom R² = 1.0 ile mükemmel uyum sağlayacaktır, ancak düzeltilmiş R²'si önemli ölçüde daha düşük olacaktır — potansiyel olarak negatif bile olabilir — çünkü neredeyse veri noktaları kadar parametre kullandınız. Bu arada...
+
+R² ve güven metriği, ekstrapolasyon kalitesini değerlendirmek için temel araçlardır, ancak bunlar başlangıç noktalarıdır, bitiş noktaları değil. Yüksek bir R², modelinizin gözlemlenen verilerle tutarlı olduğunu söyler; bu tutarlılığın veri aralığının ötesinde devam edeceğini söylemez. En güvenilir ekstrapolasyonlar, iyi istatistiksel uyum, güçlü alan anlayışı ve sağlıklı bir doz şüphecilik birleştirilerek elde edilir.
+
+Bir dahaki sefere [ekstrapolasyon hesaplayıcısını](/) kullandığınızda, yöntemleri karşılaştırmak, düzeltilmiş R²'yi kontrol etmek ve model varsayımlarının verilerinizin gerçekliğiyle eşleşip eşleşmediğini düşünmek için bir dakikanızı ayırın. Ve veri aralığınız içinde çalışıyorsanız, onun ötesinde değil, [interpolasyon hesaplayıcısı](/interpolation/) aynı istatistiksel araç setiyle size daha güvenilir sonuçlar verebilir. Sayılar, arkalarındaki muhakeme kadar iyidir.
+
+## Sıkça Sorulan Sorular
+
+<details class="faq-item">
+<summary>Ekstrapolasyon için iyi bir R² değeri nedir?</summary>
+
+Alanınıza bağlıdır, ancak genel olarak R² > 0.7 makul bir uyumu gösterir. Kesin tahmin için R² > 0.85'i hedefleyin. Ancak, veri aralığı içindeki yüksek bir R²'nin doğru ekstrapolasyonu garanti etmediğini unutmayın — yalnızca modelin gözlemlenen noktalara ne kadar iyi uyduğunu ölçer.
+
+</details>
+
+<details class="faq-item">
+<summary>R² negatif olabilir mi?</summary>
+
+Evet, doğrusal olmayan modeller için. R², 1 − (SS_residual / SS_total) olarak tanımlanır. Model ortalamadaki yatay bir çizgiden daha kötü uyuyorsa, SS_residual SS_total'i aşar ve R² negatif olur. Negatif bir R², seçilen yöntemin veriler için uygun olmadığına dair güçlü bir uyarıdır.
+
+</details>
+
+<details class="faq-item">
+<summary>Her zaman en yüksek R²'ye sahip yöntemi seçmeli miyim?</summary>
+
+Mutlaka değil. En yüksek R²'ye sahip yöntem, özellikle yüksek dereceli bir polinom ise, aşırı uyum (overfitting) gösteriyor olabilir. Model karmaşıklığını cezalandırmak için düzeltilmiş R²'yi kullanın ve her zaman ekstrapole edilmiş değerleri alan bilgisine karşı doğrulayın. Biraz daha düşük R²'ye sahip daha basit bir model, genellikle tahmin için daha güvenilirdir.
+
+</details>
+
+<details class="faq-item">
+<summary>R², güvenden nasıl farklıdır?</summary>
+
+R², regresyon çizgisinin gözlemlenen verilere ne kadar iyi uyduğunu ölçer — bu bir uyum kalitesi ölçüsüdür. Güven, ekstrapolasyonun kendisinin güvenilirliğini ifade eder. Yüksek bir R² size yöntem hakkında daha fazla güven verir, ancak güven ayrıca ne kadar uzağa ekstrapolasyon yaptığınıza ve temel trendin değişip değişemeyeceğine de bağlıdır.
+
+</details>

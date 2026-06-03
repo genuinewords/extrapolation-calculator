@@ -1,0 +1,116 @@
+---
+title: "Polinomial vs. Linear: Memilih Metode yang Tepat"
+description: Perbandingan praktis metode ekstrapolasi polinomial dan linear untuk membantu Anda memilih pendekatan terbaik untuk data Anda.
+publishDate: 2026-05-16
+author: Extrapolation Calculator Team
+category: Dasar
+featuredImage: ""
+---
+
+Ketika Anda perlu memprediksi nilai di luar rentang data yang diamati, pilihan metode [ekstrapolasi](/blog/what-is-extrapolation/) adalah salah satu keputusan paling penting yang akan Anda buat. Pilih model yang terlalu sederhana, dan Anda kehilangan struktur nyata dalam data. Pilih yang terlalu fleksibel, dan prediksi Anda meleset tanpa arah. Dua pendekatan paling umum — linear dan polinomial — berada di ujung yang berlawanan dari spektrum kesederhanaan-fleksibilitas ini.
+
+## Apa Itu Ekstrapolasi Polinomial?
+
+Ekstrapolasi polinomial memasang persamaan polinomial ke titik data Anda dan kemudian menggunakan persamaan itu untuk memproyeksikan melampaui rentang yang diamati. Polinomial derajat *n* mengambil bentuk umum:
+
+**y = a₀ + a₁x + a₂x² + a₃x³ + ... + aₙxⁿ**
+
+Derajat *n* menentukan berapa banyak tikungan atau "titik balik" yang dapat dimiliki kurva. Polinomial derajat-*n* dapat memiliki hingga *n − 1* maksimum dan minimum lokal.
+
+## Ekstrapolasi Linear: Polinomial Paling Sederhana (Derajat 1)
+
+**y = a₀ + a₁x**
+
+Model ini mengasumsikan laju perubahan konstan — kemiringan a₁ sama di mana pun di sepanjang garis.
+
+### Kapan Linear Unggul
+
+- Data memiliki tren yang stabil
+- Anda membutuhkan interpretabilitas
+- Anda mengekstrapolasi jauh melampaui data
+- Anda memiliki titik data terbatas
+
+### Keterbatasan Linear
+
+Dunia nyata jarang linear sempurna. Jika data Anda mengandung kelengkungan asli, model linear akan memprediksi secara sistematis salah.
+
+## Ekstrapolasi Kuadrat (Derajat 2): Saat Kurva Diperlukan
+
+**y = a₀ + a₁x + a₂x²**
+
+Memungkinkan kemiringan berubah secara terus-menerus. Ideal untuk proses yang mempercepat atau memperlambat.
+
+### Kasus Penggunaan Alami
+
+- Gerak proyektil
+- Ekonomi skala
+- Efek kejenuhan
+- Kurva pendapatan atau laba
+
+## Derajat Lebih Tinggi: Fleksibilitas vs. Risiko
+
+| Derajat | Maks. Titik Balik | Perilaku |
+|---------|------------------|----------|
+| 1 (Linear) | 0 | Kemiringan konstan |
+| 2 (Kuadrat) | 1 | Satu akselerasi/decelerasi |
+| 3 (Kubik) | 2 | Kurva S |
+| 4 (Kuartik) | 3 | Pola kompleks |
+| 5+ | 4+ | Ketidakstabilan |
+
+## Cara Memutuskan Antara Polinomial dan Linear
+
+1. **Plot data Anda** — inspeksi visual efektif
+2. **Bandingkan R²** antar model
+3. **Periksa residu** — cari pola sistematis
+4. **Pertimbangkan mekanisme** — fisik, ekonomi
+5. **Uji prediksi di luar sampel**
+
+## Tanda Peringatan Overfitting
+
+- R² meningkat drastis dengan setiap derajat
+- Prediksi jauh melampaui data Anda
+- Koefisien sangat besar
+- Osilasi antar titik data
+
+## Kapan Polinomial Menang
+
+- Data memiliki kelengkungan jelas
+- Proses diketahui non-linear
+- Anda melakukan interpolasi
+
+## Kapan Linear Menang
+
+- Data kira-kira lurus
+- Mengekstrapolasi jauh
+- Dataset kecil
+- Interpretabilitas penting
+
+## Pertanyaan yang Sering Diajukan
+
+<details class="faq-item">
+<summary>Derajat polinomial apa yang harus saya gunakan?</summary>
+
+Mulai dengan derajat terendah yang memberikan R² dapat diterima. Derajat 1 (linear) paling aman. Jarang di atas derajat 3.
+
+</details>
+
+<details class="faq-item">
+<summary>Mengapa ekstrapolasi polinomial kadang memberi hasil gila?</summary>
+
+Derajat tinggi dapat berosilasi liar — fenomena Runge.
+
+</details>
+
+<details class="faq-item">
+<summary>Apakah R² lebih tinggi selalu lebih baik?</summary>
+
+Tidak. R² sangat tinggi dengan derajat tinggi bisa berarti overfitting.
+
+</details>
+
+<details class="faq-item">
+<summary>Bisakah saya menggunakan polinomial untuk ramalan jangka panjang?</summary>
+
+Dengan hati-hati. Metode [linear](/blog/linear-extrapolation/) atau [logaritmik](/blog/logarithmic-diminishing-returns/) lebih aman.
+
+</details>

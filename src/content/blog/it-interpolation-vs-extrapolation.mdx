@@ -1,0 +1,230 @@
+---
+title: "Interpolazione vs Estrapolazione: Quando Usare Ciascun Metodo"
+description: Una guida chiara alle differenze chiave tra interpolazione ed estrapolazione, quando ciascun metodo è appropriato e come evitare le trappole comuni nelle tue previsioni.
+publishDate: 2026-05-18
+author: Team della Calcolatrice di Estrapolazione
+category: Fondamenti
+featuredImage: ""
+---
+
+Interpolazione ed estrapolazione sono due facce della stessa medaglia — entrambe stimano valori sconosciuti da punti dati noti, ma operano in territori fondamentalmente diversi. L'interpolazione riempie i vuoti *tra* le osservazioni; l'estrapolazione si avventura *oltre* di esse. Scegliere quella sbagliata può trasformare una stima affidabile in un'ipotesi azzardata. Questa guida spiega esattamente come funziona ogni metodo, quando usarli e come evitare gli errori di previsione più comuni.
+
+## La Differenza Fondamentale
+
+**L'interpolazione** stima valori all'interno dell'intervallo dei dati esistenti. Se conosci la temperatura alle 14:00 (72°F) e alle 16:00 (78°F), interpolare la temperatura alle 15:00 ti dà una stima limitata e di alta affidabilità — circa 75°F usando l'interpolazione lineare. Sai che la risposta deve trovarsi tra 72 e 78, perché i dati su entrambi i lati vincolano il risultato.
+
+**L'estrapolazione** stima valori al di fuori dell'intervallo dei dati. Usare quelle stesse letture di temperatura per prevedere la temperatura a mezzanotte è [estrapolazione](/blog/what-is-extrapolation/) — stai estendendo la tendenza oltre la finestra osservata, dove le condizioni possono cambiare drasticamente. La temperatura a mezzanotte potrebbe facilmente essere 55°F o 40°F, non i 48°F che una proiezione lineare ingenua suggerirebbe, perché le temperature seguono cicli diurni che il tuo set di dati a due punti non può catturare.
+
+La distinzione è semplice ma le implicazioni sono profonde: l'interpolazione è intrinsecamente più sicura perché è vincolata dai dati su entrambi i lati. L'estrapolazione non ha tali protezioni. Ogni unità di distanza che ti sposti oltre l'intervallo osservato introduce incertezza crescente.
+
+Per dirla numericamente: se i tuoi dati spaziano da x = 0 a x = 100, un'interpolazione a x = 50 è tipicamente accurata entro il rumore delle tue misurazioni. Un'estrapolazione a x = 150 può avere margini di errore diverse volte più grandi — e a x = 200, la previsione può essere essenzialmente priva di significato. Il tasso al quale la fiducia si degrada dipende dal metodo e dai dati, ma la verità direzionale è universale: **l'errore di estrapolazione cresce con la distanza dal confine dei dati**.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Zona di interpolazione (vincolata dai dati) vs zona di estrapolazione (oltre i dati) con coni di confidenza">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Interpolazione (sicura) vs Estrapolazione (rischiosa)</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <rect x="100" y="40" width="280" height="200" fill="#10b981" fill-opacity="0.08"/>
+      <path d="M 100 50 L 380 230" stroke="#10b981" stroke-width="2"/>
+      <path d="M 100 230 L 380 50" stroke="#10b981" stroke-width="2" stroke-dasharray="3 3"/>
+      <text x="240" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#059669">Zona di interpolazione</text>
+      <text x="240" y="155" text-anchor="middle" font-size="9" fill="#059669" font-style="italic">vincolata da dati su entrambi i lati</text>
+      <text x="240" y="170" text-anchor="middle" font-size="9" fill="#059669" font-style="italic">cono di previsione stretto</text>
+      <path d="M 380 110 L 500 40" stroke="#1e40af" stroke-width="2"/>
+      <path d="M 380 170 L 500 240" stroke="#1e40af" stroke-width="2" stroke-dasharray="3 3"/>
+      <path d="M 380 110 L 540 -30" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <path d="M 380 170 L 540 320" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <text x="450" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#dc2626">Zona di estrapolazione</text>
+      <text x="450" y="155" text-anchor="middle" font-size="9" fill="#dc2626" font-style="italic">nessun dato sul lato lontano</text>
+      <text x="450" y="170" text-anchor="middle" font-size="9" fill="#dc2626" font-style="italic">il cono si allarga con la distanza</text>
+      <g fill="#1e40af">
+        <circle cx="100" cy="180" r="4"/>
+        <circle cx="200" cy="155" r="4"/>
+        <circle cx="300" cy="120" r="4"/>
+        <circle cx="380" cy="95" r="4"/>
+      </g>
+      <line x1="380" y1="40" x2="380" y2="240" stroke="#0a0a0a" stroke-width="1.5"/>
+      <text x="385" y="255" font-size="9" fill="#0a0a0a" font-weight="700">confine dati</text>
+      <text x="475" y="105" font-size="9" fill="#1e40af" font-weight="600">migliore stima</text>
+    </g>
+  </svg>
+  <figcaption>Interpolazione versus estrapolazione come coni di previsione. A sinistra (zona verde), la previsione è vincolata da punti dati su entrambi i lati — il cono dei valori plausibili rimane stretto. A destra (zona rossa, oltre il confine dei dati segnato dalla linea verticale), la previsione non ha ancoraggio sul lato lontano, e il cono si allarga con la distanza dai dati. Questa incertezza crescente è la ragione fondamentale per cui l'estrapolazione è intrinsecamente più rischiosa dell'interpolazione.</figcaption>
+</figure>
+
+## Quando Usare l'Interpolazione
+
+L'interpolazione è la scelta giusta quando devi stimare un valore che cade tra due o più punti dati noti. Scenari comuni includono:
+
+- **Riempire lacune nei dati dei sensori** — una stazione meteorologica che registra ogni ora ma ha perso la lettura delle 15:00 può recuperare quel valore dai suoi vicini
+- **Generare curve morbide** — animatori e graphic designer usano l'interpolazione spline per creare movimento fluido tra i fotogrammi chiave
+- **Curve di rendimento finanziario** — i trader di obbligazioni interpolano i tassi d'interesse per scadenze non attivamente negoziate, poiché i tassi su scadenze vicine forniscono ancoraggi solidi
+- **Tabelle di consultazione ingegneristiche** — proprietà dei materiali (conduttività termica, resistenza alla trazione) a temperature o pressioni non tabulate possono essere stimate da valori tabulati
+- **Tabelle di dosaggio medico** — dosaggi pediatrici per un bambino di 23 kg quando la tabella elenca 20 kg e 25 kg
+- **Analisi geospaziale** — stima dell'elevazione a coordinate tra punti rilevati usando interpolazione bilineare o bicubica
+
+La nostra [calcolatrice di interpolazione](/interpolation/) supporta tre metodi: interpolazione lineare (veloce, buona per dati equidistanti), polinomio di Lagrange (curve morbide con pochi punti) e spline cubica naturale (lo standard d'oro per interpolazione liscia e stabile).
+
+### Un Esempio di Interpolazione Svolto
+
+Supponiamo che tu abbia misurato il tasso di crescita di una colonia batterica in tre momenti:
+
+| Tempo (ore) | Conteggio colonie (×10³) |
+|---|---|
+| 2 | 4.0 |
+| 6 | 12.0 |
+| 10 | 20.0 |
+
+Vuoi il conteggio delle colonie a 4 ore. Poiché 4 cade tra 2 e 6, questa è interpolazione. Usando l'interpolazione lineare tra (2, 4.0) e (6, 12.0):
+
+**y = y₁ + (x − x₁)(y₂ − y₁) / (x₂ − x₁) = 4.0 + (4−2)(12.0−4.0) / (6−2) = 4.0 + 4.0 = 8.0**
+
+La stima di 8.0 × 10³ colonie è ragionevole — si colloca ordinatamente tra 4.0 e 12.0, e la crescita appare approssimativamente lineare in questa finestra. Se avessi usato una spline cubica naturale che incorpora tutti e tre i punti, avresti potuto ottenere un valore leggermente diverso che tiene conto della curvatura, ma entrambi i metodi produrranno una risposta plausibile perché il punto target è circondato da dati.
+
+## Quando Usare l'Estrapolazione
+
+L'estrapolazione è necessaria quando devi prevedere oltre l'intervallo osservato. Le applicazioni del mondo reale includono:
+
+- **Previsione dei ricavi** — proiezione delle vendite del prossimo trimestre da dati storici
+- **Modellazione della popolazione** — stima della popolazione futura dai registri censuari, usando spesso l'[estrapolazione esponenziale](/blog/exponential-growth/) per la crescita in fase iniziale o modelli logaritmici per popolazioni mature
+- **Previsione scientifica** — previsione di variabili climatiche oltre gli intervalli misurati
+- **Pianificazione della capacità** — prevedere quando il traffico del server supererà l'infrastruttura attuale
+- **Efficacia dei farmaci** — stima della risposta terapeutica a dosi superiori a quelle testate negli studi clinici
+- **Indicatori economici** — proiezione di PIL, disoccupazione o inflazione per la pianificazione politica
+
+La nostra [calcolatrice di estrapolazione](/) offre cinque metodi: lineare, esponenziale, logaritmico, polinomiale e quadratico. Ciascuno cattura un diverso modello di tendenza — la chiave è abbinare il metodo al comportamento dei tuoi dati. Ad esempio, l'[estrapolazione lineare](/blog/linear-extrapolation/) funziona bene per tendenze additive stabili, mentre i metodi esponenziali sono adatti a fenomeni composti come interessi o diffusione virale.
+
+### Un Esempio di Estrapolazione Svolto
+
+Usando gli stessi dati della colonia batterica, supponiamo che tu voglia il conteggio delle colonie a 14 ore — quattro ore oltre la tua ultima misurazione. Questa è estrapolazione. Usando l'estrapolazione lineare basata sugli ultimi due punti (6, 12.0) e (10, 20.0):
+
+**y = 20.0 + (14−10)(20.0−12.0) / (10−6) = 20.0 + 8.0 = 28.0**
+
+Il metodo lineare prevede 28.0 × 10³ colonie. Ma la crescita batterica segue tipicamente una curva logistica — accelera, poi decelera man mano che le risorse si esauriscono. Il conteggio effettivo a 14 ore potrebbe essere solo di 24.0 × 10³ mentre la crescita rallenta, o potrebbe plateau completamente. L'estrapolazione lineare non ha modo di tenerne conto. Un modello esponenziale potrebbe prevedere 40.0 × 10³ o più, superando nella direzione opposta.
+
+Questo divario tra le previsioni — 24 vs 28 vs 40 — è un segnale di avvertimento lampeggiante. Quando diversi metodi ragionevoli producono valori estrapolati sostanzialmente diversi, la distanza di estrapolazione è troppo grande o il modello è mal specificato.
+
+## Confronto di Precisione
+
+| Fattore | Interpolazione | Estrapolazione |
+|--------|--------------|---------------|
+| Fiducia | Alta — vincolata dai dati | Diminuisce con la distanza dai dati |
+| Intervallo di errore | Stretto e prevedibile | Ampio e imprevedibile |
+| Rischio di fallimento | Basso | Significativo, specialmente lontano dai dati |
+| Miglior uso | Riempire lacune | Prevedere tendenze |
+| Dati richiesti | Almeno 2 punti | Almeno 2 punti (più = meglio) |
+| Soglia R² per fiducia | R² moderato accettabile | R² alto richiesto (0.95+) |
+| Sensibilità ai valori anomali | Moderata (impatto limitato) | Alta (gli effetti anomali si amplificano) |
+
+Più estrapoli oltre i tuoi dati, meno affidabile diventa la previsione. Un'estrapolazione lineare che si adatta perfettamente all'interno dell'intervallo di dati (R² = 0.99) può ancora produrre risultati assurdi se la tendenza sottostante cambia — che è esattamente ciò che accade quando proietti la crescita della popolazione senza considerare la capacità di carico, o prevedi i prezzi delle azioni attraverso un crollo del mercato.
+
+Comprendere [R² e le metriche di confidenza](/blog/r-squared-confidence/) è essenziale per la selezione del metodo. Un R² alto all'interno dell'intervallo di dati è necessario ma non sufficiente per un'estrapolazione affidabile — ti dice che il modello si adatta ai dati osservati, non che le ipotesi del modello valgano oltre. Un modello con R² = 0.97 che cattura la forma funzionale corretta estrapolerà molto meglio di un modello con R² = 0.999 che si sovra-adatta con un polinomio di alto grado.
+
+## La Zona Pericolosa: Quando l'Estrapolazione Fallisce
+
+La storia è piena di disastri di estrapolazione:
+
+- **Prezzi delle case pre-2008** — l'estrapolazione lineare presumeva che i prezzi sarebbero aumentati indefinitamente, ignorando le dinamiche cicliche del mercato
+- **Primi modelli COVID** — l'estrapolazione esponenziale ha sovrastimato la diffusione a lungo termine senza considerare i cambiamenti comportamentali, gli interventi politici e le soglie di immunità
+- **Previsioni tecnologiche** — proiettare i tassi di crescita attuali decenni avanti ignora i limiti fisici ed economici (la legge di Moore è un caso famoso in cui l'estrapolazione esponenziale ha infine incontrato vincoli fisici fondamentali)
+- **Previsioni demografiche malthusiane** — nel 1798, Thomas Malthus estrapolò linearmente la crescita della popolazione senza prevedere la rivoluzione agricola che cambiò drasticamente l'equazione
+- **Club di Roma (1972)** — il rapporto "I Limiti dello Sviluppo" estrapolò l'esaurimento delle risorse e l'inquinamento, prevedendo il collasso entro gli anni '90; l'innovazione tecnologica e gli effetti di sostituzione ritardarono molti di questi risultati
+- **Proiezioni di personale Y2K** — le aziende estrapolarono le loro crescenti esigenze di personale IT in avanti e assunsero in eccesso, solo per affrontare una brusca correzione successivamente
+
+Lo schema è sempre lo stesso: una tendenza che vale all'interno dell'intervallo osservato si rompe al di fuori. Ecco perché la conoscenza del dominio deve accompagnare l'estrapolazione matematica. I numeri da soli non sanno quando le regole cambiano. Questa è una sfida centrale nell'[estrapolazione nell'apprendimento automatico](/blog/extrapolation-machine-learning/), dove i modelli addestrati su una distribuzione di dati spesso falliscono quando incontrano input fuori distribuzione.
+
+Un modello mentale utile: **l'estrapolazione assume stazionarietà** — che il processo che genera i tuoi dati continui a operare secondo le stesse regole. Quando questa ipotesi viene violata, anche l'estrapolazione più matematicamente rigorosa fallirà. La domanda non è mai "posso estrapolare?" ma "ho motivo di credere che il processo sottostante rimanga stabile?"
+
+## Scegliere il Giusto Metodo di Estrapolazione
+
+Non tutte le estrapolazioni sono uguali. Il metodo che scegli dovrebbe riflettere la natura della tendenza:
+
+| Comportamento della tendenza | Metodo consigliato | Esempio |
+|---|---|---|
+| Cambiamento stabile e a tasso costante | Lineare | Costi delle utenze che crescono a un tasso fisso al mese |
+| Crescita accelerata e composta | Esponenziale | Adozione virale, interesse composto |
+| Rendimenti decrescenti, rallentamento | [Estrapolazione logaritmica](/blog/logarithmic-diminishing-returns/) | ROI di marketing a livelli di spesa crescenti |
+| Modelli complessi e multifase | Polinomiale | Ricavi stagionali con punti di svolta |
+| Linea retta con leggera curva | Quadratico | Moto di proiettile, accelerazione graduale |
+
+Scegliere tra [metodi polinomiali vs lineari](/blog/polynomial-vs-linear/) comporta un compromesso: i modelli polinomiali possono catturare la curvatura che i modelli lineari perdono, ma rischiano anche oscillazioni selvagge al di fuori dell'intervallo di dati, specialmente a gradi più alti. Un polinomio di grado 6 che si adatta magnificamente ai tuoi dati può oscillare a valori estremi appena oltre il confine. Come regola, usa il modello di grado più basso che catturi adeguatamente la tendenza.
+
+## Un Quadro Decisionale Pratico
+
+Fatti queste domande:
+
+1. **Il mio valore target è tra punti dati noti?** → Usa la [calcolatrice di interpolazione](/interpolation/)
+2. **Il mio valore target è oltre l'intervallo di dati?** → Usa la [calcolatrice di estrapolazione](/)
+3. **Devo modellare una relazione tra variabili piuttosto che prevedere un valore specifico?** → Usa la [calcolatrice di regressione](/regression/)
+4. **Quanto oltre i dati sto prevedendo?** → Più lontano, più cauto dovresti essere. Una regola pratica: sii scettico sulle estrapolazioni oltre il 10–20% dell'intervallo di dati senza una forte giustificazione di dominio.
+5. **La tendenza sottostante potrebbe cambiare?** → Se sì, l'estrapolazione comporta un rischio significativo. Chiediti se ci sono punti di flesso noti, limiti di capacità o cambi di regime in vista.
+6. **Metodi multipli sono d'accordo?** → Se l'estrapolazione lineare, esponenziale e polinomiale producono tutte previsioni simili, la tua previsione è più robusta. Se divergono bruscamente, la tua distanza di estrapolazione potrebbe essere troppo grande.
+7. **R² è abbastanza alto?** → Per l'interpolazione, R² > 0.80 è spesso accettabile. Per l'estrapolazione, dovresti richiedere R² > 0.95 e comunque verificare con la conoscenza del dominio.
+
+## Combinare Metodi di Interpolazione ed Estrapolazione
+
+L'approccio più affidabile è spesso usare entrambi i metodi insieme in un flusso di lavoro strutturato:
+
+1. **Interpola all'interno del tuo intervallo di dati** per validare che il metodo scelto si adatti bene. Se il tuo modello non può prevedere accuratamente punti dati noti quando sono trattenuti, non ci si può fidare per estrapolare.
+2. **Controlla il punteggio R²** — una cattiva aderenza all'interno dell'intervallo di dati significa che l'estrapolazione sarà inaffidabile. Comprendere [R² e le metriche di confidenza](/blog/r-squared-confidence/) ti aiuta a quantificare quanta fiducia riporre in ciascun metodo.
+3. **Estrapola in modo conservativo** — prevedi solo leggermente oltre l'intervallo di dati e tratta ogni passo verso l'esterno come sempre meno affidabile.
+4. **Confronta più metodi di estrapolazione** — se lineare ed esponenziale danno previsioni molto diverse, nessuno dei due dovrebbe essere fidato a distanza. La diffusione tra i metodi è essa stessa una misura di incertezza.
+5. **Applica la conoscenza del dominio** — le previsioni statistiche devono essere verificate contro vincoli fisici, economici o logici. Nessun modello può dirti che una popolazione supererà la capacità di carico del suo ambiente, o che un prezzo azionario crescerà più velocemente del PIL per sempre.
+6. **Usa l'interpolazione come controllo di sanità mentale** — se trattieni l'ultimo punto dati, estrapoli dai punti rimanenti e confronti il valore estrapolato con quello effettivo trattenuto, ottieni una stima diretta dell'errore di estrapolazione. Questa tecnica, chiamata **backtesting** o **validazione holdout**, è uno dei modi più pratici per valutare se la tua estrapolazione è affidabile.
+7. **Fondi i metodi quando i dati lo supportano** — ad esempio, usa l'[estrapolazione logaritmica](/blog/logarithmic-diminishing-returns/) per il breve termine dove ci si aspettano rendimenti decrescenti, e transita a un modello lineare di base per il lungo termine. Questo tipo di approccio ibrido spesso supera qualsiasi singolo metodo.
+
+### Un Esempio di Approccio Combinato
+
+Immagina di avere dati di ricavi trimestrali per gli ultimi 8 trimestri e di dover prevedere i prossimi 2. Ecco un flusso di lavoro robusto:
+
+1. Trattieni Q8, adatta un modello a Q1–Q7, ed "estrapola" a Q8. Confronta la previsione con l'effettivo. Questo ti dice quanto errore aspettarti a una distanza di 1 trimestre.
+2. Prova modelli lineare, esponenziale e polinomiale. Se tutti e tre prevedono Q8 entro il 5% dell'effettivo, hai una solida base per prevedere Q9 e Q10.
+3. Se i modelli divergono — lineare prevede $1.2M, esponenziale prevede $1.8M — sai che l'incertezza è grande. Riporta un intervallo, non una stima puntuale.
+4. Applica la conoscenza aziendale: c'è un calo stagionale in Q9? Un lancio di prodotto in Q10? Regola la previsione statistica di conseguenza.
+5. Riesegui il modello completo su tutti gli 8 trimestri prima di prevedere Q9 e Q10, poiché ora hai validato il metodo.
+
+Questo tipo di approccio disciplinato e multi-metodo riduce drasticamente il rischio di imbarazzanti fallimenti di previsione.
+
+## Punti Chiave
+
+- L'interpolazione stima **tra** punti dati; l'estrapolazione stima **oltre** di essi
+- L'interpolazione è intrinsecamente più affidabile perché è vincolata dalle osservazioni
+- L'estrapolazione è essenziale per le previsioni ma comporta un'incertezza crescente con la distanza dal confine dei dati
+- Controlla sempre R² e le metriche di confidenza — e combina i risultati matematici con l'esperienza del dominio
+- La scelta del metodo di estrapolazione (lineare, esponenziale, logaritmico, polinomiale) deve corrispondere al comportamento della tendenza sottostante
+- Quando più metodi sono in disaccordo, tratta la diffusione come una misura di incertezza piuttosto che scegliere la risposta che preferisci
+- La validazione holdout — estrapolare a un punto dati noto — è il miglior test pratico di affidabilità dell'estrapolazione
+- Usa la nostra [calcolatrice di interpolazione](/interpolation/) per stime all'interno dell'intervallo e la nostra [calcolatrice di estrapolazione](/) per previsioni oltre l'intervallo
+
+Entrambi gli strumenti sono gratuiti, privati e funzionano interamente nel tuo browser — i tuoi dati non lasciano mai il tuo dispositivo.
+
+## Domande Frequenti
+
+<details class="faq-item">
+<summary>L'interpolazione è sempre più accurata dell'estrapolazione?</summary>
+
+Sì, in generale. L'interpolazione è vincolata da dati su entrambi i lati, il che limita la stima. L'estrapolazione si estende oltre i dati noti dove non esiste confine. Tuttavia, la precisione dell'interpolazione dipende ancora dalla scelta del metodo giusto e dall'avere abbastanza punti dati per catturare il modello sottostante.
+
+</details>
+
+<details class="faq-item">
+<summary>Posso usare l'estrapolazione per brevi distanze oltre i miei dati?</summary>
+
+Sì, e l'estrapolazione a breve distanza è spesso abbastanza affidabile — specialmente con valori R² elevati. Il moltiplicatore di rischio chiave è la distanza: più lontano dai tuoi dati, più è probabile che la tendenza sottostante sia cambiata. Combina sempre le proiezioni statistiche con la conoscenza del dominio.
+
+</details>
+
+<details class="faq-item">
+<summary>Quale calcolatrice dovrei usare per riempire lacune vs prevedere?</summary>
+
+Usa la [calcolatrice di interpolazione](/interpolation/) quando il tuo valore target cade tra punti dati noti. Usa la [calcolatrice di estrapolazione](https://www.extrapolationcalculator.com/) quando devi prevedere oltre l'intervallo osservato. Usa la [calcolatrice di regressione](/regression/) quando vuoi modellare la relazione tra variabili piuttosto che prevedere un punto specifico.
+
+</details>
+
+<details class="faq-item">
+<summary>Qual è il metodo di estrapolazione più sicuro?</summary>
+
+L'estrapolazione lineare è generalmente la più sicura perché fa il minor numero di ipotesi sulla forma dei dati. Proietta un tasso di cambiamento costante, che è conservativo. Metodi più complessi come [esponenziale](/blog/exponential-growth/) o polinomiale possono adattarsi meglio ai dati di addestramento ma possono divergere drammaticamente oltre.
+
+</details>

@@ -1,0 +1,179 @@
+---
+title: "Estrapolazione Polinomiale vs Lineare: Quando Usare Ciascuna"
+description: Confronta estrapolazione polinomiale e lineare. Scopri le differenze, quando usare ciascun metodo e vedi esempi pratici con dati reali.
+publishDate: 2026-05-30
+author: Team della Calcolatrice di Estrapolazione
+category: Metodi
+featuredImage: ""
+---
+
+## Introduzione
+
+Scegliere il metodo di estrapolazione sbagliato può trasformare una previsione promettente in un costoso errore. L'estrapolazione polinomiale vs lineare è uno dei dilemmi più comuni che gli analisti affrontano quando proiettano tendenze oltre i propri dati. Se sei nuovo al concetto, consulta prima la nostra guida per principianti su [cos'è l'estrapolazione](/blog/what-is-extrapolation/). Entrambi i metodi sono ampiamente utilizzati, ma ciascuno è costruito per un tipo di pattern di dati fondamentalmente diverso. Usa quello sbagliato e appiattirai la crescita reale o farai impazzire le previsioni. Questo articolo spiega come funziona ciascun metodo, li confronta fianco a fianco e mostra esattamente quando usare l'uno piuttosto che l'altro.
+
+## Cos'è l'Estrapolazione Lineare?
+
+L'estrapolazione lineare estende un trend lineare esistente nel futuro. Presuppone che il tasso di cambiamento tra i punti dati rimanga costante, quindi i valori proiettati continuano lungo la stessa pendenza. La formula principale è **y = mx + b**, dove **m** è la pendenza (tasso di cambiamento) e **b** è l'intercetta y.
+
+Immagina un'azienda le cui vendite aumentano di circa $1.000 ogni mese. Se gennaio ha portato $5.000 e febbraio $6.000, l'estrapolazione lineare prevede marzo a $7.000, aprile a $8.000 e così via. La linea continua semplicemente a salire allo stesso ritmo costante.
+
+L'estrapolazione lineare funziona meglio quando i tuoi dati seguono un trend stabile e costante senza segni di curvatura verso l'alto o verso il basso. È il metodo più semplice disponibile e, per previsioni a breve termine su dati consistenti, è spesso la scelta più affidabile. Per un approfondimento sulla meccanica, consulta la nostra [guida all'estrapolazione lineare](/blog/linear-extrapolation/).
+
+## Cos'è l'Estrapolazione Polinomiale?
+
+L'estrapolazione polinomiale estende un trend curvo adattando un'equazione polinomiale ai tuoi dati. Invece di forzare una linea retta, può modellare accelerazione, decelerazione e forme più complesse a seconda del grado del polinomio. Un polinomio di secondo grado (quadratico) cattura una curva, un terzo grado (cubico) può catturare una forma a S, e gradi superiori aggiungono ancora più flessibilità.
+
+Considera una startup la cui crescita di utenti inizia lenta ma accelera ogni trimestre. Una linea retta sottostimerebbe quel momento, ma una curva polinomiale si piega per corrispondere al tasso di cambiamento crescente. Ciò rende l'estrapolazione polinomiale particolarmente utile per scenari di previsione non lineari dove le tendenze chiaramente si curvano.
+
+Il compromesso è la complessità. I polinomi di grado superiore adattano i dati storici più strettamente, ma possono comportarsi in modo erratico oltre l'intervallo di dati. Tuttavia, quando i tuoi dati chiaramente si curvano e i metodi lineari sono insufficienti, l'estrapolazione polinomiale fornisce una proiezione più realistica. Scopri di più sui [metodi polinomiali vs lineari](/blog/polynomial-vs-linear/) sul nostro blog.
+
+## Confronto Fianco a Fianco
+
+| Criterio | Estrapolazione Lineare | Estrapolazione Polinomiale |
+|----------|---------------------|--------------------------|
+| Pattern | Linea retta | Curva |
+| Migliore per | Trend stabili | Trend in accelerazione/decelerazione |
+| Complessità | Semplice | Più complessa |
+| Rischio | Basso per il breve termine | Più alto per il lungo termine |
+| Esempio | Crescita lineare delle vendite | Picchi stagionali della domanda |
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Pattern di estrapolazione lineare versus polinomiale: linea retta vs curva">
+    <rect width="600" height="260" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <g transform="translate(30, 30)">
+        <rect x="0" y="0" width="260" height="200" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Estrapolazione Lineare</text>
+        <line x1="30" y1="170" x2="240" y2="170" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="30" x2="30" y2="170" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="150" y1="30" x2="150" y2="170" stroke="#94a3b8" stroke-dasharray="3 3"/>
+        <text x="160" y="35" font-size="9" fill="#64748b">estrapolazione →</text>
+        <path d="M 50 150 L 100 130 L 150 110" stroke="#d4af37" stroke-width="2" fill="none"/>
+        <path d="M 150 110 L 230 75" stroke="#d4af37" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+        <g fill="#1e40af">
+          <circle cx="50" cy="150" r="3.5"/>
+          <circle cx="100" cy="130" r="3.5"/>
+          <circle cx="150" cy="110" r="4.5" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="200" cy="90" r="4.5" stroke="#fff" stroke-width="1.5"/>
+        </g>
+        <text x="130" y="190" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">pendenza costante</text>
+      </g>
+      <g transform="translate(310, 30)">
+        <rect x="0" y="0" width="260" height="200" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Estrapolazione Polinomiale</text>
+        <line x1="30" y1="170" x2="240" y2="170" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="30" x2="30" y2="170" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="150" y1="30" x2="150" y2="170" stroke="#94a3b8" stroke-dasharray="3 3"/>
+        <text x="160" y="35" font-size="9" fill="#64748b">estrapolazione →</text>
+        <path d="M 50 160 Q 100 130, 150 100" stroke="#d4af37" stroke-width="2" fill="none"/>
+        <path d="M 150 100 Q 180 70, 230 35" stroke="#d4af37" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+        <g fill="#1e40af">
+          <circle cx="50" cy="160" r="3.5"/>
+          <circle cx="100" cy="130" r="3.5"/>
+          <circle cx="150" cy="100" r="4.5" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="200" cy="60" r="4.5" stroke="#fff" stroke-width="1.5"/>
+        </g>
+        <text x="130" y="190" text-anchor="middle" font-size="9" fill="#64748b" font-style="italic">curva, pendenza variabile</text>
+      </g>
+    </g>
+  </svg>
+  <figcaption>Estrapolazione lineare vs polinomiale fianco a fianco. La proiezione lineare (sinistra) estende una pendenza costante indefinitamente — prevedibile e stabile, ma non può catturare l'accelerazione o la decelerazione. La proiezione polinomiale (destra) si curva per corrispondere al tasso di cambiamento variabile, catturando pattern di accelerazione che una linea retta non vede — ma con un maggior rischio di instabilità se la curva supera l'intervallo di dati.</figcaption>
+</figure>
+
+## Quando Usare Ciascuna
+
+**Usa l'estrapolazione lineare quando:**
+
+- Il tuo trend è stabile e il tasso di cambiamento è approssimativamente costante
+- Hai un dataset piccolo, tipicamente meno di cinque o sei punti
+- Stai effettuando previsioni solo a breve distanza oltre i dati esistenti
+- Semplicità e interpretabilità contano più dell'adattamento della curva
+
+**Usa l'estrapolazione polinomiale quando:**
+
+- Il tuo trend chiaramente si curva — accelerando o decelerando
+- Hai dati sufficienti per giustificare un adattamento di curva, idealmente otto o più punti
+- Il processo sottostante è complesso, come cicli stagionali o crescita composta
+- Una linea retta lascia residui visibili che una curva potrebbe assorbire
+
+**Diagramma di decisione rapida in forma testuale:**
+
+1. Il tuo grafico dati sembra approssimativamente dritto? → Usa lineare.
+2. Si curva chiaramente? → Usa polinomiale.
+3. Stai proiettando molto oltre i tuoi dati? → Rimani con lineare o un polinomio di basso grado per limitare il rischio.
+4. Hai meno di sei punti? → Usa lineare indipendentemente dall'aspetto.
+
+Scegliere il giusto metodo di estrapolazione si riduce a far corrispondere la matematica alla forma dei tuoi dati. Per ulteriori fondamenti concettuali, consulta il nostro post su [interpolazione vs estrapolazione](/blog/interpolation-vs-extrapolation/).
+
+## Un Esempio Pratico
+
+Applichiamo entrambi i metodi allo stesso dataset e confrontiamo i risultati.
+
+**Dati sui ricavi trimestrali:**
+
+| Trimestre | Ricavi |
+|---------|--------|
+| Q1 | $10K |
+| Q2 | $15K |
+| Q3 | $22K |
+| Q4 | $31K |
+| Q5 | $42K |
+
+Gli incrementi trimestre su trimestre sono $5K, $7K, $9K e $11K — ogni salto cresce di $2K. Questa differenza seconda costante segnala una crescita quadratica.
+
+**Adattamento lineare:** La pendenza media è di circa $8K per trimestre, dandoci una linea che sale a un tasso costante.
+
+**Adattamento quadratico:** Un polinomio di secondo grado cattura il pattern di accelerazione, con la formula **y = x² + 2x + 7** (dove x è il numero del trimestre).
+
+**Valori previsti:**
+
+| Trimestre | Previsione Lineare | Previsione Polinomiale |
+|---------|-------------------|----------------------|
+| Q6 | $50K | $55K |
+| Q7 | $58K | $70K |
+
+Il modello lineare sottostima i ricavi futuri perché non può tenere conto dell'accelerazione. Il modello polinomiale riflette lo slancio crescente e produce previsioni più alte — e probabilmente più accurate. Detto questo, la previsione polinomiale per Q7 salta bruscamente a $70K, illustrando quanto velocemente i modelli curvi possano escalare. Puoi verificare l'adattamento del modello usando il [punteggio R²](/blog/r-squared-confidence/) per vedere quale metodo spiega meglio i tuoi dati.
+
+## Rischi e Limitazioni
+
+Nessun metodo di estrapolazione è infallibile. L'estrapolazione lineare perde completamente la curvatura, quindi sottostimerà sistematicamente i trend in accelerazione e sovrastimerà quelli in decelerazione. Se i tuoi dati sono anche leggermente curvi, una proiezione lineare si allontanerà ulteriormente dalla realtà a ogni passo.
+
+L'estrapolazione polinomiale porta il rischio opposto. I polinomi di grado superiore possono adattare magnificamente i dati storici ma poi esplodere in direzioni inaspettate una volta che si esce dall'intervallo osservato. Questa instabilità, correlata al fenomeno di Runge, rende le previsioni polinomiali a lungo termine inaffidabili. Piccoli cambiamenti nei dati di input possono anche produrre curve drammaticamente diverse. Queste sfide riflettono il problema più ampio dell'[estrapolazione nell'apprendimento automatico](/blog/extrapolation-machine-learning/), dove anche i modelli faticano a fare previsioni affidabili al di fuori del loro intervallo di addestramento.
+
+Entrambi i metodi dipendono fortemente dalla qualità dei dati. Valori anomali, errori di misurazione e punti mancanti possono distorcere una pendenza lineare o piegare un polinomio nella direzione sbagliata. Nel dibattito estrapolazione polinomiale vs lineare, l'approccio più sicuro è usare il metodo più semplice che si adatta bene ai tuoi dati e non proiettare mai troppo nell'ignoto. Per dati che crescono esponenzialmente piuttosto che polinomialmente, consulta la nostra guida sull'[estrapolazione esponenziale](/blog/exponential-growth/).
+
+## Strumenti per Entrambi i Metodi
+
+Non hai bisogno di software specializzato per iniziare. Excel può adattare trend lineari con le funzioni SLOPE e INTERCEPT, e trend polinomiali con la funzione LINEST — la nostra guida [come estrapolare dati in Excel](/blog/how-to-extrapolate-data-in-excel/) copre entrambi gli approcci in dettaglio. Gli utenti Python possono sfruttare polyfit e polyval di NumPy per il lavoro polinomiale, mentre R offre la funzione lm sia per modelli lineari che polinomiali. Per previsioni numeriche rapide, la [calcolatrice di estrapolazione](https://www.extrapolationcalculator.com/) supporta metodi lineari e polinomiali. Se devi prima riempire i vuoti all'interno del tuo intervallo di dati, prova la [calcolatrice di interpolazione](/interpolation/). Per modellare la relazione sottostante tra variabili, la [calcolatrice di regressione](/regression/) fornisce un'analisi di regressione dettagliata.
+
+## Conclusione
+
+L'estrapolazione lineare è semplice, stabile e adatta a previsioni a breve termine su dati stabili. L'estrapolazione polinomiale è più flessibile e cattura pattern curvi, ma comporta un rischio maggiore quanto più si proietta lontano. La scelta giusta dipende interamente dalla forma dei tuoi dati — non da quale metodo sia più sofisticato. Adatta il tuo modello al tuo pattern, mantieni le proiezioni conservative e convalida sempre con una misura di bontà di adattamento. Prova entrambi i metodi sui tuoi dati con la [calcolatrice di estrapolazione gratuita](https://www.extrapolationcalculator.com/).
+
+<details class="faq-item">
+<summary>Qual è la differenza tra estrapolazione lineare e polinomiale?</summary>
+
+L'estrapolazione lineare proietta i dati lungo una linea retta assumendo un tasso di cambiamento costante. L'estrapolazione polinomiale adatta un'equazione curva ai dati, permettendo al tasso di cambiamento stesso di aumentare o diminuire. Lineare è più semplice e stabile; polinomiale è più flessibile ma meno prevedibile oltre l'intervallo di dati.
+
+</details>
+
+<details class="faq-item">
+<summary>Quando dovrei usare l'estrapolazione polinomiale?</summary>
+
+Usa l'estrapolazione polinomiale quando i tuoi dati chiaramente si curvano — come crescita accelerata o pattern stagionali — e hai punti sufficienti (tipicamente otto o più) per supportare un adattamento di curva affidabile. Evitala per dataset piccoli o previsioni a lungo raggio dove la curva può diventare instabile.
+
+</details>
+
+<details class="faq-item">
+<summary>L'estrapolazione polinomiale è più accurata?</summary>
+
+Può essere più accurata per dati con curvatura genuina, perché cattura pattern che una linea retta non vede. Tuttavia, l'accuratezza diminuisce rapidamente man mano che ci si allontana dai dati osservati, e i polinomi di grado superiore possono produrre risultati imprevedibili. Confronta sempre entrambi i metodi e controlla le statistiche di adattamento.
+
+</details>
+
+<details class="faq-item">
+<summary>Posso usare l'estrapolazione polinomiale in Excel?</summary>
+
+Sì. La funzione LINEST di Excel può adattare curve polinomiali fornendo potenze elevate di x come input aggiuntivi. Puoi anche aggiungere una linea di tendenza polinomiale a un grafico e visualizzare l'equazione sul grafico. Per una guida passo passo, la nostra [guida all'estrapolazione lineare](/blog/linear-extrapolation/) copre il flusso di lavoro di Excel in dettaglio.
+
+</details>

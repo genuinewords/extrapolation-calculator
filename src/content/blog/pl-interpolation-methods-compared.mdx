@@ -1,0 +1,218 @@
+---
+title: "Metody interpolacji porównane: Liniowa vs Lagrange'a vs Splajny sześcienny"
+description: Praktyczne porównanie trzech metod interpolacji — liniowej, wielomianu Lagrange'a i naturalnego splajnu sześciennego — z przykładami, przypadkami użycia i wskazaniem, kiedy każda jest najlepsza.
+publishDate: 2026-05-25
+author: Zespół Kalkulatora Ekstrapolacji
+category: Metody
+featuredImage: ""
+---
+
+Masz zestaw znanych punktów danych i musisz oszacować wartość, która znajduje się między nimi. Której metody interpolacji powinieneś użyć? Liniowa jest szybka i prosta. Wielomian Lagrange'a dopasowuje każdy punkt dokładnie. Splajny sześcienny daje najgładszą krzywą. Każda ma swoje mocne strony — i każda może wprowadzić w błąd, jeśli zostanie zastosowana nieostrożnie.
+
+Ten przewodnik porównuje trzy metody interpolacji bezpośrednio, z rozwiązanymi przykładami, ramami decyzyjnymi i praktycznymi zaleceniami. Jeśli przewidujesz również wartości *poza* zakresem danych, zobacz nasz przewodnik na temat [interpolacji vs ekstrapolacji](/blog/interpolation-vs-extrapolation/).
+
+## Czym jest interpolacja?
+
+Interpolacja szacuje nieznane wartości w zakresie znanych punktów danych. W przeciwieństwie do metod [ekstrapolacji](/blog/what-is-extrapolation/), które rzutują poza obserwowane dane, interpolacja jest ograniczona — twoje oszacowanie jest zawsze otoczone rzeczywistymi pomiarami z obu stron.
+
+To ograniczenie czyni interpolację z natury bardziej niezawodną. Szacowana wartość jest ograniczona przez dane, dlatego inżynierowie, naukowcy i analitycy sięgają po interpolację, gdy punkt docelowy znajduje się w ich zbiorze danych.
+
+Trzy metody obsługiwane przez nasz [kalkulator interpolacji](/interpolation/) — liniowa, wielomian Lagrange'a i naturalny splajny sześcienny — stosują fundamentalnie różne podejścia do tego samego problemu. Oto ich porównanie.
+
+## Interpolacja liniowa
+
+### Jak działa
+
+Interpolacja liniowa łączy dwa sąsiednie punkty danych linią prostą i odczytuje wartość w docelowym x. Znajduje dwa punkty obejmujące cel, oblicza nachylenie między nimi i przedłuża to nachylenie do punktu docelowego.
+
+Wzór jest prosty:
+
+**y = y₁ + (x − x₁) × (y₂ − y₁) / (x₂ − x₁)**
+
+Gdzie (x₁, y₁) i (x₂, y₂) to dwa punkty obejmujące.
+
+### Kiedy działa najlepiej
+
+- **Równomiernie rozmieszczone dane**, gdzie podstawowy trend jest w przybliżeniu liniowy
+- **Szybkie oszacowania**, gdzie szybkość jest ważniejsza niż precyzja
+- **Duże zbiory danych**, gdzie obliczanie złożonego modelu byłoby kosztowne
+- **Wyszukiwania tabelaryczne** — tabele inżynieryjne, krzywe dochodowości finansowej, odczyty czujników
+
+### Gdzie zawodzi
+
+Interpolacja liniowa zakłada linię prostą między każdą parą sąsiednich punktów. Jeśli twoje dane mają jakąkolwiek krzywiznę — przyspieszający wzrost, malejące zyski lub oscylacje — założenie linii prostej wprowadza błąd. Szacowana wartość będzie zawsze leżeć na cięciwie między dwoma punktami, nigdy na gładkiej krzywej przez nie.
+
+Jest to szczególnie widoczne w przypadku rzadkich danych. Jeśli masz tylko pięć punktów kreślących parabolę, interpolacja liniowa wyprodukuje postrzępione, odcinkowo proste oszacowanie, które zaniża szczyty i zawyża doliny.
+
+## Interpolacja wielomianem Lagrange'a
+
+### Jak działa
+
+Interpolacja Lagrange'a konstruuje pojedynczy wielomian, który przechodzi dokładnie przez *każdy* punkt danych. Dla n punktów buduje wielomian stopnia n−1 przy użyciu ważonych funkcji bazowych — każda funkcja bazowa jest równa 1 we własnym punkcie danych i 0 we wszystkich pozostałych.
+
+Rezultatem jest matematycznie dokładne dopasowanie: wielomian dotyka każdego punktu. Żadnej reszty, żadnego błędu w znanych danych.
+
+### Kiedy działa najlepiej
+
+- **Małe zbiory danych** (2–5 punktów), gdzie chcesz dokładnego dopasowania
+- **Gładkie trendy podstawowe**, gdzie pojedynczy wielomian może uchwycić wzór
+- **Analiza teoretyczna**, gdzie liczy się matematyczna elegancja
+- **Cele edukacyjne** — metoda jest przejrzysta i pouczająca
+
+Nasz [kalkulator interpolacji](/interpolation/) ogranicza Lagrange'a do maksymalnie 5 punktów, gdzie metoda działa najlepiej.
+
+### Gdzie zawodzi
+
+Wielomiany Lagrange'a cierpią na **zjawisko Rungego** — dzikie oscylacje między punktami danych, gdy stopień jest wysoki. Wielomian stopnia 8 dopasowujący 9 punktów może drastycznie oscylować między kolejnymi obserwacjami, produkując interpolowane wartości, które są matematycznie poprawne, ale fizycznie absurdalne.
+
+Dlatego ograniczamy go do 5 punktów. Poza tym oscylacje czynią metodę zawodną. Jeśli masz więcej niż 5 punktów i potrzebujesz gładkiej krzywej, splajny sześcienny jest lepszym wyborem.
+
+Lagrange nie radzi sobie też elegancko z nowymi punktami — dodanie pojedynczej obserwacji zmienia cały wielomian, co czyni go niepraktycznym dla przyrostowych zbiorów danych.
+
+## Interpolacja naturalnym splajnem sześciennym
+
+### Jak działa
+
+Splajny sześcienny dopasowuje osobny wielomian sześcienny między każdą parą sąsiednich punktów danych, a następnie łączy je z warunkami dopasowania. W każdym punkcie wewnętrznym sąsiednie wielomiany sześcienne mają tę samą wartość, tę samą pierwszą pochodną (nachylenie) i tę samą drugą pochodną (krzywiznę). Warunek „naturalny" ustawia drugą pochodną na zero na obu końcach.
+
+Rezultatem jest najgładsza możliwa krzywa przez twoje dane — matematycznie minimalizuje całkowitą krzywiznę we wszystkich segmentach.
+
+### Kiedy działa najlepiej
+
+- **Gładkie krzywe** — klatki kluczowe animacji, profile inżynieryjne, dane naukowe
+- **Średnie i duże zbiory danych**, gdzie liniowa jest zbyt szorstka, a Lagrange oscyluje
+- **Systemy fizyczne**, gdzie podstawowy proces jest ciągły i różniczkowalny
+- **Każdy scenariusz, gdzie liczy się gładkość wizualna** — renderowanie wykresów, CAD, przetwarzanie sygnałów
+
+### Gdzie zawodzi
+
+Splajny sześcienny nie może ekstrapolować — działa tylko w zakresie danych. Jeśli twój docelowy x jest poniżej najmniejszego punktu danych lub powyżej największego, metoda zgłasza błąd. Jest to celowe: ekstrapolacja splajnem jest niebezpiecznie zawodna, ponieważ segmenty sześcienne są nieograniczone poza końcami.
+
+Obliczanie splajnu jest również bardziej kosztowne niż interpolacja liniowa. Dla bardzo dużych zbiorów danych (tysiące punktów) rozwiązanie układu trójdiagonalnego dodaje narzut, choć wciąż jest wydajne w porównaniu z wielomianami wysokiego stopnia.
+
+Aby zrozumieć jakość dopasowania modelu między metodami, nasz przewodnik po [wynikach R²](/blog/r-squared-confidence/) wyjaśnia, jak ocenić, czy wybrana metoda rzeczywiście pasuje do wzorca twoich danych.
+
+## Bezpośrednie porównanie
+
+| Cecha | Liniowa | Lagrange | Splajny sześcienny |
+|---------|--------|----------|----------------|
+| Jakość dopasowania | Przybliżona | Dokładna w punktach danych | Dokładna w punktach danych |
+| Gładkość | Brak (odcinkowo prosta) | Może oscylować | Gładka (ciągłe pochodne) |
+| Maks. punktów | Nieograniczona | 5 (zalecane) | Nieograniczona |
+| Ekstrapolacja | Ograniczona (używa segmentu brzegowego) | Możliwa ale ryzykowna | Nieobsługiwana |
+| Szybkość obliczeń | Najszybsza | Umiarkowana | Umiarkowana |
+| Najlepsza do | Szybkich oszacowań, trendów liniowych | Małych zbiorów, dokładnych dopasowań | Gładkich krzywych, danych fizycznych |
+| Największe ryzyko | Pomija krzywiznę | Zjawisko Rungego | Nie może ekstrapolować |
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Interpolacja liniowa vs Lagrange'a vs splajny sześcienny na tych samych czterech punktach danych">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="10" fill="#374151">
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Trzy Metody na Tych Samych Danych</text>
+      <g fill="#1e40af">
+        <circle cx="100" cy="200" r="4.5"/>
+        <circle cx="200" cy="140" r="4.5"/>
+        <circle cx="300" cy="80" r="4.5"/>
+        <circle cx="400" cy="160" r="4.5"/>
+      </g>
+      <path d="M 100 200 L 200 140 L 300 80 L 400 160" stroke="#d4af37" stroke-width="2" stroke-dasharray="4 2"/>
+      <path d="M 100 200 Q 200 130, 300 80 Q 400 130, 400 160" stroke="#1e40af" stroke-width="2" fill="none"/>
+      <path d="M 100 200 C 200 130, 250 100, 300 80 C 350 90, 380 140, 400 160" stroke="#059669" stroke-width="2.5" fill="none"/>
+      <g transform="translate(420, 50)">
+        <rect x="0" y="0" width="160" height="100" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <line x1="10" y1="22" x2="40" y2="22" stroke="#d4af37" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="48" y="25" font-size="10">Liniowa (odcinkowo)</text>
+        <line x1="10" y1="44" x2="40" y2="44" stroke="#1e40af" stroke-width="2"/>
+        <text x="48" y="47" font-size="10">Lagrange (zakrzywiona)</text>
+        <line x1="10" y1="66" x2="40" y2="66" stroke="#059669" stroke-width="2.5"/>
+        <text x="48" y="69" font-size="10">Splajny sześcienny (gładka)</text>
+        <circle cx="25" cy="86" r="3.5" fill="#1e40af"/>
+        <text x="48" y="89" font-size="10">Punkty danych</text>
+      </g>
+      <text x="120" y="260" font-size="9" fill="#d4af37" font-weight="600">Liniowa</text>
+      <text x="220" y="260" font-size="9" fill="#1e40af" font-weight="600">Lagrange</text>
+      <text x="330" y="260" font-size="9" fill="#059669" font-weight="600">Splajny</text>
+    </g>
+  </svg>
+  <figcaption>Trzy metody interpolacji zastosowane do tych samych czterech punktów danych. Liniowa (złota przerywana) łączy sąsiednie punkty prostymi segmentami — prosta, ale pomija krzywiznę. Lagrange (niebieska) dopasowuje pojedynczy wielomian przez wszystkie punkty — dokładna, ale może oscylować. Splajny sześcienny (zielona) łączy segmenty sześcienne z ciągłymi pochodnymi — gładka i stabilna dla umiarkowanych zbiorów danych. Wybór zależy od kształtu danych, liczby punktów i konieczności ekstrapolacji.</figcaption>
+</figure>
+
+## Rozwiązany przykład
+
+Rozważmy cztery punkty danych śledzące temperaturę w ciągu dnia:
+
+| Godzina | Temperatura (°C) |
+|---------|------------------|
+| 6 | 12 |
+| 10 | 18 |
+| 14 | 26 |
+| 18 | 20 |
+
+Chcemy poznać temperaturę o 12:00 (godzina 12).
+
+**Interpolacja liniowa**: Między (10, 18) a (14, 26). Nachylenie = (26−18)/(14−10) = 2. Wynik: 18 + 2×2 = **22°C**.
+
+**Wielomian Lagrange'a**: Dopasowuje wielomian stopnia 3 przez wszystkie cztery punkty. Wielomian odchyla się nieco poniżej oszacowania liniowego, ponieważ uwzględnia późniejszy spadek o godzinie 18. Wynik: około **23,5°C**.
+
+**Naturalny splajny sześcienny**: Dopasowuje segmenty sześcienne z ciągłą krzywizną. Splajny rozpoznaje, że temperatura o godzinie 12 wciąż rośnie, ale zwalnia w kierunku szczytu. Wynik: około **23,2°C**.
+
+Różnice w tym przykładzie są niewielkie, ale mają znaczenie. Liniowa zaniża, ponieważ ignoruje krzywiznę. Lagrange nieco zawyża, ponieważ wielomian wysokiego stopnia oscyluje. Splajny znajduje się między nimi — gładki, ograniczony i fizycznie uzasadniony.
+
+## Jak wybrać właściwą metodę
+
+Użyj tych ram decyzyjnych:
+
+1. **Czy twoje dane są w przybliżeniu liniowe?** Użyj interpolacji liniowej — jest szybka, prosta i nie wprowadzi cię w błąd
+2. **Czy masz 5 lub mniej punktów i potrzebujesz dokładnego dopasowania?** Użyj wielomianu Lagrange'a
+3. **Czy potrzebujesz gładkiej krzywej przez wiele punktów?** Użyj splajnu sześciennego
+4. **Czy pracujesz z danymi fizycznymi lub inżynieryjnymi?** Użyj splajnu sześciennego — rzeczywiste systemy są gładkie
+5. **Czy musisz przewidywać poza zakresem danych?** Żadna z tych metod nie jest do tego bezpieczna — zamiast tego użyj naszego [darmowego kalkulatora ekstrapolacji](https://www.extrapolationcalculator.com/), który oferuje metody ekstrapolacji [liniowej](/blog/linear-extrapolation/), [wykładniczej](/blog/exponential-growth/) i [logarytmicznej](/blog/logarithmic-diminishing-returns/)
+6. **Czy porównujesz typy modeli?** Nasz przewodnik na temat [metod wielomianowych vs liniowych](/blog/polynomial-vs-linear/) szczegółowo omawia kompromisy
+
+## Praktyczne wskazówki
+
+- **Zawsze najpierw wizualizuj swoje dane** — jeśli wyglądają jak linia prosta, użyj interpolacji liniowej; jeśli są zakrzywione, użyj splajnu
+- **Sprawdź wartości odstające** — jeden zły punkt drastycznie zniekształca Lagrange'a i wpływa na krzywiznę splajnu
+- **Liniowa nigdy nie jest błędna** — jest tylko mniej precyzyjna dla zakrzywionych danych. Jeśli nie jesteś pewien, liniowa daje obronną linię bazową
+- **Nie mieszaj interpolacji i ekstrapolacji** — interpoluj w swoim zakresie, ekstrapoluj dedykowanymi metodami
+- **Więcej punktów pomaga wszystkim metodom** — ale Lagrange pogarsza się z ich nadmiarem, podczas gdy liniowa i splajny poprawiają się
+
+## Podsumowanie
+
+Interpolacja liniowa jest szybka i niezawodna dla w przybliżeniu liniowych danych. Wielomian Lagrange'a daje dokładne dopasowania dla małych zbiorów danych, ale oscyluje przy większej liczbie punktów. Naturalny splajny sześcienny tworzy najgładsze krzywe i dobrze radzi sobie ze średnimi i dużymi zbiorami danych, ale nie może ekstrapolować.
+
+Właściwy wybór zależy od kształtu danych, liczby punktów oraz tego, czy potrzebujesz szybkości, gładkości czy dokładności. Wypróbuj wszystkie trzy metody na tym samym zbiorze danych za pomocą naszego [kalkulatora interpolacji](/interpolation/) i porównaj wyniki — różnice wiele mówią o ukrytym wzorcu twoich danych.
+
+Do numerycznych prognoz poza zakresem danych [kalkulator ekstrapolacji](https://www.extrapolationcalculator.com/) zapewnia pięć metod dostosowanych do różnych wzorców trendów. Gdy potrzebujesz modelować związek między zmiennymi, a nie interpolować między punktami, [kalkulator regresji](/regression/) oferuje narzędzia analizy regresji.
+
+## Często zadawane pytania
+
+<details class="faq-item">
+<summary>Która metoda interpolacji jest najdokładniejsza?</summary>
+
+Żadna pojedyncza metoda nie jest zawsze najdokładniejsza. Liniowa jest najdokładniejsza dla danych rzeczywiście liniowych. Splajny sześcienny jest najdokładniejszy dla gładkich, ciągłych procesów fizycznych. Lagrange jest najdokładniejszy, gdy masz bardzo mało punktów, a podstawowa funkcja jest wielomianowa. Najlepsza metoda odpowiada rzeczywistemu wzorcowi twoich danych.
+
+</details>
+
+<details class="faq-item">
+<summary>Kiedy powinienem unikać interpolacji splajnem sześciennym?</summary>
+
+Unikaj splajnu sześciennego, gdy potrzebujesz ekstrapolować poza zakres danych — działa tylko w granicach twojego zbioru danych. Zachowaj również ostrożność w przypadku danych z ostrymi załamaniami lub nieciągłościami, gdzie ograniczenie gładkości splajnu może wygładzić rzeczywiste cechy.
+
+</details>
+
+<details class="faq-item">
+<summary>Czy interpolacja Lagrange'a jest lepsza niż liniowa?</summary>
+
+Niekoniecznie. Lagrange dopasowuje każdy punkt dokładnie, ale ta dokładność może powodować dzikie oscylacje między punktami (zjawisko Rungego), gdy masz więcej niż 5–6 obserwacji. Interpolacja liniowa jest bardziej stabilna i przewidywalna, szczególnie w przypadku danych zaszumionych lub nieregularnych.
+
+</details>
+
+<details class="faq-item">
+<summary>Czy mogę użyć interpolacji do prognozowania?</summary>
+
+Nie. Interpolacja szacuje wartości *między* znanymi punktami danych. Prognozowanie wymaga przewidywania poza obserwowanym zakresem, co jest ekstrapolacją. Użyj [kalkulatora ekstrapolacji](https://www.extrapolationcalculator.com/) do prognozowania — zapewnia metody zaprojektowane do przewidywania poza zakresem.
+
+</details>

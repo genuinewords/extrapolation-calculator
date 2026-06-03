@@ -1,0 +1,196 @@
+---
+title: "Apakah Ekstrapolasi? Definisi, Formula & Contoh"
+description: Pelajari apa itu ekstrapolasi, bagaimana formula berfungsi, dan lihat contoh kehidupan sebenar. Panduan mesra pemula dengan tip praktikal dan kalkulator percuma.
+publishDate: 2026-06-03
+author: Pasukan Kalkulator Ekstrapolasi
+category: Asas
+featuredImage: ""
+---
+
+## Pengenalan
+
+Adakah anda memerlukan payung esok? Adakah syarikat anda akan mencapai sasaran hasil suku tahun depan? Adakah populasi global akan mencapai 10 bilion menjelang 2050? Ini adalah jenis soalan yang ekstrapolasi bantu jawab. Jika anda pernah tertanya-tanya **apakah ekstrapolasi**, konsepnya sangat mudah: ekstrapolasi ialah kaedah menganggar nilai yang tidak diketahui dengan melanjutkan corak atau trend yang diketahui melampaui julat data yang diperhatikan. Dalam artikel ini, kami akan menguraikan definisi ekstrapolasi, melalui formula menggunakan nombor sebenar, meneroka jenis utama ekstrapolasi, dan melihat contoh praktikal dari kehidupan seharian. Sama ada anda seorang pelajar, penganalisis data, atau sekadar ingin tahu, panduan ini akan memberi anda pemahaman yang kukuh tentang bagaimana ekstrapolasi berfungsi dan bila untuk menggunakannya secara bertanggungjawab.
+
+## Definisi Ekstrapolasi
+
+**Definisi ekstrapolasi** formal ialah proses meramal atau menganggar nilai di luar julat titik data yang diketahui dengan memproyeksikan trend sedia ada. Dalam bahasa mudah, anda melihat data yang sudah ada, kenal pasti corak yang diikutinya, dan kemudian panjangkan corak itu ke hadapan — atau ke belakang — ke kawasan yang tiada ukuran. Kata kuncinya ialah "melampaui". Ekstrapolasi sentiasa melampaui data yang telah anda perhatikan, yang membezakannya daripada interpolasi, teknik berkaitan yang mengisi jurang antara titik data sedia ada. **Maksud ekstrapolasi** paling mudah difahami melalui analogi: jika anda telah melihat sebuah kereta memandu ke utara pada 60 batu sejam selama sepuluh minit terakhir, anda mungkin menganggarkan secara munasabah bahawa ia masih akan menuju ke utara pada kira-kira 60 batu sejam sepuluh minit dari sekarang. Anda melanjutkan corak yang diketahui ke masa depan — itulah ekstrapolasi.
+
+## Formula Ekstrapolasi
+
+**Formula ekstrapolasi** yang paling biasa digunakan ialah formula ekstrapolasi linear. Ia dinyatakan sebagai:
+
+**y = y₁ + (x − x₁) × (y₂ − y₁) / (x₂ − x₁)**
+
+Berikut adalah maksud setiap pemboleh ubah:
+
+- **y** — nilai tidak diketahui yang anda mahu ramal
+- **x** — nilai input yang anda ramalkan
+- **x₁, y₁** — koordinat titik data diketahui pertama anda
+- **x₂, y₂** — koordinat titik data diketahui kedua anda
+
+Formula ini mengira kadar perubahan antara dua titik yang diketahui dan kemudian menggunakan kadar yang sama untuk memproyeksikan nilai baru pada titik yang berbeza di sepanjang garisan. Mari kita lihat contoh ringkas. Katakan jualan anda ialah $10,000 pada bulan 1 dan $16,000 pada bulan 4. Anda mahu meramalkan jualan untuk bulan 7.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Formula ekstrapolasi linear: titik data diketahui disambung oleh garisan yang memanjang untuk meramal nilai masa depan">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">Ekstrapolasi Linear: Melanjutkan Trend Diketahui</text>
+      <line x1="40" y1="240" x2="560" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="40" y1="40" x2="40" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <text x="22" y="62" font-size="10" fill="#64748b">$22K</text>
+      <text x="22" y="132" font-size="10" fill="#64748b">$16K</text>
+      <text x="22" y="202" font-size="10" fill="#64748b">$10K</text>
+      <line x1="40" y1="200" x2="40" y2="200" stroke="none"/>
+      <line x1="40" y1="200" x2="200" y2="200" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <line x1="200" y1="40" x2="200" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <line x1="460" y1="40" x2="460" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <path d="M 80 200 L 200 130 L 460 60" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+      <g fill="#d4af37">
+        <circle cx="80" cy="200" r="5" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="200" cy="130" r="5" stroke="#fff" stroke-width="1.5"/>
+      </g>
+      <g fill="#1e40af">
+        <circle cx="460" cy="60" r="6" stroke="#fff" stroke-width="2"/>
+      </g>
+      <text x="65" y="220" font-size="10" font-weight="600" fill="#0a0a0a">M1</text>
+      <text x="80" y="186" font-size="9" fill="#64748b">$10,000</text>
+      <text x="180" y="120" font-size="9" fill="#64748b">$16,000</text>
+      <text x="180" y="150" font-size="10" font-weight="600" fill="#0a0a0a">M4</text>
+      <text x="440" y="50" font-size="9" fill="#1e40af" font-weight="600">$22,000</text>
+      <text x="440" y="80" font-size="10" font-weight="600" fill="#1e40af">M7</text>
+      <text x="240" y="255" font-size="10" fill="#64748b" font-style="italic">zon interpolasi (dibatasi oleh data)</text>
+      <text x="380" y="255" font-size="10" fill="#1e40af" font-weight="600" font-style="italic">zon ekstrapolasi (melebihi data)</text>
+    </g>
+  </svg>
+  <figcaption>Ekstrapolasi linear diilustrasikan: dua titik data diketahui (M1 = $10,000 dan M4 = $16,000) disambung oleh garisan lurus. Kecerunan yang sama kemudian dilanjutkan melebihi julat diperhatikan untuk memproyeksikan nilai masa depan pada M7 (kira-kira $22,000). Kawasan berlorek di sebelah kanan menandakan zon ekstrapolasi — kawasan tanpa data diperhatikan, di mana ramalan membawa lebih ketidakpastian.</figcaption>
+</figure>
+
+Menggunakan formula: **y = 10000 + (7 − 1) × (16000 − 10000) / (4 − 1)**
+
+Langkah demi langkah: **y = 10000 + 6 × 6000 / 3**
+
+**y = 10000 + 12000 = 22000**
+
+Jualan ramalan anda untuk bulan 7 ialah $22,000. Anda boleh baca lebih lanjut tentang kaedah ini dalam [panduan ekstrapolasi linear](/blog/linear-extrapolation/) kami.
+
+## Jenis Ekstrapolasi
+
+### Ekstrapolasi Linear
+
+Ekstrapolasi linear adalah jenis yang paling biasa dan mudah. Ia menganggap bahawa hubungan antara pemboleh ubah anda mengikuti garisan lurus. Ini berfungsi dengan baik apabila data anda menunjukkan kadar perubahan yang konsisten. Contohnya, jika sebuah kilang mengeluarkan 500 unit sehari setiap hari, anda boleh meramal dengan yakin bahawa ia akan mengeluarkan 3,500 unit dalam seminggu menggunakan ekstrapolasi linear.
+
+### Ekstrapolasi Polinomial
+
+Ekstrapolasi polinomial menyesuaikan garisan melengkung pada data anda berbanding garisan lurus. Ini berguna apabila trend anda memecut atau menyahpecut. Sebagai contoh, jika penggunaan bahan api kereta meningkat lebih cepat pada kelajuan tinggi, lengkung polinomial akan menangkap corak tak linear itu dengan lebih tepat berbanding garisan lurus. Ketahui lebih lanjut dalam panduan [ekstrapolasi polinomial](/blog/polynomial-extrapolation-vs-linear/) kami.
+
+### Ekstrapolasi Eksponen
+
+Ekstrapolasi eksponen digunakan apabila data berkembang pada kadar yang semakin meningkat. Ini biasa dalam senario yang melibatkan kandungan viral, faedah kompaun, atau pandemik, di mana setiap nilai baru mendarab berbanding menambah. Jika siaran media sosial mendapat 100 perkongsian pada hari pertama, 200 pada hari kedua, dan 400 pada hari ketiga, model eksponen akan memproyeksikan pertumbuhan pesat itu ke hadapan. Lihat artikel kami tentang [ekstrapolasi eksponen](/blog/exponential-growth/) untuk penerokaan yang lebih mendalam.
+
+### Empat Jenis Divisualisasikan
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="Perbandingan empat jenis ekstrapolasi: linear, polinomial, eksponen, dan logaritma">
+    <rect width="600" height="320" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="10" fill="#374151">
+      <g transform="translate(30, 30)">
+        <rect x="0" y="0" width="260" height="240" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Linear & Polinomial</text>
+        <line x1="30" y1="210" x2="240" y2="210" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="30" x2="30" y2="210" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 50 180 L 100 150 L 150 120 L 200 90" stroke="#d4af37" stroke-width="2" fill="none"/>
+        <path d="M 50 180 L 100 145 L 150 105 L 200 55" stroke="#1e40af" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+        <text x="50" y="170" font-size="9" fill="#d4af37" font-weight="600">Linear</text>
+        <text x="200" y="50" font-size="9" fill="#1e40af" font-weight="600">Polinomial</text>
+      </g>
+      <g transform="translate(310, 30)">
+        <rect x="0" y="0" width="260" height="240" fill="#fff" stroke="#e5e7eb" rx="4"/>
+        <text x="130" y="18" text-anchor="middle" font-weight="600" fill="#0a0a0a">Eksponen & Logaritma</text>
+        <line x1="30" y1="210" x2="240" y2="210" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="30" y1="30" x2="30" y2="210" stroke="#9ca3af" stroke-width="1"/>
+        <path d="M 50 195 L 90 175 L 130 150 L 170 110 L 200 60" stroke="#d4af37" stroke-width="2" fill="none"/>
+        <path d="M 50 195 L 100 105 L 150 75 L 200 55" stroke="#1e40af" stroke-width="2" fill="none" stroke-dasharray="4 2"/>
+        <text x="50" y="185" font-size="9" fill="#1e40af" font-weight="600">Logaritma</text>
+        <text x="200" y="50" font-size="9" fill="#d4af37" font-weight="600">Eksponen</text>
+      </g>
+      <text x="300" y="295" text-anchor="middle" font-size="10" fill="#64748b" font-style="italic">Emas = garis dasar, Biru = bentuk alternatif</text>
+    </g>
+  </svg>
+  <figcaption>Empat jenis utama ekstrapolasi dibandingkan secara berdampingan. Kaedah linear dan polinomial menyesuaikan garisan lurus atau melengkung melalui data; model eksponen menangkap pertumbuhan pendaraban yang memecut (lengkung menjadi lebih curam); model logaritma menangkap pertumbuhan yang menyahpecut (lengkung menjadi rata). Memilih jenis yang tepat bergantung pada mekanisme asas yang menjana data anda.</figcaption>
+</figure>
+
+## Contoh Ekstrapolasi dalam Kehidupan Sebenar
+
+Ekstrapolasi muncul di lebih banyak tempat daripada yang anda jangkakan. Berikut adalah beberapa contoh **ekstrapolasi dalam kehidupan sebenar** yang biasa:
+
+- **Ramalan cuaca** — Ahli meteorologi menggunakan bacaan atmosfera semasa dan corak sejarah untuk meramal suhu, hujan, dan laluan ribut hari ke hadapan.
+- **Ramalan pasaran saham** — Penganalisis melanjutkan trend harga dan volum dagangan untuk meramal ke mana sesuatu saham mungkin pergi, walaupun turun naik menjadikannya sangat berisiko.
+- **Pertumbuhan penduduk** — Kerajaan memproyeksikan angka penduduk masa depan dengan melanjutkan kadar kelahiran dan migrasi, yang memaklumkan perancangan infrastruktur dan belanjawan.
+- **Ramalan jualan** — Perniagaan menganggarkan hasil suku tahun hadapan dengan meneruskan trend dari suku sebelumnya, satu aplikasi **ekstrapolasi dalam statistik** yang biasa.
+- **Penyelidikan saintifik** — Model iklim melanjutkan data suhu dan pelepasan semasa untuk meramal senario pemanasan global beberapa dekad hadapan.
+
+Setiap daripada ini bergantung pada idea teras yang sama: ambil apa yang anda tahu dan panjangkan corak ke hadapan. Untuk perbandingan yang lebih mendalam dengan teknik berkaitan, baca artikel kami tentang [interpolasi vs ekstrapolasi](/blog/interpolation-vs-extrapolation/).
+
+## Bila Menggunakan Ekstrapolasi
+
+Ekstrapolasi berfungsi paling baik apabila tiga syarat dipenuhi. Pertama, trend dalam data anda harus stabil dan konsisten — lengkung lurus atau boleh diramal tanpa lonjakan mengejut. Kedua, anda harus bekerja dengan data terkini, kerana corak yang lebih lama mungkin tidak lagi mencerminkan keadaan semasa. Ketiga, anda hanya perlu memproyeksikan jarak pendek melampaui data diketahui anda. Semakin dekat ramalan anda dengan titik diperhatikan terakhir anda, semakin boleh dipercayai ia. **Contoh ekstrapolasi linear** klasik ialah menganggarkan bil utiliti bulan hadapan berdasarkan tiga bulan terakhir apabila penggunaan telah stabil. Dalam situasi di mana data tidak menentu atau sistem asas berubah, anda harus menggabungkan ekstrapolasi dengan kaedah ramalan lain. Anda juga boleh menyemak kebolehpercayaan trend anda menggunakan [skor R²](/blog/r-squared-confidence/) sebelum memproyeksikan ke hadapan.
+
+## Had Ekstrapolasi
+
+Ekstrapolasi adalah berkuasa, tetapi ia datang dengan risiko yang ketara. Bahaya terbesar ialah trend tidak selalu berterusan. Perniagaan yang berkembang pada 20 peratus setahun mungkin mencapai siling pasaran, menghadapi persaingan baru, atau mengalami perubahan peraturan yang meratakan pertumbuhan semalaman. Semakin jauh anda mengekstrapolasi melampaui data anda, semakin berisiko ramalan itu — corak yang bertahan selama enam bulan mungkin rosak sepenuhnya pada bulan kedua belas. Peristiwa angsa hitam, seperti krisis kewangan atau bencana alam, boleh menggagalkan walaupun trend yang paling teliti diproyeksikan dalam sekelip mata. Inilah sebabnya ekstrapolasi harus sentiasa dianggap sebagai satu input ke dalam keputusan, bukan jawapan muktamad. Ia memerlukan pertimbangan yang teliti, pengetahuan domain, dan idealnya, semakan realiti terhadap kaedah ramalan lain. Untuk maklumat lanjut tentang bagaimana ekstrapolasi berkelakuan dalam sistem kompleks, lihat artikel kami tentang [ekstrapolasi dalam pembelajaran mesin](/blog/extrapolation-machine-learning/).
+
+## Cara Mengira Ekstrapolasi (Langkah demi Langkah)
+
+Mari kita lakukan contoh lengkap. Bayangkan anda mempunyai bacaan suhu berikut yang diambil pada selang masa tetap:
+
+| Masa (jam) | Suhu (°F) |
+|---|---|
+| 2 | 68 |
+| 6 | 80 |
+
+Anda mahu menganggar suhu pada jam 10. Berikut adalah langkah-langkahnya:
+
+1. Kenal pasti titik data diketahui anda: (x₁, y₁) = (2, 68) dan (x₂, y₂) = (6, 80).
+2. Kenal pasti input sasaran anda: x = 10.
+3. Kira kadar perubahan: **(y₂ − y₁) / (x₂ − x₁) = (80 − 68) / (6 − 2) = 12 / 4 = 3** darjah sejam.
+4. Gunakan formula: **y = y₁ + (x − x₁) × kadar = 68 + (10 − 2) × 3 = 68 + 24 = 92**.
+
+Suhu ekstrapolasi anda pada jam 10 ialah 92°F. Perhatikan bahawa titik ini jatuh melampaui kedua-dua ukuran diketahui, yang menjadikannya ekstrapolasi dan bukannya menggunakan [kalkulator interpolasi](/interpolation/).
+
+## Menggunakan Kalkulator Ekstrapolasi
+
+Melakukan pengiraan secara manual adalah mendidik, tetapi ia juga boleh menjadi lambat dan mudah ralat, terutamanya apabila anda bekerja dengan set data yang lebih besar atau berbilang titik data. Di sinilah [kalkulator ekstrapolasi](https://www.extrapolationcalculator.com/) kami berperanan. Untuk pendekatan berasaskan hamparan, tutorial kami tentang [cara mengekstrapolasi data dalam Excel](/blog/how-to-extrapolate-data-in-excel/) menunjukkan cara memproyeksikan trend terus dalam buku kerja anda. Untuk memodelkan hubungan antara pemboleh ubah, [kalkulator regresi](/regression/) membantu anda menyesuaikan dan menilai model regresi. Hanya masukkan nilai x dan y diketahui anda, nyatakan titik sasaran yang anda mahu ramal, dan kalkulator mengendalikan selebihnya serta-merta. Ia percuma, tepat, dan menyelamatkan anda daripada kesilapan aritmetik manual.
+
+## Kesimpulan
+
+Ekstrapolasi ialah alat ramalan yang berkuasa yang membolehkan anda memproyeksikan trend diketahui ke wilayah tidak diketahui. Apabila data anda mengikuti corak yang stabil dan anda membuat ramalan jarak pendek, ia boleh menjadi sangat tepat. Ingat saja hadnya — trend boleh rosak, dan semakin jauh anda melampaui data anda, semakin berhati-hati anda harus. Sama ada anda menganggar jualan masa depan, memproyeksikan suhu, atau memodelkan pertumbuhan penduduk, memahami ekstrapolasi memberi anda kelebihan praktikal. Cuba [kalkulator ekstrapolasi percuma](https://www.extrapolationcalculator.com/) untuk memproyeksikan data anda sendiri.
+
+## FAQ
+
+<details class="faq-item">
+<summary>Apakah ekstrapolasi dalam istilah mudah?</summary>
+
+Ekstrapolasi ialah proses menganggar nilai melampaui data diketahui anda dengan melanjutkan trend sedia ada. Jika anda tahu bagaimana sesuatu telah berubah, anda menggunakan corak itu untuk meramal apa yang akan berlaku pada masa depan atau di kawasan tidak diukur.
+
+</details>
+
+<details class="faq-item">
+<summary>Apakah formula untuk ekstrapolasi?</summary>
+
+Formula ekstrapolasi linear piawai ialah **y = y₁ + (x − x₁) × (y₂ − y₁) / (x₂ − x₁)**. Ia menggunakan dua titik data diketahui untuk mengira kadar perubahan dan kemudian menggunakan kadar itu untuk memproyeksikan nilai pada titik baru.
+
+</details>
+
+<details class="faq-item">
+<summary>Apakah perbezaan antara ekstrapolasi dan ramalan?</summary>
+
+Ekstrapolasi ialah jenis ramalan khusus yang bergantung pada melanjutkan trend matematik dari data diketahui. Ramalan adalah istilah yang lebih luas yang boleh merangkumi pertimbangan pakar, analisis kualitatif, atau apa-apa kaedah ramalan — bukan hanya pelanjutan trend.
+
+</details>
+
+<details class="faq-item">
+<summary>Di manakah ekstrapolasi digunakan dalam kehidupan sebenar?</summary>
+
+Ekstrapolasi digunakan dalam ramalan cuaca, analisis pasaran saham, unjuran penduduk, ramalan jualan, dan pemodelan saintifik. Mana-mana bidang yang perlu menganggar nilai masa depan dari data lepas bergantung pada beberapa bentuk ekstrapolasi.
+
+</details>

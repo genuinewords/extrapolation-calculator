@@ -1,0 +1,152 @@
+---
+title: "Makine Öğreniminde Ekstrapolasyon: Kapsamlı Bir Kılavuz"
+description: Makine öğreniminde ekstrapolasyonun ne anlama geldiğini, modellerin neden zorlandığını ve dağılım dışı tahminleri iyileştirmeye hangi yöntemlerin yardımcı olduğunu öğrenin.
+publishDate: 2026-05-27
+author: Ekstrapolasyon Hesaplayıcı Ekibi
+category: Makine Öğrenimi
+featuredImage: ""
+---
+
+## Giriş
+
+Makine öğrenimi modelleri, daha önce gördükleri kalıplar içinde tahmin yapmakta etkileyici derecede iyidir. Giriş, eğitim verilerine benzediği sürece görüntüleri sınıflandırır, ürünleri önerir ve yüksek doğrulukla anormallikleri tespit ederler. Ancak onlardan bu tanıdık aralığın dışında bir şey tahmin etmelerini istediğiniz anda, performans genellikle çöker. Makine öğreniminde ekstrapolasyonun temel zorluğu budur: bir modelin öğrendiklerinin sınırlarının ötesinde güvenilir tahminler yapmak. Bu, hisse senedi fiyatlarını tahmin etmekten iklim eğilimlerini modellemeye kadar her şeyi etkileyen, iyi belgelenmiş bir sorundur. Modellerin ekstrapolasyonda neden başarısız olduğunu — ve bu konuda ne yapılabileceğini — anlamak, gerçek dünyada dayanması gereken tahmin sistemleri kuran herkes için gereklidir.
+
+## Makine Öğreniminde Ekstrapolasyon Nedir?
+
+Makine öğreniminde ekstrapolasyon, eğitim verilerinin aralığı dışında kalan girdiler için hedef değerleri tahmin etmek anlamına gelir. Bir model 100.000$ ile 500.000$ arasındaki ev fiyatları üzerinde eğitilmişse, ondan 1.000.000$'lık bir evin fiyatını tahmin etmesini istemek bir ekstrapolasyon görevidir. Model bu bölgede hiç veri görmemiştir, bu nedenle tahmini doğası gereği belirsizdir.
+
+Bu, tahminlerin gözlemlenen veri noktaları aralığı içinde yapıldığı enterpolasyonun tersidir. Enterpolasyon genellikle güvenilirdir çünkü model çıktısını yönlendirmek için yakın örneklere güvenebilir. [ML ekstrapolasyonu](/blog/what-is-extrapolation/) ise modeli hiçbir referans noktasının bulunmadığı bir alana iter — bu, çoğu algoritmanın iyi başa çıkmak üzere tasarlanmadığı bir dağılım dışı tahmin biçimi haline gelir.
+
+Pratikte, enterpolasyon ve ekstrapolasyon arasındaki sınır her zaman keskin değildir. Veri noktaları belirli bölgelerde seyrek olabilir ve enterpolasyon gibi görünen şeyi fiili bir ekstrapolasyon sorununa dönüştürebilir. Bu sınıra daha derin bir bakış için [enterpolasyon vs ekstrapolasyon](/blog/interpolation-vs-extrapolation/) kılavuzumuza bakın.
+
+## ML Modelleri Neden Ekstrapolasyonda Zorlanır
+
+Çoğu makine öğrenimi modeli, temel kurallardan veya fizik yasalarından değil, verilerden kalıplar öğrenir. Eğitim setinde bulunan ilişkileri, bu ilişkilerin neden var olduğunu anlamadan yaklaşık olarak tahmin ederler. Bu verilerin ötesinde tahmin yapmaları istendiğinde, izlenecek bir kalıp yoktur — yalnızca tahmin.
+
+"Dağılım dışı" sorunu burada merkezidir. Bir veri dağılımı üzerinde eğitilmiş bir model, çıkarım sırasında tamamen farklı bir dağılımla karşılaşabilir. Gündüz çekilmiş görüntüler üzerinde eğitilmiş bir sinir ağı, nesneler aynı olsa bile gece görüntülerinde büyük olasılıkla başarısız olacaktır.
+
+Ekstrapolasyon sinir ağları temel bir sınırlamayla karşı karşıyadır: sinir ağları esasen yüksek boyutlu enterpolatörlerdir. Çıktıları, eğitim örneklerinin ağırlıklı kombinasyonlarıdır, bu nedenle gerçek eğilimleri takip etmek yerine eğitim aralıklarının dışında pürüzsüz, ortalaması alınmış tahminler üretme eğilimindedirler. Karar ağaçları ve rastgele ormanların farklı ancak eşit derecede sınırlayıcı bir sorunu vardır — yaprak düğümlerinin aralığının ötesindeki değerleri tahmin edemezler. Verileri maksimum değeri 500 olan yapraklara bölen bir ağaç, girdiden bağımsız olarak asla 501 çıktısı vermez.
+
+Topluluk yöntemleri ve derin mimariler bile bu sorunları devralır. Görülmeyen bölgeleri işlemek için açık mekanizmalar olmadan, modeller matematiksel olarak güvenli ancak pratikte yanlış olan davranışlara yönelir. [R² puanlarını](/blog/r-squared-confidence/) anlamak, bir modelin eğitim alanının dışına itildiğinde ne kadar kötü bozulduğunu ölçmeye yardımcı olabilir.
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" class="w-full max-w-2xl mx-auto my-6 rounded-lg shadow-md" role="img" aria-label="ML ekstrapolasyon hatası: sinir ağları eğitim aralığının ötesinde düzleşirken doğrusal modeller eğilimi sürdürür">
+    <rect width="600" height="280" fill="#f8f8fc"/>
+    <g font-family="Inter, sans-serif" font-size="11" fill="#374151">
+      <text x="40" y="22" font-weight="600" fill="#0a0a0a">ML Modelleri Ekstrapolasyonda Neden Başarısız Olur</text>
+      <line x1="60" y1="240" x2="540" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="60" y1="40" x2="60" y2="240" stroke="#9ca3af" stroke-width="1.2"/>
+      <line x1="280" y1="40" x2="280" y2="240" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="120" y="55" font-size="10" fill="#64748b">Eğitim aralığı</text>
+      <text x="350" y="55" font-size="10" fill="#dc2626" font-weight="600">Eğitim aralığı dışı</text>
+      <path d="M 80 220 Q 110 180, 140 140 Q 180 100, 220 80 L 280 75" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+      <path d="M 280 75 L 480 70" stroke="#d4af37" stroke-width="2.5" fill="none" stroke-dasharray="4 2"/>
+      <path d="M 280 75 Q 320 73, 360 72 Q 420 70, 480 69" stroke="#1e40af" stroke-width="2" fill="none"/>
+      <text x="430" y="95" font-size="10" font-weight="600" fill="#1e40af">SA: düzleşir</text>
+      <text x="430" y="60" font-size="10" font-weight="600" fill="#d4af37">Doğrusal: eğilimi sürdürür</text>
+      <g fill="#1e40af">
+        <circle cx="80" cy="220" r="3.5"/>
+        <circle cx="120" cy="180" r="3.5"/>
+        <circle cx="160" cy="140" r="3.5"/>
+        <circle cx="200" cy="100" r="3.5"/>
+        <circle cx="240" cy="85" r="3.5"/>
+        <circle cx="280" cy="75" r="3.5"/>
+      </g>
+      <text x="60" y="265" font-size="9" fill="#64748b" font-style="italic">Sinir ağları, eğitim aralıklarının dışında ortalaması alınmış, düz tahminler üretir</text>
+    </g>
+  </svg>
+  <figcaption>ML modelleri ekstrapolasyonda neden başarısız olur. Eğitim aralığı içinde (kesikli çizginin solunda), bir sinir ağı (mavi) verileri yakından takip eder. Ancak bunun ötesinde (kesikli çizginin sağında), ağın çıktısı neredeyse sabit bir değere düzleşir — uzatacak öğrenilmiş bir kalıbı yoktur. Doğrusal bir model (altın kesikli) ise eğilimini süresiz olarak sürdürür. Bu temel sınırlama tüm enterpolatör tarzı modelleri etkiler: bilinen örnekleri harmanlayabilirler ancak yenilerini icat edemezler.</figcaption>
+</figure>
+
+## ML'de Ekstrapolasyonu İyileştiren Yöntemler
+
+Hiçbir tek yöntem ekstrapolasyon sorununu tamamen ortadan kaldırmaz, ancak birkaç yaklaşım dağılım dışı tahminleri anlamlı şekilde iyileştirebilir.
+
+### Doğrusal Regresyon
+
+Doğrusal regresyon, doğal olarak ekstrapolasyon yapan birkaç modelden biridir. Verilere doğrusal bir fonksiyon uydurduğu için, bu fonksiyonu her iki yönde de süresiz olarak genişletir. Bu, gerçek ilişki doğrusal değilse gerçekçi olmayan tahminler üretebilse de, en azından düzleşmek yerine tutarlı bir eğilim izler. Basit kullanım durumları için, [doğrusal ekstrapolasyon](/blog/linear-extrapolation/) pratik bir temel olmaya devam etmektedir.
+
+### Doğrusal Yapraklı Rastgele Ormanlar
+
+Standart rastgele ormanlar, eğitim aralıklarının ötesinde ekstrapolasyon yapamaz. Ancak, yaprak düğümlerinde sabit değerler yerine doğrusal modeller uyduran varyantlar, tahminleri gözlemlenen verilerin ötesine genişletebilir. Bu, ağaç tabanlı modellerin esnekliğini doğrusal regresyonun ekstrapolasyon yeteneğiyle birleştirerek gerçek eğilimler içeren görevlerde performansı artırır.
+
+### Monotonik Kısıtlamalı Sinir Ağları
+
+Belirli girdi özelliklerinde monotonluk kısıtlamaları uygulayarak, sinir ağları bilinen yönsel ilişkileri izleyen tahminler üretmeye yönlendirilebilir. Alan bilgisi, sıcaklığın basınçla artması gerektiğini söylüyorsa, monotonik bir kısıtlama, ağın eğitim aralığı dışında bile bu kurala uymasını sağlar. Bu, özellikle bilimsel ve mühendislik uygulamalarında kullanışlıdır.
+
+### Sembolik Regresyon
+
+Sembolik regresyon, verilere uyan bir formül bulmak için matematiksel ifadeler uzayında arama yapar. Sonuç, öğrenilmiş bir eşleme yerine açık bir denklem olduğu için, keşfedilen ilişkiyle tutarlı bir şekilde ekstrapolasyon yapabilir. PySR ve Eureqa gibi araçlar bu yaklaşımı giderek daha erişilebilir hale getirmektedir.
+
+### Fizik Bilgili Sinir Ağları (PINNs)
+
+PINN'ler, kayıp fonksiyonuna diferansiyel denklem kısıtlamaları ekleyerek fizik yasalarını doğrudan eğitim sürecine dahil eder. Bu, ağın eğitim verisi olmayan bölgelerde bile bilinen fiziği ihlal edemeyeceği anlamına gelir. PINN'ler, akışkanlar dinamiği, ısı transferi ve iyi anlaşılmış denklemler tarafından yönetilen diğer alanlarda güçlü ekstrapolasyon sonuçları göstermiştir.
+
+## Gerçek Dünya Örnekleri
+
+Ekstrapolasyon zorlukları birçok endüstri ve araştırma alanında ortaya çıkar.
+
+**İklim değişikliği modellemesi**, sıcaklık ve emisyon verilerini tarihsel kayıtların çok ötesine yansıtmaya dayanır. Modeller, gözlemlenen verilerde emsali olmayan koşulları tahmin etmelidir, bu da makine öğrenimi tahminini özellikle zor ve belirsiz kılar.
+
+**Finansal tahmin**, düzenli olarak son piyasa davranışının ötesinde tahminler gerektirir. Ekonomik koşullar değişir, rejimler kayar ve yükseliş piyasalarında eğitilmiş modeller, düşüş dönemlerinde felaketle sonuçlanacak şekilde başarısız olabilir — klasik bir ekstrapolasyon hatası.
+
+**İlaç keşfi**, genellikle klinik deneylerde hiç test edilmemiş dozajlardaki veya kombinasyonlardaki bileşiklerin etkilerini tahmin etmeyi içerir. Düşük doz yanıtları üzerinde eğitilmiş bir model, doğrusal olmayan toksisitenin ortaya çıkabileceği daha yüksek dozlarda güvenliği tahmin etmek için ekstrapolasyon yapmalıdır.
+
+**Sürücüsüz arabalar**, eğitim verilerinde bulunmayan yol koşulları, hava olayları ve engel konfigürasyonlarıyla karşılaşır. Güvenilir çalışma, bir miktar ekstrapolasyon kapasitesi veya en azından bilinmeyenle karşılaşıldığında zarif bir bozulma gerektirir.
+
+## ML'de Ekstrapolasyon vs Enterpolasyon
+
+Enterpolasyon ve ekstrapolasyon arasındaki farkı anlamak, doğru modeli seçmek ve gerçekçi beklentiler belirlemek için kritiktir. Aşağıdaki tablo temel farklılıkları vurgulamaktadır. Daha ayrıntılı bir karşılaştırma için [enterpolasyon vs ekstrapolasyon](/blog/interpolation-vs-extrapolation/) makalemize bakın.
+
+| Yön | Enterpolasyon | Ekstrapolasyon |
+|--------|--------------|---------------|
+| Veri aralığı | Eğitim verileri içinde | Eğitim verileri dışında |
+| Model güveni | Daha yüksek | Daha düşük |
+| Hata riski | Daha düşük | Daha yüksek |
+| Yaygın kullanım | Sınıflandırma, uydurma | Tahmin, öngörü |
+
+Enterpolasyon, tahminleri sabitleyen yoğun referans noktalarından yararlanır. Ekstrapolasyon bu çıpalardan yoksundur, bu nedenle ML genellemesi merkezi endişe — ve merkezi risk — haline gelir. Eğitim dağılımları içinde iyi genelleme yapan modeller, bunun dışında hiç genelleme yapmayabilir. Her iki yaklaşımı da [enterpolasyon hesaplayıcımız](/interpolation/) veya [regresyon hesaplayıcımız](/regression/) ile uygulamalı olarak keşfedebilirsiniz.
+
+## En İyi Uygulamalar
+
+- **Dağılım dışı test setlerinde doğrulayın.** Standart eğitim-test ayrımları, değerlendirmeyi eğitim dağılımı içinde tutar. Gerçek ekstrapolasyon performansını ölçmek için farklı aralıklardan veya koşullardan verileri kasıtlı olarak ayırın.
+- **Tahminleri sınırlamak için alan bilgisini kullanın.** Modelleme sürecine bilinen fizik yasalarını, monotonik ilişkileri veya sınır koşullarını dahil edin. Bu, modelin fiziksel olarak imkansız sonuçlar üretmesini önler.
+- **ML'yi geleneksel istatistiksel yöntemlerle birleştirin.** Öğrenilmiş kalıpları ilkeli ekstrapolasyon teknikleriyle harmanlayan hibrit yaklaşımlar — klasik istatistikten alınan [ekstrapolasyon yöntemleri](/blog/polynomial-vs-linear/) gibi — dağılım dışı ortamlarda saf ML'yi geride bırakma eğilimindedir. En yaygın iki klasik yöntemin odaklı bir karşılaştırması için [polinom ekstrapolasyonu vs doğrusal](/blog/polynomial-extrapolation-vs-linear/) bölümüne bakın.
+
+## Araçlar ve Kaynaklar
+
+Birçok Python kütüphanesi, ekstrapolasyon bilinçli modellemeyi destekler. **scikit-learn**, daha iyi ekstrapolasyon davranışı için yapılandırılabilen doğrusal modeller ve ağaç tabanlı yöntemler sağlar. **PyTorch**, monotonik özellikler ve fizik bilgili eğitim döngüleri dahil olmak üzere özel kayıp fonksiyonları ve mimari kısıtlamaları sağlar. Daha basit ihtiyaçlar için **ekstrapolasyon hesaplayıcı**, kod yazmadan eğilimleri yansıtmak için hızlı bir yol sunar.
+
+Geleneksel sayısal tahmin? Hızlı eğilim projeksiyonu için [ekstrapolasyon hesaplayıcıyı](https://www.extrapolationcalculator.com/) deneyin.
+
+## Sonuç
+
+Makine öğreniminde ekstrapolasyon doğası gereği zordur, ancak imkansız değildir. Doğrusal modeller, kısıtlanmış mimariler, sembolik regresyon ve fizik bilgili yaklaşımların her biri daha güvenilir dağılım dışı tahminlere giden yollar sunar. Anahtar, ekstrapolasyonun ne zaman gerektiğini tanımak, göreve uygun yöntemleri seçmek ve eğitim dağılımının ötesinde agresif bir şekilde doğrulamaktır. Farklı yaklaşımlarla deney yapın, neyin başarısız olduğunu ölçün ve yineleyin. Tam bir ML hattı oluşturmadan eğilimleri yansıtmanın basit bir yoluna ihtiyacınız olduğunda, [ekstrapolasyon hesaplayıcıyı](https://www.extrapolationcalculator.com/) deneyin.
+
+<details class="faq-item">
+<summary>Sinir ağları ekstrapolasyon yapabilir mi?</summary>
+
+Standart sinir ağları ekstrapolasyonda zayıftır. Eğitim örnekleri arasında enterpolasyon yapmayı öğrenirler ve eğitim aralığının dışında düz veya düzensiz tahminler üretme eğilimindedirler. Monotonik kısıtlamalar veya fizik bilgili kayıp fonksiyonlarına sahip özel mimariler ekstrapolasyonu iyileştirebilir, ancak sıradan ağlar genellikle yapamaz.
+
+</details>
+
+<details class="faq-item">
+<summary>Makine öğreniminde ekstrapolasyon neden zordur?</summary>
+
+Ekstrapolasyon zordur çünkü ML modelleri nedensel kurallar yerine eğitim verilerinden istatistiksel kalıplar öğrenir. Girdiler eğitim dağılımının dışına düştüğünde, izlenecek kalıp yoktur ve modelin tahminleri için ilkeli bir temeli yoktur. Bu, öngörülemeyen ve genellikle aşırı derecede yanlış çıktılara yol açar.
+
+</details>
+
+<details class="faq-item">
+<summary>ML'de enterpolasyon ve ekstrapolasyon arasındaki fark nedir?</summary>
+
+Enterpolasyon, modelin yakın örneklere başvurabileceği eğitim verileri aralığı içinde tahmin yapar. Ekstrapolasyon, hiçbir referans noktasının bulunmadığı bu aralığın dışında tahmin yapar. Enterpolasyon tipik olarak doğrudur; ekstrapolasyon tipik olarak belirsiz ve hataya açıktır.
+
+</details>
+
+<details class="faq-item">
+<summary>Hangi ML modelleri ekstrapolasyon yapabilir?</summary>
+
+Doğrusal regresyon, uydurulmuş çizgisini uzatarak doğal olarak ekstrapolasyon yapar. Düzenlileştirme (ridge, lasso) içeren doğrusal modeller benzer şekilde davranır. Doğrusal yapraklı rastgele ormanlar, sembolik regresyon modelleri ve fizik bilgili sinir ağları da çeşitli güvenilirlik dereceleriyle ekstrapolasyon yapabilir. Diğer çoğu model — standart sinir ağları, karar ağaçları ve k-en yakın komşular dahil — yapamaz.
+
+</details>
