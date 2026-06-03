@@ -14,8 +14,9 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props;
 const currentPath = localizePath('/blog/', locale);
-const posts = await getCollection('blog');
-const sortedPosts = posts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+const allPosts = await getCollection('blog');
+const localePosts = allPosts.filter(p => p.id.startsWith(`${locale}-`));
+const sortedPosts = localePosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 ---
 
 <BaseLayout locale={locale} currentPath={currentPath} title={t(locale, 'blog.title')} description={t(locale, 'blog.description')}>
@@ -29,7 +30,7 @@ const sortedPosts = posts.sort((a, b) => b.data.publishDate.valueOf() - a.data.p
               <span class="inline-block bg-primary/10 text-primary text-xs font-medium px-3 py-1 rounded-full mb-3">{post.data.category}</span>
             )}
             <h2 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
-              <a href={`/${locale}/blog/${post.id.replace(/\.mdx$/, '')}/`} class="hover:text-primary transition-colors">{post.data.title}</a>
+              <a href={`/${locale}/blog/${post.id.replace(/\.mdx$/, '').replace(/^[a-z]{2}-/, '')}/`} class="hover:text-primary transition-colors">{post.data.title}</a>
             </h2>
             <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-3">{post.data.description}</p>
             <div class="flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-500">

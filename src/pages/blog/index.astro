@@ -4,7 +4,10 @@ import { t } from '@theme/i18n/utils';
 import { getCollection } from 'astro:content';
 
 const locale = 'en';
-const posts = await getCollection('blog');
+const allPosts = await getCollection('blog');
+const posts = allPosts.filter(
+  p => !['hi', 'es', 'ru', 'fr', 'de', 'it', 'pt', 'bn', 'ja', 'ko', 'ms', 'pl', 'id', 'ar', 'bg', 'tr', 'sv'].some(l => p.id.startsWith(`${l}-`))
+);
 const sortedPosts = posts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 const POSTS_PER_PAGE = 12;
 const pagePosts = sortedPosts.slice(0, POSTS_PER_PAGE);

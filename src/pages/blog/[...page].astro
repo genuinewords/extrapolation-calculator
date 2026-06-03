@@ -5,7 +5,10 @@ import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const allPosts = await getCollection('blog');
-  const posts = allPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+  const basePosts = allPosts.filter(
+    p => !['hi', 'es', 'ru', 'fr', 'de', 'it', 'pt', 'bn', 'ja', 'ko', 'ms', 'pl', 'id', 'ar', 'bg', 'tr', 'sv'].some(l => p.id.startsWith(`${l}-`))
+  );
+  const posts = basePosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
   const POSTS_PER_PAGE = 12;
   const totalPages = Math.max(1, Math.ceil(posts.length / POSTS_PER_PAGE));
 
