@@ -4,11 +4,14 @@ import { SUPPORTED_LOCALES, DEFAULT_LOCALE, t } from '@theme/i18n/utils';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  const allPosts = await getCollection('blog');
+  const basePosts = allPosts.filter(
+    p => !SUPPORTED_LOCALES.some(l => l !== DEFAULT_LOCALE && p.id.startsWith(`${l}-`))
+  );
   return SUPPORTED_LOCALES
     .filter((l) => l !== DEFAULT_LOCALE)
     .flatMap((locale) =>
-      posts.map((post) => ({
+      basePosts.map((post) => ({
         params: { locale, slug: post.id.replace(/\.mdx$/, '') },
         props: { locale, post },
       }))
@@ -20,7 +23,7 @@ const slug = post.id.replace(/\.mdx$/, '');
 
 // Load locale-specific content if available (e.g., hi- prefix for Hindi)
 const allPosts = await getCollection('blog');
-const localizedId = `${locale}-${slug}.mdx`;
+const localizedId = `${locale}-${slug}`;
 const localizedPost = allPosts.find(p => p.id === localizedId);
 const contentPost = localizedPost ?? post;
 const { Content } = await contentPost.render();

@@ -1,10 +1,14 @@
 ---
 import BlogLayout from '@theme/layouts/BlogLayout.astro';
+import { SUPPORTED_LOCALES, DEFAULT_LOCALE } from '@theme/i18n/utils';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map((post) => ({
+  const allPosts = await getCollection('blog');
+  const basePosts = allPosts.filter(
+    p => !SUPPORTED_LOCALES.some(l => l !== DEFAULT_LOCALE && p.id.startsWith(`${l}-`))
+  );
+  return basePosts.map((post) => ({
     params: { slug: post.id.replace(/\.mdx$/, '') },
     props: { post },
   }));
