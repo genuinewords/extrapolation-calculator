@@ -4,7 +4,7 @@
   "outputDirectory": "dist",
   "redirects": [
     {
-      "source": "/blog/(hi|es|ru|fr|de|it|pt|bn|ja|ko|ms|pl|id|ar|bg|tr|sv)-([^/]+)/?",
+      "source": "/blog/(hi|es|ru|fr|de|it|pt|bn|ja|ko|ms|pl|id|ar|bg|tr|sv)-:slug*",
       "destination": "/$1/blog/$2",
       "permanent": true
     }
