@@ -11,33 +11,32 @@ export async function getStaticPaths() {
   return SUPPORTED_LOCALES
     .filter((l) => l !== DEFAULT_LOCALE)
     .flatMap((locale) =>
-      basePosts.map((post) => ({
-        params: { locale, slug: post.id.replace(/\.mdx$/, '') },
-        props: { locale, post },
-      }))
+      basePosts.map((post) => {
+        const slug = post.id.replace(/\.mdx$/, '');
+        const localizedId = `${locale}-${slug}`;
+        const localizedPost = allPosts.find(p => p.id === localizedId);
+        return {
+          params: { locale, slug },
+          props: { locale, post: localizedPost ?? post },
+        };
+      })
     );
 }
 
 const { locale, post } = Astro.props;
 const slug = post.id.replace(/\.mdx$/, '');
-
-// Load locale-specific content if available (e.g., hi- prefix for Hindi)
-const allPosts = await getCollection('blog');
-const localizedId = `${locale}-${slug}`;
-const localizedPost = allPosts.find(p => p.id === localizedId);
-const contentPost = localizedPost ?? post;
-const { Content } = await contentPost.render();
+const { Content } = await post.render();
 ---
 
 <BlogLayout
   locale={locale}
-  title={contentPost.data.title}
-  description={contentPost.data.description}
+  title={post.data.title}
+  description={post.data.description}
   currentPath={`/${locale}/blog/${slug}/`}
-  publishDate={contentPost.data.publishDate}
-  author={contentPost.data.author}
-  category={contentPost.data.category}
-  featuredImage={contentPost.data.featuredImage}
+  publishDate={post.data.publishDate}
+  author={post.data.author}
+  category={post.data.category}
+  featuredImage={post.data.featuredImage}
 >
   <Content />
 </BlogLayout>
