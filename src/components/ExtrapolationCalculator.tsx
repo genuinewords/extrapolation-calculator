@@ -284,51 +284,6 @@ export default function ExtrapolationCalculator({ locale = 'en', showChart = tru
 
   return (
     <div className="calculator-card p-6 md:p-10 max-w-5xl mx-auto" role="application" aria-label={L('title', locale)}>
-      {/* Method Tabs */}
-      <div className="flex gap-2 mb-8 flex-wrap justify-center">
-        {(['linear', 'exponential', 'logarithmic', 'polynomial', 'quadratic'] as MethodKey[]).map((m) => (
-          <button
-            key={m}
-            onClick={() => setMethod(m)}
-            className={method === m ? 'btn-tab-active' : 'btn-tab-inactive'}
-            aria-pressed={method === m}
-          >
-            {methodLabels[m][locale] ?? methodLabels[m].en}
-          </button>
-        ))}
-      </div>
-
-      {/* Load Example Data */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-3">
-          <span className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">{L('loadExample', locale)}</span>
-          <div className="h-px flex-1 bg-gradient-to-r from-neutral-200 dark:from-neutral-700 to-transparent" />
-        </div>
-        <div className="flex gap-2 flex-wrap">
-          {(['linear', 'exponential', 'logarithmic', 'polynomial', 'quadratic'] as MethodKey[]).map((m) => (
-            <button
-              key={m}
-              onClick={() => {
-                const d = dummyDataByMethod[m];
-                setInputRows([...d.rows]);
-                setTargetX(d.targetX);
-                setMethod(m);
-                setResult(null);
-                setGeneralError('');
-                setActiveDataset('custom');
-              }}
-              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
-                method === m
-                  ? 'bg-gold-600 text-white shadow-md shadow-gold-500/20'
-                  : 'bg-white/60 dark:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300 hover:bg-white dark:hover:bg-neutral-700/80 border border-neutral-200/60 dark:border-neutral-700/60'
-              }`}
-            >
-              {methodLabels[m][locale] ?? methodLabels[m].en}
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* Demo Data Buttons */}
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-3">
