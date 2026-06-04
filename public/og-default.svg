@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#f5d060"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="4" fill="url(#gold)"/>
+  <circle cx="100" cy="315" r="40" fill="none" stroke="url(#gold)" stroke-width="3"/>
+  <text x="100" y="325" font-family="Georgia, serif" font-size="36" fill="#d4af37" text-anchor="middle" font-weight="bold">EC</text>
+  <text x="600" y="260" font-family="Arial, sans-serif" font-size="52" fill="#ffffff" text-anchor="middle" font-weight="bold">Extrapolation Calculator</text>
+  <text x="600" y="330" font-family="Arial, sans-serif" font-size="28" fill="#9ca3af" text-anchor="middle">Free Online Value Predictor</text>
+  <text x="600" y="380" font-family="Arial, sans-serif" font-size="20" fill="#6b7280" text-anchor="middle">Linear | Exponential | Polynomial | Logarithmic</text>
+  <rect x="0" y="626" width="1200" height="4" fill="url(#gold)"/>
+</svg>

@@ -80,14 +80,15 @@ const blogSchema: Record<string, unknown> = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL.href} />
-    {featuredImage && <meta property="og:image" content={featuredImage} />}
+    <meta property="og:image" content={featuredImage ?? 'https://extrapolationcalculator.com/og-default.svg'} />
+    <meta property="og:site_name" content="Extrapolation Calculator" />
     {publishDate && <meta property="article:published_time" content={publishDate.toISOString()} />}
     {author && <meta property="article:author" content={author} />}
 
     <meta name="twitter:card" content={featuredImage ? "summary_large_image" : "summary"} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    {featuredImage && <meta name="twitter:image" content={featuredImage} />}
+    <meta name="twitter:image" content={featuredImage ?? 'https://extrapolationcalculator.com/og-default.svg'} />
 
     {alternateUrls.map(({ locale: altLocale, url: altUrl }) => (
       <link rel="alternate" hreflang={altLocale} href={new URL(altUrl, Astro.site).href} />
