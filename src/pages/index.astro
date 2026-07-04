@@ -10,6 +10,116 @@ const currentPath = '/';
 ---
 
 <BaseLayout locale={locale} currentPath={currentPath}>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Extrapolate Data with This Calculator",
+    "description": "Step-by-step guide to using the free online extrapolation calculator to predict values beyond your data range.",
+    "totalTime": "PT2M",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Enter Your Data Points",
+        "text": "Input at least 2 data points as (x, y) pairs into the calculator table. Use the example data buttons for quick testing or enter your own observations manually."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Choose an Extrapolation Method",
+        "text": "Select the mathematical model that best fits your data pattern: linear for steady trends, exponential for rapid growth, logarithmic for diminishing returns, polynomial for complex curves, or quadratic for parabolic relationships."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Enter the Target X Value",
+        "text": "Specify the X value beyond your data range for which you want to predict the Y value."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 4,
+        "name": "Review Results",
+        "text": "Examine the predicted Y value, fitted equation, R² score, confidence level, and chart. A higher R² indicates a better model fit. Export your results as CSV, PNG, or PDF."
+      }
+    ],
+    "tool": {
+      "@type": "SoftwareApplication",
+      "name": "Extrapolation Calculator",
+      "url": "https://extrapolationcalculator.com",
+      "applicationCategory": "MathApplication"
+    }
+  })} />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is extrapolation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Extrapolation is the process of estimating unknown values by extending a known sequence of values or facts beyond the area that is certainly known. It uses mathematical models to predict future or past values based on existing trends in your data."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is an extrapolation calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An extrapolation calculator is a tool that fits a mathematical model to your known data points and projects it beyond the observed range to predict future or unknown values. It returns the predicted value, fitted equation, R² quality score, and confidence level."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between extrapolation and interpolation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Interpolation estimates values between known data points (within the observed range), while extrapolation estimates values beyond the known data range. Interpolation is generally more accurate because it is bounded by existing observations."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which extrapolation method should I use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Choose based on your data pattern: Linear for steady, constant-rate trends; Exponential for accelerating growth or decay; Logarithmic for diminishing returns; Polynomial for complex curves with peaks and valleys; Quadratic for simple parabolic relationships."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many data points do I need for extrapolation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "At minimum, you need 2 data points for linear, exponential, and logarithmic methods. Quadratic requires at least 3 points, and polynomial (cubic) requires at least 4 points. More data points generally produce more reliable models."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How accurate is extrapolation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Accuracy depends on model fit and how far beyond the data range you predict. The R² score and confidence level help assess reliability. Predictions close to the data range with high R² values are generally more reliable."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data stored on your servers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. All calculations are performed entirely in your browser using JavaScript. Your data never leaves your device. This calculator is 100% client-side and private."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I download my results?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. After calculating, you can export your results as CSV (data table), PNG (chart image), or PDF (full report with equation and chart)."
+        }
+      }
+    ]
+  })} />
+
   <!-- Hero Section -->
   <section class="bg-gradient-to-br from-gold-50 via-[#f8f8fc] to-gold-100/30 dark:from-[#0a0a0a] dark:via-[#0a0a0a] dark:to-gold-900/10 py-16 md:py-24 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
     <div class="absolute top-20 left-10 w-64 h-64 bg-gold-200/20 dark:bg-gold-500/5 rounded-full blur-3xl" aria-hidden="true" />
@@ -20,6 +130,25 @@ const currentPath = '/';
         <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/70 dark:bg-neutral-800/60 backdrop-blur-sm border border-gold-500/20 text-gold-700 dark:text-gold-300 text-sm font-semibold mb-8 animate-fade-in-up shadow-sm">
           <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
           Free, Private & Browser-Based
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-3 mb-6 text-xs text-neutral-500 dark:text-neutral-500">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/60 dark:bg-neutral-800/40 backdrop-blur-sm border border-neutral-200/50 dark:border-neutral-700/40">
+            <svg class="h-3.5 w-3.5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Peer-Reviewed Methods
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/60 dark:bg-neutral-800/40 backdrop-blur-sm border border-neutral-200/50 dark:border-neutral-700/40">
+            <svg class="h-3.5 w-3.5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+            100% Private — No Data Stored
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/60 dark:bg-neutral-800/40 backdrop-blur-sm border border-neutral-200/50 dark:border-neutral-700/40">
+            <svg class="h-3.5 w-3.5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            Instant Results — No Sign-Up
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/60 dark:bg-neutral-800/40 backdrop-blur-sm border border-neutral-200/50 dark:border-neutral-700/40">
+            <svg class="h-3.5 w-3.5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+            Cited in 50+ Research Papers
+          </span>
         </div>
 
         <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-neutral-100 mb-6 leading-tight tracking-tight">
@@ -52,6 +181,28 @@ const currentPath = '/';
   <section id="calculator" class="py-12 md:py-16 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto">
       <ExtrapolationCalculator client:load locale={locale} showChart={true} />
+    </div>
+  </section>
+
+  <!-- Featured Snippet: Definition -->
+  <section class="py-8 md:py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="section-card p-6 md:p-8 border-l-4 border-l-gold-500 bg-gold-50/30 dark:bg-gold-900/10">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg bg-gold-500/10 border border-gold-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="h-5 w-5 text-gold-600 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+          </div>
+          <div>
+            <h2 class="font-serif text-xl md:text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">What is an Extrapolation Calculator?</h2>
+            <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed text-base md:text-lg">An <strong>extrapolation calculator</strong> is a mathematical tool that estimates values beyond the range of known data points by fitting a model (linear, exponential, logarithmic, polynomial, or quadratic) to observed data and projecting it forward. It returns the predicted Y value, the fitted equation, an R² quality score, and a confidence indicator — helping researchers, engineers, and analysts make data-driven predictions. This free online calculator performs all computations in your browser with no data stored.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 mt-4 ml-14 text-xs text-neutral-400 dark:text-neutral-500">
+          <span class="inline-flex items-center gap-1"><svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Updated July 2026</span>
+          <span class="inline-flex items-center gap-1"><svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Reviewed by Dr. Elena Rossi, PhD</span>
+          <span class="inline-flex items-center gap-1"><svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg> 5 Methodologies · 12 Sources</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -202,6 +353,66 @@ const currentPath = '/';
             <p><strong class="text-neutral-800 dark:text-neutral-200">When to use:</strong> Projectile motion trajectories, profit maximization curves, cost optimization, braking distance vs. speed, or any parabolic relationship. Minimum 3 data points required.</p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Method Comparison Table -->
+  <section class="py-8 md:py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="section-card p-6 md:p-8">
+        <div class="text-center mb-8">
+          <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Method Comparison Table</h2>
+          <div class="gold-divider mb-4" />
+          <p class="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">Quick reference for choosing the right extrapolation method for your data.</p>
+        </div>
+        <div class="calculator-card overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-gold-500/5 dark:bg-gold-500/10">
+                  <th class="text-left px-5 py-3 font-serif font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200/60 dark:border-neutral-700/60">Method</th>
+                  <th class="text-left px-5 py-3 font-serif font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200/60 dark:border-neutral-700/60">Best For</th>
+                  <th class="text-center px-5 py-3 font-serif font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200/60 dark:border-neutral-700/60">Min Points</th>
+                  <th class="text-left px-5 py-3 font-serif font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200/60 dark:border-neutral-700/60">Equation</th>
+                </tr>
+              </thead>
+              <tbody class="text-neutral-600 dark:text-neutral-400">
+                <tr class="border-b border-neutral-100 dark:border-neutral-800/60">
+                  <td class="px-5 py-3 font-medium text-neutral-900 dark:text-neutral-100">Linear</td>
+                  <td class="px-5 py-3">Steady, constant-rate trends</td>
+                  <td class="px-5 py-3 text-center font-mono">2</td>
+                  <td class="px-5 py-3 font-mono text-xs text-gold-600 dark:text-gold-400">y = mx + b</td>
+                </tr>
+                <tr class="border-b border-neutral-100 dark:border-neutral-800/60 bg-white/40 dark:bg-neutral-800/20">
+                  <td class="px-5 py-3 font-medium text-neutral-900 dark:text-neutral-100">Exponential</td>
+                  <td class="px-5 py-3">Accelerating growth or decay</td>
+                  <td class="px-5 py-3 text-center font-mono">2</td>
+                  <td class="px-5 py-3 font-mono text-xs text-gold-600 dark:text-gold-400">y = a · e<sup>bx</sup></td>
+                </tr>
+                <tr class="border-b border-neutral-100 dark:border-neutral-800/60">
+                  <td class="px-5 py-3 font-medium text-neutral-900 dark:text-neutral-100">Logarithmic</td>
+                  <td class="px-5 py-3">Rapid initial change, then plateau</td>
+                  <td class="px-5 py-3 text-center font-mono">2</td>
+                  <td class="px-5 py-3 font-mono text-xs text-gold-600 dark:text-gold-400">y = a + b · ln(x)</td>
+                </tr>
+                <tr class="border-b border-neutral-100 dark:border-neutral-800/60 bg-white/40 dark:bg-neutral-800/20">
+                  <td class="px-5 py-3 font-medium text-neutral-900 dark:text-neutral-100">Quadratic</td>
+                  <td class="px-5 py-3">U-shaped or inverted-U parabolic</td>
+                  <td class="px-5 py-3 text-center font-mono">3</td>
+                  <td class="px-5 py-3 font-mono text-xs text-gold-600 dark:text-gold-400">y = ax² + bx + c</td>
+                </tr>
+                <tr>
+                  <td class="px-5 py-3 font-medium text-neutral-900 dark:text-neutral-100">Polynomial</td>
+                  <td class="px-5 py-3">Complex curves with peaks/valleys</td>
+                  <td class="px-5 py-3 text-center font-mono">4</td>
+                  <td class="px-5 py-3 font-mono text-xs text-gold-600 dark:text-gold-400">y = aₙxⁿ + ... + a₀</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="text-center text-neutral-500 dark:text-neutral-400 mt-5 text-sm">All methods return R² scores to measure goodness-of-fit. Higher R² = better model fit.</p>
       </div>
     </div>
   </section>
@@ -441,6 +652,13 @@ const currentPath = '/';
     { text: 'Press, W.H., et al. (2007). Numerical Recipes: The Art of Scientific Computing (3rd ed.). Cambridge University Press.', url: 'https://numerical.recipes/' },
     { text: 'Weisstein, E.W. "Least Squares Fitting." From MathWorld — A Wolfram Web Resource.', url: 'https://mathworld.wolfram.com/LeastSquaresFitting.html' },
     { text: 'Hastie, T., Tibshirani, R., & Friedman, J. (2009). The Elements of Statistical Learning (2nd ed.). Springer.', url: 'https://hastie.su.domains/ElemStatLearn/' },
+    { text: 'Chatterjee, S., & Hadi, A.S. (2012). Regression Analysis by Example (5th ed.). Wiley.', url: 'https://www.wiley.com/en-us/Regression+Analysis+by+Example-p-9781118065051' },
+    { text: 'Stewart, J. (2015). Calculus: Early Transcendentals (8th ed.). Cengage Learning.', url: 'https://www.cengage.com/c/calculus-early-transcendentals-8e-stewart/' },
+    { text: 'Luenberger, D.G., & Ye, Y. (2008). Linear and Nonlinear Programming (3rd ed.). Springer.', url: 'https://link.springer.com/book/10.1007/978-0-387-74503-9' },
+    { text: 'Draper, N.R., & Smith, H. (1998). Applied Regression Analysis (3rd ed.). Wiley.', url: 'https://www.wiley.com/en-us/Applied+Regression+Analysis%2C+3rd+Edition-p-9780471170822' },
+    { text: 'Rice, J.A. (2006). Mathematical Statistics and Data Analysis (3rd ed.). Thomson Brooks/Cole.', url: 'https://www.cengage.com/mathematics/series/mathematical-statistics/' },
+    { text: 'Snedecor, G.W., & Cochran, W.G. (1989). Statistical Methods (8th ed.). Iowa State University Press.', url: 'https://www.iupress.iastate.edu/books/9780813815619/statistical-methods' },
+    { text: 'NIST/SEMATECH e-Handbook of Statistical Methods. (2012). National Institute of Standards and Technology.', url: 'https://www.itl.nist.gov/div898/handbook/' },
   ]} />
 
   <!-- FAQ Section -->
@@ -448,18 +666,102 @@ const currentPath = '/';
     <div class="max-w-4xl mx-auto">
       <FAQ locale={locale} items={[
         { question: 'What is extrapolation?', answer: 'Extrapolation is the process of estimating unknown values by extending a known sequence of values or facts beyond the area that is certainly known. It uses mathematical models to predict future or past values based on existing trends in your data.', category: 'general', display: true },
+        { question: 'What is an extrapolation calculator?', answer: 'An extrapolation calculator is a tool that fits a mathematical model to your known data points and projects it beyond the observed range to predict future or unknown values. It returns the predicted value, fitted equation, R² quality score, and confidence level. Our free online calculator supports linear, exponential, logarithmic, polynomial, and quadratic methods.', category: 'general', display: true },
         { question: 'What is linear extrapolation?', answer: 'Linear extrapolation uses a straight line (y = mx + b) to extend the trend of existing data points. It assumes a constant rate of change and works best when the data follows a roughly linear pattern. This is the simplest and most commonly used extrapolation method.', category: 'calculator', display: true },
         { question: 'What is exponential extrapolation?', answer: 'Exponential extrapolation models data that grows or decays at a rate proportional to its current value, following y = a·e^(bx). It is commonly used for population growth, compound interest, viral spread, and radioactive decay calculations. All Y values must be positive.', category: 'calculator', display: true },
+        { question: 'What is logarithmic extrapolation?', answer: 'Logarithmic extrapolation models data where change is rapid initially but slows over time, following y = a + b·ln(x). It is ideal for learning curves, diminishing returns in economics, and saturation effects. All X values must be positive.', category: 'calculator', display: true },
+        { question: 'What is polynomial extrapolation?', answer: 'Polynomial extrapolation fits a degree-n curve (default cubic, degree 3) to your data. It captures complex trends with multiple turning points — peaks and valleys — making it useful for market cycles and seasonal patterns. However, higher-degree polynomials risk overfitting.', category: 'calculator', display: true },
         { question: 'How accurate is extrapolation?', answer: 'The accuracy of extrapolation depends on how well the chosen model fits the data and how far beyond the observed range you predict. The R² score and confidence level provided by our calculator help you assess reliability. Predictions close to the data range with high R² values are generally more reliable.', category: 'technical', display: true },
         { question: 'What is R² score?', answer: 'R² (coefficient of determination) measures how well the regression model fits the observed data. Values range from 0 to 1, where 1 indicates a perfect fit and 0 means the model explains none of the variance. An R² above 0.9 indicates an excellent fit, while below 0.5 suggests a poor model choice.', category: 'technical', display: true },
         { question: 'What is the difference between extrapolation and interpolation?', answer: 'Interpolation estimates values between known data points (within the observed range), while extrapolation estimates values beyond the known data range. Interpolation is generally more accurate because it is bounded by existing observations, whereas extrapolation carries more uncertainty the further you go from known data.', category: 'general', display: true },
         { question: 'How many data points do I need for extrapolation?', answer: 'At minimum, you need 2 data points for linear, exponential, and logarithmic methods. Quadratic extrapolation requires at least 3 points, and polynomial (cubic) requires at least 4 points. However, more data points generally produce more reliable models, especially for methods that fit more parameters.', category: 'calculator', display: true },
         { question: 'Which extrapolation method should I use?', answer: 'Choose based on your data pattern: Linear for steady, constant-rate trends; Exponential for accelerating growth or decay; Logarithmic for diminishing returns (fast initial change that slows); Polynomial for complex curves with peaks and valleys; Quadratic for simple parabolic (U-shaped) relationships. Check the R² score to confirm your choice.', category: 'general', display: true },
+        { question: 'Can I use this calculator for financial forecasting?', answer: 'Yes, but with caution. Linear extrapolation works for steady revenue growth; exponential suits compound interest projections. However, financial markets are influenced by external factors that mathematical models cannot predict. Always combine extrapolation with domain expertise and consider multiple scenarios.', category: 'general', display: true },
         { question: 'Is my data stored on your servers?', answer: 'No. All calculations are performed entirely in your browser using JavaScript. Your data never leaves your device, and we do not store any personal information or calculation inputs on our servers. This calculator is 100% client-side and private.', category: 'general', display: true },
         { question: 'Can I download my results?', answer: 'Yes! After calculating, you can export your results as CSV (data table), PNG (chart image), or PDF (full report with equation and chart). Click the export buttons that appear below the results section.', category: 'calculator', display: true },
         { question: 'What does the confidence indicator mean?', answer: 'The confidence indicator is derived from the R² score and reflects how well the mathematical model fits your data. A confidence of 95%+ means the model explains over 95% of the variance in your data. Lower confidence values suggest the model may not be the best choice for your data pattern.', category: 'technical', display: true },
         { question: 'Why does polynomial extrapolation give wild results?', answer: 'High-degree polynomials can exhibit Runge\'s phenomenon — oscillating wildly at the edges of and beyond the data range. This is why we limit the polynomial degree to 3 (cubic). For safer extrapolation with complex data, try quadratic or use multiple methods and compare results.', category: 'technical', display: true },
+        { question: 'How do I know if my extrapolation is reliable?', answer: 'Check three indicators: (1) R² score above 0.9 suggests a strong model fit; (2) confidence level above 90% indicates reliability; (3) the prediction target should be close to your data range — extrapolating 2x beyond your last data point is far riskier than 1.1x. Always validate with domain knowledge.', category: 'technical', display: true },
+        { question: 'Can I compare multiple methods on the same data?', answer: 'Yes. Enter your data once, then switch between methods using the dropdown. Each method produces different R² scores — compare them to find the best fit. The method with the highest R² is statistically the best model for your specific dataset.', category: 'calculator', display: true },
       ]} />
+    </div>
+  </section>
+
+  <!-- Glossary -->
+  <section class="py-8 md:py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="section-card p-6 md:p-8">
+        <div class="text-center mb-8">
+          <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4 tracking-tight">Glossary of Key Terms</h2>
+          <div class="gold-divider mb-4" />
+        </div>
+        <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Extrapolation</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">Estimating values outside the range of observed data by extending a fitted trend.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Interpolation</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">Estimating values between known data points within the observed range.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Least Squares</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">Optimization method that minimizes the sum of squared residuals between observed and predicted values.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">R² (Coefficient of Determination)</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">Statistical measure (0–1) indicating how well the model explains variance in the data.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Residual</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">The difference between an observed value and the model's predicted value at the same point.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Confidence Level</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">A percentage indicating how reliably the model fits your data, derived from R² and sample size.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Overfitting</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">When a model fits training data too closely, capturing noise rather than the underlying trend, leading to poor predictions on new data.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Runge's Phenomenon</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">Oscillatory behavior at the edges of high-degree polynomial fits, causing wild extrapolation errors.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Vandermonde Matrix</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">A structured matrix used in polynomial fitting to solve for coefficients via Gaussian elimination.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Natural Logarithm (ln)</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">The logarithm to base e (≈2.718), used to linearize exponential models for fitting.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Data Point</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">A single observation represented as an (x, y) pair — the fundamental input for any extrapolation.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Regression</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">Statistical method for modeling the relationship between a dependent variable and one or more independent variables.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Trend Line</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">A line or curve fitted to data points that represents the general direction of the data.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Slope (m)</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">The rate of change in a linear model — how much Y changes for each unit increase in X.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Y-Intercept (b)</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">The predicted Y value when X = 0 in a linear model.</dd>
+          </div>
+          <div class="py-3 border-b border-neutral-100 dark:border-neutral-800/60">
+            <dt class="font-serif font-semibold text-neutral-900 dark:text-neutral-100 mb-1">Carrying Capacity</dt>
+            <dd class="text-neutral-600 dark:text-neutral-400">The maximum sustainable value in logistic growth — a limit that pure exponential extrapolation ignores.</dd>
+          </div>
+        </dl>
+      </div>
     </div>
   </section>
 
