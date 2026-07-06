@@ -32,7 +32,7 @@ const currentPath = localizePath('/interpolation/', locale);
         <div class="gold-divider-wide mb-6" />
         <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed max-w-2xl mx-auto">{t(locale, 'interpolation.description')}</p>
       </div>
-      <InterpolationCalculator client:idle locale={locale} />
+      <InterpolationCalculator client:visible locale={locale} />
     </div>
   </div>
 </BaseLayout>

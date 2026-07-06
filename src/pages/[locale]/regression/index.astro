@@ -32,7 +32,7 @@ const currentPath = localizePath('/regression/', locale);
         <div class="gold-divider-wide mb-6" />
         <p class="text-neutral-600 dark:text-neutral-400 text-lg leading-relaxed max-w-2xl mx-auto">{t(locale, 'regression.description')}</p>
       </div>
-      <RegressionCalculator client:idle locale={locale} />
+      <RegressionCalculator client:visible locale={locale} />
     </div>
   </div>
 </BaseLayout>
