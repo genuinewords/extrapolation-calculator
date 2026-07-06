@@ -12,12 +12,14 @@
 - Export to CSV and PNG
 
 ## Pages
-- / - Calculator homepage
-- /about-us/ - About the project
-- /contact-us/ - Contact form
-- /blog/ - Articles about extrapolation methods
-- /terms/ - Terms of service
-- /privacy/ - Privacy policy
+- [Calculator Homepage](https://extrapolationcalculator.com/) - Free online extrapolation calculator with multiple methods
+- [Interpolation Calculator](https://extrapolationcalculator.com/interpolation/) - Free online interpolation calculator
+- [Regression Calculator](https://extrapolationcalculator.com/regression/) - Free online regression analysis tool
+- [About Us](https://extrapolationcalculator.com/about-us/) - About the project and team
+- [Contact Us](https://extrapolationcalculator.com/contact-us/) - Contact form and information
+- [Blog](https://extrapolationcalculator.com/blog/) - Articles about extrapolation methods and data analysis
+- [Terms of Service](https://extrapolationcalculator.com/terms/) - Terms of service
+- [Privacy Policy](https://extrapolationcalculator.com/privacy/) - Privacy policy
 
 ## Languages
 Supported in: English, Hindi, Spanish, Russian, French, German, Italian, Portuguese, Bengali, Japanese, Korean, Malay, Polish, Indonesian, Arabic, Bulgarian, Turkish, Swedish

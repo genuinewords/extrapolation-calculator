@@ -50,15 +50,5 @@ export default defineConfig({
         '@theme': new URL('./theme', import.meta.url).pathname,
       },
     },
-    build: {
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            calculator: ['./src/components/ExtrapolationCalculator.tsx'],
-            charts: ['./src/components/ExtrapolationChart.tsx'],
-          },
-        },
-      },
-    },
   },
 });
