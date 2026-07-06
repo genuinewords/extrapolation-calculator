@@ -30,6 +30,12 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/((?!_astro|.*\\..*).*)",
+      "has": [{ "type": "header", "key": "accept", "value": ".*text/html.*" }],
+      "destination": "/$1/",
+      "permanent": true
+    },
     { "source": "/blog/hi-:slug/", "destination": "/hi/blog/:slug/", "permanent": true },
     { "source": "/blog/es-:slug/", "destination": "/es/blog/:slug/", "permanent": true },
     { "source": "/blog/ru-:slug/", "destination": "/ru/blog/:slug/", "permanent": true },

@@ -30,6 +30,8 @@ const {
 const dir = isRtl(locale) ? 'rtl' : 'ltr';
 const canonicalURL = new URL(currentPath, Astro.site);
 const alternateUrls = getAlternateUrls(currentPath);
+const pathWithoutLocale = currentPath.replace(/^\/[a-z]{2}(\/|$)/, '$1') || '/';
+const xDefaultURL = new URL(pathWithoutLocale, Astro.site);
 
 const blogSchema: Record<string, unknown> = {
   "@context": "https://schema.org",
@@ -93,13 +95,15 @@ const blogSchema: Record<string, unknown> = {
     {alternateUrls.map(({ locale: altLocale, url: altUrl }) => (
       <link rel="alternate" hreflang={altLocale} href={new URL(altUrl, Astro.site).href} />
     ))}
-    <link rel="alternate" hreflang="x-default" href={canonicalURL.href} />
+    <link rel="alternate" hreflang="x-default" href={xDefaultURL.href} />
 
     <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" /></noscript>
 
     {locale !== 'en' && (
       <script is:inline src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
