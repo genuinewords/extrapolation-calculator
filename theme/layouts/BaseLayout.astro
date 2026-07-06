@@ -120,7 +120,7 @@ const personSchema = {
     {alternateUrls.map(({ locale: altLocale, url: altUrl }) => (
       <link rel="alternate" hreflang={altLocale} href={new URL(altUrl, Astro.site).href} />
     ))}
-    <link rel="alternate" hreflang="x-default" href={Astro.site?.href} />
+    <link rel="alternate" hreflang="x-default" href={canonicalURL.href} />
 
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />

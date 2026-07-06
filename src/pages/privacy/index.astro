@@ -6,6 +6,13 @@ const currentPath = '/privacy/';
 ---
 
 <BaseLayout locale={locale} currentPath={currentPath} title="Privacy Policy – Extrapolation Calculator Data Handling" description="Your data stays in your browser. Extrapolation Calculator processes all calculations client-side with no server storage, no tracking cookies, and full HTTPS.">
+  <nav class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8" aria-label="Breadcrumb">
+    <ol class="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400">
+      <li><a href="/" class="hover:text-gold-600 dark:hover:text-gold-400 transition-colors">Home</a></li>
+      <li><svg class="h-3.5 w-3.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></li>
+      <li class="text-neutral-900 dark:text-neutral-100 font-medium" aria-current="page">Privacy Policy</li>
+    </ol>
+  </nav>
   <div class="max-w-4xl mx-auto py-16 md:py-24">
     <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">Privacy Policy</h1>
     <div class="prose prose-neutral dark:prose-invert max-w-none dark:text-neutral-300">

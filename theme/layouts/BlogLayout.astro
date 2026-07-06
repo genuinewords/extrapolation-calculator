@@ -72,7 +72,7 @@ const blogSchema: Record<string, unknown> = {
       (function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()
     </script>
 
-    <title>{title} | {t(locale, 'site.title')}</title>
+    <title>{title.length > 30 ? title.slice(0, 27) + '…' : title} | ExtrapolationCalculator.com</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL.href} />
 
@@ -93,7 +93,7 @@ const blogSchema: Record<string, unknown> = {
     {alternateUrls.map(({ locale: altLocale, url: altUrl }) => (
       <link rel="alternate" hreflang={altLocale} href={new URL(altUrl, Astro.site).href} />
     ))}
-    <link rel="alternate" hreflang="x-default" href={Astro.site?.href} />
+    <link rel="alternate" hreflang="x-default" href={canonicalURL.href} />
 
     <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
 
@@ -125,6 +125,15 @@ const blogSchema: Record<string, unknown> = {
     <Header locale={locale} currentPath={currentPath} />
     <main id="main-content" class="flex-1 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <article class="max-w-3xl mx-auto py-16 md:py-24">
+        <nav class="mb-6" aria-label="Breadcrumb">
+          <ol class="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400">
+            <li><a href={localizePath('/', locale)} class="hover:text-gold-600 dark:hover:text-gold-400 transition-colors">Home</a></li>
+            <li><svg class="h-3.5 w-3.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></li>
+            <li><a href={localizePath('/blog/', locale)} class="hover:text-gold-600 dark:hover:text-gold-400 transition-colors">Blog</a></li>
+            <li><svg class="h-3.5 w-3.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></li>
+            <li class="text-neutral-900 dark:text-neutral-100 font-medium truncate max-w-[200px]" aria-current="page">{title}</li>
+          </ol>
+        </nav>
         <header class="mb-10">
           {category && (
             <span class="inline-block bg-gold-500/10 text-gold-600 dark:text-gold-400 text-xs font-semibold px-4 py-1.5 rounded-full mb-4 tracking-wide uppercase border border-gold-500/20">{category}</span>
@@ -160,7 +169,7 @@ const blogSchema: Record<string, unknown> = {
           <h2 class="font-serif text-2xl md:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">{t(locale, 'cta.tools.title')}</h2>
           <p class="text-neutral-600 dark:text-neutral-400 mb-8 text-lg">{t(locale, 'cta.tools.description')}</p>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <a href={localizePath('/extrapolation-calculator/', locale)} class="group block calculator-card p-6 hover:border-gold-500/60 transition-all duration-300">
+            <a href={localizePath('/', locale)} class="group block calculator-card p-6 hover:border-gold-500/60 transition-all duration-300">
               <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 border border-gold-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <svg class="h-6 w-6 text-gold-600 dark:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
               </div>
@@ -168,7 +177,7 @@ const blogSchema: Record<string, unknown> = {
               <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4 leading-relaxed">{t(locale, 'cta.tools.extrapolation.desc')}</p>
               <span class="text-sm font-semibold text-gold-600 dark:text-gold-400 group-hover:underline underline-offset-2">{t(locale, 'cta.tools.tryIt')} &rarr;</span>
             </a>
-            <a href={localizePath('/interpolation-calculator/', locale)} class="group block calculator-card p-6 hover:border-gold-500/60 transition-all duration-300">
+            <a href={localizePath('/interpolation/', locale)} class="group block calculator-card p-6 hover:border-gold-500/60 transition-all duration-300">
               <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 border border-blue-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
               </div>
@@ -176,7 +185,7 @@ const blogSchema: Record<string, unknown> = {
               <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4 leading-relaxed">{t(locale, 'cta.tools.interpolation.desc')}</p>
               <span class="text-sm font-semibold text-gold-600 dark:text-gold-400 group-hover:underline underline-offset-2">{t(locale, 'cta.tools.tryIt')} &rarr;</span>
             </a>
-            <a href={localizePath('/regression-calculator/', locale)} class="group block calculator-card p-6 hover:border-gold-500/60 transition-all duration-300">
+            <a href={localizePath('/regression/', locale)} class="group block calculator-card p-6 hover:border-gold-500/60 transition-all duration-300">
               <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 border border-emerald-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <svg class="h-6 w-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
               </div>
